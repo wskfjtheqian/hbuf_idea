@@ -7,11 +7,19 @@ import com.intellij.psi.PsiElement;
 
 public class HbufVisitor extends PsiElementVisitor {
 
-  public void visitProperty(@NotNull HbufProperty o) {
-    visitNamedElement(o);
+  public void visitImport(@NotNull HbufImport o) {
+    visitImportElement(o);
   }
 
-  public void visitNamedElement(@NotNull HbufNamedElement o) {
+  public void visitPackage(@NotNull HbufPackage o) {
+    visitPackageElement(o);
+  }
+
+  public void visitImportElement(@NotNull HbufImportElement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPackageElement(@NotNull HbufPackageElement o) {
     visitPsiElement(o);
   }
 

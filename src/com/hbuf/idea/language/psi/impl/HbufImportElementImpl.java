@@ -2,7 +2,7 @@
 
 package com.hbuf.idea.language.psi.impl;
 
-import com.hbuf.idea.language.psi.HbufNamedElement;
+import com.hbuf.idea.language.psi.HbufPackageElement;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.NlsSafe;
@@ -11,9 +11,9 @@ import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class HbufNamedElementImpl extends ASTWrapperPsiElement implements HbufNamedElement {
+public abstract class HbufImportElementImpl extends ASTWrapperPsiElement implements HbufPackageElement {
 
-  public HbufNamedElementImpl(@NotNull ASTNode node) {
+  public HbufImportElementImpl(@NotNull ASTNode node) {
     super(node);
   }
 

@@ -4,6 +4,6 @@ package com.hbuf.idea.language.psi;
 
 import com.intellij.psi.PsiNameIdentifierOwner;
 
-public interface HbufNamedElement extends PsiNameIdentifierOwner {
+public interface HbufImportElement extends PsiNameIdentifierOwner {
 
 }

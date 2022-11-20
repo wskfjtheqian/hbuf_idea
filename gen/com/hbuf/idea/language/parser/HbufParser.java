@@ -48,74 +48,71 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // property|COMMENT|CRLF
+  // string
+  public static boolean import_$(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "import_$")) return false;
+    if (!nextTokenIs(b, STRING)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, STRING);
+    exit_section_(b, m, IMPORT, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // package|import|data|server|CRLF
   static boolean item_(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "item_")) return false;
     boolean r;
-    Marker m = enter_section_(b);
-    r = property(b, l + 1);
-    if (!r) r = consumeToken(b, COMMENT);
+    r = package_$(b, l + 1);
+    if (!r) r = import_$(b, l + 1);
+    if (!r) r = consumeToken(b, DATA);
+    if (!r) r = consumeToken(b, SERVER);
     if (!r) r = consumeToken(b, CRLF);
-    exit_section_(b, m, null, r);
     return r;
   }
 
   /* ********************************************************** */
-  // (KEY? SEPARATOR VALUE?) | KEY
-  public static boolean property(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "property")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, PROPERTY, "<property>");
-    r = property_0(b, l + 1);
-    if (!r) r = consumeToken(b, KEY);
-    exit_section_(b, l, m, r, false, HbufParser::recover_property);
-    return r;
-  }
-
-  // KEY? SEPARATOR VALUE?
-  private static boolean property_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "property_0")) return false;
+  // id + EQ + string
+  public static boolean package_$(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "package_$")) return false;
+    if (!nextTokenIs(b, ID)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = property_0_0(b, l + 1);
-    r = r && consumeToken(b, SEPARATOR);
-    r = r && property_0_2(b, l + 1);
+    r = package_0(b, l + 1);
+    r = r && package_1(b, l + 1);
+    r = r && consumeToken(b, STRING);
+    exit_section_(b, m, PACKAGE, r);
+    return r;
+  }
+
+  // id +
+  private static boolean package_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "package_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, ID);
+    while (r) {
+      int c = current_position_(b);
+      if (!consumeToken(b, ID)) break;
+      if (!empty_element_parsed_guard_(b, "package_0", c)) break;
+    }
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // KEY?
-  private static boolean property_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "property_0_0")) return false;
-    consumeToken(b, KEY);
-    return true;
-  }
-
-  // VALUE?
-  private static boolean property_0_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "property_0_2")) return false;
-    consumeToken(b, VALUE);
-    return true;
-  }
-
-  /* ********************************************************** */
-  // !(KEY|SEPARATOR|COMMENT)
-  static boolean recover_property(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "recover_property")) return false;
+  // EQ +
+  private static boolean package_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "package_1")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NOT_);
-    r = !recover_property_0(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // KEY|SEPARATOR|COMMENT
-  private static boolean recover_property_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "recover_property_0")) return false;
-    boolean r;
-    r = consumeToken(b, KEY);
-    if (!r) r = consumeToken(b, SEPARATOR);
-    if (!r) r = consumeToken(b, COMMENT);
+    Marker m = enter_section_(b);
+    r = consumeToken(b, EQ);
+    while (r) {
+      int c = current_position_(b);
+      if (!consumeToken(b, EQ)) break;
+      if (!empty_element_parsed_guard_(b, "package_1", c)) break;
+    }
+    exit_section_(b, m, null, r);
     return r;
   }
 

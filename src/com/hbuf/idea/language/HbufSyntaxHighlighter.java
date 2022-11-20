@@ -16,49 +16,53 @@ import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAtt
 
 public class HbufSyntaxHighlighter extends SyntaxHighlighterBase {
 
-  public static final TextAttributesKey SEPARATOR =
-          createTextAttributesKey("HBUF_SEPARATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN);
-  public static final TextAttributesKey KEY =
-          createTextAttributesKey("HBUF_KEY", DefaultLanguageHighlighterColors.KEYWORD);
-  public static final TextAttributesKey VALUE =
-          createTextAttributesKey("HBUF_VALUE", DefaultLanguageHighlighterColors.STRING);
-  public static final TextAttributesKey COMMENT =
-          createTextAttributesKey("HBUF_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
-  public static final TextAttributesKey BAD_CHARACTER =
-          createTextAttributesKey("HBUF_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER);
+    public static final TextAttributesKey SEPARATOR =
+            createTextAttributesKey("HBUF_SEPARATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN);
+    public static final TextAttributesKey KEY =
+            createTextAttributesKey("HBUF_KEY", DefaultLanguageHighlighterColors.KEYWORD);
+    public static final TextAttributesKey VALUE =
+            createTextAttributesKey("HBUF_VALUE", DefaultLanguageHighlighterColors.STRING);
+    public static final TextAttributesKey COMMENT =
+            createTextAttributesKey("HBUF_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
+    public static final TextAttributesKey BAD_CHARACTER =
+            createTextAttributesKey("HBUF_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER);
 
 
-  private static final TextAttributesKey[] BAD_CHAR_KEYS = new TextAttributesKey[]{BAD_CHARACTER};
-  private static final TextAttributesKey[] SEPARATOR_KEYS = new TextAttributesKey[]{SEPARATOR};
-  private static final TextAttributesKey[] KEY_KEYS = new TextAttributesKey[]{KEY};
-  private static final TextAttributesKey[] VALUE_KEYS = new TextAttributesKey[]{VALUE};
-  private static final TextAttributesKey[] COMMENT_KEYS = new TextAttributesKey[]{COMMENT};
-  private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
+    private static final TextAttributesKey[] BAD_CHAR_KEYS = new TextAttributesKey[]{BAD_CHARACTER};
+    private static final TextAttributesKey[] SEPARATOR_KEYS = new TextAttributesKey[]{SEPARATOR};
+    private static final TextAttributesKey[] KEY_KEYS = new TextAttributesKey[]{KEY};
+    private static final TextAttributesKey[] VALUE_KEYS = new TextAttributesKey[]{VALUE};
+    private static final TextAttributesKey[] COMMENT_KEYS = new TextAttributesKey[]{COMMENT};
+    private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
 
-  @NotNull
-  @Override
-  public Lexer getHighlightingLexer() {
-    return new HbufLexerAdapter();
-  }
+    @NotNull
+    @Override
+    public Lexer getHighlightingLexer() {
+        return new HbufLexerAdapter();
+    }
 
-  @Override
-  public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {
-    if (tokenType.equals(HbufTypes.SEPARATOR)) {
-      return SEPARATOR_KEYS;
+    @Override
+    public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {
+        if (tokenType.equals(HbufTypes.EQ)) {
+            return SEPARATOR_KEYS;
+        }
+        if (tokenType.equals(HbufTypes.IMPORT)) {
+            return KEY_KEYS;
+        }
+        if (tokenType.equals(HbufTypes.PACKAGE)) {
+            return KEY_KEYS;
+        }
+
+//    if (tokenType.equals(HbufTypes.VALUE)) {
+//      return VALUE_KEYS;
+//    }
+//    if (tokenType.equals(HbufTypes.COMMENT)) {
+//      return COMMENT_KEYS;
+//    }
+        if (tokenType.equals(TokenType.BAD_CHARACTER)) {
+            return BAD_CHAR_KEYS;
+        }
+        return EMPTY_KEYS;
     }
-    if (tokenType.equals(HbufTypes.KEY)) {
-      return KEY_KEYS;
-    }
-    if (tokenType.equals(HbufTypes.VALUE)) {
-      return VALUE_KEYS;
-    }
-    if (tokenType.equals(HbufTypes.COMMENT)) {
-      return COMMENT_KEYS;
-    }
-    if (tokenType.equals(TokenType.BAD_CHARACTER)) {
-      return BAD_CHAR_KEYS;
-    }
-    return EMPTY_KEYS;
-  }
 
 }

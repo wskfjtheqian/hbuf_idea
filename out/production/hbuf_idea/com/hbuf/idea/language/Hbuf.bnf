@@ -15,20 +15,47 @@
   tokenTypeClass="com.hbuf.idea.language.psi.HbufTokenType"
 
   psiImplUtilClass="com.hbuf.idea.language.psi.impl.HbufPsiImplUtil"
+
+  tokens=[
+    SEMI=';'
+    EQ='='
+    LP='('
+    RP=')'
+
+    space='regexp:\s+'
+    comment='regexp://.*'
+    number='regexp:\d+(\.\d*)?'
+    id='regexp:\p{Alpha}\w*'
+    string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
+  ]
 }
 
 hbufFile ::= item_*
 
-private item_ ::= (property|COMMENT|CRLF)
-
-property ::= (KEY? SEPARATOR VALUE?) | KEY {
+private item_ ::= (package|import|data|server|CRLF)
+package ::= id + EQ + string{
   pin=3
-  recoverWhile="recover_property"
-  mixin="com.hbuf.idea.language.psi.impl.HbufNamedElementImpl"
-  implements="com.hbuf.idea.language.psi.HbufNamedElement"
-  methods=[getKey getValue getName setName getNameIdentifier getPresentation]
+  mixin="com.hbuf.idea.language.psi.impl.HbufPackageElementImpl"
+  implements="com.hbuf.idea.language.psi.HbufPackageElement"
+  methods=[getName getValue]
 }
 
-private recover_property ::= !(KEY|SEPARATOR|COMMENT)
+import ::= string{
+  pin=3
+  mixin="com.hbuf.idea.language.psi.impl.HbufImportElementImpl"
+  implements="com.hbuf.idea.language.psi.HbufImportElement"
+  methods=[getValue]
+}
+
+
+//package ::= (KEY? SEPARATOR VALUE?) | KEY {
+//  pin=3
+//  recoverWhile="recover_property"
+//  mixin="com.hbuf.idea.language.psi.impl.HbufPackageElementImpl"
+//  implements="com.hbuf.idea.language.psi.HbufPackageElement"
+//  methods=[getKey getValue getName setName getNameIdentifier getPresentation]
+//}
+
+//private recover_property ::= !(KEY|SEPARATOR|COMMENT)
 
 

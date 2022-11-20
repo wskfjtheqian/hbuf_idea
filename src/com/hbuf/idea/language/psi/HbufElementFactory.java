@@ -9,20 +9,20 @@ import com.intellij.psi.PsiFileFactory;
 
 public class HbufElementFactory {
 
-  public static HbufProperty createProperty(Project project, String name) {
-    final HbufFile file = createFile(project, name);
-    return (HbufProperty) file.getFirstChild();
-  }
+//  public static HbufProperty createProperty(Project project, String name) {
+//    final HbufFile file = createFile(project, name);
+//    return (HbufProperty) file.getFirstChild();
+//  }
 
   public static HbufFile createFile(Project project, String text) {
     String name = "dummy.hbuf";
     return (HbufFile) PsiFileFactory.getInstance(project).createFileFromText(name, HbufFileType.INSTANCE, text);
   }
-
-  public static HbufProperty createProperty(Project project, String name, String value) {
-    final HbufFile file = createFile(project, name + " = " + value);
-    return (HbufProperty) file.getFirstChild();
-  }
+//
+//  public static HbufProperty createProperty(Project project, String name, String value) {
+//    final HbufFile file = createFile(project, name + " = " + value);
+//    return (HbufProperty) file.getFirstChild();
+//  }
 
   public static PsiElement createCRLF(Project project) {
     final HbufFile file = createFile(project, "\n");

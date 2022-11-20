@@ -10,20 +10,26 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.hbuf.idea.language.psi.HbufTypes.*;
 import com.hbuf.idea.language.psi.*;
 
-public class HbufPropertyImpl extends HbufNamedElementImpl implements HbufProperty {
+public class HbufImportImpl extends HbufImportElementImpl implements HbufImport {
 
-  public HbufPropertyImpl(ASTNode node) {
+  public HbufImportImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull HbufVisitor visitor) {
-    visitor.visitProperty(this);
+    visitor.visitImport(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof HbufVisitor) accept((HbufVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getString() {
+    return findNotNullChildByType(STRING);
   }
 
 }
