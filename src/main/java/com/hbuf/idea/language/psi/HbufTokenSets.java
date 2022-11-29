@@ -6,9 +6,6 @@ import com.hbuf.idea.language.psi.HbufTypes;
 import com.intellij.psi.tree.TokenSet;
 
 public interface HbufTokenSets {
-
-    TokenSet IDENTIFIERS = TokenSet.create(HbufTypes.KEY);
-
     TokenSet COMMENTS = TokenSet.create(HbufTypes.COMMENT);
 
 }

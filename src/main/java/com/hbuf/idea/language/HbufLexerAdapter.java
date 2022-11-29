@@ -5,7 +5,7 @@ import com.intellij.lexer.FlexAdapter;
 public class HbufLexerAdapter extends FlexAdapter {
 
     public HbufLexerAdapter() {
-        super(new HbufLexer(null));
+        super(new _HbufLexer(null));
     }
 
 }

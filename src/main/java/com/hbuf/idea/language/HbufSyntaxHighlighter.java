@@ -43,13 +43,15 @@ public class HbufSyntaxHighlighter extends SyntaxHighlighterBase {
 
     @Override
     public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {
-        if (tokenType.equals(HbufTypes.SEPARATOR)) {
+        System.out.printf(tokenType.toString());
+
+        if (tokenType.equals(HbufTypes.PACKAGE)) {
             return SEPARATOR_KEYS;
         }
-        if (tokenType.equals(HbufTypes.KEY)) {
+        if (tokenType.equals(HbufTypes.ID)) {
             return KEY_KEYS;
         }
-        if (tokenType.equals(HbufTypes.VALUE)) {
+        if (tokenType.equals(HbufTypes.STRING)) {
             return VALUE_KEYS;
         }
         if (tokenType.equals(HbufTypes.COMMENT)) {

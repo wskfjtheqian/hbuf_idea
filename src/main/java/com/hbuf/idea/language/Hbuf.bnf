@@ -1,4 +1,15 @@
 // Copyright 2000-2022 JetBrains s.r.o. and other contributors. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+//property ::= (KEY? SEPARATOR VALUE?) | KEY {
+//  pin=3
+//  recoverWhile="recover_property"
+//    mixin="com.hbuf.idea.language.psi.impl.HbufPackageElementImpl"
+//    implements="com.hbuf.idea.language.psi.HbufPackageElement"
+//    methods=[getKey getValue getName setName getNameIdentifier getPresentation]
+//}
+
+//private recover_property ::= !(KEY|SEPARATOR|COMMENT)
+
+
 {
   parserClass="com.hbuf.idea.language.parser.HbufParser"
   parserUtilClass="com.hbuf.idea.language.parser.HbufParserUtil"
@@ -15,18 +26,29 @@
   tokenTypeClass="com.hbuf.idea.language.psi.HbufTokenType"
 
   psiImplUtilClass="com.hbuf.idea.language.psi.impl.HbufPsiImplUtil"
+
+  tokens = [
+    ASSIGN = '='
+
+    COMMENT='regexp://.*'
+    NUMBER='regexp:\d+(\.\d*)?'
+    ID='regexp:\p{Alpha}\w*'
+    STRING="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
+    NUMBER='regexp:\d+(\.\d*)?'
+  ]
 }
 
 hbufFile ::= item_*
 
-private item_ ::= (property|COMMENT|CRLF)
+private item_ ::= (package|data|COMMENT|CRLF)
 
-property ::= (KEY? SEPARATOR VALUE?) | KEY {
-  pin=3
-  recoverWhile="recover_property"
-  mixin="com.hbuf.idea.language.psi.impl.HbufNamedElementImpl"
-  implements="com.hbuf.idea.language.psi.HbufNamedElement"
-  methods=[getKey getValue getName setName getNameIdentifier getPresentation]
+package ::= (ID ASSIGN STRING) {
+    pin=3
+    mixin="com.hbuf.idea.language.psi.impl.HbufPackageElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufPackageElement"
 }
 
-private recover_property ::= !(KEY|SEPARATOR|COMMENT)
+
+
+
+
