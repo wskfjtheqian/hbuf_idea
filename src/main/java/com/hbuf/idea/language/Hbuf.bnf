@@ -28,7 +28,20 @@
   psiImplUtilClass="com.hbuf.idea.language.psi.impl.HbufPsiImplUtil"
 
   tokens = [
+    SPACE = ' '
     ASSIGN = '='
+	Question = '?'
+	LSS = '<'
+	LPAREN  = '('
+	LBRACK = '['
+	LBRACE = '{'
+	COMMA = ','
+	GTR = '>'
+	RPAREN  = ')'
+	RBRACK = ']'
+	RBRACE = '}'
+	SEMICOLON = ';'
+	COLON = ':'
 
     COMMENT='regexp://.*'
     NUMBER='regexp:\d+(\.\d*)?'
@@ -40,12 +53,34 @@
 
 hbufFile ::= item_*
 
-private item_ ::= (package|data|COMMENT|CRLF)
+private item_ ::= (package|import|data|COMMENT|CRLF)
 
-package ::= (ID ASSIGN STRING) {
+package ::="package" ID ASSIGN STRING{
     pin=3
     mixin="com.hbuf.idea.language.psi.impl.HbufPackageElementImpl"
     implements="com.hbuf.idea.language.psi.HbufPackageElement"
+}
+
+import::="import" STRING {
+    pin=3
+    mixin="com.hbuf.idea.language.psi.impl.HbufImportElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufImportElement"
+}
+
+data::= [annotation] "data" ID ASSIGN NUMBER{
+
+}
+
+annotation-group::= annotation [annotation-group] {
+}
+
+annotation::=LBRACK ID COLON [annotation-list] RBRACK{
+}
+
+annotation-list::= annotation-item [SEMICOLON annotation-list]  {
+}
+
+annotation-item::= ID ASSIGN STRING {
 }
 
 

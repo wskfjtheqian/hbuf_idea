@@ -34,8 +34,20 @@ STRING=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
 <YYINITIAL> {
   {WHITE_SPACE}      { return WHITE_SPACE; }
 
+  " "                { return SPACE; }
   "="                { return ASSIGN; }
-  "data"             { return DATA; }
+  "?"                { return QUESTION; }
+  "<"                { return LSS; }
+  "("                { return LPAREN; }
+  "["                { return LBRACK; }
+  "{"                { return LBRACE; }
+  ","                { return COMMA; }
+  ">"                { return GTR; }
+  ")"                { return RPAREN; }
+  "]"                { return RBRACK; }
+  "}"                { return RBRACE; }
+  ";"                { return SEMICOLON; }
+  ":"                { return COLON; }
   "CRLF"             { return CRLF; }
 
   {COMMENT}          { return COMMENT; }
