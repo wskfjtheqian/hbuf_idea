@@ -67,7 +67,14 @@ import::="import" STRING {
     implements="com.hbuf.idea.language.psi.HbufImportElement"
 }
 
-data::= [annotation] "data" ID ASSIGN NUMBER{
+data::= [annotation] "data" ID [COLON extends] ASSIGN NUMBER data-body{
+
+}
+
+extends::=ID [COMMA extends]{
+}
+
+data-body::=LBRACE RBRACE {
 
 }
 
