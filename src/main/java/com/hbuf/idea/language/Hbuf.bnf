@@ -1,5 +1,5 @@
 // Copyright 2000-2022 JetBrains s.r.o. and other contributors. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
-//property ::= (KEY? SEPARATOR VALUE?) | KEY {
+//property ::= (KEY? SEPARATOR VALUE?)|KEY {
 //  pin=3
 //  recoverWhile="recover_property"
 //    mixin="com.hbuf.idea.language.psi.impl.HbufPackageElementImpl"
@@ -30,7 +30,7 @@
   tokens = [
     SPACE = ' '
     ASSIGN = '='
-	Question = '?'
+	QUESTION = '?'
 	LSS = '<'
 	LPAREN  = '('
 	LBRACK = '['
@@ -67,16 +67,31 @@ import::="import" STRING {
     implements="com.hbuf.idea.language.psi.HbufImportElement"
 }
 
-data::= [annotation] "data" ID [COLON extends] ASSIGN NUMBER data-body{
+data::= [annotation-group] "data" ID [COLON extends] ASSIGN NUMBER data-body{
 
 }
 
 extends::=ID [COMMA extends]{
 }
 
-data-body::=LBRACE RBRACE {
+data-body::=LBRACE field-list RBRACE {
 
 }
+
+field-list::= field-statement [field-list]{
+
+}
+
+field-statement::= [annotation-group] type-statement ID ASSIGN NUMBER{}
+
+type-base::= "int8"|"int16"|"int32"|"int64"|"uint8"|"uint16"|"uint32"|"uint64"|"bool"|"float"|"double"|"decimal"|"string"|"date"
+
+type-statement::= (type-base | ID | type-array | type-map) [QUESTION] {
+}
+
+type-array::=type-statement LBRACK RBRACK {}
+
+type-map::=type-statement LSS type-base GTR{}
 
 annotation-group::= annotation [annotation-group] {
 }
@@ -91,6 +106,22 @@ annotation-item::= ID ASSIGN STRING {
 }
 
 
+server::= [annotation-group] "server" ID [COLON extends] ASSIGN NUMBER server-body{
 
+}
 
+server-body::=LBRACE func-list RBRACE {
 
+}
+
+func-list::= func-statement [func-list]{
+
+}
+
+func-statement::=[annotation-group] func-type ID LPAREN func-param RPAREN ASSIGN NUMBER{
+
+}
+
+func-type::=ID{}
+
+func-param::= func-type ID{}
