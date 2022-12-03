@@ -46,7 +46,7 @@ public class HbufFoldingBuilder extends FoldingBuilderEx implements DumbAware {
     public String getPlaceholderText(@NotNull ASTNode node) {
         String retTxt = "...";
         if (node.getElementType() == HbufTypes.ANNOTATION_GROUP) {
-            return "[db:...]";
+            return "override";
         }
         return retTxt;
     }
