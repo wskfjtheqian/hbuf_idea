@@ -1,15 +1,3 @@
-// Copyright 2000-2022 JetBrains s.r.o. and other contributors. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
-//property ::= (KEY? SEPARATOR VALUE?)|KEY {
-//  pin=3
-//  recoverWhile="recover_property"
-//    mixin="com.hbuf.idea.language.psi.impl.HbufPackageElementImpl"
-//    implements="com.hbuf.idea.language.psi.HbufPackageElement"
-//    methods=[getKey getValue getName setName getNameIdentifier getPresentation]
-//}
-
-//private recover_property ::= !(KEY|SEPARATOR|COMMENT)
-
-
 {
   parserClass="com.hbuf.idea.language.parser.HbufParser"
   parserUtilClass="com.hbuf.idea.language.parser.HbufParserUtil"
@@ -53,7 +41,7 @@
 
 hbufFile ::= item_*
 
-private item_ ::= (package|import|data|COMMENT|CRLF)
+private item_ ::= (package|import|data|server|COMMENT|CRLF)
 
 package ::="package" ID ASSIGN STRING{
     pin=3
@@ -74,7 +62,7 @@ data::= [annotation-group] "data" ID [COLON extends] ASSIGN NUMBER data-body{
 extends::=ID [COMMA extends]{
 }
 
-data-body::=LBRACE field-list RBRACE {
+data-body::=LBRACE [field-list] RBRACE {
 
 }
 
@@ -84,14 +72,14 @@ field-list::= field-statement [field-list]{
 
 field-statement::= [annotation-group] type-statement ID ASSIGN NUMBER{}
 
-type-base::= "int8"|"int16"|"int32"|"int64"|"uint8"|"uint16"|"uint32"|"uint64"|"bool"|"float"|"double"|"decimal"|"string"|"date"
+type-base::= "int8"|"int16"|"int32"|"int64"|"uint8"|"uint16"|"uint32"|"uint64"|"bool"|"float"|"double"|"decimal"|"string"|"date"|ID
 
-type-statement::= (type-base | ID | type-array | type-map) [QUESTION] {
+type-statement::=type-array|type-map|type-base [QUESTION] {
 }
 
-type-array::=type-statement LBRACK RBRACK {}
+type-array::=type-base [QUESTION] LBRACK RBRACK {}
 
-type-map::=type-statement LSS type-base GTR{}
+type-map::=type-base [QUESTION] LSS type-base GTR{}
 
 annotation-group::= annotation [annotation-group] {
 }
@@ -105,21 +93,17 @@ annotation-list::= annotation-item [SEMICOLON annotation-list]  {
 annotation-item::= ID ASSIGN STRING {
 }
 
-
 server::= [annotation-group] "server" ID [COLON extends] ASSIGN NUMBER server-body{
 
 }
 
-server-body::=LBRACE func-list RBRACE {
-
+server-body::=LBRACE [func-list] RBRACE {
 }
 
 func-list::= func-statement [func-list]{
-
 }
 
 func-statement::=[annotation-group] func-type ID LPAREN func-param RPAREN ASSIGN NUMBER{
-
 }
 
 func-type::=ID{}
