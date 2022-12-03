@@ -18,6 +18,8 @@
         <lang.parserDefinition language="Hbuf" implementationClass="com.hbuf.idea.language.HbufParserDefinition"/>
         <lang.syntaxHighlighterFactory language="Hbuf"
                                        implementationClass="com.hbuf.idea.language.HbufSyntaxHighlighterFactory"/>
+        <lang.foldingBuilder language="Hbuf"
+                             implementationClass="com.hbuf.idea.language.HbufFoldingBuilder"/>
     </extensions>
 
     <actions>

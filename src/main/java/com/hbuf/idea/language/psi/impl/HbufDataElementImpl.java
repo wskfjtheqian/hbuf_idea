@@ -1,7 +1,6 @@
-// Copyright 2000-2022 JetBrains s.r.o. and other contributors. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
-
 package com.hbuf.idea.language.psi.impl;
 
+import com.hbuf.idea.language.psi.HbufDataElement;
 import com.hbuf.idea.language.psi.HbufPackageElement;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
@@ -11,16 +10,16 @@ import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class HbufPackageElementImpl extends ASTWrapperPsiElement implements HbufPackageElement {
 
-    public HbufPackageElementImpl(@NotNull ASTNode node) {
+public abstract class HbufDataElementImpl extends ASTWrapperPsiElement implements HbufDataElement {
+    public HbufDataElementImpl(@NotNull ASTNode node) {
         super(node);
     }
 
     @Override
     public @Nullable
     PsiElement getNameIdentifier() {
-        return null;
+        return getId();
     }
 
     @Override
@@ -28,20 +27,6 @@ public abstract class HbufPackageElementImpl extends ASTWrapperPsiElement implem
         return null;
     }
 
-    @NotNull
-    @Override
-    public PsiElement getKey() {
-        return getId();
-    }
-
-    @NotNull
-    @Override
-    public PsiElement getValue() {
-        return getString();
-    }
 
     abstract PsiElement getId();
-
-    abstract PsiElement getString();
-
 }

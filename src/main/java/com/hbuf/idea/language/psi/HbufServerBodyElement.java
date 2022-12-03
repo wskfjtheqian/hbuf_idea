@@ -2,15 +2,9 @@
 
 package com.hbuf.idea.language.psi;
 
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiNameIdentifierOwner;
-import org.jetbrains.annotations.NotNull;
 
-public interface HbufPackageElement extends PsiNameIdentifierOwner {
-    @NotNull
-    PsiElement getKey();
+public interface HbufServerBodyElement extends PsiNameIdentifierOwner {
 
-    @NotNull
-    PsiElement getValue();
 
 }

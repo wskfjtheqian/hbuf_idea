@@ -56,14 +56,17 @@ import::="import" STRING {
 }
 
 data::= [annotation-group] "data" ID [COLON extends] ASSIGN NUMBER data-body{
-
+    pin=3
+    mixin="com.hbuf.idea.language.psi.impl.HbufDataElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufDataElement"
 }
 
 extends::=ID [COMMA extends]{
 }
 
 data-body::=LBRACE [field-list] RBRACE {
-
+    mixin="com.hbuf.idea.language.psi.impl.HbufDataBodyElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufDataBodyElement"
 }
 
 field-list::= field-statement [field-list]{
@@ -82,6 +85,8 @@ type-array::=type-base [QUESTION] LBRACK RBRACK {}
 type-map::=type-base [QUESTION] LSS type-base GTR{}
 
 annotation-group::= annotation [annotation-group] {
+    mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationGroupElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufAnnotationGroupElement"
 }
 
 annotation::=LBRACK ID COLON [annotation-list] RBRACK{
@@ -94,10 +99,13 @@ annotation-item::= ID ASSIGN STRING {
 }
 
 server::= [annotation-group] "server" ID [COLON extends] ASSIGN NUMBER server-body{
-
+    mixin="com.hbuf.idea.language.psi.impl.HbufServerElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufServerElement"
 }
 
 server-body::=LBRACE [func-list] RBRACE {
+    mixin="com.hbuf.idea.language.psi.impl.HbufServerBodyElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufServerBodyElement"
 }
 
 func-list::= func-statement [func-list]{

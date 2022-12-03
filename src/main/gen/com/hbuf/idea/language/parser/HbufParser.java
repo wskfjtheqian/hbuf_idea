@@ -65,8 +65,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // annotation [annotation-group] {
-  // }
+  // annotation [annotation-group]
   public static boolean annotation_group(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "annotation_group")) return false;
     if (!nextTokenIs(b, LBRACK)) return false;
@@ -74,7 +73,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = annotation(b, l + 1);
     r = r && annotation_group_1(b, l + 1);
-    r = r && annotation_group_2(b, l + 1);
     exit_section_(b, m, ANNOTATION_GROUP, r);
     return r;
   }
@@ -83,12 +81,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
   private static boolean annotation_group_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "annotation_group_1")) return false;
     annotation_group(b, l + 1);
-    return true;
-  }
-
-  // {
-  // }
-  private static boolean annotation_group_2(PsiBuilder b, int l) {
     return true;
   }
 
@@ -152,21 +144,20 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [annotation-group] "data" ID [COLON extends] ASSIGN NUMBER data-body{
-  // }
+  // [annotation-group] "data" ID [COLON extends] ASSIGN NUMBER data-body
   public static boolean data(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "data")) return false;
-    boolean r;
+    boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, DATA, "<data>");
     r = data_0(b, l + 1);
     r = r && consumeToken(b, "data");
     r = r && consumeToken(b, ID);
-    r = r && data_3(b, l + 1);
-    r = r && consumeTokens(b, 0, ASSIGN, NUMBER);
-    r = r && data_body(b, l + 1);
-    r = r && data_7(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
+    p = r; // pin = 3
+    r = r && report_error_(b, data_3(b, l + 1));
+    r = p && report_error_(b, consumeTokens(b, -1, ASSIGN, NUMBER)) && r;
+    r = p && data_body(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // [annotation-group]
@@ -194,15 +185,8 @@ public class HbufParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // {
-  // }
-  private static boolean data_7(PsiBuilder b, int l) {
-    return true;
-  }
-
   /* ********************************************************** */
-  // LBRACE [field-list] RBRACE {
-  // }
+  // LBRACE [field-list] RBRACE
   public static boolean data_body(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "data_body")) return false;
     if (!nextTokenIs(b, LBRACE)) return false;
@@ -211,7 +195,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, LBRACE);
     r = r && data_body_1(b, l + 1);
     r = r && consumeToken(b, RBRACE);
-    r = r && data_body_3(b, l + 1);
     exit_section_(b, m, DATA_BODY, r);
     return r;
   }
@@ -220,12 +203,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
   private static boolean data_body_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "data_body_1")) return false;
     field_list(b, l + 1);
-    return true;
-  }
-
-  // {
-  // }
-  private static boolean data_body_3(PsiBuilder b, int l) {
     return true;
   }
 
@@ -469,8 +446,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [annotation-group] "server" ID [COLON extends] ASSIGN NUMBER server-body{
-  // }
+  // [annotation-group] "server" ID [COLON extends] ASSIGN NUMBER server-body
   public static boolean server(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "server")) return false;
     boolean r;
@@ -481,7 +457,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = r && server_3(b, l + 1);
     r = r && consumeTokens(b, 0, ASSIGN, NUMBER);
     r = r && server_body(b, l + 1);
-    r = r && server_7(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -511,15 +486,8 @@ public class HbufParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // {
-  // }
-  private static boolean server_7(PsiBuilder b, int l) {
-    return true;
-  }
-
   /* ********************************************************** */
-  // LBRACE [func-list] RBRACE {
-  // }
+  // LBRACE [func-list] RBRACE
   public static boolean server_body(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "server_body")) return false;
     if (!nextTokenIs(b, LBRACE)) return false;
@@ -528,7 +496,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, LBRACE);
     r = r && server_body_1(b, l + 1);
     r = r && consumeToken(b, RBRACE);
-    r = r && server_body_3(b, l + 1);
     exit_section_(b, m, SERVER_BODY, r);
     return r;
   }
@@ -537,12 +504,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
   private static boolean server_body_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "server_body_1")) return false;
     func_list(b, l + 1);
-    return true;
-  }
-
-  // {
-  // }
-  private static boolean server_body_3(PsiBuilder b, int l) {
     return true;
   }
 
