@@ -4,14 +4,10 @@ package com.hbuf.idea.language.psi;
 
 import com.intellij.navigation.NavigationItem;
 import com.intellij.psi.PsiNameIdentifierOwner;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-public interface HbufEnumElement extends PsiNameIdentifierOwner, NavigationItem {
-    @Nullable
-    HbufAnnotationGroup getAnnotationGroup();
+public interface HbufDataFieldElement extends PsiNameIdentifierOwner, NavigationItem {
 
-    @NotNull
-    HbufEnumBody getEnumBody();
+    public int getNo();
 
+    String getType();
 }

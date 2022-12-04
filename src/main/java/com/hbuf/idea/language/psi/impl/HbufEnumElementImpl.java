@@ -1,10 +1,13 @@
 package com.hbuf.idea.language.psi.impl;
 
+import com.hbuf.idea.language.HbufIcons;
 import com.hbuf.idea.language.psi.HbufEnumElement;
 import com.hbuf.idea.language.psi.HbufTypes;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import com.intellij.ide.projectView.PresentationData;
 import com.intellij.ide.util.PsiNavigationSupport;
 import com.intellij.lang.ASTNode;
+import com.intellij.navigation.ItemPresentation;
 import com.intellij.openapi.util.NlsSafe;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.impl.source.tree.LeafPsiElement;
@@ -52,4 +55,11 @@ public abstract class HbufEnumElementImpl extends ASTWrapperPsiElement implement
         return this.canNavigate();
     }
 
+    @Override
+    public ItemPresentation getPresentation() {
+        PresentationData data = new PresentationData();
+        data.setPresentableText(getName());
+        data.setIcon(HbufIcons.ENUM);
+        return data;
+    }
 }

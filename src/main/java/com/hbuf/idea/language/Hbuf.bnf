@@ -79,16 +79,30 @@ field-list::= field-statement [field-list]{
 
 }
 
-field-statement::= [annotation-group] type-statement ID ASSIGN NUMBER{}
-
-type-base::= TYPES|ID
-
-type-statement::=type-array|type-map|type-base [QUESTION] {
+field-statement::= [annotation-group] type-statement ID ASSIGN NUMBER{
+    mixin="com.hbuf.idea.language.psi.impl.HbufDataFieldElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufDataFieldElement"
 }
 
-type-array::=type-base [QUESTION] LBRACK RBRACK {}
+type-base::= TYPES|ID{
+    mixin="com.hbuf.idea.language.psi.impl.HbufTypeBaseElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufTypeBaseElement"
+}
 
-type-map::=type-base [QUESTION] LSS type-base GTR{}
+type-statement::=type-array|type-map|type-base [QUESTION] {
+    mixin="com.hbuf.idea.language.psi.impl.HbufTypeStatementElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufTypeStatementElement"
+}
+
+type-array::=type-base [QUESTION] LBRACK RBRACK {
+    mixin="com.hbuf.idea.language.psi.impl.HbufTypeArrayElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufTypeArrayElement"
+}
+
+type-map::=type-base [QUESTION] LSS type-base GTR{
+    mixin="com.hbuf.idea.language.psi.impl.HbufTypeMapElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufTypeMapElement"
+}
 
 annotation-group::= annotation [annotation-group] {
     mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationGroupElementImpl"
@@ -118,11 +132,19 @@ func-list::= func-statement [func-list]{
 }
 
 func-statement::=[annotation-group] func-type ID LPAREN func-param RPAREN ASSIGN NUMBER{
+    mixin="com.hbuf.idea.language.psi.impl.HbufServerFuncElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufServerFuncElement"
 }
 
-func-type::=ID{}
+func-type::=ID{
+    mixin="com.hbuf.idea.language.psi.impl.HbufFuncTypeElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufFuncTypeElement"
+}
 
-func-param::= func-type ID{}
+func-param::= func-type ID{
+    mixin="com.hbuf.idea.language.psi.impl.HbufFuncParamElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufFuncParamElement"
+}
 
 enum-statement::= [annotation-group] ENUM ID enum-body{
     mixin="com.hbuf.idea.language.psi.impl.HbufEnumElementImpl"

@@ -17,7 +17,7 @@ public class HbufStructureViewFactory implements PsiStructureViewFactory {
             @Override
             public @NotNull
             StructureViewModel createStructureViewModel(@Nullable Editor editor) {
-                return new HbufStructureViewModel(psiFile, editor);
+                return new HbufStructureViewModel(editor, psiFile);
             }
         };
     }

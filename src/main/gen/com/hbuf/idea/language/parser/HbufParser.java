@@ -363,7 +363,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [annotation-group] type-statement ID ASSIGN NUMBER{}
+  // [annotation-group] type-statement ID ASSIGN NUMBER
   public static boolean field_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "field_statement")) return false;
     boolean r;
@@ -371,7 +371,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = field_statement_0(b, l + 1);
     r = r && type_statement(b, l + 1);
     r = r && consumeTokens(b, 0, ID, ASSIGN, NUMBER);
-    r = r && field_statement_5(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -380,11 +379,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
   private static boolean field_statement_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "field_statement_0")) return false;
     annotation_group(b, l + 1);
-    return true;
-  }
-
-  // {}
-  private static boolean field_statement_5(PsiBuilder b, int l) {
     return true;
   }
 
@@ -417,7 +411,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // func-type ID{}
+  // func-type ID
   public static boolean func_param(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_param")) return false;
     if (!nextTokenIs(b, ID)) return false;
@@ -425,19 +419,12 @@ public class HbufParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = func_type(b, l + 1);
     r = r && consumeToken(b, ID);
-    r = r && func_param_2(b, l + 1);
     exit_section_(b, m, FUNC_PARAM, r);
     return r;
   }
 
-  // {}
-  private static boolean func_param_2(PsiBuilder b, int l) {
-    return true;
-  }
-
   /* ********************************************************** */
-  // [annotation-group] func-type ID LPAREN func-param RPAREN ASSIGN NUMBER{
-  // }
+  // [annotation-group] func-type ID LPAREN func-param RPAREN ASSIGN NUMBER
   public static boolean func_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_statement")) return false;
     if (!nextTokenIs(b, "<func statement>", ID, LBRACK)) return false;
@@ -448,7 +435,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = r && consumeTokens(b, 0, ID, LPAREN);
     r = r && func_param(b, l + 1);
     r = r && consumeTokens(b, 0, RPAREN, ASSIGN, NUMBER);
-    r = r && func_statement_8(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -460,28 +446,16 @@ public class HbufParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // {
-  // }
-  private static boolean func_statement_8(PsiBuilder b, int l) {
-    return true;
-  }
-
   /* ********************************************************** */
-  // ID{}
+  // ID
   public static boolean func_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_type")) return false;
     if (!nextTokenIs(b, ID)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, ID);
-    r = r && func_type_1(b, l + 1);
     exit_section_(b, m, FUNC_TYPE, r);
     return r;
-  }
-
-  // {}
-  private static boolean func_type_1(PsiBuilder b, int l) {
-    return true;
   }
 
   /* ********************************************************** */

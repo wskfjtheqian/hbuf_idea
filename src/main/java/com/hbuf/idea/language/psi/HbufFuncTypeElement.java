@@ -3,9 +3,7 @@
 package com.hbuf.idea.language.psi;
 
 import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.Nullable;
 
-public interface HbufEnumBodyElement extends PsiElement {
-    @Nullable
-    HbufEnumFieldList getEnumFieldList();
+public interface HbufFuncTypeElement extends PsiElement {
+    String getType();
 }

@@ -1,8 +1,7 @@
 package com.hbuf.idea.language.psi.impl;
 
 import com.hbuf.idea.language.HbufIcons;
-import com.hbuf.idea.language.psi.HbufDataElement;
-import com.hbuf.idea.language.psi.HbufTypes;
+import com.hbuf.idea.language.psi.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.ide.projectView.PresentationData;
 import com.intellij.ide.util.PsiNavigationSupport;
@@ -16,8 +15,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 
-public abstract class HbufDataElementImpl extends ASTWrapperPsiElement implements HbufDataElement {
-    public HbufDataElementImpl(@NotNull ASTNode node) {
+public abstract class HbufServerFuncElementImpl extends ASTWrapperPsiElement implements HbufServerFuncElement {
+    public HbufServerFuncElementImpl(@NotNull ASTNode node) {
         super(node);
     }
 
@@ -38,14 +37,28 @@ public abstract class HbufDataElementImpl extends ASTWrapperPsiElement implement
         return getId().getText();
     }
 
-    abstract PsiElement getId();
-
-    abstract PsiElement getNumber();
-
     @Override
     public int getNo() {
         return Integer.parseInt(getNumber().getText());
     }
+
+    @Override
+    public HbufFuncTypeElement getType() {
+        return getFuncType();
+    }
+
+    @Override
+    public HbufFuncParamElement getParam() {
+        return getFuncParam();
+    }
+
+    abstract PsiElement getId();
+
+    abstract PsiElement getNumber();
+
+    abstract HbufFuncParam getFuncParam();
+
+    abstract HbufFuncType getFuncType();
 
     @Override
     public void navigate(boolean requestFocus) {
@@ -68,7 +81,8 @@ public abstract class HbufDataElementImpl extends ASTWrapperPsiElement implement
     public ItemPresentation getPresentation() {
         PresentationData data = new PresentationData();
         data.setPresentableText(getName());
-        data.setIcon(HbufIcons.DATA);
+        data.setIcon(HbufIcons.ENUM);
         return data;
     }
 }
+

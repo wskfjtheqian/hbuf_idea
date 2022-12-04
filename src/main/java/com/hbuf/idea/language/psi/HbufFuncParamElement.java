@@ -2,11 +2,9 @@
 
 package com.hbuf.idea.language.psi;
 
-import com.intellij.navigation.NavigationItem;
-import com.intellij.psi.PsiNameIdentifierOwner;
+import com.intellij.psi.PsiNamedElement;
 
-public interface HbufEnumFieldElement extends PsiNameIdentifierOwner, NavigationItem {
-
-    public int getNo();
+public interface HbufFuncParamElement extends PsiNamedElement {
+    HbufFuncTypeElement getFuncType();
 
 }

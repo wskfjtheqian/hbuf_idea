@@ -1,74 +1,40 @@
 package com.hbuf.idea.language;
 
-import com.hbuf.idea.language.psi.HbufDataElement;
-import com.hbuf.idea.language.psi.HbufEnumElement;
-import com.hbuf.idea.language.psi.HbufFile;
-import com.hbuf.idea.language.psi.HbufServerElement;
-import com.intellij.ide.projectView.PresentationData;
+import com.hbuf.idea.language.psi.*;
 import com.intellij.ide.structureView.StructureViewTreeElement;
-import com.intellij.ide.util.treeView.smartTree.SortableTreeElement;
-import com.intellij.ide.util.treeView.smartTree.TreeElement;
-import com.intellij.navigation.ItemPresentation;
-import com.intellij.psi.NavigatablePsiElement;
+import com.intellij.ide.structureView.impl.common.PsiTreeElementBase;
+import com.intellij.openapi.util.NlsSafe;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class HbufStructureViewElement implements StructureViewTreeElement, SortableTreeElement {
-    private final NavigatablePsiElement myElement;
 
-    public HbufStructureViewElement(NavigatablePsiElement element) {
-        this.myElement = element;
+public class HbufStructureViewElement {
+    HbufStructureFileElement create(HbufFile hbufFile) {
+        return new HbufStructureFileElement(hbufFile);
     }
 
-    @Override
-    public Object getValue() {
-        return myElement;
-    }
+    class HbufStructureFileElement extends PsiTreeElementBase<HbufFile> {
+        public HbufStructureFileElement(HbufFile element) {
+            super(element);
+        }
 
-    @Override
-    public void navigate(boolean requestFocus) {
-        myElement.navigate(requestFocus);
-    }
-
-    @Override
-    public boolean canNavigate() {
-        return myElement.canNavigate();
-    }
-
-    @Override
-    public boolean canNavigateToSource() {
-        return myElement.canNavigateToSource();
-    }
-
-    @NotNull
-    @Override
-    public String getAlphaSortKey() {
-        String name = myElement.getName();
-        return name != null ? name : "";
-    }
-
-    @NotNull
-    @Override
-    public ItemPresentation getPresentation() {
-        ItemPresentation presentation = myElement.getPresentation();
-        return presentation != null ? presentation : new PresentationData();
-    }
-
-    @Override
-    public TreeElement[] getChildren() {
-        if (myElement instanceof HbufFile) {
-            Collection<PsiElement> elements = PsiTreeUtil.findChildrenOfAnyType(myElement,
+        @Override
+        public @NotNull
+        Collection<StructureViewTreeElement> getChildrenBase() {
+            Collection<PsiElement> elements = PsiTreeUtil.findChildrenOfAnyType(getElement(),
                     HbufDataElement.class,
                     HbufEnumElement.class,
                     HbufServerElement.class
             );
 
-            List<TreeElement> treeElements = new ArrayList<>(elements.size());
+            List<StructureViewTreeElement> treeElements = new ArrayList<>(elements.size());
             for (PsiElement element : elements) {
                 if (element instanceof HbufEnumElement) {
                     treeElements.add(new HbufTreeEnumElement((HbufEnumElement) element));
@@ -79,154 +45,194 @@ public class HbufStructureViewElement implements StructureViewTreeElement, Sorta
                 }
 
             }
-            return treeElements.toArray(new TreeElement[0]);
+            return treeElements;
         }
-        return EMPTY_ARRAY;
+
+        @Override
+        public @NlsSafe
+        @Nullable
+        String getPresentableText() {
+            return getElement().getPresentation().getPresentableText();
+        }
+
     }
 
-    private class HbufTreeEnumElement implements StructureViewTreeElement, SortableTreeElement {
-        private final HbufEnumElement enumElement;
-
-        private HbufTreeEnumElement(HbufEnumElement enumElement) {
-            this.enumElement = enumElement;
-        }
-
-        @Override
-        public Object getValue() {
-            return enumElement;
+    class HbufTreeEnumElement extends PsiTreeElementBase<HbufEnumElement> {
+        protected HbufTreeEnumElement(HbufEnumElement psiElement) {
+            super(psiElement);
         }
 
         @Override
         public @NotNull
-        String getAlphaSortKey() {
-            String name = enumElement.getName();
-            return name != null ? "e" + name : "";
+        Collection<StructureViewTreeElement> getChildrenBase() {
+            Collection<PsiElement> elements = PsiTreeUtil.findChildrenOfAnyType(getElement(),
+                    HbufEnumFieldElement.class
+            );
+
+            List<StructureViewTreeElement> treeElements = new ArrayList<>(elements.size());
+            for (PsiElement element : elements) {
+                treeElements.add(new HbufTreeEnumFieldElement((HbufEnumFieldElement) element));
+            }
+            return treeElements;
         }
 
         @Override
-        public @NotNull
-        ItemPresentation getPresentation() {
-            PresentationData data = new PresentationData();
-            data.setPresentableText(enumElement.getName());
-            return data;
+        public @NlsSafe
+        @Nullable
+        String getPresentableText() {
+            return getElement().getPresentation().getPresentableText();
         }
 
         @Override
-        public TreeElement[] getChildren() {
-            return new TreeElement[0];
-        }
-
-        @Override
-        public void navigate(boolean b) {
-            myElement.navigate(b);
-        }
-
-        @Override
-        public boolean canNavigate() {
-            return myElement.canNavigate();
-        }
-
-        @Override
-        public boolean canNavigateToSource() {
-            return myElement.canNavigateToSource();
+        public Icon getIcon(boolean open) {
+            return getElement().getPresentation().getIcon(open);
         }
     }
 
-    private class HbufTreeDataElement implements StructureViewTreeElement, SortableTreeElement {
-        private final HbufDataElement enumElement;
-
-        private HbufTreeDataElement(HbufDataElement enumElement) {
-            this.enumElement = enumElement;
-        }
-
-        @Override
-        public Object getValue() {
-            return enumElement;
+    private class HbufTreeEnumFieldElement extends PsiTreeElementBase<HbufEnumFieldElement> {
+        public HbufTreeEnumFieldElement(HbufEnumFieldElement element) {
+            super(element);
         }
 
         @Override
         public @NotNull
-        String getAlphaSortKey() {
-            String name = enumElement.getName();
-            return name != null ? "d" + name : "";
+        Collection<StructureViewTreeElement> getChildrenBase() {
+            List<StructureViewTreeElement> treeElements = new ArrayList<>();
+            return treeElements;
         }
 
         @Override
-        public @NotNull
-        ItemPresentation getPresentation() {
-            PresentationData data = new PresentationData();
-            data.setPresentableText(enumElement.getName());
-            return data;
+        public @NlsSafe
+        @Nullable
+        String getPresentableText() {
+            return getElement().getPresentation().getPresentableText() + "=" + getElement().getNo();
         }
 
         @Override
-        public TreeElement[] getChildren() {
-            return new TreeElement[0];
-        }
-
-        @Override
-        public void navigate(boolean b) {
-            enumElement.navigate(b);
-        }
-
-        @Override
-        public boolean canNavigate() {
-            return enumElement.canNavigate();
-        }
-
-        @Override
-        public boolean canNavigateToSource() {
-            return enumElement.canNavigateToSource();
+        public Icon getIcon(boolean open) {
+            return getElement().getPresentation().getIcon(open);
         }
     }
 
-    private class HbufTreeServerElement implements StructureViewTreeElement, SortableTreeElement {
-        private final HbufServerElement enumElement;
+    class HbufTreeDataElement extends PsiTreeElementBase<HbufDataElement> {
 
-        private HbufTreeServerElement(HbufServerElement enumElement) {
-            this.enumElement = enumElement;
-        }
-
-        @Override
-        public Object getValue() {
-            return enumElement;
+        protected HbufTreeDataElement(HbufDataElement psiElement) {
+            super(psiElement);
         }
 
         @Override
         public @NotNull
-        String getAlphaSortKey() {
-            String name = enumElement.getName();
-            return name != null ? "e" + name : "";
+        Collection<StructureViewTreeElement> getChildrenBase() {
+            Collection<PsiElement> elements = PsiTreeUtil.findChildrenOfAnyType(getElement(),
+                    HbufDataFieldElement.class
+            );
+
+            List<StructureViewTreeElement> treeElements = new ArrayList<>(elements.size());
+            for (PsiElement element : elements) {
+                treeElements.add(new HbufTreeDataFieldElement((HbufDataFieldElement) element));
+            }
+            return treeElements;
         }
 
         @Override
-        public @NotNull
-        ItemPresentation getPresentation() {
-            PresentationData data = new PresentationData();
-            data.setPresentableText(enumElement.getName());
-            return data;
+        public @NlsSafe
+        @Nullable
+        String getPresentableText() {
+            return getElement().getPresentation().getPresentableText();
         }
 
         @Override
-        public TreeElement[] getChildren() {
-            return new TreeElement[0];
-        }
-
-        @Override
-        public void navigate(boolean b) {
-            enumElement.navigate(b);
-        }
-
-        @Override
-        public boolean canNavigate() {
-            return enumElement.canNavigate();
-        }
-
-        @Override
-        public boolean canNavigateToSource() {
-            return enumElement.canNavigateToSource();
+        public Icon getIcon(boolean open) {
+            return getElement().getPresentation().getIcon(open);
         }
     }
 
+    private class HbufTreeDataFieldElement extends PsiTreeElementBase<HbufDataFieldElement> {
+        public HbufTreeDataFieldElement(HbufDataFieldElement element) {
+            super(element);
+        }
+
+        @Override
+        public @NotNull
+        Collection<StructureViewTreeElement> getChildrenBase() {
+            List<StructureViewTreeElement> treeElements = new ArrayList<>();
+            return treeElements;
+        }
+
+        @Override
+        public @NlsSafe
+        @Nullable
+        String getPresentableText() {
+            return getElement().getPresentation().getPresentableText() +
+                    ": " + getElement().getType() +
+                    "=" + getElement().getNo();
+        }
+
+        @Override
+        public Icon getIcon(boolean open) {
+            return getElement().getPresentation().getIcon(open);
+        }
+    }
+
+    class HbufTreeServerElement extends PsiTreeElementBase<HbufServerElement> {
+
+        protected HbufTreeServerElement(HbufServerElement psiElement) {
+            super(psiElement);
+        }
+
+        @Override
+        public @NotNull
+        Collection<StructureViewTreeElement> getChildrenBase() {
+            Collection<PsiElement> elements = PsiTreeUtil.findChildrenOfAnyType(getElement(),
+                    HbufServerFuncElement.class
+            );
+
+            List<StructureViewTreeElement> treeElements = new ArrayList<>(elements.size());
+            for (PsiElement element : elements) {
+                treeElements.add(new HbufTreeServerFuncElement((HbufServerFuncElement) element));
+            }
+            return treeElements;
+        }
+
+        @Override
+        public @NlsSafe
+        @Nullable
+        String getPresentableText() {
+            return getElement().getPresentation().getPresentableText() + " = " + getElement().getNo();
+        }
+
+        @Override
+        public Icon getIcon(boolean open) {
+            return getElement().getPresentation().getIcon(open);
+        }
+    }
+
+    private class HbufTreeServerFuncElement extends PsiTreeElementBase<HbufServerFuncElement> {
+        public HbufTreeServerFuncElement(HbufServerFuncElement element) {
+            super(element);
+        }
+
+        @Override
+        public @NotNull
+        Collection<StructureViewTreeElement> getChildrenBase() {
+            List<StructureViewTreeElement> treeElements = new ArrayList<>();
+            return treeElements;
+        }
+
+        @Override
+        public @NlsSafe
+        @Nullable
+        String getPresentableText() {
+            return getElement().getPresentation().getPresentableText() +
+                    "(" + getElement().getParam().getFuncType().getType() +
+                    "): " + getElement().getType().getType() +
+                    " = " + getElement().getNo();
+        }
+
+        @Override
+        public Icon getIcon(boolean open) {
+            return getElement().getPresentation().getIcon(open);
+        }
+    }
 
 }
