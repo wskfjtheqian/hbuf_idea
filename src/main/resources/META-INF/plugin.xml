@@ -20,6 +20,10 @@
                                        implementationClass="com.hbuf.idea.language.HbufSyntaxHighlighterFactory"/>
         <lang.foldingBuilder language="Hbuf"
                              implementationClass="com.hbuf.idea.language.HbufFoldingBuilder"/>
+        <lang.psiStructureViewFactory language="Hbuf"
+                             implementationClass="com.hbuf.idea.language.HbufStructureViewFactory"/>
+
+
 <!--        <lang.formatter language="Hbuf" -->
 <!--                        implementationClass="com.hbuf.idea.language.HbufFormattingModelBuilder"/>-->
     </extensions>

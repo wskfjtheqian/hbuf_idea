@@ -5,35 +5,47 @@ package com.hbuf.idea.language;
 import com.hbuf.idea.language.psi.HbufTypes;
 import com.intellij.lexer.Lexer;
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
-import com.intellij.openapi.editor.HighlighterColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
-import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 
 import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
 
 public class HbufSyntaxHighlighter extends SyntaxHighlighterBase {
-
-    public static final TextAttributesKey SEPARATOR =
-            createTextAttributesKey("HBUF_SEPARATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN);
-    public static final TextAttributesKey KEY =
-            createTextAttributesKey("HBUF_KEY", DefaultLanguageHighlighterColors.KEYWORD);
-    public static final TextAttributesKey VALUE =
-            createTextAttributesKey("HBUF_VALUE", DefaultLanguageHighlighterColors.STRING);
-    public static final TextAttributesKey COMMENT =
-            createTextAttributesKey("HBUF_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
-    public static final TextAttributesKey BAD_CHARACTER =
-            createTextAttributesKey("HBUF_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER);
-
-
-    private static final TextAttributesKey[] BAD_CHAR_KEYS = new TextAttributesKey[]{BAD_CHARACTER};
-    private static final TextAttributesKey[] SEPARATOR_KEYS = new TextAttributesKey[]{SEPARATOR};
-    private static final TextAttributesKey[] KEY_KEYS = new TextAttributesKey[]{KEY};
-    private static final TextAttributesKey[] VALUE_KEYS = new TextAttributesKey[]{VALUE};
-    private static final TextAttributesKey[] COMMENT_KEYS = new TextAttributesKey[]{COMMENT};
     private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
+
+    public static final TextAttributesKey COMMENT = createTextAttributesKey(
+            "HBUF_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT
+    );
+    private static final TextAttributesKey[] COMMENT_KEYS = new TextAttributesKey[]{COMMENT};
+
+    public static final TextAttributesKey STRING = createTextAttributesKey(
+            "HBUF_STRING", DefaultLanguageHighlighterColors.STRING
+    );
+    private static final TextAttributesKey[] STRING_KEYS = new TextAttributesKey[]{STRING};
+
+    public static final TextAttributesKey KEY = createTextAttributesKey(
+            "HBUF_KEY", DefaultLanguageHighlighterColors.KEYWORD
+    );
+    private static final TextAttributesKey[] KEY_KEYS = new TextAttributesKey[]{KEY};
+
+    public static final TextAttributesKey NUMBER = createTextAttributesKey(
+            "HBUF_NUMBER", DefaultLanguageHighlighterColors.NUMBER
+    );
+    private static final TextAttributesKey[] NUMBER_KEYS = new TextAttributesKey[]{NUMBER};
+
+    public static final TextAttributesKey IDENTIFIER = createTextAttributesKey(
+            "HBUF_IDENTIFIER", DefaultLanguageHighlighterColors.FUNCTION_DECLARATION
+    );
+    private static final TextAttributesKey[] IDENTIFIER_KEYS = new TextAttributesKey[]{IDENTIFIER};
+
+
+    public static final TextAttributesKey SEMICOLON = createTextAttributesKey(
+            "HBUF_SEMICOLON", DefaultLanguageHighlighterColors.SEMICOLON
+    );
+    private static final TextAttributesKey[] SEMICOLON_KEYS = new TextAttributesKey[]{SEMICOLON};
+
 
     @NotNull
     @Override
@@ -43,24 +55,35 @@ public class HbufSyntaxHighlighter extends SyntaxHighlighterBase {
 
     @Override
     public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {
-        System.out.printf(tokenType.toString());
-
-        if (tokenType.equals(HbufTypes.PACKAGE)) {
-            return SEPARATOR_KEYS;
-        }
-        if (tokenType.equals(HbufTypes.ID)) {
-            return KEY_KEYS;
-        }
-        if (tokenType.equals(HbufTypes.STRING)) {
-            return VALUE_KEYS;
-        }
         if (tokenType.equals(HbufTypes.COMMENT)) {
             return COMMENT_KEYS;
         }
-        if (tokenType.equals(TokenType.BAD_CHARACTER)) {
-            return BAD_CHAR_KEYS;
+        if (tokenType.equals(HbufTypes.STRING)) {
+            return STRING_KEYS;
         }
+        if (tokenType.equals(HbufTypes.NUMBER)) {
+            return NUMBER_KEYS;
+        }
+
+        if (tokenType.equals(HbufTypes.PACKAGE) ||
+                tokenType.equals(HbufTypes.IMPORT) ||
+                tokenType.equals(HbufTypes.ENUM) ||
+                tokenType.equals(HbufTypes.DATA) ||
+                tokenType.equals(HbufTypes.SERVER) ||
+                tokenType.equals(HbufTypes.TYPES)) {
+            return KEY_KEYS;
+        }
+
+        if (tokenType.equals(HbufTypes.ID)) {
+            return IDENTIFIER_KEYS;
+        }
+
+        if (tokenType.equals(HbufTypes.SEMICOLON) || tokenType.equals(HbufTypes.COLON)) {
+            return SEMICOLON_KEYS;
+        }
+
         return EMPTY_KEYS;
     }
 
 }
+

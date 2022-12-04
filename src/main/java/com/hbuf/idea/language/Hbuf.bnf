@@ -30,32 +30,38 @@
 	RBRACE = '}'
 	SEMICOLON = ';'
 	COLON = ':'
+	
+    PACKAGE='package'
+    IMPORT='import'
+    ENUM='enum'
+    SERVER='server'
+    DATA='data'
+    TYPES='regexp:int8|int16|int32|int64|uint8|uint16|uint32|uint64|bool|float|double|decimal|string|date'
 
     COMMENT='regexp://.*'
     NUMBER='regexp:\d+(\.\d*)?'
     ID='regexp:\p{Alpha}\w*'
     STRING="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
-    NUMBER='regexp:\d+(\.\d*)?'
   ]
 }
 
 hbufFile ::= item_*
 
-private item_ ::= (package|import|data|server|enum|COMMENT|CRLF)
+private item_ ::= (package-statement|import-statement|data-statement|server-statement|enum-statement|COMMENT|CRLF)
 
-package ::="package" ID ASSIGN STRING{
+package-statement ::=PACKAGE ID ASSIGN STRING{
     pin=3
     mixin="com.hbuf.idea.language.psi.impl.HbufPackageElementImpl"
     implements="com.hbuf.idea.language.psi.HbufPackageElement"
 }
 
-import::="import" STRING {
+import-statement::=IMPORT STRING {
     pin=3
     mixin="com.hbuf.idea.language.psi.impl.HbufImportElementImpl"
     implements="com.hbuf.idea.language.psi.HbufImportElement"
 }
 
-data::= [annotation-group] "data" ID [COLON extends] ASSIGN NUMBER data-body{
+data-statement::= [annotation-group] DATA ID [COLON extends] ASSIGN NUMBER data-body{
     pin=3
     mixin="com.hbuf.idea.language.psi.impl.HbufDataElementImpl"
     implements="com.hbuf.idea.language.psi.HbufDataElement"
@@ -75,7 +81,7 @@ field-list::= field-statement [field-list]{
 
 field-statement::= [annotation-group] type-statement ID ASSIGN NUMBER{}
 
-type-base::= "int8"|"int16"|"int32"|"int64"|"uint8"|"uint16"|"uint32"|"uint64"|"bool"|"float"|"double"|"decimal"|"string"|"date"|ID
+type-base::= TYPES|ID
 
 type-statement::=type-array|type-map|type-base [QUESTION] {
 }
@@ -98,7 +104,7 @@ annotation-list::= annotation-item [SEMICOLON annotation-list]  {
 annotation-item::= ID ASSIGN STRING {
 }
 
-server::= [annotation-group] "server" ID [COLON extends] ASSIGN NUMBER server-body{
+server-statement::= [annotation-group] SERVER ID [COLON extends] ASSIGN NUMBER server-body{
     mixin="com.hbuf.idea.language.psi.impl.HbufServerElementImpl"
     implements="com.hbuf.idea.language.psi.HbufServerElement"
 }
@@ -118,7 +124,7 @@ func-type::=ID{}
 
 func-param::= func-type ID{}
 
-enum::= [annotation-group] "enum" ID enum-body{
+enum-statement::= [annotation-group] ENUM ID enum-body{
     mixin="com.hbuf.idea.language.psi.impl.HbufEnumElementImpl"
     implements="com.hbuf.idea.language.psi.HbufEnumElement"
 }
@@ -131,4 +137,7 @@ enum-body::=LBRACE [enum-field-list] RBRACE {
 enum-field-list::= enum-field-statement [enum-field-list]{
 }
 
-enum-field-statement::= [annotation-group] ID ASSIGN NUMBER{}
+enum-field-statement::= [annotation-group] ID ASSIGN NUMBER{
+    mixin="com.hbuf.idea.language.psi.impl.HbufEnumFieldElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufEnumFieldElement"
+}
