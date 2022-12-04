@@ -16,16 +16,7 @@ public abstract class HbufAnnotationGroupElementImpl extends ASTWrapperPsiElemen
         super(node);
     }
 
-    @Override
-    public @Nullable
-    PsiElement getNameIdentifier() {
-        return null;
-    }
 
-    @Override
-    public PsiElement setName(@NlsSafe @NotNull String s) throws IncorrectOperationException {
-        return null;
-    }
 
 
 }

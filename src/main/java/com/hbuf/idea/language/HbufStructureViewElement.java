@@ -19,7 +19,6 @@ import java.util.Collection;
 import java.util.List;
 
 public class HbufStructureViewElement implements StructureViewTreeElement, SortableTreeElement {
-
     private final NavigatablePsiElement myElement;
 
     public HbufStructureViewElement(NavigatablePsiElement element) {
@@ -73,7 +72,12 @@ public class HbufStructureViewElement implements StructureViewTreeElement, Sorta
             for (PsiElement element : elements) {
                 if (element instanceof HbufEnumElement) {
                     treeElements.add(new HbufTreeEnumElement((HbufEnumElement) element));
+                } else if (element instanceof HbufDataElement) {
+                    treeElements.add(new HbufTreeDataElement((HbufDataElement) element));
+                } else if (element instanceof HbufServerElement) {
+                    treeElements.add(new HbufTreeServerElement((HbufServerElement) element));
                 }
+
             }
             return treeElements.toArray(new TreeElement[0]);
         }
@@ -104,7 +108,7 @@ public class HbufStructureViewElement implements StructureViewTreeElement, Sorta
         ItemPresentation getPresentation() {
             PresentationData data = new PresentationData();
             data.setPresentableText(enumElement.getName());
-            return  data;
+            return data;
         }
 
         @Override
@@ -127,4 +131,102 @@ public class HbufStructureViewElement implements StructureViewTreeElement, Sorta
             return myElement.canNavigateToSource();
         }
     }
+
+    private class HbufTreeDataElement implements StructureViewTreeElement, SortableTreeElement {
+        private final HbufDataElement enumElement;
+
+        private HbufTreeDataElement(HbufDataElement enumElement) {
+            this.enumElement = enumElement;
+        }
+
+        @Override
+        public Object getValue() {
+            return enumElement;
+        }
+
+        @Override
+        public @NotNull
+        String getAlphaSortKey() {
+            String name = enumElement.getName();
+            return name != null ? "d" + name : "";
+        }
+
+        @Override
+        public @NotNull
+        ItemPresentation getPresentation() {
+            PresentationData data = new PresentationData();
+            data.setPresentableText(enumElement.getName());
+            return data;
+        }
+
+        @Override
+        public TreeElement[] getChildren() {
+            return new TreeElement[0];
+        }
+
+        @Override
+        public void navigate(boolean b) {
+            enumElement.navigate(b);
+        }
+
+        @Override
+        public boolean canNavigate() {
+            return enumElement.canNavigate();
+        }
+
+        @Override
+        public boolean canNavigateToSource() {
+            return enumElement.canNavigateToSource();
+        }
+    }
+
+    private class HbufTreeServerElement implements StructureViewTreeElement, SortableTreeElement {
+        private final HbufServerElement enumElement;
+
+        private HbufTreeServerElement(HbufServerElement enumElement) {
+            this.enumElement = enumElement;
+        }
+
+        @Override
+        public Object getValue() {
+            return enumElement;
+        }
+
+        @Override
+        public @NotNull
+        String getAlphaSortKey() {
+            String name = enumElement.getName();
+            return name != null ? "e" + name : "";
+        }
+
+        @Override
+        public @NotNull
+        ItemPresentation getPresentation() {
+            PresentationData data = new PresentationData();
+            data.setPresentableText(enumElement.getName());
+            return data;
+        }
+
+        @Override
+        public TreeElement[] getChildren() {
+            return new TreeElement[0];
+        }
+
+        @Override
+        public void navigate(boolean b) {
+            enumElement.navigate(b);
+        }
+
+        @Override
+        public boolean canNavigate() {
+            return enumElement.canNavigate();
+        }
+
+        @Override
+        public boolean canNavigateToSource() {
+            return enumElement.canNavigateToSource();
+        }
+    }
+
+
 }

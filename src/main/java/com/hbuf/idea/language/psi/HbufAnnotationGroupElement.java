@@ -2,9 +2,9 @@
 
 package com.hbuf.idea.language.psi;
 
-import com.intellij.psi.PsiNameIdentifierOwner;
+import com.intellij.psi.PsiElement;
 
-public interface HbufAnnotationGroupElement extends PsiNameIdentifierOwner {
+public interface HbufAnnotationGroupElement extends PsiElement {
 
 
 }

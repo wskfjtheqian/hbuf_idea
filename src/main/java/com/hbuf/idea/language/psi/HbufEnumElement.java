@@ -2,8 +2,9 @@
 
 package com.hbuf.idea.language.psi;
 
+import com.intellij.navigation.NavigationItem;
 import com.intellij.psi.PsiNameIdentifierOwner;
 
-public interface HbufEnumElement extends PsiNameIdentifierOwner {
+public interface HbufEnumElement extends PsiNameIdentifierOwner, NavigationItem {
 
 }

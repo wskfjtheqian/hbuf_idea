@@ -15,14 +15,4 @@ public abstract class HbufEnumBodyElementImpl extends ASTWrapperPsiElement imple
         super(node);
     }
 
-    @Override
-    public @Nullable
-    PsiElement getNameIdentifier() {
-        return null;
-    }
-
-    @Override
-    public PsiElement setName(@NlsSafe @NotNull String s) throws IncorrectOperationException {
-        return null;
-    }
 }

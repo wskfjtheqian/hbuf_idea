@@ -2,9 +2,8 @@
 
 package com.hbuf.idea.language.psi;
 
-import com.intellij.psi.PsiNameIdentifierOwner;
+import com.intellij.psi.PsiElement;
 
-public interface HbufEnumBodyElement extends PsiNameIdentifierOwner {
-
+public interface HbufEnumBodyElement extends PsiElement {
 
 }

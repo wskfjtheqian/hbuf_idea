@@ -6,4 +6,6 @@ import com.intellij.psi.PsiNameIdentifierOwner;
 
 public interface HbufEnumFieldElement extends PsiNameIdentifierOwner {
 
+    public int getNo();
+
 }
