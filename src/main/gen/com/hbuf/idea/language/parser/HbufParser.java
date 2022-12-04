@@ -363,7 +363,10 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [annotation-group] type-statement ID ASSIGN NUMBER
+  // [annotation-group] type-statement ID ASSIGN NUMBER{
+  // //    mixin="com.hbuf.idea.language.psi.impl.HbufDataFieldElementImpl"
+  // //    implements="com.hbuf.idea.language.psi.HbufDataFieldElement"
+  // }
   public static boolean field_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "field_statement")) return false;
     boolean r;
@@ -371,6 +374,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = field_statement_0(b, l + 1);
     r = r && type_statement(b, l + 1);
     r = r && consumeTokens(b, 0, ID, ASSIGN, NUMBER);
+    r = r && field_statement_5(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -379,6 +383,14 @@ public class HbufParser implements PsiParser, LightPsiParser {
   private static boolean field_statement_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "field_statement_0")) return false;
     annotation_group(b, l + 1);
+    return true;
+  }
+
+  // {
+  // //    mixin="com.hbuf.idea.language.psi.impl.HbufDataFieldElementImpl"
+  // //    implements="com.hbuf.idea.language.psi.HbufDataFieldElement"
+  // }
+  private static boolean field_statement_5(PsiBuilder b, int l) {
     return true;
   }
 
@@ -573,7 +585,10 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // type-base [QUESTION] LBRACK RBRACK {}
+  // type-base [QUESTION] LBRACK RBRACK {
+  // //    mixin="com.hbuf.idea.language.psi.impl.HbufTypeArrayElementImpl"
+  // //    implements="com.hbuf.idea.language.psi.HbufTypeArrayElement"
+  // }
   public static boolean type_array(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_array")) return false;
     if (!nextTokenIs(b, "<type array>", ID, TYPES)) return false;
@@ -594,26 +609,57 @@ public class HbufParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // {}
+  // {
+  // //    mixin="com.hbuf.idea.language.psi.impl.HbufTypeArrayElementImpl"
+  // //    implements="com.hbuf.idea.language.psi.HbufTypeArrayElement"
+  // }
   private static boolean type_array_4(PsiBuilder b, int l) {
     return true;
   }
 
   /* ********************************************************** */
-  // TYPES|ID
+  // TYPES|ID{
+  // //    mixin="com.hbuf.idea.language.psi.impl.HbufTypeBaseElementImpl"
+  // //    implements="com.hbuf.idea.language.psi.HbufTypeBaseElement"
+  // }
   public static boolean type_base(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_base")) return false;
     if (!nextTokenIs(b, "<type base>", ID, TYPES)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, TYPE_BASE, "<type base>");
     r = consumeToken(b, TYPES);
-    if (!r) r = consumeToken(b, ID);
+    if (!r) r = type_base_1(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
+  // ID{
+  // //    mixin="com.hbuf.idea.language.psi.impl.HbufTypeBaseElementImpl"
+  // //    implements="com.hbuf.idea.language.psi.HbufTypeBaseElement"
+  // }
+  private static boolean type_base_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_base_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, ID);
+    r = r && type_base_1_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // {
+  // //    mixin="com.hbuf.idea.language.psi.impl.HbufTypeBaseElementImpl"
+  // //    implements="com.hbuf.idea.language.psi.HbufTypeBaseElement"
+  // }
+  private static boolean type_base_1_1(PsiBuilder b, int l) {
+    return true;
+  }
+
   /* ********************************************************** */
-  // type-base [QUESTION] LSS type-base GTR{}
+  // type-base [QUESTION] LSS type-base GTR{
+  // //    mixin="com.hbuf.idea.language.psi.impl.HbufTypeMapElementImpl"
+  // //    implements="com.hbuf.idea.language.psi.HbufTypeMapElement"
+  // }
   public static boolean type_map(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_map")) return false;
     if (!nextTokenIs(b, "<type map>", ID, TYPES)) return false;
@@ -636,13 +682,18 @@ public class HbufParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // {}
+  // {
+  // //    mixin="com.hbuf.idea.language.psi.impl.HbufTypeMapElementImpl"
+  // //    implements="com.hbuf.idea.language.psi.HbufTypeMapElement"
+  // }
   private static boolean type_map_5(PsiBuilder b, int l) {
     return true;
   }
 
   /* ********************************************************** */
   // type-array|type-map|type-base [QUESTION] {
+  // //    mixin="com.hbuf.idea.language.psi.impl.HbufTypeStatementElementImpl"
+  // //    implements="com.hbuf.idea.language.psi.HbufTypeStatementElement"
   // }
   public static boolean type_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_statement")) return false;
@@ -657,6 +708,8 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   // type-base [QUESTION] {
+  // //    mixin="com.hbuf.idea.language.psi.impl.HbufTypeStatementElementImpl"
+  // //    implements="com.hbuf.idea.language.psi.HbufTypeStatementElement"
   // }
   private static boolean type_statement_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_statement_2")) return false;
@@ -677,6 +730,8 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   // {
+  // //    mixin="com.hbuf.idea.language.psi.impl.HbufTypeStatementElementImpl"
+  // //    implements="com.hbuf.idea.language.psi.HbufTypeStatementElement"
   // }
   private static boolean type_statement_2_2(PsiBuilder b, int l) {
     return true;
