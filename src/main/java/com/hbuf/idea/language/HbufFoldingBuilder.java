@@ -27,6 +27,7 @@ public class HbufFoldingBuilder extends FoldingBuilderEx implements DumbAware {
         Collection<PsiElement> elements = PsiTreeUtil.findChildrenOfAnyType(root,
                 HbufAnnotationGroupElement.class,
                 HbufDataBodyElement.class,
+                HbufEnumBodyElement.class,
                 HbufServerBodyElement.class
         );
         for (final PsiElement element : elements) {

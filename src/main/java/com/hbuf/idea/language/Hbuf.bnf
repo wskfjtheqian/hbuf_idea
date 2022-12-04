@@ -41,7 +41,7 @@
 
 hbufFile ::= item_*
 
-private item_ ::= (package|import|data|server|COMMENT|CRLF)
+private item_ ::= (package|import|data|server|enum|COMMENT|CRLF)
 
 package ::="package" ID ASSIGN STRING{
     pin=3
@@ -117,3 +117,18 @@ func-statement::=[annotation-group] func-type ID LPAREN func-param RPAREN ASSIGN
 func-type::=ID{}
 
 func-param::= func-type ID{}
+
+enum::= [annotation-group] "enum" ID enum-body{
+    mixin="com.hbuf.idea.language.psi.impl.HbufEnumElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufEnumElement"
+}
+
+enum-body::=LBRACE [enum-field-list] RBRACE {
+    mixin="com.hbuf.idea.language.psi.impl.HbufEnumBodyElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufEnumBodyElement"
+}
+
+enum-field-list::= enum-field-statement [enum-field-list]{
+}
+
+enum-field-statement::= [annotation-group] ID ASSIGN NUMBER{}

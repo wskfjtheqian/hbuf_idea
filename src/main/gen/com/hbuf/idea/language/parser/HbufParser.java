@@ -207,6 +207,102 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // [annotation-group] "enum" ID enum-body
+  public static boolean enum_$(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_$")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, ENUM, "<enum $>");
+    r = enum_0(b, l + 1);
+    r = r && consumeToken(b, "enum");
+    r = r && consumeToken(b, ID);
+    r = r && enum_body(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // [annotation-group]
+  private static boolean enum_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_0")) return false;
+    annotation_group(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // LBRACE [enum-field-list] RBRACE
+  public static boolean enum_body(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_body")) return false;
+    if (!nextTokenIs(b, LBRACE)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LBRACE);
+    r = r && enum_body_1(b, l + 1);
+    r = r && consumeToken(b, RBRACE);
+    exit_section_(b, m, ENUM_BODY, r);
+    return r;
+  }
+
+  // [enum-field-list]
+  private static boolean enum_body_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_body_1")) return false;
+    enum_field_list(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // enum-field-statement [enum-field-list]{
+  // }
+  public static boolean enum_field_list(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_field_list")) return false;
+    if (!nextTokenIs(b, "<enum field list>", ID, LBRACK)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, ENUM_FIELD_LIST, "<enum field list>");
+    r = enum_field_statement(b, l + 1);
+    r = r && enum_field_list_1(b, l + 1);
+    r = r && enum_field_list_2(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // [enum-field-list]
+  private static boolean enum_field_list_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_field_list_1")) return false;
+    enum_field_list(b, l + 1);
+    return true;
+  }
+
+  // {
+  // }
+  private static boolean enum_field_list_2(PsiBuilder b, int l) {
+    return true;
+  }
+
+  /* ********************************************************** */
+  // [annotation-group] ID ASSIGN NUMBER{}
+  public static boolean enum_field_statement(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_field_statement")) return false;
+    if (!nextTokenIs(b, "<enum field statement>", ID, LBRACK)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, ENUM_FIELD_STATEMENT, "<enum field statement>");
+    r = enum_field_statement_0(b, l + 1);
+    r = r && consumeTokens(b, 0, ID, ASSIGN, NUMBER);
+    r = r && enum_field_statement_4(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // [annotation-group]
+  private static boolean enum_field_statement_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_field_statement_0")) return false;
+    annotation_group(b, l + 1);
+    return true;
+  }
+
+  // {}
+  private static boolean enum_field_statement_4(PsiBuilder b, int l) {
+    return true;
+  }
+
+  /* ********************************************************** */
   // ID [COMMA extends]{
   // }
   public static boolean extends_$(PsiBuilder b, int l) {
@@ -419,7 +515,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // package|import|data|server|COMMENT|CRLF
+  // package|import|data|server|enum|COMMENT|CRLF
   static boolean item_(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "item_")) return false;
     boolean r;
@@ -427,6 +523,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
     if (!r) r = import_$(b, l + 1);
     if (!r) r = data(b, l + 1);
     if (!r) r = server(b, l + 1);
+    if (!r) r = enum_$(b, l + 1);
     if (!r) r = consumeToken(b, COMMENT);
     if (!r) r = consumeToken(b, CRLF);
     return r;
