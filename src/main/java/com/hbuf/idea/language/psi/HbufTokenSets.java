@@ -8,4 +8,6 @@ import com.intellij.psi.tree.TokenSet;
 public interface HbufTokenSets {
     TokenSet COMMENTS = TokenSet.create(HbufTypes.COMMENT);
 
+    TokenSet IDENTIFIERS = TokenSet.create(HbufTypes.ID);
+
 }

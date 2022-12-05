@@ -1,6 +1,7 @@
 package com.hbuf.idea.language.psi.impl;
 
 import com.hbuf.idea.language.HbufIcons;
+import com.hbuf.idea.language.psi.HbufIdentName;
 import com.hbuf.idea.language.psi.HbufServerElement;
 import com.hbuf.idea.language.psi.HbufTypes;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
@@ -24,21 +25,21 @@ public abstract class HbufServerElementImpl extends ASTWrapperPsiElement impleme
     @Override
     public @Nullable
     PsiElement getNameIdentifier() {
-        return getId();
+        return getIdentName();
     }
 
     @Override
     public PsiElement setName(@NlsSafe @NotNull String s) throws IncorrectOperationException {
-        getNode().replaceChild(getId().getNode(), new LeafPsiElement(HbufTypes.ID, s).getNode());
+        getNode().replaceChild(getIdentName().getNode(), new LeafPsiElement(HbufTypes.ID, s).getNode());
         return this;
     }
 
     @Override
     public String getName() {
-        return getId().getText();
+        return getIdentName().getText();
     }
 
-    abstract PsiElement getId();
+    abstract HbufIdentName getIdentName();
 
     abstract PsiElement getNumber();
 
@@ -49,14 +50,14 @@ public abstract class HbufServerElementImpl extends ASTWrapperPsiElement impleme
 
     @Override
     public void navigate(boolean requestFocus) {
-        assert this.canNavigate() : getId();
+        assert this.canNavigate() : getIdentName();
 
-        PsiNavigationSupport.getInstance().getDescriptor(getId()).navigate(requestFocus);
+        PsiNavigationSupport.getInstance().getDescriptor(getIdentName()).navigate(requestFocus);
     }
 
     @Override
     public boolean canNavigate() {
-        return PsiNavigationSupport.getInstance().canNavigate(getId());
+        return PsiNavigationSupport.getInstance().canNavigate(getIdentName());
     }
 
     @Override

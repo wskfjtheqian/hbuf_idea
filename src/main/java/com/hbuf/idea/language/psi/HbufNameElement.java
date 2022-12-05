@@ -2,10 +2,9 @@
 
 package com.hbuf.idea.language.psi;
 
+import com.intellij.navigation.NavigationItem;
 import com.intellij.psi.PsiNamedElement;
 
-public interface HbufTypeBaseElement extends PsiNamedElement {
+public interface HbufNameElement extends PsiNamedElement, NavigationItem {
 
-    //是否是基础类型
-    boolean isBaseType();
 }

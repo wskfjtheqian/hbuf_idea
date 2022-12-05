@@ -1,8 +1,7 @@
 package com.hbuf.idea.language.psi.impl;
 
 import com.hbuf.idea.language.HbufIcons;
-import com.hbuf.idea.language.psi.HbufDataElement;
-import com.hbuf.idea.language.psi.HbufIdentName;
+import com.hbuf.idea.language.psi.HbufNameElement;
 import com.hbuf.idea.language.psi.HbufTypes;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.ide.projectView.PresentationData;
@@ -14,50 +13,38 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.impl.source.tree.LeafPsiElement;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 
-public abstract class HbufDataElementImpl extends ASTWrapperPsiElement implements HbufDataElement {
-    public HbufDataElementImpl(@NotNull ASTNode node) {
+public abstract class HbufNameElementImpl extends ASTWrapperPsiElement implements HbufNameElement {
+    public HbufNameElementImpl(@NotNull ASTNode node) {
         super(node);
     }
 
-    @Override
-    public @Nullable
-    PsiElement getNameIdentifier() {
-        return getIdentName();
-    }
+
 
     @Override
     public PsiElement setName(@NlsSafe @NotNull String s) throws IncorrectOperationException {
-        getNode().replaceChild(getIdentName().getNode(), new LeafPsiElement(HbufTypes.ID, s).getNode());
+        getNode().replaceChild(getId().getNode(), new LeafPsiElement(HbufTypes.ID, s).getNode());
         return this;
     }
 
     @Override
     public String getName() {
-        return getIdentName().getText();
+        return getId().getText();
     }
 
-    abstract HbufIdentName getIdentName();
-
-    abstract PsiElement getNumber();
-
-    @Override
-    public int getNo() {
-        return Integer.parseInt(getNumber().getText());
-    }
+    abstract PsiElement getId();
 
     @Override
     public void navigate(boolean requestFocus) {
-        assert this.canNavigate() : getIdentName();
+        assert this.canNavigate() : getId();
 
-        PsiNavigationSupport.getInstance().getDescriptor(getIdentName()).navigate(requestFocus);
+        PsiNavigationSupport.getInstance().getDescriptor(getId()).navigate(requestFocus);
     }
 
     @Override
     public boolean canNavigate() {
-        return PsiNavigationSupport.getInstance().canNavigate(getIdentName());
+        return PsiNavigationSupport.getInstance().canNavigate(getId());
     }
 
     @Override
@@ -69,7 +56,7 @@ public abstract class HbufDataElementImpl extends ASTWrapperPsiElement implement
     public ItemPresentation getPresentation() {
         PresentationData data = new PresentationData();
         data.setPresentableText(getName());
-        data.setIcon(HbufIcons.DATA);
+        data.setIcon(HbufIcons.ENUM);
         return data;
     }
 }

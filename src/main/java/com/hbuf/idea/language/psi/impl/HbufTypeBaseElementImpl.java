@@ -35,4 +35,9 @@ public abstract class HbufTypeBaseElementImpl extends ASTWrapperPsiElement imple
 
 
     abstract PsiElement getTypes();
+
+    @Override
+    public boolean isBaseType() {
+        return null != getTypes();
+    }
 }
