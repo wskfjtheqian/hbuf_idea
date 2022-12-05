@@ -80,28 +80,28 @@ field-list::= field-statement [field-list]{
 }
 
 field-statement::= [annotation-group] type-statement ID ASSIGN NUMBER{
-//    mixin="com.hbuf.idea.language.psi.impl.HbufDataFieldElementImpl"
-//    implements="com.hbuf.idea.language.psi.HbufDataFieldElement"
+    mixin="com.hbuf.idea.language.psi.impl.HbufDataFieldElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufDataFieldElement"
 }
 
 type-base::= TYPES|ID{
-//    mixin="com.hbuf.idea.language.psi.impl.HbufTypeBaseElementImpl"
-//    implements="com.hbuf.idea.language.psi.HbufTypeBaseElement"
+    mixin="com.hbuf.idea.language.psi.impl.HbufTypeBaseElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufTypeBaseElement"
 }
 
 type-statement::=type-array|type-map|type-base [QUESTION] {
-//    mixin="com.hbuf.idea.language.psi.impl.HbufTypeStatementElementImpl"
-//    implements="com.hbuf.idea.language.psi.HbufTypeStatementElement"
+    mixin="com.hbuf.idea.language.psi.impl.HbufTypeStatementElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufTypeStatementElement"
 }
 
 type-array::=type-base [QUESTION] LBRACK RBRACK {
-//    mixin="com.hbuf.idea.language.psi.impl.HbufTypeArrayElementImpl"
-//    implements="com.hbuf.idea.language.psi.HbufTypeArrayElement"
+    mixin="com.hbuf.idea.language.psi.impl.HbufTypeArrayElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufTypeArrayElement"
 }
 
-type-map::=type-base [QUESTION] LSS type-base GTR{
-//    mixin="com.hbuf.idea.language.psi.impl.HbufTypeMapElementImpl"
-//    implements="com.hbuf.idea.language.psi.HbufTypeMapElement"
+type-map::=type-base [QUESTION] LSS TYPES GTR{
+    mixin="com.hbuf.idea.language.psi.impl.HbufTypeMapElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufTypeMapElement"
 }
 
 annotation-group::= annotation [annotation-group] {

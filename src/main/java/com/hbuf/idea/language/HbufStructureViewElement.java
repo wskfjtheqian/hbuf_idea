@@ -163,8 +163,17 @@ public class HbufStructureViewElement {
         public @NlsSafe
         @Nullable
         String getPresentableText() {
+            HbufTypeStatementElement type = getElement().getType();
+            String text = "";
+            if (null != type.getMap()) {
+                text = type.getMap().getBase().getName() + "<" + type.getMap().getKey().getText() + ">";
+            } else if (null != type.getArray()) {
+                text = type.getArray().getBase().getName() + "[]";
+            } else if (null != type.getBase()) {
+                text = type.getBase().getName();
+            }
             return getElement().getPresentation().getPresentableText() +
-                    ": " + getElement().getType() +
+                    ": " + text +
                     "=" + getElement().getNo();
         }
 

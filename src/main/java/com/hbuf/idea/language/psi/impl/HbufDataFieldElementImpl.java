@@ -2,7 +2,8 @@ package com.hbuf.idea.language.psi.impl;
 
 import com.hbuf.idea.language.HbufIcons;
 import com.hbuf.idea.language.psi.HbufDataFieldElement;
-import com.hbuf.idea.language.psi.HbufEnumFieldElement;
+import com.hbuf.idea.language.psi.HbufTypeStatement;
+import com.hbuf.idea.language.psi.HbufTypeStatementElement;
 import com.hbuf.idea.language.psi.HbufTypes;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.ide.projectView.PresentationData;
@@ -34,6 +35,10 @@ public abstract class HbufDataFieldElementImpl extends ASTWrapperPsiElement impl
         return this;
     }
 
+    public HbufTypeStatementElement getType() {
+        return getTypeStatement();
+    }
+
     @Override
     public String getName() {
         return getId().getText();
@@ -42,6 +47,8 @@ public abstract class HbufDataFieldElementImpl extends ASTWrapperPsiElement impl
     abstract PsiElement getId();
 
     abstract PsiElement getNumber();
+
+    abstract HbufTypeStatement getTypeStatement();
 
     @Override
     public int getNo() {
@@ -54,10 +61,12 @@ public abstract class HbufDataFieldElementImpl extends ASTWrapperPsiElement impl
 
         PsiNavigationSupport.getInstance().getDescriptor(getId()).navigate(requestFocus);
     }
+
     @Override
     public boolean canNavigate() {
         return PsiNavigationSupport.getInstance().canNavigate(getId());
     }
+
     @Override
     public boolean canNavigateToSource() {
         return this.canNavigate();

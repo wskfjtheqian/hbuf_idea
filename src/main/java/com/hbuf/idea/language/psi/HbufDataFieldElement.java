@@ -9,5 +9,5 @@ public interface HbufDataFieldElement extends PsiNameIdentifierOwner, Navigation
 
     public int getNo();
 
-    String getType();
+    HbufTypeStatementElement getType();
 }
