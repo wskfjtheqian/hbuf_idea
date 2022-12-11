@@ -19,9 +19,7 @@ public abstract class HbufNameElementImpl extends ASTWrapperPsiElement implement
     public HbufNameElementImpl(@NotNull ASTNode node) {
         super(node);
     }
-
-
-
+    
     @Override
     public PsiElement setName(@NlsSafe @NotNull String s) throws IncorrectOperationException {
         getNode().replaceChild(getId().getNode(), new LeafPsiElement(HbufTypes.ID, s).getNode());

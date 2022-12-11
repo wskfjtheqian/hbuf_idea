@@ -63,7 +63,7 @@ public class HbufStructureViewModel extends TextEditorBasedStructureViewModel im
         @Nullable
         @Override
         public String getPresentableText() {
-            return null;
+            return getElement().getName();
         }
 
         @NotNull

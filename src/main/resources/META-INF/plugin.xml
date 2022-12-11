@@ -21,16 +21,19 @@
         <lang.foldingBuilder language="Hbuf"
                              implementationClass="com.hbuf.idea.language.HbufFoldingBuilder"/>
         <lang.psiStructureViewFactory language="Hbuf"
-                             implementationClass="com.hbuf.idea.language.HbufStructureViewFactory"/>
+                                      implementationClass="com.hbuf.idea.language.HbufStructureViewFactory"/>
 
         <lang.findUsagesProvider language="Hbuf"
                                  implementationClass="com.hbuf.idea.language.HbufFindUsagesProvider"/>
-<!--        <completion.contributor-->
-<!--                language="Hbuf"-->
-<!--                implementationClass="com.hbuf.idea.language.HbufCompletionContributor"/>-->
+        <lang.commenter
+                language="Hbuf"
+                implementationClass="com.hbuf.idea.language.HbufCommenter"/>
+        <!--        <completion.contributor-->
+        <!--                language="Hbuf"-->
+        <!--                implementationClass="com.hbuf.idea.language.HbufCompletionContributor"/>-->
 
-<!--        <lang.formatter language="Hbuf" -->
-<!--                        implementationClass="com.hbuf.idea.language.HbufFormattingModelBuilder"/>-->
+        <!--        <lang.formatter language="Hbuf" -->
+        <!--                        implementationClass="com.hbuf.idea.language.HbufFormattingModelBuilder"/>-->
     </extensions>
 
     <actions>
