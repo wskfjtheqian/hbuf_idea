@@ -60,7 +60,7 @@ public class HbufSpellcheckingStrategy extends SpellcheckingStrategy {
             if (id != null && id.getTextLength() > 0) {
                 final PsiElement keyPsi = id.getPsi();
                 final String text = id.getText();
-                consumer.consumeToken(keyPsi, text, true, 0,
+                consumer.consumeToken(keyPsi, text, false, 0,
                         TextRange.allOf(text), IdentifierSplitter.getInstance());
             }
         }
