@@ -28,6 +28,10 @@
         <lang.commenter
                 language="Hbuf"
                 implementationClass="com.hbuf.idea.language.HbufCommenter"/>
+
+        <spellchecker.support language="Hbuf"
+                              implementationClass="com.hbuf.idea.language.HbufSpellcheckingStrategy"/>
+
         <!--        <completion.contributor-->
         <!--                language="Hbuf"-->
         <!--                implementationClass="com.hbuf.idea.language.HbufCompletionContributor"/>-->
