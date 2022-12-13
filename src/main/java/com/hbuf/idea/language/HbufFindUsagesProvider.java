@@ -1,12 +1,11 @@
 package com.hbuf.idea.language;
 
-import com.hbuf.idea.language.psi.HbufDataFieldElement;
-import com.hbuf.idea.language.psi.HbufDataFieldElement;
-import com.hbuf.idea.language.psi.HbufTokenSets;
+import com.hbuf.idea.language.psi.*;
 import com.intellij.lang.cacheBuilder.DefaultWordsScanner;
 import com.intellij.lang.cacheBuilder.WordsScanner;
 import com.intellij.lang.findUsages.FindUsagesProvider;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiNamedElement;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -24,10 +23,10 @@ public class HbufFindUsagesProvider implements FindUsagesProvider {
 
     @Override
     public boolean canFindUsagesFor(@NotNull PsiElement psiElement) {
-        if (psiElement instanceof HbufDataFieldElement) {
-            return true;
-        }
-        return false;
+        return psiElement instanceof HbufEnumElement
+                || psiElement instanceof HbufDataElement
+                || psiElement instanceof HbufFieldStatement
+                ;
     }
 
     @Nullable
@@ -39,28 +38,25 @@ public class HbufFindUsagesProvider implements FindUsagesProvider {
     @NotNull
     @Override
     public String getType(@NotNull PsiElement element) {
-        if (element instanceof HbufDataFieldElement) {
-            return ((HbufDataFieldElement) element).getName();
-        }
+        if(element instanceof HbufEnumElement) return "enum";
+        if(element instanceof HbufDataElement) return "data";
+        if(element instanceof HbufFieldStatement) return "field";
         return "";
     }
 
     @NotNull
     @Override
     public String getDescriptiveName(@NotNull PsiElement element) {
-        if (element instanceof HbufDataFieldElement) {
-            return ((HbufDataFieldElement) element).getName();
-        }
-        return "";
+        return ((PsiNamedElement)element).getName();
     }
 
     @NotNull
     @Override
-    public String getNodeText(@NotNull PsiElement element, boolean useFullName) {
-        if (element instanceof HbufDataFieldElement) {
-            return element.getText();
+    public String getNodeText(@NotNull PsiElement psiElement, boolean useFullName) {
+        if(!useFullName){
+            return ((PsiNamedElement)psiElement).getName();
         }
-        return "";
+        return ((PsiNamedElement)psiElement).getName();
     }
 
 }

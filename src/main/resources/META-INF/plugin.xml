@@ -32,12 +32,14 @@
         <spellchecker.support language="Hbuf"
                               implementationClass="com.hbuf.idea.language.HbufSpellcheckingStrategy"/>
 
-        <!--        <completion.contributor-->
-        <!--                language="Hbuf"-->
-        <!--                implementationClass="com.hbuf.idea.language.HbufCompletionContributor"/>-->
+        <completion.contributor
+                language="Hbuf"
+                implementationClass="com.hbuf.idea.language.HbufCompletionContributor"/>
 
         <!--        <lang.formatter language="Hbuf" -->
         <!--                        implementationClass="com.hbuf.idea.language.HbufFormattingModelBuilder"/>-->
+
+        <gotoSymbolContributor implementation="com.hbuf.idea.language.HbufChooseByNameContributor"/>
     </extensions>
 
     <actions>
