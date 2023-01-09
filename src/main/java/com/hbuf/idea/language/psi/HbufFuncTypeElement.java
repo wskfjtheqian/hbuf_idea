@@ -3,7 +3,8 @@
 package com.hbuf.idea.language.psi;
 
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiNamedElement;
 
-public interface HbufFuncTypeElement extends PsiElement {
+public interface HbufFuncTypeElement extends PsiNamedElement {
     String getType();
 }

@@ -8,4 +8,5 @@ import com.intellij.psi.PsiNameIdentifierOwner;
 public interface HbufDataElement extends PsiNameIdentifierOwner , NavigationItem {
 
     int getNo();
+
 }

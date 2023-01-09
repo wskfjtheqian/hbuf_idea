@@ -40,6 +40,11 @@
         <!--                        implementationClass="com.hbuf.idea.language.HbufFormattingModelBuilder"/>-->
 
         <gotoSymbolContributor implementation="com.hbuf.idea.language.HbufChooseByNameContributor"/>
+
+        <psi.referenceContributor language="Hbuf"
+                                  implementation="com.hbuf.idea.language.HbufReferenceContributor"/>
+        <lang.refactoringSupport language="Hbuf" implementationClass="com.hbuf.idea.language.HbufRefactoringSupportProvider"/>
+        <annotator language="Hbuf" implementationClass="com.hbuf.idea.language.HbufAnnotator"/>
     </extensions>
 
     <actions>

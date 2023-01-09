@@ -4,6 +4,7 @@ import com.hbuf.idea.language.psi.*;
 import com.intellij.lang.cacheBuilder.DefaultWordsScanner;
 import com.intellij.lang.cacheBuilder.WordsScanner;
 import com.intellij.lang.findUsages.FindUsagesProvider;
+import com.intellij.openapi.util.NlsSafe;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiNamedElement;
 import com.intellij.psi.tree.TokenSet;
@@ -25,7 +26,6 @@ public class HbufFindUsagesProvider implements FindUsagesProvider {
     public boolean canFindUsagesFor(@NotNull PsiElement psiElement) {
         return psiElement instanceof HbufEnumElement
                 || psiElement instanceof HbufDataElement
-                || psiElement instanceof HbufFieldStatement
                 ;
     }
 
@@ -38,25 +38,31 @@ public class HbufFindUsagesProvider implements FindUsagesProvider {
     @NotNull
     @Override
     public String getType(@NotNull PsiElement element) {
-        if(element instanceof HbufEnumElement) return "enum";
-        if(element instanceof HbufDataElement) return "data";
-        if(element instanceof HbufFieldStatement) return "field";
+        if (element instanceof HbufEnumElement) return "Hbuf enum";
+        if (element instanceof HbufDataElement) return "Hbuf data";
         return "";
     }
 
     @NotNull
     @Override
     public String getDescriptiveName(@NotNull PsiElement element) {
-        return ((PsiNamedElement)element).getName();
+        if (element instanceof HbufEnumElement) {
+            return ((HbufEnumElement) element).getName();
+        }else if (element instanceof HbufDataElement) {
+            return ((HbufDataElement) element).getName();
+        }
+        return "";
     }
 
     @NotNull
     @Override
-    public String getNodeText(@NotNull PsiElement psiElement, boolean useFullName) {
-        if(!useFullName){
-            return ((PsiNamedElement)psiElement).getName();
+    public String getNodeText(@NotNull PsiElement element, boolean useFullName) {
+        if (element instanceof HbufEnumElement) {
+            return "Enum:" + ((HbufEnumElement) element).getName() ;
+        }else if (element instanceof HbufDataElement) {
+            return "Data:" +  ((HbufDataElement) element).getName();
         }
-        return ((PsiNamedElement)psiElement).getName();
+        return "";
     }
 
 }

@@ -42,6 +42,46 @@ public class HbufUtil {
         return result;
     }
 
+    public static boolean isData(Project project, String key) {
+        Collection<VirtualFile> virtualFiles =
+                FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(project));
+        for (VirtualFile virtualFile : virtualFiles) {
+            HbufFile hbufFile = (HbufFile) PsiManager.getInstance(project).findFile(virtualFile);
+            if (hbufFile != null) {
+                @NotNull Collection<PsiNameIdentifierOwner> properties = PsiTreeUtil.findChildrenOfAnyType(
+                        hbufFile,
+                        HbufDataElement.class
+                );
+                for (PsiNameIdentifierOwner item : properties) {
+                    if (Objects.equals(item.getName(), key)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean isEnum(Project project, String key) {
+        Collection<VirtualFile> virtualFiles =
+                FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(project));
+        for (VirtualFile virtualFile : virtualFiles) {
+            HbufFile hbufFile = (HbufFile) PsiManager.getInstance(project).findFile(virtualFile);
+            if (hbufFile != null) {
+                @NotNull Collection<PsiNameIdentifierOwner> properties = PsiTreeUtil.findChildrenOfAnyType(
+                        hbufFile,
+                        HbufEnumElement.class
+                );
+                for (PsiNameIdentifierOwner item : properties) {
+                    if (Objects.equals(item.getName(), key)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public static List<PsiNameIdentifierOwner> findProperties(Project project) {
         List<PsiNameIdentifierOwner> result = new ArrayList<>();
         Collection<VirtualFile> virtualFiles =

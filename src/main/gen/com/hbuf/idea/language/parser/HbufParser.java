@@ -169,17 +169,16 @@ public class HbufParser implements PsiParser, LightPsiParser {
   public static boolean data_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "data_statement")) return false;
     if (!nextTokenIs(b, "<data statement>", DATA, LBRACK)) return false;
-    boolean r, p;
+    boolean r;
     Marker m = enter_section_(b, l, _NONE_, DATA_STATEMENT, "<data statement>");
     r = data_statement_0(b, l + 1);
     r = r && consumeToken(b, DATA);
     r = r && ident_name(b, l + 1);
-    p = r; // pin = 3
-    r = r && report_error_(b, data_statement_3(b, l + 1));
-    r = p && report_error_(b, consumeTokens(b, -1, ASSIGN, NUMBER)) && r;
-    r = p && data_body(b, l + 1) && r;
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
+    r = r && data_statement_3(b, l + 1);
+    r = r && consumeTokens(b, 0, ASSIGN, NUMBER);
+    r = r && data_body(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
   }
 
   // [annotation-group]
@@ -299,16 +298,14 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ID [COMMA extends]{
-  // }
+  // ident-name [COMMA extends]
   public static boolean extends_$(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "extends_$")) return false;
     if (!nextTokenIs(b, ID)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, ID);
+    r = ident_name(b, l + 1);
     r = r && extends_1(b, l + 1);
-    r = r && extends_2(b, l + 1);
     exit_section_(b, m, EXTENDS, r);
     return r;
   }
@@ -329,12 +326,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = r && extends_$(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
-  }
-
-  // {
-  // }
-  private static boolean extends_2(PsiBuilder b, int l) {
-    return true;
   }
 
   /* ********************************************************** */
@@ -516,12 +507,11 @@ public class HbufParser implements PsiParser, LightPsiParser {
   public static boolean package_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "package_statement")) return false;
     if (!nextTokenIs(b, PACKAGE)) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, PACKAGE_STATEMENT, null);
-    r = consumeTokens(b, 3, PACKAGE, ID, ASSIGN, STRING);
-    p = r; // pin = 3
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, PACKAGE, ID, ASSIGN, STRING);
+    exit_section_(b, m, PACKAGE_STATEMENT, r);
+    return r;
   }
 
   /* ********************************************************** */

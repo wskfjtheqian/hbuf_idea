@@ -50,24 +50,23 @@ hbufFile ::= item_*
 private item_ ::= (package-statement|import-statement|data-statement|server-statement|enum-statement|COMMENT|CRLF)
 
 package-statement ::=PACKAGE ID ASSIGN STRING{
-    pin=3
     mixin="com.hbuf.idea.language.psi.impl.HbufPackageElementImpl"
     implements="com.hbuf.idea.language.psi.HbufPackageElement"
 }
 
 import-statement::=IMPORT STRING {
-    pin=3
     mixin="com.hbuf.idea.language.psi.impl.HbufImportElementImpl"
     implements="com.hbuf.idea.language.psi.HbufImportElement"
 }
 
 data-statement::= [annotation-group] DATA ident-name [COLON extends] ASSIGN NUMBER data-body{
-    pin=3
     mixin="com.hbuf.idea.language.psi.impl.HbufDataElementImpl"
     implements="com.hbuf.idea.language.psi.HbufDataElement"
 }
 
-extends::=ID [COMMA extends]{
+extends::=ident-name [COMMA extends]{
+    mixin="com.hbuf.idea.language.psi.impl.HbufExtendsElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufExtendsElement"
 }
 
 data-body::=LBRACE [field-list] RBRACE {
