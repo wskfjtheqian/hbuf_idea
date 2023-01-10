@@ -228,8 +228,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // enum-field-statement [enum-field-list]{
-  // }
+  // enum-field-statement [enum-field-list]
   public static boolean enum_field_list(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_field_list")) return false;
     if (!nextTokenIs(b, "<enum field list>", ID, LBRACK)) return false;
@@ -237,7 +236,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, ENUM_FIELD_LIST, "<enum field list>");
     r = enum_field_statement(b, l + 1);
     r = r && enum_field_list_1(b, l + 1);
-    r = r && enum_field_list_2(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -249,21 +247,16 @@ public class HbufParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // {
-  // }
-  private static boolean enum_field_list_2(PsiBuilder b, int l) {
-    return true;
-  }
-
   /* ********************************************************** */
-  // [annotation-group] ID ASSIGN NUMBER
+  // [annotation-group] ident-name ASSIGN NUMBER
   public static boolean enum_field_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_field_statement")) return false;
     if (!nextTokenIs(b, "<enum field statement>", ID, LBRACK)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, ENUM_FIELD_STATEMENT, "<enum field statement>");
     r = enum_field_statement_0(b, l + 1);
-    r = r && consumeTokens(b, 0, ID, ASSIGN, NUMBER);
+    r = r && ident_name(b, l + 1);
+    r = r && consumeTokens(b, 0, ASSIGN, NUMBER);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -356,14 +349,15 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [annotation-group] type-statement ID ASSIGN NUMBER
+  // [annotation-group] type-statement ident-name ASSIGN NUMBER
   public static boolean field_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "field_statement")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, FIELD_STATEMENT, "<field statement>");
     r = field_statement_0(b, l + 1);
     r = r && type_statement(b, l + 1);
-    r = r && consumeTokens(b, 0, ID, ASSIGN, NUMBER);
+    r = r && ident_name(b, l + 1);
+    r = r && consumeTokens(b, 0, ASSIGN, NUMBER);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -417,7 +411,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [annotation-group] func-type ID LPAREN func-param RPAREN ASSIGN NUMBER
+  // [annotation-group] func-type ident-name LPAREN func-param RPAREN ASSIGN NUMBER
   public static boolean func_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_statement")) return false;
     if (!nextTokenIs(b, "<func statement>", ID, LBRACK)) return false;
@@ -425,7 +419,8 @@ public class HbufParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, FUNC_STATEMENT, "<func statement>");
     r = func_statement_0(b, l + 1);
     r = r && func_type(b, l + 1);
-    r = r && consumeTokens(b, 0, ID, LPAREN);
+    r = r && ident_name(b, l + 1);
+    r = r && consumeToken(b, LPAREN);
     r = r && func_param(b, l + 1);
     r = r && consumeTokens(b, 0, RPAREN, ASSIGN, NUMBER);
     exit_section_(b, l, m, r, false, null);

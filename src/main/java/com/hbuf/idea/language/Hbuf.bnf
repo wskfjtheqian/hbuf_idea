@@ -78,7 +78,7 @@ field-list::= field-statement [field-list]{
 
 }
 
-field-statement::= [annotation-group] type-statement ID ASSIGN NUMBER{
+field-statement::= [annotation-group] type-statement ident-name ASSIGN NUMBER{
     mixin="com.hbuf.idea.language.psi.impl.HbufDataFieldElementImpl"
     implements="com.hbuf.idea.language.psi.HbufDataFieldElement"
 }
@@ -130,7 +130,7 @@ server-body::=LBRACE [func-list] RBRACE {
 func-list::= func-statement [func-list]{
 }
 
-func-statement::=[annotation-group] func-type ID LPAREN func-param RPAREN ASSIGN NUMBER{
+func-statement::=[annotation-group] func-type ident-name LPAREN func-param RPAREN ASSIGN NUMBER{
     mixin="com.hbuf.idea.language.psi.impl.HbufServerFuncElementImpl"
     implements="com.hbuf.idea.language.psi.HbufServerFuncElement"
 }
@@ -161,9 +161,11 @@ enum-body::=LBRACE [enum-field-list] RBRACE {
 }
 
 enum-field-list::= enum-field-statement [enum-field-list]{
+   mixin="com.hbuf.idea.language.psi.impl.HbufEnumFieldsElementImpl"
+   implements="com.hbuf.idea.language.psi.HbufEnumFieldsElement"
 }
 
-enum-field-statement::= [annotation-group] ID ASSIGN NUMBER{
+enum-field-statement::= [annotation-group] ident-name ASSIGN NUMBER{
     mixin="com.hbuf.idea.language.psi.impl.HbufEnumFieldElementImpl"
     implements="com.hbuf.idea.language.psi.HbufEnumFieldElement"
 }

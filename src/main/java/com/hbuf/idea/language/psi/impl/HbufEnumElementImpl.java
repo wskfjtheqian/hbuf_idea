@@ -63,4 +63,5 @@ public abstract class HbufEnumElementImpl extends ASTWrapperPsiElement implement
         data.setIcon(HbufIcons.ENUM);
         return data;
     }
+
 }

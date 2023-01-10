@@ -51,7 +51,7 @@ public class HbufAnnotator implements Annotator {
 
         if (element instanceof HbufNameElement) {
             PsiElement parent = element.getParent();
-            if (parent instanceof HbufEnumStatement) {
+            if (parent instanceof HbufEnumElement) {
                 return;
             }
             if (parent instanceof HbufDataElement) {
@@ -64,17 +64,41 @@ public class HbufAnnotator implements Annotator {
                 return;
             }
             if (parent instanceof HbufEnumFieldElement) {
+                checkEnumFieldName(holder, (HbufEnumFieldElement) parent, element);
                 return;
             }
-            if (parent instanceof HbufEnumFieldElement) {
+            if (parent instanceof HbufServerFuncElement) {
                 return;
             }
             if (parent instanceof HbufExtendsElement) {
-
-
+                parent = parent.getParent();
+                if (parent instanceof HbufDataElement) {
+                    checkType(holder, element, CheckType.Data);
+                    return;
+                }
+                if (parent instanceof HbufServerElement) {
+                    checkType(holder, element, CheckType.Server);
+                    return;
+                }
             }
         }
     }
+
+    private void checkEnumFieldName(AnnotationHolder holder, HbufEnumFieldElement parent, PsiElement element) {
+        HbufEnumFieldsElement fields = (HbufEnumFieldsElement) parent.getParent();
+        for (HbufEnumFieldElement item : fields.getFields()) {
+            if (item == parent) {
+                continue;
+            }
+            if (item.getName().equals(element.getText())) {
+                holder.newAnnotation(HighlightSeverity.ERROR, "Field '" + element.getText() + "' is already defined in the scope element.getText()")
+                        .range(element)
+                        .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                        .create();
+            }
+        }
+    }
+
 
     private void checkField(AnnotationHolder holder, PsiElement element) {
         element.getParent();
@@ -84,7 +108,8 @@ public class HbufAnnotator implements Annotator {
     enum CheckType {
         Base,
         Data,
-        Enum
+        Enum,
+        Server,
     }
 
     private void checkType(@NotNull AnnotationHolder holder, PsiElement base, CheckType... types) {
@@ -117,7 +142,12 @@ public class HbufAnnotator implements Annotator {
                 return;
             }
         }
-        holder.newAnnotation(HighlightSeverity.ERROR, base.getText() + "undefined symbol")
+        if (list.contains(CheckType.Server)) {
+            if (HbufUtil.isServer(base.getProject(), base.getText())) {
+                return;
+            }
+        }
+        holder.newAnnotation(HighlightSeverity.ERROR, base.getText() + " undefined symbol")
                 .range(base)
                 .highlightType(ProblemHighlightType.LIKE_UNKNOWN_SYMBOL)
                 .create();

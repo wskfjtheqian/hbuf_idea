@@ -7,11 +7,13 @@ import com.intellij.psi.PsiNameIdentifierOwner;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public interface HbufEnumElement extends PsiNameIdentifierOwner, NavigationItem {
     @Nullable
     HbufAnnotationGroup getAnnotationGroup();
 
     @NotNull
-    HbufEnumBody getEnumBody();
+    HbufEnumBodyElement getEnumBody();
 
 }

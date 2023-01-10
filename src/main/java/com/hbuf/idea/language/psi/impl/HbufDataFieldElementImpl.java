@@ -26,12 +26,12 @@ public abstract class HbufDataFieldElementImpl extends ASTWrapperPsiElement impl
     @Override
     public @Nullable
     PsiElement getNameIdentifier() {
-        return getId();
+        return getIdentName();
     }
 
     @Override
     public PsiElement setName(@NlsSafe @NotNull String s) throws IncorrectOperationException {
-        getNode().replaceChild(getId().getNode(), new LeafPsiElement(HbufTypes.ID, s).getNode());
+        getNode().replaceChild(getIdentName().getNode(), new LeafPsiElement(HbufTypes.ID, s).getNode());
         return this;
     }
 
@@ -41,10 +41,10 @@ public abstract class HbufDataFieldElementImpl extends ASTWrapperPsiElement impl
 
     @Override
     public String getName() {
-        return getId().getText();
+        return getIdentName().getText();
     }
 
-    abstract PsiElement getId();
+    abstract PsiElement getIdentName();
 
     abstract PsiElement getNumber();
 
@@ -57,14 +57,14 @@ public abstract class HbufDataFieldElementImpl extends ASTWrapperPsiElement impl
 
     @Override
     public void navigate(boolean requestFocus) {
-        assert this.canNavigate() : getId();
+        assert this.canNavigate() : getIdentName();
 
-        PsiNavigationSupport.getInstance().getDescriptor(getId()).navigate(requestFocus);
+        PsiNavigationSupport.getInstance().getDescriptor(getIdentName()).navigate(requestFocus);
     }
 
     @Override
     public boolean canNavigate() {
-        return PsiNavigationSupport.getInstance().canNavigate(getId());
+        return PsiNavigationSupport.getInstance().canNavigate(getIdentName());
     }
 
     @Override
