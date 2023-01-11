@@ -5,6 +5,7 @@ package com.hbuf.idea.language.psi;
 import com.hbuf.idea.language.HbufFileType;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiNameIdentifierOwner;
 import com.intellij.psi.search.FileTypeIndex;
@@ -119,5 +120,25 @@ public class HbufUtil {
         return result;
     }
 
+    public static  HbufEnumElement getEnumByChild(PsiElement element){
+        while (null != element && !(element instanceof HbufEnumElement)){
+            element = element.getParent();
+        }
+        return (HbufEnumElement) element;
+    }
 
+    public static  HbufDataElement getDataByChild(PsiElement element){
+        while (null != element && !(element instanceof HbufDataElement)){
+            element = element.getParent();
+        }
+        return (HbufDataElement) element;
+    }
+
+
+    public static  HbufServerElement getServerByChild(PsiElement element){
+        while (null != element && !(element instanceof HbufServerElement)){
+            element = element.getParent();
+        }
+        return (HbufServerElement) element;
+    }
 }

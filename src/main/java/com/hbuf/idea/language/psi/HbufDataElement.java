@@ -4,9 +4,17 @@ package com.hbuf.idea.language.psi;
 
 import com.intellij.navigation.NavigationItem;
 import com.intellij.psi.PsiNameIdentifierOwner;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public interface HbufDataElement extends PsiNameIdentifierOwner, NavigationItem {
 
     int getNo();
+
+    @Nullable
+    HbufAnnotationGroup getAnnotationGroup();
+
+    @NotNull
+    HbufDataBodyElement getDataBody();
 
 }

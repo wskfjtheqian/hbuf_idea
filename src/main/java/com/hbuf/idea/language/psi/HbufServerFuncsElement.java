@@ -9,6 +9,6 @@ import java.util.Collection;
 
 public interface HbufServerFuncsElement extends PsiElement {
 
-    Collection<HbufEnumFieldElement> getFields();
+    Collection<HbufServerFuncElement> getFields();
 
 }

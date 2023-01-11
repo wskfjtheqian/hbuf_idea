@@ -124,11 +124,12 @@ server-statement::= [annotation-group] SERVER ident-name [COLON extends] ASSIGN 
 }
 
 server-body::=LBRACE [func-list] RBRACE {
-    mixin="com.hbuf.idea.language.psi.impl.HbufServerBodyElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufServerBodyElement"
+
 }
 
 func-list::= func-statement [func-list]{
+    mixin="com.hbuf.idea.language.psi.impl.HbufServerFuncsElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufServerFuncsElement"
 }
 
 func-statement::=[annotation-group] func-type ident-name LPAREN func-param RPAREN ASSIGN NUMBER{

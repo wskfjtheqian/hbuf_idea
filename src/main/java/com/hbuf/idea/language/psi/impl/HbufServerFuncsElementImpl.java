@@ -1,10 +1,10 @@
 package com.hbuf.idea.language.psi.impl;
 
-import com.hbuf.idea.language.psi.HbufEnumFieldElement;
-import com.hbuf.idea.language.psi.HbufServerFuncsElement;
+import com.hbuf.idea.language.psi.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,17 +16,20 @@ public abstract class HbufServerFuncsElementImpl extends ASTWrapperPsiElement im
     }
 
     @Override
-    public Collection<HbufEnumFieldElement> getFields() {
-        List<HbufEnumFieldElement> list = new ArrayList();
+    public Collection<HbufServerFuncElement> getFields() {
+        List<HbufServerFuncElement> list = new ArrayList();
         HbufServerFuncsElementImpl element = this;
         while (null != element) {
-            list.add(element.getServerFuncstatement());
-            element = (HbufServerFuncsElementImpl) element.getEnumFieldList();
+            list.add(element.getFuncStatement());
+            element = (HbufServerFuncsElementImpl) element.getFuncList();
         }
         return list;
     }
 
-    abstract HbufServerFuncsElement getEnumFieldList();
+    @Nullable
+    abstract HbufServerFuncsElement getFuncList();
 
-    abstract HbufEnumFieldElement getServerFuncstatement();
+
+    @NotNull
+    abstract HbufServerFuncElement getFuncStatement();
 }
