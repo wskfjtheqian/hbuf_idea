@@ -6,10 +6,10 @@ import com.intellij.lang.Language;
 
 public class HbufLanguage extends Language {
 
-  public static final HbufLanguage INSTANCE = new HbufLanguage();
+    public static final HbufLanguage INSTANCE = new HbufLanguage();
 
-  private HbufLanguage() {
-    super("Hbuf");
-  }
+    private HbufLanguage() {
+        super("Hbuf");
+    }
 
 }

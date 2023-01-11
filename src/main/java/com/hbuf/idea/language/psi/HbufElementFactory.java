@@ -10,14 +10,14 @@ import com.intellij.psi.PsiFileFactory;
 
 public class HbufElementFactory {
 
-  public static HbufFile createFile(Project project, String text) {
-    String name = "dummy.hbuf";
-    return (HbufFile) PsiFileFactory.getInstance(project).createFileFromText(name, HbufFileType.INSTANCE, text);
-  }
+    public static HbufFile createFile(Project project, String text) {
+        String name = "dummy.hbuf";
+        return (HbufFile) PsiFileFactory.getInstance(project).createFileFromText(name, HbufFileType.INSTANCE, text);
+    }
 
-  public static PsiElement createCRLF(Project project) {
-    final HbufFile file = createFile(project, "\n");
-    return file.getFirstChild();
-  }
+    public static PsiElement createCRLF(Project project) {
+        final HbufFile file = createFile(project, "\n");
+        return file.getFirstChild();
+    }
 
 }

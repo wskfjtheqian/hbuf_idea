@@ -2,10 +2,13 @@
 
 package com.hbuf.idea.language.psi;
 
-import com.intellij.navigation.NavigationItem;
-import com.intellij.psi.PsiNameIdentifierOwner;
 
-public interface HbufServerElement extends PsiNameIdentifierOwner, NavigationItem {
+import com.intellij.psi.PsiElement;
 
-    int getNo();
+import java.util.Collection;
+
+public interface HbufServerFuncsElement extends PsiElement {
+
+    Collection<HbufEnumFieldElement> getFields();
+
 }

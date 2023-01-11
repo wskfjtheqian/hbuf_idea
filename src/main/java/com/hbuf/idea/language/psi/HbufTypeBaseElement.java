@@ -6,6 +6,5 @@ import com.intellij.psi.PsiNamedElement;
 
 public interface HbufTypeBaseElement extends PsiNamedElement {
 
-    //是否是基础类型
     boolean isBaseType();
 }

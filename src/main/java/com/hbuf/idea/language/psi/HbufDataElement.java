@@ -5,7 +5,7 @@ package com.hbuf.idea.language.psi;
 import com.intellij.navigation.NavigationItem;
 import com.intellij.psi.PsiNameIdentifierOwner;
 
-public interface HbufDataElement extends PsiNameIdentifierOwner , NavigationItem {
+public interface HbufDataElement extends PsiNameIdentifierOwner, NavigationItem {
 
     int getNo();
 

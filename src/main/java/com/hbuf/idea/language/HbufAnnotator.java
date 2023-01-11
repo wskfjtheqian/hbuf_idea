@@ -14,19 +14,19 @@ import java.util.List;
 public class HbufAnnotator implements Annotator {
     @Override
     public void annotate(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
-        if (element instanceof HbufTypeStatement) {
-            HbufTypeStatement type = ((HbufTypeStatement) element);
-            HbufTypeBase base = type.getTypeBase();
+        if (element instanceof HbufTypeStatementElement) {
+            HbufTypeStatementElement type = ((HbufTypeStatementElement) element);
+            HbufTypeBaseElement base = type.getTypeBase();
             if (null != base) {
                 checkType(holder, base, CheckType.Base, CheckType.Data, CheckType.Enum);
                 return;
             }
-            HbufTypeArray array = type.getTypeArray();
+            HbufTypeArrayElement array = type.getTypeArray();
             if (null != array) {
                 checkType(holder, array.getTypeBase(), CheckType.Base, CheckType.Data, CheckType.Enum);
                 return;
             }
-            HbufTypeMap map = type.getTypeMap();
+            HbufTypeMapElement map = type.getTypeMap();
             if (null != map) {
                 checkType(holder, map.getKey(), CheckType.Base);
                 checkType(holder, map.getBase(), CheckType.Base, CheckType.Data, CheckType.Enum);
@@ -43,12 +43,7 @@ public class HbufAnnotator implements Annotator {
             checkType(holder, param.getFuncType(), CheckType.Data);
             return;
         }
-
-        if (element instanceof HbufFieldStatement) {
-            checkField(holder, element);
-            return;
-        }
-
+        
         if (element instanceof HbufNameElement) {
             PsiElement parent = element.getParent();
             if (parent instanceof HbufEnumElement) {
@@ -61,6 +56,7 @@ public class HbufAnnotator implements Annotator {
                 return;
             }
             if (parent instanceof HbufDataFieldElement) {
+                checkDataFieldName(holder, (HbufDataFieldElement) parent, element);
                 return;
             }
             if (parent instanceof HbufEnumFieldElement) {
@@ -95,15 +91,27 @@ public class HbufAnnotator implements Annotator {
                         .range(element)
                         .highlightType(ProblemHighlightType.GENERIC_ERROR)
                         .create();
+                return;
             }
         }
     }
 
-
-    private void checkField(AnnotationHolder holder, PsiElement element) {
-        element.getParent();
-
+    private void checkDataFieldName(AnnotationHolder holder, HbufDataFieldElement parent, PsiElement element) {
+        HbufDataFieldsElement fields = (HbufDataFieldsElement) parent.getParent();
+        for (HbufDataFieldElement item : fields.getFields()) {
+            if (item == parent) {
+                continue;
+            }
+            if (item.getName().equals(element.getText())) {
+                holder.newAnnotation(HighlightSeverity.ERROR, "Field '" + element.getText() + "' is already defined in the scope element.getText()")
+                        .range(element)
+                        .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                        .create();
+                return;
+            }
+        }
     }
+
 
     enum CheckType {
         Base,

@@ -47,10 +47,12 @@ public abstract class HbufEnumElementImpl extends ASTWrapperPsiElement implement
 
         PsiNavigationSupport.getInstance().getDescriptor(getIdentName()).navigate(requestFocus);
     }
+
     @Override
     public boolean canNavigate() {
         return PsiNavigationSupport.getInstance().canNavigate(getIdentName());
     }
+
     @Override
     public boolean canNavigateToSource() {
         return this.canNavigate();

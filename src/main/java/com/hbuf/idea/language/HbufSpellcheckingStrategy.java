@@ -14,7 +14,6 @@ import com.intellij.spellchecker.tokenizer.TokenConsumer;
 import com.intellij.spellchecker.tokenizer.Tokenizer;
 import org.jetbrains.annotations.NotNull;
 
-//拼写检查(自动检查单词是否拼写错误)
 public class HbufSpellcheckingStrategy extends SpellcheckingStrategy {
     @Override
     public @NotNull

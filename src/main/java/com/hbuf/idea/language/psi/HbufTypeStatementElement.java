@@ -8,12 +8,11 @@ import org.jetbrains.annotations.Nullable;
 
 public interface HbufTypeStatementElement extends PsiElement {
 
-    @Nullable
-    HbufTypeArrayElement getArray();
+    HbufTypeArrayElement getTypeArray();
 
-    @Nullable
-    HbufTypeBaseElement getBase();
 
-    @Nullable
-    HbufTypeMapElement getMap();
+    HbufTypeBaseElement getTypeBase();
+
+
+    HbufTypeMapElement getTypeMap();
 }

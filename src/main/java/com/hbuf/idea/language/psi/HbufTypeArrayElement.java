@@ -9,5 +9,5 @@ import org.jetbrains.annotations.NotNull;
 public interface HbufTypeArrayElement extends PsiElement {
 
     @NotNull
-    HbufTypeBaseElement getBase();
+    HbufTypeBaseElement getTypeBase();
 }

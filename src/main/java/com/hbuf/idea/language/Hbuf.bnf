@@ -69,16 +69,17 @@ extends::=ident-name [COMMA extends]{
     implements="com.hbuf.idea.language.psi.HbufExtendsElement"
 }
 
-data-body::=LBRACE [field-list] RBRACE {
+data-body::=LBRACE [data-field-list] RBRACE {
     mixin="com.hbuf.idea.language.psi.impl.HbufDataBodyElementImpl"
     implements="com.hbuf.idea.language.psi.HbufDataBodyElement"
 }
 
-field-list::= field-statement [field-list]{
-
+data-field-list::= data-field-statement [data-field-list]{
+     mixin="com.hbuf.idea.language.psi.impl.HbufDataFieldsElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufDataFieldsElement"
 }
 
-field-statement::= [annotation-group] type-statement ident-name ASSIGN NUMBER{
+data-field-statement::= [annotation-group] type-statement ident-name ASSIGN NUMBER{
     mixin="com.hbuf.idea.language.psi.impl.HbufDataFieldElementImpl"
     implements="com.hbuf.idea.language.psi.HbufDataFieldElement"
 }

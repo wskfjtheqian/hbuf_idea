@@ -9,8 +9,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class HbufElementType extends IElementType {
 
-  public HbufElementType(@NotNull @NonNls String debugName) {
-    super(debugName, HbufLanguage.INSTANCE);
-  }
+    public HbufElementType(@NotNull @NonNls String debugName) {
+        super(debugName, HbufLanguage.INSTANCE);
+    }
 
 }

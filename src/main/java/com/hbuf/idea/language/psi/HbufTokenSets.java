@@ -2,7 +2,6 @@
 
 package com.hbuf.idea.language.psi;
 
-import com.hbuf.idea.language.psi.HbufTypes;
 import com.intellij.psi.tree.TokenSet;
 
 public interface HbufTokenSets {

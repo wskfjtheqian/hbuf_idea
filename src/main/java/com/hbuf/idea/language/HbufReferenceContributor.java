@@ -2,7 +2,6 @@ package com.hbuf.idea.language;
 
 import com.hbuf.idea.language.psi.HbufFuncParam;
 import com.hbuf.idea.language.psi.HbufFuncType;
-import com.intellij.openapi.util.TextRange;
 import com.intellij.patterns.PlatformPatterns;
 import com.intellij.psi.*;
 import com.intellij.util.ProcessingContext;

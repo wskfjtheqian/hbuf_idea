@@ -1,8 +1,10 @@
 package com.hbuf.idea.language;
 
 import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.*;
-import org.jetbrains.annotations.NotNull;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiPolyVariantReference;
+import com.intellij.psi.PsiReferenceBase;
+import com.intellij.psi.ResolveResult;
 import org.jetbrains.annotations.Nullable;
 
 public class HbufReference extends PsiReferenceBase<PsiElement> implements PsiPolyVariantReference {

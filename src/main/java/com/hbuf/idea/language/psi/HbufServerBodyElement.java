@@ -3,7 +3,6 @@
 package com.hbuf.idea.language.psi;
 
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiNameIdentifierOwner;
 
 public interface HbufServerBodyElement extends PsiElement {
 

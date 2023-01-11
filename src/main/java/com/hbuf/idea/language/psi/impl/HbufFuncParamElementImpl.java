@@ -1,7 +1,6 @@
 package com.hbuf.idea.language.psi.impl;
 
 import com.hbuf.idea.language.psi.HbufFuncParamElement;
-import com.hbuf.idea.language.psi.HbufFuncTypeElement;
 import com.hbuf.idea.language.psi.HbufTypes;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;

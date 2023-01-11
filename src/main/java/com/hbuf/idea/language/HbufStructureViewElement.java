@@ -165,12 +165,12 @@ public class HbufStructureViewElement {
         String getPresentableText() {
             HbufTypeStatementElement type = getElement().getType();
             String text = "";
-            if (null != type.getMap()) {
-                text = type.getMap().getBase().getName() + "<" + type.getMap().getKey().getText() + ">";
-            } else if (null != type.getArray()) {
-                text = type.getArray().getBase().getName() + "[]";
-            } else if (null != type.getBase()) {
-                text = type.getBase().getName();
+            if (null != type.getTypeMap()) {
+                text = type.getTypeMap().getBase().getName() + "<" + type.getTypeMap().getKey().getText() + ">";
+            } else if (null != type.getTypeArray()) {
+                text = type.getTypeArray().getTypeBase().getName() + "[]";
+            } else if (null != type.getTypeBase()) {
+                text = type.getTypeBase().getName();
             }
             return getElement().getPresentation().getPresentableText() +
                     ": " + text +

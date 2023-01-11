@@ -14,16 +14,16 @@ public abstract class HbufTypeMapElementImpl extends ASTWrapperPsiElement implem
     }
 
     @NotNull
-    public HbufTypeBaseElement getBase(){
+    public HbufTypeBaseElement getBase() {
         return getTypeBase();
     }
 
     @NotNull
-    public PsiElement getKey(){
+    public PsiElement getKey() {
         return getTypes();
     }
 
-    abstract  HbufTypeBase getTypeBase();
+    abstract HbufTypeBase getTypeBase();
 
 
     abstract PsiElement getTypes();

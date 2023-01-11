@@ -144,7 +144,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LBRACE [field-list] RBRACE
+  // LBRACE [data-field-list] RBRACE
   public static boolean data_body(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "data_body")) return false;
     if (!nextTokenIs(b, LBRACE)) return false;
@@ -157,10 +157,50 @@ public class HbufParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [field-list]
+  // [data-field-list]
   private static boolean data_body_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "data_body_1")) return false;
-    field_list(b, l + 1);
+    data_field_list(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // data-field-statement [data-field-list]
+  public static boolean data_field_list(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "data_field_list")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, DATA_FIELD_LIST, "<data field list>");
+    r = data_field_statement(b, l + 1);
+    r = r && data_field_list_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // [data-field-list]
+  private static boolean data_field_list_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "data_field_list_1")) return false;
+    data_field_list(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // [annotation-group] type-statement ident-name ASSIGN NUMBER
+  public static boolean data_field_statement(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "data_field_statement")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, DATA_FIELD_STATEMENT, "<data field statement>");
+    r = data_field_statement_0(b, l + 1);
+    r = r && type_statement(b, l + 1);
+    r = r && ident_name(b, l + 1);
+    r = r && consumeTokens(b, 0, ASSIGN, NUMBER);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // [annotation-group]
+  private static boolean data_field_statement_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "data_field_statement_0")) return false;
+    annotation_group(b, l + 1);
     return true;
   }
 
@@ -319,54 +359,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = r && extends_$(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
-  }
-
-  /* ********************************************************** */
-  // field-statement [field-list]{
-  // }
-  public static boolean field_list(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "field_list")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, FIELD_LIST, "<field list>");
-    r = field_statement(b, l + 1);
-    r = r && field_list_1(b, l + 1);
-    r = r && field_list_2(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // [field-list]
-  private static boolean field_list_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "field_list_1")) return false;
-    field_list(b, l + 1);
-    return true;
-  }
-
-  // {
-  // }
-  private static boolean field_list_2(PsiBuilder b, int l) {
-    return true;
-  }
-
-  /* ********************************************************** */
-  // [annotation-group] type-statement ident-name ASSIGN NUMBER
-  public static boolean field_statement(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "field_statement")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, FIELD_STATEMENT, "<field statement>");
-    r = field_statement_0(b, l + 1);
-    r = r && type_statement(b, l + 1);
-    r = r && ident_name(b, l + 1);
-    r = r && consumeTokens(b, 0, ASSIGN, NUMBER);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // [annotation-group]
-  private static boolean field_statement_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "field_statement_0")) return false;
-    annotation_group(b, l + 1);
-    return true;
   }
 
   /* ********************************************************** */

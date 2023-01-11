@@ -12,31 +12,5 @@ public abstract class HbufTypeStatementElementImpl extends ASTWrapperPsiElement 
     }
 
 
-    @Nullable
-    @Override
-    public HbufTypeArrayElement getArray() {
-        return getTypeArray();
-    }
-
-    @Nullable
-    @Override
-    public HbufTypeBaseElement getBase() {
-        return getTypeBase();
-    }
-
-    @Nullable
-    @Override
-    public HbufTypeMapElement getMap() {
-        return getTypeMap();
-    }
-
-
-    abstract HbufTypeArray getTypeArray();
-
-
-    abstract HbufTypeBase getTypeBase();
-
-
-    abstract HbufTypeMap getTypeMap();
 
 }

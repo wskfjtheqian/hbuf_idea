@@ -8,7 +8,7 @@ import com.intellij.psi.PsiNameIdentifierOwner;
 
 import java.util.ArrayList;
 import java.util.List;
-//转到符号贡献者
+
 public class HbufChooseByNameContributor implements ChooseByNameContributor {
     @Override
     public String[] getNames(Project project, boolean includeNonProjectItems) {

@@ -1,6 +1,5 @@
 package com.hbuf.idea.language.psi.impl;
 
-import com.hbuf.idea.language.psi.HbufFuncType;
 import com.hbuf.idea.language.psi.HbufFuncTypeElement;
 import com.hbuf.idea.language.psi.HbufTypes;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
@@ -16,6 +15,7 @@ public abstract class HbufFuncTypeElementImpl extends ASTWrapperPsiElement imple
     public HbufFuncTypeElementImpl(@NotNull ASTNode node) {
         super(node);
     }
+
     @Override
     public PsiElement setName(@NlsSafe @NotNull String s) throws IncorrectOperationException {
         getNode().replaceChild(getId().getNode(), new LeafPsiElement(HbufTypes.ID, s).getNode());
@@ -33,8 +33,6 @@ public abstract class HbufFuncTypeElementImpl extends ASTWrapperPsiElement imple
     }
 
     abstract PsiElement getId();
-
-
 
 
 }

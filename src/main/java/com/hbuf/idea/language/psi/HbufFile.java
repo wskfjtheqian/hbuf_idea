@@ -11,19 +11,19 @@ import org.jetbrains.annotations.NotNull;
 
 public class HbufFile extends PsiFileBase {
 
-  public HbufFile(@NotNull FileViewProvider viewProvider) {
-    super(viewProvider, HbufLanguage.INSTANCE);
-  }
+    public HbufFile(@NotNull FileViewProvider viewProvider) {
+        super(viewProvider, HbufLanguage.INSTANCE);
+    }
 
-  @NotNull
-  @Override
-  public FileType getFileType() {
-    return HbufFileType.INSTANCE;
-  }
+    @NotNull
+    @Override
+    public FileType getFileType() {
+        return HbufFileType.INSTANCE;
+    }
 
-  @Override
-  public String toString() {
-    return "Hbuf File";
-  }
+    @Override
+    public String toString() {
+        return "Hbuf File";
+    }
 
 }

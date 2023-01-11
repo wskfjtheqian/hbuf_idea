@@ -5,7 +5,6 @@ package com.hbuf.idea.language.psi;
 import com.hbuf.idea.language.HbufFileType;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiNameIdentifierOwner;
 import com.intellij.psi.search.FileTypeIndex;
@@ -81,6 +80,7 @@ public class HbufUtil {
         }
         return false;
     }
+
     public static boolean isServer(Project project, String key) {
         Collection<VirtualFile> virtualFiles =
                 FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(project));
@@ -100,6 +100,7 @@ public class HbufUtil {
         }
         return false;
     }
+
     public static List<PsiNameIdentifierOwner> findProperties(Project project) {
         List<PsiNameIdentifierOwner> result = new ArrayList<>();
         Collection<VirtualFile> virtualFiles =

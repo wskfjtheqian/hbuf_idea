@@ -4,7 +4,6 @@ import com.intellij.lang.Commenter;
 
 import javax.annotation.Nullable;
 
-//快速注释和取消注释
 public class HbufCommenter implements Commenter {
 
     @Nullable

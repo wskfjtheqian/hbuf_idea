@@ -11,12 +11,4 @@ public abstract class HbufTypeArrayElementImpl extends ASTWrapperPsiElement impl
     public HbufTypeArrayElementImpl(@NotNull ASTNode node) {
         super(node);
     }
-
-    @NotNull
-    public HbufTypeBaseElement getBase() {
-        return getTypeBase();
-    }
-
-
-    abstract HbufTypeBase getTypeBase();
 }
