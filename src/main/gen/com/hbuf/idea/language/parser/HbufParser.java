@@ -494,8 +494,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LBRACE [func-list] RBRACE {
-  // }
+  // LBRACE [func-list] RBRACE
   public static boolean server_body(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "server_body")) return false;
     if (!nextTokenIs(b, LBRACE)) return false;
@@ -504,7 +503,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, LBRACE);
     r = r && server_body_1(b, l + 1);
     r = r && consumeToken(b, RBRACE);
-    r = r && server_body_3(b, l + 1);
     exit_section_(b, m, SERVER_BODY, r);
     return r;
   }
@@ -513,12 +511,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
   private static boolean server_body_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "server_body_1")) return false;
     func_list(b, l + 1);
-    return true;
-  }
-
-  // {
-  // }
-  private static boolean server_body_3(PsiBuilder b, int l) {
     return true;
   }
 

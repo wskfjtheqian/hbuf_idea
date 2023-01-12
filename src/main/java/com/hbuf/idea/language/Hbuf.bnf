@@ -30,7 +30,7 @@
 	RBRACE = '}'
 	SEMICOLON = ';'
 	COLON = ':'
-	
+
     PACKAGE='package'
     IMPORT='import'
     ENUM='enum'
@@ -124,7 +124,8 @@ server-statement::= [annotation-group] SERVER ident-name [COLON extends] ASSIGN 
 }
 
 server-body::=LBRACE [func-list] RBRACE {
-
+   mixin="com.hbuf.idea.language.psi.impl.HbufServerBodyElementImpl"
+   implements="com.hbuf.idea.language.psi.HbufServerBodyElement"
 }
 
 func-list::= func-statement [func-list]{

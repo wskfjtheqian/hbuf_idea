@@ -7,5 +7,5 @@ import org.jetbrains.annotations.NotNull;
 
 public interface HbufServerBodyElement extends PsiElement {
     @NotNull
-    HbufServerFuncsElement getServerFuncList();
+    HbufServerFuncsElement getFuncList();
 }

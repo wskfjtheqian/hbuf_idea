@@ -70,16 +70,51 @@ public class HbufAnnotator implements Annotator {
             if (parent instanceof HbufExtendsElement) {
                 parent = parent.getParent();
                 if (parent instanceof HbufDataElement) {
-                    checkType(holder, element, CheckType.Data);
+                    checkDataExtends(holder, (HbufDataElement) parent, element);
                     return;
                 }
                 if (parent instanceof HbufServerElement) {
-                    checkType(holder, element, CheckType.Server);
+                    checkServerExtends(holder, (HbufServerElement) parent, element);
                     return;
                 }
             }
         }
     }
+
+    private void checkServerExtends(AnnotationHolder holder, HbufServerElement data, PsiElement element) {
+        if (data.getName().equals(element.getText())) {
+            holder.newAnnotation(HighlightSeverity.ERROR, "Cyclic inheritance involving '" + element.getText() + "'")
+                    .range(element)
+                    .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                    .create();
+            return;
+        }
+        if (HbufUtil.isData(element.getProject(), element.getText())) {
+            return;
+        }
+        holder.newAnnotation(HighlightSeverity.ERROR, element.getText() + " undefined symbol")
+                .range(element)
+                .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                .create();
+    }
+
+    private void checkDataExtends(AnnotationHolder holder, HbufDataElement data, PsiElement element) {
+        if (data.getName().equals(element.getText())) {
+            holder.newAnnotation(HighlightSeverity.ERROR, "Cyclic inheritance involving '" + element.getText() + "'")
+                    .range(element)
+                    .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                    .create();
+            return;
+        }
+        if (HbufUtil.isData(element.getProject(), element.getText())) {
+            return;
+        }
+        holder.newAnnotation(HighlightSeverity.ERROR, element.getText() + " undefined symbol")
+                .range(element)
+                .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                .create();
+    }
+
 
     private void checkEnumFieldName(AnnotationHolder holder, HbufEnumFieldElement parent, PsiElement element) {
         HbufEnumElement hee = HbufUtil.getEnumByChild(element);
@@ -105,7 +140,7 @@ public class HbufAnnotator implements Annotator {
         if (null == hee) {
             return;
         }
-        for (HbufServerFuncElement item : hee.getServerBody().getServerFuncList().getFields()) {
+        for (HbufServerFuncElement item : hee.getServerBody().getFuncList().getFields()) {
             if (item == parent) {
                 continue;
             }
