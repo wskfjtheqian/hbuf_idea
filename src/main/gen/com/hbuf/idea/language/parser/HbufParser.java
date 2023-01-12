@@ -184,7 +184,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [annotation-group] type-statement ident-name ASSIGN NUMBER
+  // [annotation-group] type-statement ident-name ASSIGN ident-id
   public static boolean data_field_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "data_field_statement")) return false;
     boolean r;
@@ -192,7 +192,8 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = data_field_statement_0(b, l + 1);
     r = r && type_statement(b, l + 1);
     r = r && ident_name(b, l + 1);
-    r = r && consumeTokens(b, 0, ASSIGN, NUMBER);
+    r = r && consumeToken(b, ASSIGN);
+    r = r && ident_id(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -205,7 +206,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [annotation-group] DATA ident-name [COLON extends] ASSIGN NUMBER data-body
+  // [annotation-group] DATA ident-name [COLON extends] ASSIGN ident-id data-body
   public static boolean data_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "data_statement")) return false;
     if (!nextTokenIs(b, "<data statement>", DATA, LBRACK)) return false;
@@ -215,7 +216,8 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = r && consumeToken(b, DATA);
     r = r && ident_name(b, l + 1);
     r = r && data_statement_3(b, l + 1);
-    r = r && consumeTokens(b, 0, ASSIGN, NUMBER);
+    r = r && consumeToken(b, ASSIGN);
+    r = r && ident_id(b, l + 1);
     r = r && data_body(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -288,7 +290,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [annotation-group] ident-name ASSIGN NUMBER
+  // [annotation-group] ident-name ASSIGN ident-id
   public static boolean enum_field_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_field_statement")) return false;
     if (!nextTokenIs(b, "<enum field statement>", ID, LBRACK)) return false;
@@ -296,7 +298,8 @@ public class HbufParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, ENUM_FIELD_STATEMENT, "<enum field statement>");
     r = enum_field_statement_0(b, l + 1);
     r = r && ident_name(b, l + 1);
-    r = r && consumeTokens(b, 0, ASSIGN, NUMBER);
+    r = r && consumeToken(b, ASSIGN);
+    r = r && ident_id(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -395,7 +398,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [annotation-group] func-type ident-name LPAREN func-param RPAREN ASSIGN NUMBER
+  // [annotation-group] func-type ident-name LPAREN func-param RPAREN ASSIGN ident-id
   public static boolean func_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_statement")) return false;
     if (!nextTokenIs(b, "<func statement>", ID, LBRACK)) return false;
@@ -406,7 +409,8 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = r && ident_name(b, l + 1);
     r = r && consumeToken(b, LPAREN);
     r = r && func_param(b, l + 1);
-    r = r && consumeTokens(b, 0, RPAREN, ASSIGN, NUMBER);
+    r = r && consumeTokens(b, 0, RPAREN, ASSIGN);
+    r = r && ident_id(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -440,6 +444,18 @@ public class HbufParser implements PsiParser, LightPsiParser {
       if (!empty_element_parsed_guard_(b, "hbufFile", c)) break;
     }
     return true;
+  }
+
+  /* ********************************************************** */
+  // NUMBER
+  public static boolean ident_id(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ident_id")) return false;
+    if (!nextTokenIs(b, NUMBER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, NUMBER);
+    exit_section_(b, m, IDENT_ID, r);
+    return r;
   }
 
   /* ********************************************************** */
@@ -515,7 +531,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [annotation-group] SERVER ident-name [COLON extends] ASSIGN NUMBER server-body
+  // [annotation-group] SERVER ident-name [COLON extends] ASSIGN ident-id server-body
   public static boolean server_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "server_statement")) return false;
     if (!nextTokenIs(b, "<server statement>", LBRACK, SERVER)) return false;
@@ -525,7 +541,8 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = r && consumeToken(b, SERVER);
     r = r && ident_name(b, l + 1);
     r = r && server_statement_3(b, l + 1);
-    r = r && consumeTokens(b, 0, ASSIGN, NUMBER);
+    r = r && consumeToken(b, ASSIGN);
+    r = r && ident_id(b, l + 1);
     r = r && server_body(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;

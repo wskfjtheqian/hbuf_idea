@@ -79,6 +79,54 @@ public class HbufAnnotator implements Annotator {
                 }
             }
         }
+
+        if (element instanceof HbufIdElement) {
+            PsiElement parent = element.getParent();
+            if (parent instanceof HbufEnumElement) {
+                return;
+            }
+            if (parent instanceof HbufDataElement) {
+                return;
+            }
+            if (parent instanceof HbufServerElement) {
+                return;
+            }
+            if (parent instanceof HbufDataFieldElement) {
+                checkDataFieldId(holder, (HbufDataFieldElement) parent, element);
+                return;
+            }
+            if (parent instanceof HbufEnumFieldElement) {
+                checkEnumFieldId(holder, (HbufEnumFieldElement) parent, element);
+                return;
+            }
+            if (parent instanceof HbufServerFuncElement) {
+                checkServerFuncId(holder, (HbufServerFuncElement) parent, element);
+                return;
+            }
+            if (parent instanceof HbufExtendsElement) {
+                parent = parent.getParent();
+                if (parent instanceof HbufDataElement) {
+                    checkDataExtends(holder, (HbufDataElement) parent, element);
+                    return;
+                }
+                if (parent instanceof HbufServerElement) {
+                    checkServerExtends(holder, (HbufServerElement) parent, element);
+                    return;
+                }
+            }
+        }
+    }
+
+    private void checkServerFuncId(AnnotationHolder holder, HbufServerFuncElement parent, PsiElement element) {
+
+    }
+
+    private void checkEnumFieldId(AnnotationHolder holder, HbufEnumFieldElement parent, PsiElement element) {
+
+    }
+
+    private void checkDataFieldId(AnnotationHolder holder, HbufDataFieldElement parent, PsiElement element) {
+
     }
 
     private void checkServerExtends(AnnotationHolder holder, HbufServerElement data, PsiElement element) {

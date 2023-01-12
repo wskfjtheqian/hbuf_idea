@@ -38,11 +38,6 @@ public abstract class HbufServerFuncElementImpl extends ASTWrapperPsiElement imp
     }
 
     @Override
-    public int getNo() {
-        return Integer.parseInt(getNumber().getText());
-    }
-
-    @Override
     public HbufFuncTypeElement getType() {
         return getFuncType();
     }
@@ -54,7 +49,12 @@ public abstract class HbufServerFuncElementImpl extends ASTWrapperPsiElement imp
 
     abstract PsiElement getIdentName();
 
-    abstract PsiElement getNumber();
+    abstract HbufIdElement getIdentId();
+
+    @Override
+    public int getNo() {
+        return getIdentId().getNo();
+    }
 
     abstract HbufFuncParam getFuncParam();
 

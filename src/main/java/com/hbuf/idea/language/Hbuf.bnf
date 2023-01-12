@@ -59,7 +59,12 @@ import-statement::=IMPORT STRING {
     implements="com.hbuf.idea.language.psi.HbufImportElement"
 }
 
-data-statement::= [annotation-group] DATA ident-name [COLON extends] ASSIGN NUMBER data-body{
+ident-id::=NUMBER{
+    mixin="com.hbuf.idea.language.psi.impl.HbufIdElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufIdElement"
+}
+
+data-statement::= [annotation-group] DATA ident-name [COLON extends] ASSIGN ident-id data-body{
     mixin="com.hbuf.idea.language.psi.impl.HbufDataElementImpl"
     implements="com.hbuf.idea.language.psi.HbufDataElement"
 }
@@ -79,7 +84,7 @@ data-field-list::= data-field-statement [data-field-list]{
     implements="com.hbuf.idea.language.psi.HbufDataFieldsElement"
 }
 
-data-field-statement::= [annotation-group] type-statement ident-name ASSIGN NUMBER{
+data-field-statement::= [annotation-group] type-statement ident-name ASSIGN ident-id{
     mixin="com.hbuf.idea.language.psi.impl.HbufDataFieldElementImpl"
     implements="com.hbuf.idea.language.psi.HbufDataFieldElement"
 }
@@ -118,7 +123,7 @@ annotation-list::= annotation-item [SEMICOLON annotation-list]  {
 annotation-item::= ID ASSIGN STRING {
 }
 
-server-statement::= [annotation-group] SERVER ident-name [COLON extends] ASSIGN NUMBER server-body{
+server-statement::= [annotation-group] SERVER ident-name [COLON extends] ASSIGN ident-id server-body{
     mixin="com.hbuf.idea.language.psi.impl.HbufServerElementImpl"
     implements="com.hbuf.idea.language.psi.HbufServerElement"
 }
@@ -133,7 +138,7 @@ func-list::= func-statement [func-list]{
     implements="com.hbuf.idea.language.psi.HbufServerFuncsElement"
 }
 
-func-statement::=[annotation-group] func-type ident-name LPAREN func-param RPAREN ASSIGN NUMBER{
+func-statement::=[annotation-group] func-type ident-name LPAREN func-param RPAREN ASSIGN ident-id{
     mixin="com.hbuf.idea.language.psi.impl.HbufServerFuncElementImpl"
     implements="com.hbuf.idea.language.psi.HbufServerFuncElement"
 }
@@ -168,7 +173,7 @@ enum-field-list::= enum-field-statement [enum-field-list]{
    implements="com.hbuf.idea.language.psi.HbufEnumFieldsElement"
 }
 
-enum-field-statement::= [annotation-group] ident-name ASSIGN NUMBER{
+enum-field-statement::= [annotation-group] ident-name ASSIGN ident-id{
     mixin="com.hbuf.idea.language.psi.impl.HbufEnumFieldElementImpl"
     implements="com.hbuf.idea.language.psi.HbufEnumFieldElement"
 }
