@@ -92,15 +92,15 @@ public class HbufAnnotator implements Annotator {
                 return;
             }
             if (parent instanceof HbufDataFieldElement) {
-                checkDataFieldId(holder, (HbufDataFieldElement) parent, element);
+                checkDataFieldId(holder, (HbufDataFieldElement) parent, (HbufIdElement) element);
                 return;
             }
             if (parent instanceof HbufEnumFieldElement) {
-                checkEnumFieldId(holder, (HbufEnumFieldElement) parent, element);
+                checkEnumFieldId(holder, (HbufEnumFieldElement) parent, (HbufIdElement) element);
                 return;
             }
             if (parent instanceof HbufServerFuncElement) {
-                checkServerFuncId(holder, (HbufServerFuncElement) parent, element);
+                checkServerFuncId(holder, (HbufServerFuncElement) parent, (HbufIdElement) element);
                 return;
             }
             if (parent instanceof HbufExtendsElement) {
@@ -117,16 +117,61 @@ public class HbufAnnotator implements Annotator {
         }
     }
 
-    private void checkServerFuncId(AnnotationHolder holder, HbufServerFuncElement parent, PsiElement element) {
-
+    private void checkServerFuncId(AnnotationHolder holder, HbufServerFuncElement parent, HbufIdElement element) {
+        HbufServerElement hse = HbufUtil.getServerByChild(element);
+        if (null == hse) {
+            return;
+        }
+        for (HbufServerFuncElement item : hse.getServerBody().getFuncList().getFields()) {
+            if (item == parent) {
+                continue;
+            }
+            if (item.getNo() == element.getNo()) {
+                holder.newAnnotation(HighlightSeverity.ERROR, "Func Id'" + element.getNo() + "' is already defined in the scope")
+                        .range(element)
+                        .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                        .create();
+                return;
+            }
+        }
     }
 
-    private void checkEnumFieldId(AnnotationHolder holder, HbufEnumFieldElement parent, PsiElement element) {
-
+    private void checkEnumFieldId(AnnotationHolder holder, HbufEnumFieldElement parent, HbufIdElement element) {
+        HbufEnumElement hee = HbufUtil.getEnumByChild(element);
+        if (null == hee) {
+            return;
+        }
+        for (HbufEnumFieldElement item : hee.getEnumBody().getEnumFieldList().getFields()) {
+            if (item == parent) {
+                continue;
+            }
+            if (item.getNo() == element.getNo()) {
+                holder.newAnnotation(HighlightSeverity.ERROR, "Field Id'" + element.getNo() + "' is already defined in the scope")
+                        .range(element)
+                        .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                        .create();
+                return;
+            }
+        }
     }
 
-    private void checkDataFieldId(AnnotationHolder holder, HbufDataFieldElement parent, PsiElement element) {
-
+    private void checkDataFieldId(AnnotationHolder holder, HbufDataFieldElement parent, HbufIdElement element) {
+        HbufDataElement hee = HbufUtil.getDataByChild(element);
+        if (null == hee) {
+            return;
+        }
+        for (HbufDataFieldElement item : hee.getDataBody().getDataFieldList().getFields()) {
+            if (item == parent) {
+                continue;
+            }
+            if (item.getNo() == element.getNo()) {
+                holder.newAnnotation(HighlightSeverity.ERROR, "Field Id'" + element.getNo() + "' is already defined in the scope")
+                        .range(element)
+                        .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                        .create();
+                return;
+            }
+        }
     }
 
     private void checkServerExtends(AnnotationHolder holder, HbufServerElement data, PsiElement element) {
