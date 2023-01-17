@@ -115,14 +115,18 @@ annotation-group::= annotation [annotation-group] {
 }
 
 annotation::=LBRACK ident-name COLON [annotation-list] RBRACK{
+    mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufAnnotationElement"
 }
 
-annotation-list::= annotation-item [SEMICOLON annotation-list]  {
-
+annotation-list::= annotation-field [SEMICOLON annotation-list]  {
+    mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationListElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufAnnotationListElement"
 }
 
-annotation-item::= ident-name ASSIGN STRING {
-
+annotation-field::= ident-name ASSIGN STRING {
+    mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationFieldElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufAnnotationFieldElement"
 }
 
 server-statement::= [annotation-group] SERVER ident-name [COLON extends] ASSIGN ident-id server-body{

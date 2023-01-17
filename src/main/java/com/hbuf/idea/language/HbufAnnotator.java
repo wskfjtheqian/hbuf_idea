@@ -47,6 +47,10 @@ public class HbufAnnotator implements Annotator {
 
         if (element instanceof HbufNameElement) {
             PsiElement parent = element.getParent();
+            if(parent instanceof HbufAnnotationFieldElement){
+                checkAnnotationFieldName(holder, (HbufAnnotationFieldElement) parent, element);
+                return;
+            }
             if (parent instanceof HbufEnumElement) {
                 checkEnumName(holder, (HbufEnumElement) parent, element);
                 return;
@@ -116,6 +120,25 @@ public class HbufAnnotator implements Annotator {
                     checkServerExtends(holder, (HbufServerElement) parent, element);
                     return;
                 }
+            }
+        }
+    }
+
+    private void checkAnnotationFieldName(AnnotationHolder holder, HbufAnnotationFieldElement parent, PsiElement element) {
+        HbufAnnotationElement hae = HbufUtil.getAnnotationByChild(element);
+        if (null == hae) {
+            return;
+        }
+        for (HbufAnnotationFieldElement item : hae.getAnnotationList().getFields()) {
+            if (item == parent) {
+                continue;
+            }
+            if (Objects.equals(item.getName(), element.getText())) {
+                holder.newAnnotation(HighlightSeverity.ERROR, "Field key'" + element.getText() + "' is already defined in the scope")
+                        .range(element)
+                        .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                        .create();
+                return;
             }
         }
     }

@@ -36,17 +36,17 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LBRACK ID COLON [annotation-list] RBRACK{
-  // }
+  // LBRACK ident-name COLON [annotation-list] RBRACK
   public static boolean annotation(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "annotation")) return false;
     if (!nextTokenIs(b, LBRACK)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, LBRACK, ID, COLON);
+    r = consumeToken(b, LBRACK);
+    r = r && ident_name(b, l + 1);
+    r = r && consumeToken(b, COLON);
     r = r && annotation_3(b, l + 1);
     r = r && consumeToken(b, RBRACK);
-    r = r && annotation_5(b, l + 1);
     exit_section_(b, m, ANNOTATION, r);
     return r;
   }
@@ -58,10 +58,17 @@ public class HbufParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // {
-  // }
-  private static boolean annotation_5(PsiBuilder b, int l) {
-    return true;
+  /* ********************************************************** */
+  // ident-name ASSIGN STRING
+  public static boolean annotation_field(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "annotation_field")) return false;
+    if (!nextTokenIs(b, ID)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = ident_name(b, l + 1);
+    r = r && consumeTokens(b, 0, ASSIGN, STRING);
+    exit_section_(b, m, ANNOTATION_FIELD, r);
+    return r;
   }
 
   /* ********************************************************** */
@@ -85,36 +92,14 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ID ASSIGN STRING {
-  // }
-  public static boolean annotation_item(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "annotation_item")) return false;
-    if (!nextTokenIs(b, ID)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, ID, ASSIGN, STRING);
-    r = r && annotation_item_3(b, l + 1);
-    exit_section_(b, m, ANNOTATION_ITEM, r);
-    return r;
-  }
-
-  // {
-  // }
-  private static boolean annotation_item_3(PsiBuilder b, int l) {
-    return true;
-  }
-
-  /* ********************************************************** */
-  // annotation-item [SEMICOLON annotation-list]  {
-  // }
+  // annotation-field [SEMICOLON annotation-list]
   public static boolean annotation_list(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "annotation_list")) return false;
     if (!nextTokenIs(b, ID)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = annotation_item(b, l + 1);
+    r = annotation_field(b, l + 1);
     r = r && annotation_list_1(b, l + 1);
-    r = r && annotation_list_2(b, l + 1);
     exit_section_(b, m, ANNOTATION_LIST, r);
     return r;
   }
@@ -135,12 +120,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = r && annotation_list(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
-  }
-
-  // {
-  // }
-  private static boolean annotation_list_2(PsiBuilder b, int l) {
-    return true;
   }
 
   /* ********************************************************** */

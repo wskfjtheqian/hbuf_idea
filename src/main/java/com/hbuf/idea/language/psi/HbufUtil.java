@@ -140,6 +140,13 @@ public class HbufUtil {
         return (HbufEnumElement) element;
     }
 
+   public static HbufAnnotationElement getAnnotationByChild(PsiElement element) {
+        while (null != element && !(element instanceof HbufAnnotationElement)) {
+            element = element.getParent();
+        }
+        return (HbufAnnotationElement) element;
+    }
+
     public static HbufDataElement getDataByChild(PsiElement element) {
         while (null != element && !(element instanceof HbufDataElement)) {
             element = element.getParent();
