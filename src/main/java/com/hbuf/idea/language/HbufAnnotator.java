@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class HbufAnnotator implements Annotator {
     @Override
@@ -47,12 +48,15 @@ public class HbufAnnotator implements Annotator {
         if (element instanceof HbufNameElement) {
             PsiElement parent = element.getParent();
             if (parent instanceof HbufEnumElement) {
+                checkEnumName(holder, (HbufEnumElement) parent, element);
                 return;
             }
             if (parent instanceof HbufDataElement) {
+                checkDataName(holder, (HbufDataElement) parent, element);
                 return;
             }
             if (parent instanceof HbufServerElement) {
+                checkServerName(holder, (HbufServerElement) parent, element);
                 return;
             }
             if (parent instanceof HbufDataFieldElement) {
@@ -82,13 +86,12 @@ public class HbufAnnotator implements Annotator {
 
         if (element instanceof HbufIdElement) {
             PsiElement parent = element.getParent();
-            if (parent instanceof HbufEnumElement) {
-                return;
-            }
             if (parent instanceof HbufDataElement) {
+                checkDataId(holder, (HbufDataElement) parent, (HbufIdElement) element);
                 return;
             }
             if (parent instanceof HbufServerElement) {
+                checkServerId(holder, (HbufServerElement) parent, (HbufIdElement) element);
                 return;
             }
             if (parent instanceof HbufDataFieldElement) {
@@ -113,6 +116,81 @@ public class HbufAnnotator implements Annotator {
                     checkServerExtends(holder, (HbufServerElement) parent, element);
                     return;
                 }
+            }
+        }
+    }
+
+    private void checkDataId(AnnotationHolder holder, HbufDataElement parent, HbufIdElement element) {
+        for (HbufDataElement item : HbufUtil.findChildrenOfAnyType(element.getProject(), HbufDataElement.class)) {
+            if (item == parent) {
+                continue;
+            }
+            if (item.getNo() == element.getNo()) {
+                holder.newAnnotation(HighlightSeverity.ERROR, "Data id'" + element.getText() + "' is already defined in the scope")
+                        .range(element)
+                        .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                        .create();
+                return;
+            }
+        }
+    }
+
+    private void checkServerId(AnnotationHolder holder, HbufServerElement parent, HbufIdElement element) {
+        for (HbufServerElement item : HbufUtil.findChildrenOfAnyType(element.getProject(), HbufServerElement.class)) {
+            if (item == parent) {
+                continue;
+            }
+            if (item.getNo() == element.getNo()) {
+                holder.newAnnotation(HighlightSeverity.ERROR, "Server id'" + element.getText() + "' is already defined in the scope")
+                        .range(element)
+                        .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                        .create();
+                return;
+            }
+        }
+    }
+
+    private void checkDataName(AnnotationHolder holder, HbufDataElement parent, PsiElement element) {
+        for (HbufDataElement item : HbufUtil.findChildrenOfAnyType(element.getProject(), HbufDataElement.class)) {
+            if (item == parent) {
+                continue;
+            }
+            if (Objects.equals(item.getName(), element.getText())) {
+                holder.newAnnotation(HighlightSeverity.ERROR, "Data name'" + element.getText() + "' is already defined in the scope")
+                        .range(element)
+                        .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                        .create();
+                return;
+            }
+        }
+    }
+
+    private void checkEnumName(AnnotationHolder holder, HbufEnumElement parent, PsiElement element) {
+        for (HbufEnumElement item : HbufUtil.findChildrenOfAnyType(element.getProject(), HbufEnumElement.class)) {
+            if (item == parent) {
+                continue;
+            }
+            if (Objects.equals(item.getName(), element.getText())) {
+                holder.newAnnotation(HighlightSeverity.ERROR, "Enum name'" + element.getText() + "' is already defined in the scope")
+                        .range(element)
+                        .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                        .create();
+                return;
+            }
+        }
+    }
+
+    private void checkServerName(AnnotationHolder holder, HbufServerElement parent, PsiElement element) {
+        for (HbufServerElement item : HbufUtil.findChildrenOfAnyType(element.getProject(), HbufServerElement.class)) {
+            if (item == parent) {
+                continue;
+            }
+            if (Objects.equals(item.getName(), element.getText())) {
+                holder.newAnnotation(HighlightSeverity.ERROR, "Server name'" + element.getText() + "' is already defined in the scope")
+                        .range(element)
+                        .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                        .create();
+                return;
             }
         }
     }

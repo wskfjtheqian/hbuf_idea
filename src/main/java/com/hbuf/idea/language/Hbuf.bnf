@@ -114,13 +114,15 @@ annotation-group::= annotation [annotation-group] {
     implements="com.hbuf.idea.language.psi.HbufAnnotationGroupElement"
 }
 
-annotation::=LBRACK ID COLON [annotation-list] RBRACK{
+annotation::=LBRACK ident-name COLON [annotation-list] RBRACK{
 }
 
 annotation-list::= annotation-item [SEMICOLON annotation-list]  {
+
 }
 
-annotation-item::= ID ASSIGN STRING {
+annotation-item::= ident-name ASSIGN STRING {
+
 }
 
 server-statement::= [annotation-group] SERVER ident-name [COLON extends] ASSIGN ident-id server-body{

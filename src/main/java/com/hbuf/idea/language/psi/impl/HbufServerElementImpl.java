@@ -1,6 +1,7 @@
 package com.hbuf.idea.language.psi.impl;
 
 import com.hbuf.idea.language.HbufIcons;
+import com.hbuf.idea.language.psi.HbufIdentId;
 import com.hbuf.idea.language.psi.HbufIdentName;
 import com.hbuf.idea.language.psi.HbufServerElement;
 import com.hbuf.idea.language.psi.HbufTypes;
@@ -41,11 +42,12 @@ public abstract class HbufServerElementImpl extends ASTWrapperPsiElement impleme
 
     abstract HbufIdentName getIdentName();
 
-    abstract PsiElement getNumber();
+    @NotNull
+    abstract HbufIdentId getIdentId();
 
     @Override
     public int getNo() {
-        return Integer.parseInt(getNumber().getText());
+        return getIdentId().getNo();
     }
 
     @Override

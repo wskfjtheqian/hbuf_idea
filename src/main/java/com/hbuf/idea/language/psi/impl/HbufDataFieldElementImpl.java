@@ -1,10 +1,7 @@
 package com.hbuf.idea.language.psi.impl;
 
 import com.hbuf.idea.language.HbufIcons;
-import com.hbuf.idea.language.psi.HbufDataFieldElement;
-import com.hbuf.idea.language.psi.HbufTypeStatement;
-import com.hbuf.idea.language.psi.HbufTypeStatementElement;
-import com.hbuf.idea.language.psi.HbufTypes;
+import com.hbuf.idea.language.psi.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.ide.projectView.PresentationData;
 import com.intellij.ide.util.PsiNavigationSupport;
@@ -46,13 +43,14 @@ public abstract class HbufDataFieldElementImpl extends ASTWrapperPsiElement impl
 
     abstract PsiElement getIdentName();
 
-    abstract PsiElement getNumber();
+    @NotNull
+    abstract HbufIdentId getIdentId();
 
     abstract HbufTypeStatement getTypeStatement();
 
     @Override
     public int getNo() {
-        return Integer.parseInt(getNumber().getText());
+        return getIdentId().getNo();
     }
 
     @Override

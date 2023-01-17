@@ -20,6 +20,19 @@ import java.util.Objects;
 
 public class HbufUtil {
 
+    public static <T extends PsiElement> Collection<T> findChildrenOfAnyType(Project project, Class<? extends T>... classes) {
+        List<T> result = new ArrayList<>();
+        Collection<VirtualFile> virtualFiles = FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(project));
+        for (VirtualFile virtualFile : virtualFiles) {
+            HbufFile hbufFile = (HbufFile) PsiManager.getInstance(project).findFile(virtualFile);
+            if (hbufFile != null) {
+                @NotNull Collection<T> properties = PsiTreeUtil.findChildrenOfAnyType(hbufFile, classes);
+                result.addAll(properties);
+            }
+        }
+        return result;
+    }
+
     public static List<PsiNameIdentifierOwner> findProperties(Project project, String key) {
         List<PsiNameIdentifierOwner> result = new ArrayList<>();
         Collection<VirtualFile> virtualFiles =
@@ -120,23 +133,23 @@ public class HbufUtil {
         return result;
     }
 
-    public static  HbufEnumElement getEnumByChild(PsiElement element){
-        while (null != element && !(element instanceof HbufEnumElement)){
+    public static HbufEnumElement getEnumByChild(PsiElement element) {
+        while (null != element && !(element instanceof HbufEnumElement)) {
             element = element.getParent();
         }
         return (HbufEnumElement) element;
     }
 
-    public static  HbufDataElement getDataByChild(PsiElement element){
-        while (null != element && !(element instanceof HbufDataElement)){
+    public static HbufDataElement getDataByChild(PsiElement element) {
+        while (null != element && !(element instanceof HbufDataElement)) {
             element = element.getParent();
         }
         return (HbufDataElement) element;
     }
 
 
-    public static  HbufServerElement getServerByChild(PsiElement element){
-        while (null != element && !(element instanceof HbufServerElement)){
+    public static HbufServerElement getServerByChild(PsiElement element) {
+        while (null != element && !(element instanceof HbufServerElement)) {
             element = element.getParent();
         }
         return (HbufServerElement) element;
