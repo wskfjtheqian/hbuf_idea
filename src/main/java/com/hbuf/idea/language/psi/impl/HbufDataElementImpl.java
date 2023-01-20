@@ -14,6 +14,9 @@ import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 
 public abstract class HbufDataElementImpl extends ASTWrapperPsiElement implements HbufDataElement {
     public HbufDataElementImpl(@NotNull ASTNode node) {
@@ -36,8 +39,6 @@ public abstract class HbufDataElementImpl extends ASTWrapperPsiElement implement
     public String getName() {
         return getIdentName().getText();
     }
-
-    abstract HbufIdentName getIdentName();
 
     abstract HbufIdElement getIdentId();
 
@@ -70,4 +71,17 @@ public abstract class HbufDataElementImpl extends ASTWrapperPsiElement implement
         data.setIcon(HbufIcons.DATA);
         return data;
     }
+
+    @NotNull
+    @Override
+    public Collection<HbufNameElement> getExtendList() {
+        if (null == getExtends()) {
+            return new ArrayList<>();
+        }
+        return getExtends().getExtendList();
+    }
+
+    @Nullable
+    abstract HbufExtendsElement getExtends();
+
 }

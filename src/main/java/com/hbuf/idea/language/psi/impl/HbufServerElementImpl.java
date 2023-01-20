@@ -1,10 +1,7 @@
 package com.hbuf.idea.language.psi.impl;
 
 import com.hbuf.idea.language.HbufIcons;
-import com.hbuf.idea.language.psi.HbufIdentId;
-import com.hbuf.idea.language.psi.HbufIdentName;
-import com.hbuf.idea.language.psi.HbufServerElement;
-import com.hbuf.idea.language.psi.HbufTypes;
+import com.hbuf.idea.language.psi.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.ide.projectView.PresentationData;
 import com.intellij.ide.util.PsiNavigationSupport;
@@ -16,6 +13,9 @@ import com.intellij.psi.impl.source.tree.LeafPsiElement;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 
 public abstract class HbufServerElementImpl extends ASTWrapperPsiElement implements HbufServerElement {
@@ -39,8 +39,6 @@ public abstract class HbufServerElementImpl extends ASTWrapperPsiElement impleme
     public String getName() {
         return getIdentName().getText();
     }
-
-    abstract HbufIdentName getIdentName();
 
     @NotNull
     abstract HbufIdentId getIdentId();
@@ -74,4 +72,16 @@ public abstract class HbufServerElementImpl extends ASTWrapperPsiElement impleme
         data.setIcon(HbufIcons.SERVER);
         return data;
     }
+
+    @NotNull
+    @Override
+    public Collection<HbufNameElement> getExtendList() {
+        if (null == getExtends()) {
+            return new ArrayList<>();
+        }
+        return getExtends().getExtendList();
+    }
+
+    @Nullable
+    abstract HbufExtendsElement getExtends();
 }

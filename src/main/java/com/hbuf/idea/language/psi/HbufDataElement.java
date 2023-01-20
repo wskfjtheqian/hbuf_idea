@@ -7,6 +7,8 @@ import com.intellij.psi.PsiNameIdentifierOwner;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
+
 public interface HbufDataElement extends PsiNameIdentifierOwner, NavigationItem {
 
     int getNo();
@@ -16,5 +18,10 @@ public interface HbufDataElement extends PsiNameIdentifierOwner, NavigationItem 
 
     @NotNull
     HbufDataBodyElement getDataBody();
+
+    @NotNull
+    Collection<HbufNameElement> getExtendList();
+
+    HbufIdentName getIdentName();
 
 }

@@ -43,8 +43,11 @@
 
         <psi.referenceContributor language="Hbuf"
                                   implementation="com.hbuf.idea.language.HbufReferenceContributor"/>
-        <lang.refactoringSupport language="Hbuf" implementationClass="com.hbuf.idea.language.HbufRefactoringSupportProvider"/>
+        <lang.refactoringSupport language="Hbuf"
+                                 implementationClass="com.hbuf.idea.language.HbufRefactoringSupportProvider"/>
         <annotator language="Hbuf" implementationClass="com.hbuf.idea.language.HbufAnnotator"/>
+        <codeInsight.lineMarkerProvider language="Hbuf"
+                implementationClass="com.hbuf.idea.language.HbufLineMarkerProvider"/>
     </extensions>
 
     <actions>

@@ -6,10 +6,17 @@ import com.intellij.navigation.NavigationItem;
 import com.intellij.psi.PsiNameIdentifierOwner;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
+
 public interface HbufServerElement extends PsiNameIdentifierOwner, NavigationItem {
 
     int getNo();
 
     @NotNull
     HbufServerBodyElement getServerBody();
+
+    @NotNull
+    Collection<HbufNameElement> getExtendList();
+
+    HbufIdentName getIdentName();
 }

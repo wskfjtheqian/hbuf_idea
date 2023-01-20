@@ -161,4 +161,53 @@ public class HbufUtil {
         }
         return (HbufServerElement) element;
     }
+
+    public static Collection<HbufDataElement> getDataSub(HbufDataElement element){
+        List<HbufDataElement> result = new ArrayList<>();
+        Collection<VirtualFile> virtualFiles = FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(element.getProject()));
+        for (VirtualFile virtualFile : virtualFiles) {
+            HbufFile hbufFile = (HbufFile) PsiManager.getInstance(element.getProject()).findFile(virtualFile);
+            if (hbufFile != null) {
+                @NotNull Collection<HbufDataElement> properties = PsiTreeUtil.findChildrenOfAnyType(hbufFile, HbufDataElement.class);
+                for(HbufDataElement data : properties){
+                    if(data == element){
+                        continue;
+                    }
+                    for(HbufNameElement item : data.getExtendList()){
+                        if(Objects.equals(item.getName(), element.getName())){
+                            result.add(data);
+                            result.addAll(getDataSub(data));
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    public static Collection<HbufServerElement> getServerSub(HbufServerElement element){
+        List<HbufServerElement> result = new ArrayList<>();
+        Collection<VirtualFile> virtualFiles = FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(element.getProject()));
+        for (VirtualFile virtualFile : virtualFiles) {
+            HbufFile hbufFile = (HbufFile) PsiManager.getInstance(element.getProject()).findFile(virtualFile);
+            if (hbufFile != null) {
+                @NotNull Collection<HbufServerElement> properties = PsiTreeUtil.findChildrenOfAnyType(hbufFile, HbufServerElement.class);
+                for(HbufServerElement data : properties){
+                    if(data == element){
+                        continue;
+                    }
+                    for(HbufNameElement item : data.getExtendList()){
+                        if(Objects.equals(item.getName(), element.getName())){
+                            result.add(data);
+                            result.addAll(getServerSub(data));
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
 }

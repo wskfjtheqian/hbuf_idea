@@ -13,4 +13,5 @@ public interface HbufAnnotationElement extends PsiNamedElement {
     HbufAnnotationListElement getAnnotationList();
 
 
+
 }
