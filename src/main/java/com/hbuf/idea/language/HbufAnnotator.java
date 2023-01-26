@@ -283,7 +283,7 @@ public class HbufAnnotator implements Annotator {
                     .create();
             return;
         }
-        if (HbufUtil.isData(element.getProject(), element.getText())) {
+        if (HbufUtil.isServer(element.getProject(), element.getText())) {
             return;
         }
         holder.newAnnotation(HighlightSeverity.ERROR, element.getText() + " undefined symbol")

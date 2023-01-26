@@ -13,7 +13,7 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileType name="Hbuf File" implementationClass="com.hbuf.idea.language.HbufFileType" fieldName="INSTANCE"
+        <fileType name="Hbuf" implementationClass="com.hbuf.idea.language.HbufFileType" fieldName="INSTANCE"
                   language="Hbuf" extensions="hbuf"/>
         <lang.parserDefinition language="Hbuf" implementationClass="com.hbuf.idea.language.HbufParserDefinition"/>
         <lang.syntaxHighlighterFactory language="Hbuf"
@@ -45,6 +45,7 @@
                                   implementation="com.hbuf.idea.language.HbufReferenceContributor"/>
         <lang.refactoringSupport language="Hbuf"
                                  implementationClass="com.hbuf.idea.language.HbufRefactoringSupportProvider"/>
+
         <annotator language="Hbuf" implementationClass="com.hbuf.idea.language.HbufAnnotator"/>
         <codeInsight.lineMarkerProvider language="Hbuf"
                 implementationClass="com.hbuf.idea.language.HbufLineMarkerProvider"/>

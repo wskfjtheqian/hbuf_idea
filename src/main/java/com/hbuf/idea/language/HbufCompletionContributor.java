@@ -1,5 +1,6 @@
 package com.hbuf.idea.language;
 
+import com.hbuf.idea.language.psi.HbufFuncTypeElement;
 import com.hbuf.idea.language.psi.HbufTypes;
 import com.intellij.codeInsight.completion.*;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
@@ -22,6 +23,15 @@ public class HbufCompletionContributor extends CompletionContributor {
                     }
                 }
         );
+        extend(CompletionType.BASIC, PlatformPatterns.psiElement(HbufFuncTypeElement.class), new CompletionProvider<CompletionParameters>() {
+            @Override
+            protected void addCompletions(@NotNull CompletionParameters completionParameters,
+                                          @NotNull ProcessingContext processingContext,
+                                          @NotNull CompletionResultSet completionResultSet) {
+                completionResultSet.addElement(LookupElementBuilder.create("Heqian"));
+
+            }
+        });
     }
 
 }

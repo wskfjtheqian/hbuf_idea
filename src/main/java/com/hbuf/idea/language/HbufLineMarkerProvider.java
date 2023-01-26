@@ -7,6 +7,7 @@ import com.hbuf.idea.language.psi.HbufUtil;
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerInfo;
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerProvider;
 import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder;
+import com.intellij.icons.AllIcons;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 
@@ -41,7 +42,7 @@ public class HbufLineMarkerProvider extends RelatedItemLineMarkerProvider {
                 NavigationGutterIconBuilder<PsiElement> builder = NavigationGutterIconBuilder.create(HbufIcons.FILE)
                         .setTargets(name)
                         .setTooltipText("Navigate to Server Inheritor");
-                result.add(builder.createLineMarkerInfo(((HbufDataElement) element).getIdentName()));
+                result.add(builder.createLineMarkerInfo(((HbufServerElement) element).getIdentName()));
                 return;
             }
         }

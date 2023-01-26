@@ -138,7 +138,7 @@ public class HbufStructureViewElement {
         public @NlsSafe
         @Nullable
         String getPresentableText() {
-            return getElement().getPresentation().getPresentableText();
+            return getElement().getPresentation().getPresentableText() + " = " + getElement().getNo();
         }
 
         @Override
