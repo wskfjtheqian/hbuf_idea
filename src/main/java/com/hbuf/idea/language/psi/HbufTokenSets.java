@@ -7,5 +7,7 @@ import com.intellij.psi.tree.TokenSet;
 public interface HbufTokenSets {
     TokenSet COMMENTS = TokenSet.create(HbufTypes.COMMENT);
 
-    TokenSet IDENTIFIERS = TokenSet.create(HbufTypes.ENUM, HbufTypes.DATA);
+    TokenSet IDENTIFIERS = TokenSet.create(HbufTypes.IDENT);
+
+    TokenSet STRING = TokenSet.create(HbufTypes.STRING);
 }

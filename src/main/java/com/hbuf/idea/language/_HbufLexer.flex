@@ -27,8 +27,8 @@ WHITE_SPACE=\s+
 
 TYPES=int8|int16|int32|int64|uint8|uint16|uint32|uint64|bool|float|double|decimal|string|date
 COMMENT="//".*
-NUMBER=[0-9]+(\.[0-9]*)?
-ID=[:letter:][a-zA-Z_0-9]*
+ID=[0-9]+(\.[0-9]*)?
+IDENT=[:letter:][a-zA-Z_0-9]*
 STRING=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
 
 %%
@@ -58,8 +58,8 @@ STRING=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
 
   {TYPES}            { return TYPES; }
   {COMMENT}          { return COMMENT; }
-  {NUMBER}           { return NUMBER; }
   {ID}               { return ID; }
+  {IDENT}            { return IDENT; }
   {STRING}           { return STRING; }
 
 }

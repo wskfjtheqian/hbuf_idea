@@ -2,8 +2,8 @@
 
 package com.hbuf.idea.language.psi;
 
-import com.intellij.psi.PsiNamedElement;
+import com.intellij.psi.PsiElement;
 
-public interface HbufFuncTypeElement extends PsiNamedElement {
-    String getType();
+public interface HbufFuncTypeElement extends PsiElement {
+    String getName();
 }

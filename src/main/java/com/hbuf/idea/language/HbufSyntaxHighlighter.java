@@ -61,7 +61,7 @@ public class HbufSyntaxHighlighter extends SyntaxHighlighterBase {
         if (tokenType.equals(HbufTypes.STRING)) {
             return STRING_KEYS;
         }
-        if (tokenType.equals(HbufTypes.NUMBER)) {
+        if (tokenType.equals(HbufTypes.ID)) {
             return NUMBER_KEYS;
         }
 
@@ -74,7 +74,7 @@ public class HbufSyntaxHighlighter extends SyntaxHighlighterBase {
             return KEY_KEYS;
         }
 
-        if (tokenType.equals(HbufTypes.ID)) {
+        if (tokenType.equals(HbufTypes.IDENT)) {
             return EMPTY_KEYS;
         }
 

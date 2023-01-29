@@ -1,7 +1,7 @@
 package com.hbuf.idea.language;
 
 import com.hbuf.idea.language.psi.HbufDataElement;
-import com.hbuf.idea.language.psi.HbufEnumElement;
+import com.hbuf.idea.language.psi.HbufNameElement;
 import com.hbuf.idea.language.psi.HbufTokenSets;
 import com.intellij.lang.cacheBuilder.DefaultWordsScanner;
 import com.intellij.lang.cacheBuilder.WordsScanner;
@@ -19,14 +19,12 @@ public class HbufFindUsagesProvider implements FindUsagesProvider {
         return new DefaultWordsScanner(new HbufLexerAdapter(),
                 HbufTokenSets.IDENTIFIERS,
                 HbufTokenSets.COMMENTS,
-                TokenSet.EMPTY);
+                HbufTokenSets.STRING);
     }
 
     @Override
     public boolean canFindUsagesFor(@NotNull PsiElement psiElement) {
-        return psiElement instanceof HbufEnumElement
-                || psiElement instanceof HbufDataElement
-                ;
+        return psiElement instanceof HbufNameElement;
     }
 
     @Nullable
@@ -38,18 +36,17 @@ public class HbufFindUsagesProvider implements FindUsagesProvider {
     @NotNull
     @Override
     public String getType(@NotNull PsiElement element) {
-        if (element instanceof HbufEnumElement) return "Hbuf enum";
-        if (element instanceof HbufDataElement) return "Hbuf data";
+        PsiElement parent = element.getParent();
+        if (parent instanceof HbufDataElement) return "Hbuf data";
         return "";
     }
 
     @NotNull
     @Override
     public String getDescriptiveName(@NotNull PsiElement element) {
-        if (element instanceof HbufEnumElement) {
-            return ((HbufEnumElement) element).getName();
-        } else if (element instanceof HbufDataElement) {
-            return ((HbufDataElement) element).getName();
+        PsiElement parent = element.getParent();
+        if (parent instanceof HbufDataElement) {
+            return ((HbufDataElement) parent).getName();
         }
         return "";
     }
@@ -57,12 +54,11 @@ public class HbufFindUsagesProvider implements FindUsagesProvider {
     @NotNull
     @Override
     public String getNodeText(@NotNull PsiElement element, boolean useFullName) {
-        if (element instanceof HbufEnumElement) {
-            return "Enum:" + ((HbufEnumElement) element).getName();
-        } else if (element instanceof HbufDataElement) {
-            return "Data:" + ((HbufDataElement) element).getName();
+        PsiElement parent = element.getParent();
+        if (parent instanceof HbufDataElement) {
+            return "Data:" + ((HbufDataElement) parent).getName();
         }
-        return "";
+        return element.getText();
     }
 
 }

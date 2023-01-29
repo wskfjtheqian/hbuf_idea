@@ -18,37 +18,35 @@
         <lang.parserDefinition language="Hbuf" implementationClass="com.hbuf.idea.language.HbufParserDefinition"/>
         <lang.syntaxHighlighterFactory language="Hbuf"
                                        implementationClass="com.hbuf.idea.language.HbufSyntaxHighlighterFactory"/>
-        <lang.foldingBuilder language="Hbuf"
-                             implementationClass="com.hbuf.idea.language.HbufFoldingBuilder"/>
-        <lang.psiStructureViewFactory language="Hbuf"
-                                      implementationClass="com.hbuf.idea.language.HbufStructureViewFactory"/>
-
+<!--        <lang.foldingBuilder language="Hbuf"-->
+<!--                             implementationClass="com.hbuf.idea.language.HbufFoldingBuilder"/>-->
+<!--        <lang.psiStructureViewFactory language="Hbuf"-->
+<!--                                      implementationClass="com.hbuf.idea.language.HbufStructureViewFactory"/>-->
+<!--        <psi.referenceContributor language="Hbuf"-->
+<!--                                          implementation="com.hbuf.idea.language.HbufReferenceContributor"/>-->
         <lang.findUsagesProvider language="Hbuf"
                                  implementationClass="com.hbuf.idea.language.HbufFindUsagesProvider"/>
-        <lang.commenter
-                language="Hbuf"
-                implementationClass="com.hbuf.idea.language.HbufCommenter"/>
+<!--        <lang.commenter-->
+<!--                language="Hbuf"-->
+<!--                implementationClass="com.hbuf.idea.language.HbufCommenter"/>-->
 
-        <spellchecker.support language="Hbuf"
-                              implementationClass="com.hbuf.idea.language.HbufSpellcheckingStrategy"/>
+<!--        <spellchecker.support language="Hbuf"-->
+<!--                              implementationClass="com.hbuf.idea.language.HbufSpellcheckingStrategy"/>-->
 
-        <completion.contributor
-                language="Hbuf"
-                implementationClass="com.hbuf.idea.language.HbufCompletionContributor"/>
+<!--        <completion.contributor-->
+<!--                language="Hbuf"-->
+<!--                implementationClass="com.hbuf.idea.language.HbufCompletionContributor"/>-->
 
         <!--        <lang.formatter language="Hbuf" -->
         <!--                        implementationClass="com.hbuf.idea.language.HbufFormattingModelBuilder"/>-->
 
-        <gotoSymbolContributor implementation="com.hbuf.idea.language.HbufChooseByNameContributor"/>
+<!--        <gotoSymbolContributor implementation="com.hbuf.idea.language.HbufChooseByNameContributor"/>-->
 
-        <psi.referenceContributor language="Hbuf"
-                                  implementation="com.hbuf.idea.language.HbufReferenceContributor"/>
-        <lang.refactoringSupport language="Hbuf"
-                                 implementationClass="com.hbuf.idea.language.HbufRefactoringSupportProvider"/>
 
-        <annotator language="Hbuf" implementationClass="com.hbuf.idea.language.HbufAnnotator"/>
-        <codeInsight.lineMarkerProvider language="Hbuf"
-                implementationClass="com.hbuf.idea.language.HbufLineMarkerProvider"/>
+
+<!--        <annotator language="Hbuf" implementationClass="com.hbuf.idea.language.HbufAnnotator"/>-->
+<!--        <codeInsight.lineMarkerProvider language="Hbuf"-->
+<!--                implementationClass="com.hbuf.idea.language.HbufLineMarkerProvider"/>-->
     </extensions>
 
     <actions>

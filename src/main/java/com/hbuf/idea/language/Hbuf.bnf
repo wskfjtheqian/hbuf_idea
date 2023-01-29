@@ -13,7 +13,7 @@
   elementTypeClass="com.hbuf.idea.language.psi.HbufElementType"
   tokenTypeClass="com.hbuf.idea.language.psi.HbufTokenType"
 
-  psiImplUtilClass="com.hbuf.idea.language.psi.impl.HbufPsiImplUtil"
+  psiImplUtilClass="com.hbuf.idea.language.psi.impl.HbufPisUtilImpl"
 
   tokens = [
     SPACE = ' '
@@ -39,8 +39,8 @@
     TYPES='regexp:int8|int16|int32|int64|uint8|uint16|uint32|uint64|bool|float|double|decimal|string|date'
 
     COMMENT='regexp://.*'
-    NUMBER='regexp:\d+(\.\d*)?'
-    ID='regexp:\p{Alpha}\w*'
+    ID='regexp:\d+(\.\d*)?'
+    IDENT='regexp:\p{Alpha}\w*'
     STRING="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
   ]
 }
@@ -49,137 +49,132 @@ hbufFile ::= item_*
 
 private item_ ::= (package-statement|import-statement|data-statement|server-statement|enum-statement|COMMENT|CRLF)
 
-package-statement ::=PACKAGE ID ASSIGN STRING{
-    mixin="com.hbuf.idea.language.psi.impl.HbufPackageElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufPackageElement"
+package-statement ::=PACKAGE ident-name ASSIGN STRING{
+//    mixin="com.hbuf.idea.language.psi.impl.HbufPackageElementImpl"
+//    implements="com.hbuf.idea.language.psi.HbufPackageElement"
 }
 
 import-statement::=IMPORT STRING {
-    mixin="com.hbuf.idea.language.psi.impl.HbufImportElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufImportElement"
+//    mixin="com.hbuf.idea.language.psi.impl.HbufImportElementImpl"
+//    implements="com.hbuf.idea.language.psi.HbufImportElement"
 }
 
-ident-id::=NUMBER{
-    mixin="com.hbuf.idea.language.psi.impl.HbufIdElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufIdElement"
+data-statement::= [annotation-group] DATA ident-name [COLON extends] ASSIGN ID data-body{
+     mixin="com.hbuf.idea.language.psi.impl.HbufDataElementImpl"
+     implements="com.hbuf.idea.language.psi.HbufDataElement"
 }
 
-data-statement::= [annotation-group] DATA ident-name [COLON extends] ASSIGN ident-id data-body{
-    mixin="com.hbuf.idea.language.psi.impl.HbufDataElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufDataElement"
+ident-name::= IDENT {
+     mixin="com.hbuf.idea.language.psi.impl.HbufNameElementImpl"
+     implements="com.hbuf.idea.language.psi.HbufNameElement"
 }
 
 extends::=ident-name [COMMA extends]{
-    mixin="com.hbuf.idea.language.psi.impl.HbufExtendsElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufExtendsElement"
+//    mixin="com.hbuf.idea.language.psi.impl.HbufExtendsElementImpl"
+//    implements="com.hbuf.idea.language.psi.HbufExtendsElement"
 }
 
 data-body::=LBRACE [data-field-list] RBRACE {
-    mixin="com.hbuf.idea.language.psi.impl.HbufDataBodyElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufDataBodyElement"
+//    mixin="com.hbuf.idea.language.psi.impl.HbufDataBodyElementImpl"
+//    implements="com.hbuf.idea.language.psi.HbufDataBodyElement"
 }
 
 data-field-list::= data-field-statement [data-field-list]{
-     mixin="com.hbuf.idea.language.psi.impl.HbufDataFieldsElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufDataFieldsElement"
+//     mixin="com.hbuf.idea.language.psi.impl.HbufDataFieldsElementImpl"
+//    implements="com.hbuf.idea.language.psi.HbufDataFieldsElement"
 }
 
-data-field-statement::= [annotation-group] type-statement ident-name ASSIGN ident-id{
-    mixin="com.hbuf.idea.language.psi.impl.HbufDataFieldElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufDataFieldElement"
+data-field-statement::= [annotation-group] type-statement ident-name ASSIGN ID{
+//    mixin="com.hbuf.idea.language.psi.impl.HbufDataFieldElementImpl"
+//    implements="com.hbuf.idea.language.psi.HbufDataFieldElement"
 }
 
-type-base::= TYPES|ID{
-    mixin="com.hbuf.idea.language.psi.impl.HbufTypeBaseElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufTypeBaseElement"
+type-base::= TYPES|ident-name{
+//    mixin="com.hbuf.idea.language.psi.impl.HbufTypeBaseElementImpl"
+//    implements="com.hbuf.idea.language.psi.HbufTypeBaseElement"
 }
 
 type-statement::=type-array|type-map|type-base [QUESTION] {
-    mixin="com.hbuf.idea.language.psi.impl.HbufTypeStatementElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufTypeStatementElement"
+//    mixin="com.hbuf.idea.language.psi.impl.HbufTypeStatementElementImpl"
+//    implements="com.hbuf.idea.language.psi.HbufTypeStatementElement"
 }
 
 type-array::=type-base [QUESTION] LBRACK RBRACK {
-    mixin="com.hbuf.idea.language.psi.impl.HbufTypeArrayElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufTypeArrayElement"
+//    mixin="com.hbuf.idea.language.psi.impl.HbufTypeArrayElementImpl"
+//    implements="com.hbuf.idea.language.psi.HbufTypeArrayElement"
 }
 
 type-map::=type-base [QUESTION] LSS TYPES GTR{
-    mixin="com.hbuf.idea.language.psi.impl.HbufTypeMapElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufTypeMapElement"
+//    mixin="com.hbuf.idea.language.psi.impl.HbufTypeMapElementImpl"
+//    implements="com.hbuf.idea.language.psi.HbufTypeMapElement"
 }
 
 annotation-group::= annotation [annotation-group] {
-    mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationGroupElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufAnnotationGroupElement"
+//    mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationGroupElementImpl"
+//    implements="com.hbuf.idea.language.psi.HbufAnnotationGroupElement"
 }
 
 annotation::=LBRACK ident-name COLON [annotation-list] RBRACK{
-    mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufAnnotationElement"
+//    mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationElementImpl"
+//    implements="com.hbuf.idea.language.psi.HbufAnnotationElement"
 }
 
 annotation-list::= annotation-field [SEMICOLON annotation-list]  {
-    mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationListElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufAnnotationListElement"
+//    mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationListElementImpl"
+//    implements="com.hbuf.idea.language.psi.HbufAnnotationListElement"
 }
 
 annotation-field::= ident-name ASSIGN STRING {
-    mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationFieldElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufAnnotationFieldElement"
+//    mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationFieldElementImpl"
+//    implements="com.hbuf.idea.language.psi.HbufAnnotationFieldElement"
 }
 
-server-statement::= [annotation-group] SERVER ident-name [COLON extends] ASSIGN ident-id server-body{
-    mixin="com.hbuf.idea.language.psi.impl.HbufServerElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufServerElement"
+server-statement::= [annotation-group] SERVER ident-name [COLON extends] ASSIGN ID server-body{
+//    mixin="com.hbuf.idea.language.psi.impl.HbufServerElementImpl"
+//    implements="com.hbuf.idea.language.psi.HbufServerElement"
 }
 
 server-body::=LBRACE [func-list] RBRACE {
-   mixin="com.hbuf.idea.language.psi.impl.HbufServerBodyElementImpl"
-   implements="com.hbuf.idea.language.psi.HbufServerBodyElement"
+//   mixin="com.hbuf.idea.language.psi.impl.HbufServerBodyElementImpl"
+//   implements="com.hbuf.idea.language.psi.HbufServerBodyElement"
 }
 
 func-list::= func-statement [func-list]{
-    mixin="com.hbuf.idea.language.psi.impl.HbufServerFuncsElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufServerFuncsElement"
+//    mixin="com.hbuf.idea.language.psi.impl.HbufServerFuncsElementImpl"
+//    implements="com.hbuf.idea.language.psi.HbufServerFuncsElement"
 }
 
-func-statement::=[annotation-group] func-type ident-name LPAREN func-param RPAREN ASSIGN ident-id{
-    mixin="com.hbuf.idea.language.psi.impl.HbufServerFuncElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufServerFuncElement"
+func-statement::=[annotation-group] func-type ident-name LPAREN func-param RPAREN ASSIGN ID{
+//    mixin="com.hbuf.idea.language.psi.impl.HbufServerFuncElementImpl"
+//    implements="com.hbuf.idea.language.psi.HbufServerFuncElement"
 }
 
-func-type::=ID{
+func-type::=ident-name{
     mixin="com.hbuf.idea.language.psi.impl.HbufFuncTypeElementImpl"
     implements="com.hbuf.idea.language.psi.HbufFuncTypeElement"
 }
 
-func-param::= func-type ID{
-    mixin="com.hbuf.idea.language.psi.impl.HbufFuncParamElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufFuncParamElement"
+func-param::= func-type ident-name{
+//    mixin="com.hbuf.idea.language.psi.impl.HbufFuncParamElementImpl"
+//    implements="com.hbuf.idea.language.psi.HbufFuncParamElement"
 }
 
 enum-statement::= [annotation-group] ENUM ident-name enum-body{
-    mixin="com.hbuf.idea.language.psi.impl.HbufEnumElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufEnumElement"
-}
-
-ident-name::=ID{
-    mixin="com.hbuf.idea.language.psi.impl.HbufNameElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufNameElement"
+//    mixin="com.hbuf.idea.language.psi.impl.HbufEnumElementImpl"
+//    implements="com.hbuf.idea.language.psi.HbufEnumElement"
 }
 
 enum-body::=LBRACE [enum-field-list] RBRACE {
-    mixin="com.hbuf.idea.language.psi.impl.HbufEnumBodyElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufEnumBodyElement"
+//    mixin="com.hbuf.idea.language.psi.impl.HbufEnumBodyElementImpl"
+//    implements="com.hbuf.idea.language.psi.HbufEnumBodyElement"
 }
 
 enum-field-list::= enum-field-statement [enum-field-list]{
-   mixin="com.hbuf.idea.language.psi.impl.HbufEnumFieldsElementImpl"
-   implements="com.hbuf.idea.language.psi.HbufEnumFieldsElement"
+//   mixin="com.hbuf.idea.language.psi.impl.HbufEnumFieldsElementImpl"
+//   implements="com.hbuf.idea.language.psi.HbufEnumFieldsElement"
 }
 
-enum-field-statement::= [annotation-group] ident-name ASSIGN ident-id{
-    mixin="com.hbuf.idea.language.psi.impl.HbufEnumFieldElementImpl"
-    implements="com.hbuf.idea.language.psi.HbufEnumFieldElement"
+enum-field-statement::= [annotation-group] ident-name ASSIGN ID{
+//    mixin="com.hbuf.idea.language.psi.impl.HbufEnumFieldElementImpl"
+//    implements="com.hbuf.idea.language.psi.HbufEnumFieldElement"
 }
