@@ -70,8 +70,8 @@ ident-name::= IDENT {
 }
 
 extends::=ident-name [COMMA extends]{
-//    mixin="com.hbuf.idea.language.psi.impl.HbufExtendsElementImpl"
-//    implements="com.hbuf.idea.language.psi.HbufExtendsElement"
+    mixin="com.hbuf.idea.language.psi.impl.HbufExtendsElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufExtendsElement"
 }
 
 data-body::=LBRACE [data-field-list] RBRACE {
@@ -90,8 +90,8 @@ data-field-statement::= [annotation-group] type-statement ident-name ASSIGN ID{
 }
 
 type-base::= TYPES|ident-name{
-//    mixin="com.hbuf.idea.language.psi.impl.HbufTypeBaseElementImpl"
-//    implements="com.hbuf.idea.language.psi.HbufTypeBaseElement"
+    mixin="com.hbuf.idea.language.psi.impl.HbufTypeElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufTypeElement"
 }
 
 type-statement::=type-array|type-map|type-base [QUESTION] {
@@ -130,8 +130,8 @@ annotation-field::= ident-name ASSIGN STRING {
 }
 
 server-statement::= [annotation-group] SERVER ident-name [COLON extends] ASSIGN ID server-body{
-//    mixin="com.hbuf.idea.language.psi.impl.HbufServerElementImpl"
-//    implements="com.hbuf.idea.language.psi.HbufServerElement"
+    mixin="com.hbuf.idea.language.psi.impl.HbufServerElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufServerElement"
 }
 
 server-body::=LBRACE [func-list] RBRACE {
@@ -160,8 +160,8 @@ func-param::= func-type ident-name{
 }
 
 enum-statement::= [annotation-group] ENUM ident-name enum-body{
-//    mixin="com.hbuf.idea.language.psi.impl.HbufEnumElementImpl"
-//    implements="com.hbuf.idea.language.psi.HbufEnumElement"
+    mixin="com.hbuf.idea.language.psi.impl.HbufEnumElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufEnumElement"
 }
 
 enum-body::=LBRACE [enum-field-list] RBRACE {

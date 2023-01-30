@@ -25,8 +25,6 @@ public abstract class HbufDataElementImpl extends ASTWrapperPsiElement implement
         return getIdentName().getName();
     }
 
-    @NotNull
-    abstract HbufNameElement getIdentName();
 
 
 }

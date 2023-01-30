@@ -22,8 +22,8 @@
 <!--                             implementationClass="com.hbuf.idea.language.HbufFoldingBuilder"/>-->
 <!--        <lang.psiStructureViewFactory language="Hbuf"-->
 <!--                                      implementationClass="com.hbuf.idea.language.HbufStructureViewFactory"/>-->
-<!--        <psi.referenceContributor language="Hbuf"-->
-<!--                                          implementation="com.hbuf.idea.language.HbufReferenceContributor"/>-->
+        <lang.refactoringSupport language="Hbuf"
+                                 implementationClass="com.hbuf.idea.language.HbufRefactoringSupportProvider"/>
         <lang.findUsagesProvider language="Hbuf"
                                  implementationClass="com.hbuf.idea.language.HbufFindUsagesProvider"/>
 <!--        <lang.commenter-->
