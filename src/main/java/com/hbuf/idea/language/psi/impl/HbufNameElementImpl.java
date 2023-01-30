@@ -111,7 +111,8 @@ public abstract class HbufNameElementImpl extends ASTWrapperPsiElement implement
 
         @Override
         public PsiElement handleElementRename(@NotNull String newElementName) throws IncorrectOperationException {
-            return super.handleElementRename(newElementName);
+            HbufNameElement newElement = HbufUtil.createNameElement(getProject(), newElementName);
+            return newElement;
         }
     }
 
@@ -156,6 +157,12 @@ public abstract class HbufNameElementImpl extends ASTWrapperPsiElement implement
             }
             return variants.toArray();
         }
+
+        @Override
+        public PsiElement handleElementRename(@NotNull String newElementName) throws IncorrectOperationException {
+            HbufNameElement newElement = HbufUtil.createNameElement(getProject(), newElementName);
+            return newElement;
+        }
     }
 
     class ServerPsiReference extends PsiReferenceBase<PsiElement> implements PsiPolyVariantReference {
@@ -197,6 +204,12 @@ public abstract class HbufNameElementImpl extends ASTWrapperPsiElement implement
                 }
             }
             return variants.toArray();
+        }
+
+        @Override
+        public PsiElement handleElementRename(@NotNull String newElementName) throws IncorrectOperationException {
+            HbufNameElement newElement = HbufUtil.createNameElement(getProject(), newElementName);
+            return newElement;
         }
     }
 
