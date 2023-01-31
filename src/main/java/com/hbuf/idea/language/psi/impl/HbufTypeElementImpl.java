@@ -8,8 +8,6 @@ import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static com.hbuf.idea.language.psi.HbufTypes.TYPES;
-
 public abstract class HbufTypeElementImpl extends ASTWrapperPsiElement implements HbufTypeElement {
 
     public HbufTypeElementImpl(@NotNull ASTNode node) {
@@ -33,6 +31,6 @@ public abstract class HbufTypeElementImpl extends ASTWrapperPsiElement implement
 
     @Override
     public boolean isNullable() {
-        return getNode().getLastChildNode().getText().equals("?");
+        return "?".equals(getNode().getLastChildNode().getText());
     }
 }

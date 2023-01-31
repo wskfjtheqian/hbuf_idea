@@ -145,8 +145,8 @@ func-list::= func-statement [func-list]{
 }
 
 func-statement::=[annotation-group] func-type ident-name LPAREN func-param RPAREN ASSIGN ID{
-//    mixin="com.hbuf.idea.language.psi.impl.HbufServerFuncElementImpl"
-//    implements="com.hbuf.idea.language.psi.HbufServerFuncElement"
+    mixin="com.hbuf.idea.language.psi.impl.HbufServerFuncElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufServerFuncElement"
 }
 
 func-type::=ident-name{
@@ -155,8 +155,8 @@ func-type::=ident-name{
 }
 
 func-param::= func-type ident-name{
-//    mixin="com.hbuf.idea.language.psi.impl.HbufFuncParamElementImpl"
-//    implements="com.hbuf.idea.language.psi.HbufFuncParamElement"
+    mixin="com.hbuf.idea.language.psi.impl.HbufFuncParamElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufFuncParamElement"
 }
 
 enum-statement::= [annotation-group] ENUM ident-name enum-body{

@@ -469,10 +469,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // func-type ident-name{
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufFuncParamElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufFuncParamElement"
-  // }
+  // func-type ident-name
   public static boolean func_param(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_param")) return false;
     if (!nextTokenIs(b, IDENT)) return false;
@@ -480,24 +477,12 @@ public class HbufParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = func_type(b, l + 1);
     r = r && ident_name(b, l + 1);
-    r = r && func_param_2(b, l + 1);
     exit_section_(b, m, FUNC_PARAM, r);
     return r;
   }
 
-  // {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufFuncParamElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufFuncParamElement"
-  // }
-  private static boolean func_param_2(PsiBuilder b, int l) {
-    return true;
-  }
-
   /* ********************************************************** */
-  // [annotation-group] func-type ident-name LPAREN func-param RPAREN ASSIGN ID{
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufServerFuncElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufServerFuncElement"
-  // }
+  // [annotation-group] func-type ident-name LPAREN func-param RPAREN ASSIGN ID
   public static boolean func_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_statement")) return false;
     if (!nextTokenIs(b, "<func statement>", IDENT, LBRACK)) return false;
@@ -509,7 +494,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = r && consumeToken(b, LPAREN);
     r = r && func_param(b, l + 1);
     r = r && consumeTokens(b, 0, RPAREN, ASSIGN, ID);
-    r = r && func_statement_8(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -518,14 +502,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
   private static boolean func_statement_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_statement_0")) return false;
     annotation_group(b, l + 1);
-    return true;
-  }
-
-  // {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufServerFuncElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufServerFuncElement"
-  // }
-  private static boolean func_statement_8(PsiBuilder b, int l) {
     return true;
   }
 

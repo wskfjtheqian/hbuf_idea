@@ -16,4 +16,6 @@ public interface HbufTypeMapElement extends PsiElement {
 
     @NotNull
     String getKey();
+
+    boolean isNullable();
 }

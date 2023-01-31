@@ -18,4 +18,8 @@ public abstract class HbufTypeMapElementImpl extends ASTWrapperPsiElement implem
         return getTypes().getText();
     }
 
+    @Override
+    public boolean isNullable() {
+        return "?".equals(getNode().getLastChildNode().getText());
+    }
 }

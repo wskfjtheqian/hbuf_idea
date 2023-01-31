@@ -8,5 +8,5 @@ public interface HbufTypeArrayElement extends PsiElement {
     @NotNull
     HbufTypeElement getTypeBase();
 
-
+    boolean isNullable();
 }

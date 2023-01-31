@@ -41,7 +41,7 @@ public class HbufStructureViewElement {
                 } else if (element instanceof HbufDataElement) {
                     treeElements.add(new HbufTreeDataElement((HbufDataElement) element));
                 } else if (element instanceof HbufServerElement) {
-//                    treeElements.add(new HbufTreeServerElement((HbufServerElement) element));
+                    treeElements.add(new HbufTreeServerElement((HbufServerElement) element));
                 }
 
             }
@@ -110,7 +110,7 @@ public class HbufStructureViewElement {
 
         @Override
         public Icon getIcon(boolean open) {
-            return HbufIcons.ENUM;
+            return HbufIcons.FIELD;
         }
     }
 
@@ -166,9 +166,9 @@ public class HbufStructureViewElement {
             HbufFieldTypeElement type = getElement().getTypeStatement();
             String text = "";
             if (null != type.getTypeMap()) {
-                text = type.getTypeMap().getTypeBase().getName() + (type.getTypeBase().isNullable() ? "?" : "") + "<" + type.getTypeMap().getKey() + ">";
+                text = type.getTypeMap().getTypeBase().getName() + (type.getTypeMap().getTypeBase().isNullable() ? "?" : "") + "<" + type.getTypeMap().getKey() + ">" + (type.getTypeMap().isNullable() ? "?" : "");
             } else if (null != type.getTypeArray()) {
-                text = type.getTypeArray().getTypeBase().getName() + (type.getTypeBase().isNullable() ? "?" : "") + "[]";
+                text = type.getTypeArray().getTypeBase().getName() + (type.getTypeArray().getTypeBase().isNullable() ? "?" : "") + "[]" + (type.getTypeArray().isNullable() ? "?" : "");
             } else if (null != type.getTypeBase()) {
                 text = type.getTypeBase().getName() + (type.getTypeBase().isNullable() ? "?" : "");
             }
@@ -179,69 +179,69 @@ public class HbufStructureViewElement {
 
         @Override
         public Icon getIcon(boolean open) {
-            return HbufIcons.DATA;
+            return HbufIcons.FIELD;
         }
     }
-//
-//    class HbufTreeServerElement extends PsiTreeElementBase<HbufServerElement> {
-//
-//        protected HbufTreeServerElement(HbufServerElement psiElement) {
-//            super(psiElement);
-//        }
-//
-//        @Override
-//        public @NotNull
-//        Collection<StructureViewTreeElement> getChildrenBase() {
-//            Collection<PsiElement> elements = PsiTreeUtil.findChildrenOfAnyType(getElement(),
-//                    HbufServerFuncElement.class
-//            );
-//
-//            List<StructureViewTreeElement> treeElements = new ArrayList<>(elements.size());
-//            for (PsiElement element : elements) {
-//                treeElements.add(new HbufTreeServerFuncElement((HbufServerFuncElement) element));
-//            }
-//            return treeElements;
-//        }
-//
-//        @Override
-//        public @NlsSafe
-//        @Nullable
-//        String getPresentableText() {
-//            return getElement().getPresentation().getPresentableText() + " = " + getElement().getNo();
-//        }
-//
-//        @Override
-//        public Icon getIcon(boolean open) {
-//            return getElement().getPresentation().getIcon(open);
-//        }
-//    }
-//
-//    private class HbufTreeServerFuncElement extends PsiTreeElementBase<HbufServerFuncElement> {
-//        public HbufTreeServerFuncElement(HbufServerFuncElement element) {
-//            super(element);
-//        }
-//
-//        @Override
-//        public @NotNull
-//        Collection<StructureViewTreeElement> getChildrenBase() {
-//            List<StructureViewTreeElement> treeElements = new ArrayList<>();
-//            return treeElements;
-//        }
-//
-//        @Override
-//        public @NlsSafe
-//        @Nullable
-//        String getPresentableText() {
-//            return getElement().getPresentation().getPresentableText() +
-//                    "(" + getElement().getParam().getFuncType().getType() +
-//                    "): " + getElement().getType().getType() +
-//                    " = " + getElement().getNo();
-//        }
-//
-//        @Override
-//        public Icon getIcon(boolean open) {
-//            return getElement().getPresentation().getIcon(open);
-//        }
-//    }
+
+    class HbufTreeServerElement extends PsiTreeElementBase<HbufServerElement> {
+
+        protected HbufTreeServerElement(HbufServerElement psiElement) {
+            super(psiElement);
+        }
+
+        @Override
+        public @NotNull
+        Collection<StructureViewTreeElement> getChildrenBase() {
+            Collection<PsiElement> elements = PsiTreeUtil.findChildrenOfAnyType(getElement(),
+                    HbufServerFuncElement.class
+            );
+
+            List<StructureViewTreeElement> treeElements = new ArrayList<>(elements.size());
+            for (PsiElement element : elements) {
+                treeElements.add(new HbufTreeServerFuncElement((HbufServerFuncElement) element));
+            }
+            return treeElements;
+        }
+
+        @Override
+        public @NlsSafe
+        @Nullable
+        String getPresentableText() {
+            return getElement().getName() + " = " + getElement().getNumber();
+        }
+
+        @Override
+        public Icon getIcon(boolean open) {
+            return HbufIcons.SERVER;
+        }
+    }
+
+    private class HbufTreeServerFuncElement extends PsiTreeElementBase<HbufServerFuncElement> {
+        public HbufTreeServerFuncElement(HbufServerFuncElement element) {
+            super(element);
+        }
+
+        @Override
+        public @NotNull
+        Collection<StructureViewTreeElement> getChildrenBase() {
+            List<StructureViewTreeElement> treeElements = new ArrayList<>();
+            return treeElements;
+        }
+
+        @Override
+        public @NlsSafe
+        @Nullable
+        String getPresentableText() {
+            return getElement().getName() +
+                    "(" + getElement().getFuncParam().getFuncType().getName() +
+                    "): " + getElement().getFuncType().getName() +
+                    " = " + getElement().getNumber();
+        }
+
+        @Override
+        public Icon getIcon(boolean open) {
+            return HbufIcons.FUNC;
+        }
+    }
 
 }
