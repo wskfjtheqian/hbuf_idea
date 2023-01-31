@@ -1,18 +1,15 @@
 package com.hbuf.idea.language.psi.impl;
 
 import com.hbuf.idea.language.psi.HbufDataElement;
+import com.hbuf.idea.language.psi.HbufExtendsElement;
 import com.hbuf.idea.language.psi.HbufNameElement;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
-import com.intellij.openapi.util.NlsSafe;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiPolyVariantReference;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.ResolveResult;
-import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 public abstract class HbufDataElementImpl extends ASTWrapperPsiElement implements HbufDataElement {
 
@@ -28,9 +25,19 @@ public abstract class HbufDataElementImpl extends ASTWrapperPsiElement implement
     @NotNull
     @Override
     public long getNumber() {
-        return Long.parseLong(getId().getText());
+        return getId().getId();
     }
 
+    @Nullable
+    abstract HbufExtendsElement getExtends();
+
     @NotNull
-    public abstract PsiElement getId();
+    @Override
+    public Collection<HbufNameElement> getExtendList() {
+        if (null == getExtends()) {
+            return new ArrayList<>();
+        }
+        return getExtends().getExtendList();
+    }
+
 }

@@ -1,10 +1,8 @@
 package com.hbuf.idea.language.psi.impl;
 
 import com.hbuf.idea.language.psi.HbufDataFieldElement;
-import com.hbuf.idea.language.psi.HbufEnumFieldElement;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class HbufDataFieldElementImpl extends ASTWrapperPsiElement implements HbufDataFieldElement {
@@ -21,9 +19,7 @@ public abstract class HbufDataFieldElementImpl extends ASTWrapperPsiElement impl
     @NotNull
     @Override
     public long getNumber() {
-        return Long.parseLong(getId().getText());
+        return getId().getId();
     }
 
-    @NotNull
-    public abstract PsiElement getId();
 }

@@ -675,7 +675,7 @@ public class _HbufLexer implements FlexLexer {
             // fall through
           case 29: break;
           case 4: 
-            { return ID;
+            { return NUMBER;
             } 
             // fall through
           case 30: break;

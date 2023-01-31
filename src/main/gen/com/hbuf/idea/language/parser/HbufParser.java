@@ -36,10 +36,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LBRACK ident-name COLON [annotation-list] RBRACK{
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufAnnotationElement"
-  // }
+  // LBRACK ident-name COLON [annotation-list] RBRACK
   public static boolean annotation(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "annotation")) return false;
     if (!nextTokenIs(b, LBRACK)) return false;
@@ -50,7 +47,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = r && consumeToken(b, COLON);
     r = r && annotation_3(b, l + 1);
     r = r && consumeToken(b, RBRACK);
-    r = r && annotation_5(b, l + 1);
     exit_section_(b, m, ANNOTATION, r);
     return r;
   }
@@ -62,19 +58,8 @@ public class HbufParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufAnnotationElement"
-  // }
-  private static boolean annotation_5(PsiBuilder b, int l) {
-    return true;
-  }
-
   /* ********************************************************** */
-  // ident-name ASSIGN STRING {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationFieldElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufAnnotationFieldElement"
-  // }
+  // ident-name ASSIGN STRING
   public static boolean annotation_field(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "annotation_field")) return false;
     if (!nextTokenIs(b, IDENT)) return false;
@@ -82,24 +67,12 @@ public class HbufParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = ident_name(b, l + 1);
     r = r && consumeTokens(b, 0, ASSIGN, STRING);
-    r = r && annotation_field_3(b, l + 1);
     exit_section_(b, m, ANNOTATION_FIELD, r);
     return r;
   }
 
-  // {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationFieldElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufAnnotationFieldElement"
-  // }
-  private static boolean annotation_field_3(PsiBuilder b, int l) {
-    return true;
-  }
-
   /* ********************************************************** */
-  // annotation [annotation-group] {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationGroupElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufAnnotationGroupElement"
-  // }
+  // annotation [annotation-group]
   public static boolean annotation_group(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "annotation_group")) return false;
     if (!nextTokenIs(b, LBRACK)) return false;
@@ -107,7 +80,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = annotation(b, l + 1);
     r = r && annotation_group_1(b, l + 1);
-    r = r && annotation_group_2(b, l + 1);
     exit_section_(b, m, ANNOTATION_GROUP, r);
     return r;
   }
@@ -119,19 +91,8 @@ public class HbufParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationGroupElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufAnnotationGroupElement"
-  // }
-  private static boolean annotation_group_2(PsiBuilder b, int l) {
-    return true;
-  }
-
   /* ********************************************************** */
-  // annotation-field [SEMICOLON annotation-list]  {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationListElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufAnnotationListElement"
-  // }
+  // annotation-field [SEMICOLON annotation-list]
   public static boolean annotation_list(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "annotation_list")) return false;
     if (!nextTokenIs(b, IDENT)) return false;
@@ -139,7 +100,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = annotation_field(b, l + 1);
     r = r && annotation_list_1(b, l + 1);
-    r = r && annotation_list_2(b, l + 1);
     exit_section_(b, m, ANNOTATION_LIST, r);
     return r;
   }
@@ -162,59 +122,28 @@ public class HbufParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationListElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufAnnotationListElement"
-  // }
-  private static boolean annotation_list_2(PsiBuilder b, int l) {
-    return true;
-  }
-
   /* ********************************************************** */
-  // LBRACE [data-field-list] RBRACE {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufDataBodyElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufDataBodyElement"
-  // }
+  // LBRACE data-field-list RBRACE
   public static boolean data_body(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "data_body")) return false;
     if (!nextTokenIs(b, LBRACE)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, LBRACE);
-    r = r && data_body_1(b, l + 1);
+    r = r && data_field_list(b, l + 1);
     r = r && consumeToken(b, RBRACE);
-    r = r && data_body_3(b, l + 1);
     exit_section_(b, m, DATA_BODY, r);
     return r;
   }
 
-  // [data-field-list]
-  private static boolean data_body_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "data_body_1")) return false;
-    data_field_list(b, l + 1);
-    return true;
-  }
-
-  // {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufDataBodyElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufDataBodyElement"
-  // }
-  private static boolean data_body_3(PsiBuilder b, int l) {
-    return true;
-  }
-
   /* ********************************************************** */
-  // data-field-statement [data-field-list]{
-  // //     mixin="com.hbuf.idea.language.psi.impl.HbufDataFieldsElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufDataFieldsElement"
-  // }
+  // data-field-statement [data-field-list]
   public static boolean data_field_list(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "data_field_list")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, DATA_FIELD_LIST, "<data field list>");
     r = data_field_statement(b, l + 1);
     r = r && data_field_list_1(b, l + 1);
-    r = r && data_field_list_2(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -226,16 +155,8 @@ public class HbufParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // {
-  // //     mixin="com.hbuf.idea.language.psi.impl.HbufDataFieldsElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufDataFieldsElement"
-  // }
-  private static boolean data_field_list_2(PsiBuilder b, int l) {
-    return true;
-  }
-
   /* ********************************************************** */
-  // [annotation-group] type-statement ident-name ASSIGN ID
+  // [annotation-group] type-statement ident-name ASSIGN id
   public static boolean data_field_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "data_field_statement")) return false;
     boolean r;
@@ -243,7 +164,8 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = data_field_statement_0(b, l + 1);
     r = r && type_statement(b, l + 1);
     r = r && ident_name(b, l + 1);
-    r = r && consumeTokens(b, 0, ASSIGN, ID);
+    r = r && consumeToken(b, ASSIGN);
+    r = r && id(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -256,7 +178,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [annotation-group] DATA ident-name [COLON extends] ASSIGN ID data-body
+  // [annotation-group] DATA ident-name [COLON extends] ASSIGN id data-body
   public static boolean data_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "data_statement")) return false;
     if (!nextTokenIs(b, "<data statement>", DATA, LBRACK)) return false;
@@ -266,7 +188,8 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = r && consumeToken(b, DATA);
     r = r && ident_name(b, l + 1);
     r = r && data_statement_3(b, l + 1);
-    r = r && consumeTokens(b, 0, ASSIGN, ID);
+    r = r && consumeToken(b, ASSIGN);
+    r = r && id(b, l + 1);
     r = r && data_body(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -298,43 +221,21 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LBRACE [enum-field-list] RBRACE {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufEnumBodyElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufEnumBodyElement"
-  // }
+  // LBRACE enum-field-list RBRACE
   public static boolean enum_body(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_body")) return false;
     if (!nextTokenIs(b, LBRACE)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, LBRACE);
-    r = r && enum_body_1(b, l + 1);
+    r = r && enum_field_list(b, l + 1);
     r = r && consumeToken(b, RBRACE);
-    r = r && enum_body_3(b, l + 1);
     exit_section_(b, m, ENUM_BODY, r);
     return r;
   }
 
-  // [enum-field-list]
-  private static boolean enum_body_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "enum_body_1")) return false;
-    enum_field_list(b, l + 1);
-    return true;
-  }
-
-  // {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufEnumBodyElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufEnumBodyElement"
-  // }
-  private static boolean enum_body_3(PsiBuilder b, int l) {
-    return true;
-  }
-
   /* ********************************************************** */
-  // enum-field-statement [enum-field-list]{
-  // //   mixin="com.hbuf.idea.language.psi.impl.HbufEnumFieldsElementImpl"
-  // //   implements="com.hbuf.idea.language.psi.HbufEnumFieldsElement"
-  // }
+  // enum-field-statement [enum-field-list]
   public static boolean enum_field_list(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_field_list")) return false;
     if (!nextTokenIs(b, "<enum field list>", IDENT, LBRACK)) return false;
@@ -342,7 +243,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, ENUM_FIELD_LIST, "<enum field list>");
     r = enum_field_statement(b, l + 1);
     r = r && enum_field_list_1(b, l + 1);
-    r = r && enum_field_list_2(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -354,16 +254,8 @@ public class HbufParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // {
-  // //   mixin="com.hbuf.idea.language.psi.impl.HbufEnumFieldsElementImpl"
-  // //   implements="com.hbuf.idea.language.psi.HbufEnumFieldsElement"
-  // }
-  private static boolean enum_field_list_2(PsiBuilder b, int l) {
-    return true;
-  }
-
   /* ********************************************************** */
-  // [annotation-group] ident-name ASSIGN ID
+  // [annotation-group] ident-name ASSIGN id
   public static boolean enum_field_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_field_statement")) return false;
     if (!nextTokenIs(b, "<enum field statement>", IDENT, LBRACK)) return false;
@@ -371,7 +263,8 @@ public class HbufParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, ENUM_FIELD_STATEMENT, "<enum field statement>");
     r = enum_field_statement_0(b, l + 1);
     r = r && ident_name(b, l + 1);
-    r = r && consumeTokens(b, 0, ASSIGN, ID);
+    r = r && consumeToken(b, ASSIGN);
+    r = r && id(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -437,10 +330,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // func-statement [func-list]{
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufServerFuncsElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufServerFuncsElement"
-  // }
+  // func-statement [func-list]
   public static boolean func_list(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_list")) return false;
     if (!nextTokenIs(b, "<func list>", IDENT, LBRACK)) return false;
@@ -448,7 +338,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, FUNC_LIST, "<func list>");
     r = func_statement(b, l + 1);
     r = r && func_list_1(b, l + 1);
-    r = r && func_list_2(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -457,14 +346,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
   private static boolean func_list_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_list_1")) return false;
     func_list(b, l + 1);
-    return true;
-  }
-
-  // {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufServerFuncsElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufServerFuncsElement"
-  // }
-  private static boolean func_list_2(PsiBuilder b, int l) {
     return true;
   }
 
@@ -482,7 +363,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [annotation-group] func-type ident-name LPAREN func-param RPAREN ASSIGN ID
+  // [annotation-group] func-type ident-name LPAREN func-param RPAREN ASSIGN id
   public static boolean func_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_statement")) return false;
     if (!nextTokenIs(b, "<func statement>", IDENT, LBRACK)) return false;
@@ -493,7 +374,8 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = r && ident_name(b, l + 1);
     r = r && consumeToken(b, LPAREN);
     r = r && func_param(b, l + 1);
-    r = r && consumeTokens(b, 0, RPAREN, ASSIGN, ID);
+    r = r && consumeTokens(b, 0, RPAREN, ASSIGN);
+    r = r && id(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -530,6 +412,18 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // NUMBER
+  public static boolean id(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "id")) return false;
+    if (!nextTokenIs(b, NUMBER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, NUMBER);
+    exit_section_(b, m, ID, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // IDENT
   public static boolean ident_name(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ident_name")) return false;
@@ -542,27 +436,15 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IMPORT STRING {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufImportElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufImportElement"
-  // }
+  // IMPORT STRING
   public static boolean import_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "import_statement")) return false;
     if (!nextTokenIs(b, IMPORT)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, IMPORT, STRING);
-    r = r && import_statement_2(b, l + 1);
     exit_section_(b, m, IMPORT_STATEMENT, r);
     return r;
-  }
-
-  // {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufImportElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufImportElement"
-  // }
-  private static boolean import_statement_2(PsiBuilder b, int l) {
-    return true;
   }
 
   /* ********************************************************** */
@@ -581,36 +463,19 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // PACKAGE ident-name ASSIGN STRING{
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufPackageElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufPackageElement"
-  // }
+  // PACKAGE IDENT ASSIGN STRING
   public static boolean package_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "package_statement")) return false;
     if (!nextTokenIs(b, PACKAGE)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, PACKAGE);
-    r = r && ident_name(b, l + 1);
-    r = r && consumeTokens(b, 0, ASSIGN, STRING);
-    r = r && package_statement_4(b, l + 1);
+    r = consumeTokens(b, 0, PACKAGE, IDENT, ASSIGN, STRING);
     exit_section_(b, m, PACKAGE_STATEMENT, r);
     return r;
   }
 
-  // {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufPackageElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufPackageElement"
-  // }
-  private static boolean package_statement_4(PsiBuilder b, int l) {
-    return true;
-  }
-
   /* ********************************************************** */
-  // LBRACE [func-list] RBRACE {
-  // //   mixin="com.hbuf.idea.language.psi.impl.HbufServerBodyElementImpl"
-  // //   implements="com.hbuf.idea.language.psi.HbufServerBodyElement"
-  // }
+  // LBRACE [func-list] RBRACE
   public static boolean server_body(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "server_body")) return false;
     if (!nextTokenIs(b, LBRACE)) return false;
@@ -619,7 +484,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, LBRACE);
     r = r && server_body_1(b, l + 1);
     r = r && consumeToken(b, RBRACE);
-    r = r && server_body_3(b, l + 1);
     exit_section_(b, m, SERVER_BODY, r);
     return r;
   }
@@ -631,16 +495,8 @@ public class HbufParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // {
-  // //   mixin="com.hbuf.idea.language.psi.impl.HbufServerBodyElementImpl"
-  // //   implements="com.hbuf.idea.language.psi.HbufServerBodyElement"
-  // }
-  private static boolean server_body_3(PsiBuilder b, int l) {
-    return true;
-  }
-
   /* ********************************************************** */
-  // [annotation-group] SERVER ident-name [COLON extends] ASSIGN ID server-body
+  // [annotation-group] SERVER ident-name [COLON extends] ASSIGN id server-body
   public static boolean server_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "server_statement")) return false;
     if (!nextTokenIs(b, "<server statement>", LBRACK, SERVER)) return false;
@@ -650,7 +506,8 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = r && consumeToken(b, SERVER);
     r = r && ident_name(b, l + 1);
     r = r && server_statement_3(b, l + 1);
-    r = r && consumeTokens(b, 0, ASSIGN, ID);
+    r = r && consumeToken(b, ASSIGN);
+    r = r && id(b, l + 1);
     r = r && server_body(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;

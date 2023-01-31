@@ -10,4 +10,7 @@ public interface HbufEnumFieldElement extends PsiElement {
     HbufNameElement getIdentName();
 
     long getNumber();
+
+    @NotNull
+    HbufIdElement getId();
 }

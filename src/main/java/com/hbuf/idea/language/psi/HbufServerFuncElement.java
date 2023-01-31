@@ -12,6 +12,9 @@ public interface HbufServerFuncElement extends PsiElement {
     long getNumber();
 
     @NotNull
+    HbufIdElement getId();
+
+    @NotNull
     HbufFuncParam getFuncParam();
 
     @NotNull

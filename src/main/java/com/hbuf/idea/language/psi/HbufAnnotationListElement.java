@@ -6,7 +6,7 @@ import com.intellij.psi.PsiElement;
 
 import java.util.Collection;
 
-public interface HbufExtendsElement extends PsiElement {
+public interface HbufAnnotationListElement extends PsiElement {
 
-    Collection<HbufNameElement> getExtendList();
+    Collection<HbufAnnotationFieldElement> getFields();
 }

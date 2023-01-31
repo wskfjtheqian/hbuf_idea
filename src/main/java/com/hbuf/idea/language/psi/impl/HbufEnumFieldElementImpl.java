@@ -24,9 +24,6 @@ public abstract class HbufEnumFieldElementImpl extends ASTWrapperPsiElement impl
     @NotNull
     @Override
     public long getNumber() {
-        return Long.parseLong(getId().getText());
+        return getId().getId();
     }
-
-    @NotNull
-    public abstract PsiElement getId();
 }

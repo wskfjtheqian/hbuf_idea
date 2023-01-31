@@ -2,11 +2,13 @@
 
 package com.hbuf.idea.language.psi;
 
+
 import com.intellij.psi.PsiElement;
 
 import java.util.Collection;
 
-public interface HbufExtendsElement extends PsiElement {
+public interface HbufEnumFieldsElement extends PsiElement {
 
-    Collection<HbufNameElement> getExtendList();
+    Collection<HbufEnumFieldElement> getFields();
+
 }
