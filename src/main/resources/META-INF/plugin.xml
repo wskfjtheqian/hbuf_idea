@@ -20,15 +20,15 @@
                                        implementationClass="com.hbuf.idea.language.HbufSyntaxHighlighterFactory"/>
 <!--        <lang.foldingBuilder language="Hbuf"-->
 <!--                             implementationClass="com.hbuf.idea.language.HbufFoldingBuilder"/>-->
-<!--        <lang.psiStructureViewFactory language="Hbuf"-->
-<!--                                      implementationClass="com.hbuf.idea.language.HbufStructureViewFactory"/>-->
+        <lang.psiStructureViewFactory language="Hbuf"
+                                      implementationClass="com.hbuf.idea.language.HbufStructureViewFactory"/>
         <lang.refactoringSupport language="Hbuf"
                                  implementationClass="com.hbuf.idea.language.HbufRefactoringSupportProvider"/>
         <lang.findUsagesProvider language="Hbuf"
                                  implementationClass="com.hbuf.idea.language.HbufFindUsagesProvider"/>
-<!--        <lang.commenter-->
-<!--                language="Hbuf"-->
-<!--                implementationClass="com.hbuf.idea.language.HbufCommenter"/>-->
+        <lang.commenter
+                language="Hbuf"
+                implementationClass="com.hbuf.idea.language.HbufCommenter"/>
 
 <!--        <spellchecker.support language="Hbuf"-->
 <!--                              implementationClass="com.hbuf.idea.language.HbufSpellcheckingStrategy"/>-->

@@ -235,10 +235,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [annotation-group] type-statement ident-name ASSIGN ID{
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufDataFieldElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufDataFieldElement"
-  // }
+  // [annotation-group] type-statement ident-name ASSIGN ID
   public static boolean data_field_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "data_field_statement")) return false;
     boolean r;
@@ -247,7 +244,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = r && type_statement(b, l + 1);
     r = r && ident_name(b, l + 1);
     r = r && consumeTokens(b, 0, ASSIGN, ID);
-    r = r && data_field_statement_5(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -256,14 +252,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
   private static boolean data_field_statement_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "data_field_statement_0")) return false;
     annotation_group(b, l + 1);
-    return true;
-  }
-
-  // {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufDataFieldElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufDataFieldElement"
-  // }
-  private static boolean data_field_statement_5(PsiBuilder b, int l) {
     return true;
   }
 
@@ -375,10 +363,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [annotation-group] ident-name ASSIGN ID{
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufEnumFieldElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufEnumFieldElement"
-  // }
+  // [annotation-group] ident-name ASSIGN ID
   public static boolean enum_field_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_field_statement")) return false;
     if (!nextTokenIs(b, "<enum field statement>", IDENT, LBRACK)) return false;
@@ -387,7 +372,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = enum_field_statement_0(b, l + 1);
     r = r && ident_name(b, l + 1);
     r = r && consumeTokens(b, 0, ASSIGN, ID);
-    r = r && enum_field_statement_4(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -396,14 +380,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
   private static boolean enum_field_statement_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_field_statement_0")) return false;
     annotation_group(b, l + 1);
-    return true;
-  }
-
-  // {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufEnumFieldElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufEnumFieldElement"
-  // }
-  private static boolean enum_field_statement_4(PsiBuilder b, int l) {
     return true;
   }
 
@@ -730,89 +706,78 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // type-base [QUESTION] LBRACK RBRACK {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufTypeArrayElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufTypeArrayElement"
-  // }
+  // type-base LBRACK RBRACK [QUESTION]
   public static boolean type_array(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_array")) return false;
     if (!nextTokenIs(b, "<type array>", IDENT, TYPES)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, TYPE_ARRAY, "<type array>");
     r = type_base(b, l + 1);
-    r = r && type_array_1(b, l + 1);
     r = r && consumeTokens(b, 0, LBRACK, RBRACK);
-    r = r && type_array_4(b, l + 1);
+    r = r && type_array_3(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
   // [QUESTION]
-  private static boolean type_array_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "type_array_1")) return false;
+  private static boolean type_array_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_array_3")) return false;
     consumeToken(b, QUESTION);
     return true;
   }
 
-  // {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufTypeArrayElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufTypeArrayElement"
-  // }
-  private static boolean type_array_4(PsiBuilder b, int l) {
-    return true;
-  }
-
   /* ********************************************************** */
-  // TYPES|ident-name
+  // (TYPES|ident-name)[QUESTION]
   public static boolean type_base(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_base")) return false;
     if (!nextTokenIs(b, "<type base>", IDENT, TYPES)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, TYPE_BASE, "<type base>");
-    r = consumeToken(b, TYPES);
-    if (!r) r = ident_name(b, l + 1);
+    r = type_base_0(b, l + 1);
+    r = r && type_base_1(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
+  // TYPES|ident-name
+  private static boolean type_base_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_base_0")) return false;
+    boolean r;
+    r = consumeToken(b, TYPES);
+    if (!r) r = ident_name(b, l + 1);
+    return r;
+  }
+
+  // [QUESTION]
+  private static boolean type_base_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_base_1")) return false;
+    consumeToken(b, QUESTION);
+    return true;
+  }
+
   /* ********************************************************** */
-  // type-base [QUESTION] LSS TYPES GTR{
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufTypeMapElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufTypeMapElement"
-  // }
+  // type-base LSS TYPES GTR [QUESTION]
   public static boolean type_map(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_map")) return false;
     if (!nextTokenIs(b, "<type map>", IDENT, TYPES)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, TYPE_MAP, "<type map>");
     r = type_base(b, l + 1);
-    r = r && type_map_1(b, l + 1);
     r = r && consumeTokens(b, 0, LSS, TYPES, GTR);
-    r = r && type_map_5(b, l + 1);
+    r = r && type_map_4(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
   // [QUESTION]
-  private static boolean type_map_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "type_map_1")) return false;
+  private static boolean type_map_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_map_4")) return false;
     consumeToken(b, QUESTION);
     return true;
   }
 
-  // {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufTypeMapElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufTypeMapElement"
-  // }
-  private static boolean type_map_5(PsiBuilder b, int l) {
-    return true;
-  }
-
   /* ********************************************************** */
-  // type-array|type-map|type-base [QUESTION] {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufTypeStatementElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufTypeStatementElement"
-  // }
+  // type-array|type-map|type-base
   public static boolean type_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_statement")) return false;
     if (!nextTokenIs(b, "<type statement>", IDENT, TYPES)) return false;
@@ -820,39 +785,9 @@ public class HbufParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, TYPE_STATEMENT, "<type statement>");
     r = type_array(b, l + 1);
     if (!r) r = type_map(b, l + 1);
-    if (!r) r = type_statement_2(b, l + 1);
+    if (!r) r = type_base(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
-  }
-
-  // type-base [QUESTION] {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufTypeStatementElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufTypeStatementElement"
-  // }
-  private static boolean type_statement_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "type_statement_2")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = type_base(b, l + 1);
-    r = r && type_statement_2_1(b, l + 1);
-    r = r && type_statement_2_2(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [QUESTION]
-  private static boolean type_statement_2_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "type_statement_2_1")) return false;
-    consumeToken(b, QUESTION);
-    return true;
-  }
-
-  // {
-  // //    mixin="com.hbuf.idea.language.psi.impl.HbufTypeStatementElementImpl"
-  // //    implements="com.hbuf.idea.language.psi.HbufTypeStatementElement"
-  // }
-  private static boolean type_statement_2_2(PsiBuilder b, int l) {
-    return true;
   }
 
 }

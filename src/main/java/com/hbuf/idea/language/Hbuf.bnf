@@ -85,28 +85,28 @@ data-field-list::= data-field-statement [data-field-list]{
 }
 
 data-field-statement::= [annotation-group] type-statement ident-name ASSIGN ID{
-//    mixin="com.hbuf.idea.language.psi.impl.HbufDataFieldElementImpl"
-//    implements="com.hbuf.idea.language.psi.HbufDataFieldElement"
+    mixin="com.hbuf.idea.language.psi.impl.HbufDataFieldElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufDataFieldElement"
 }
 
-type-base::= TYPES|ident-name{
+type-base::= (TYPES|ident-name)[QUESTION]{
     mixin="com.hbuf.idea.language.psi.impl.HbufTypeElementImpl"
     implements="com.hbuf.idea.language.psi.HbufTypeElement"
 }
 
-type-statement::=type-array|type-map|type-base [QUESTION] {
-//    mixin="com.hbuf.idea.language.psi.impl.HbufTypeStatementElementImpl"
-//    implements="com.hbuf.idea.language.psi.HbufTypeStatementElement"
+type-statement::=type-array|type-map|type-base {
+    mixin="com.hbuf.idea.language.psi.impl.HbufFieldTypeElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufFieldTypeElement"
 }
 
-type-array::=type-base [QUESTION] LBRACK RBRACK {
-//    mixin="com.hbuf.idea.language.psi.impl.HbufTypeArrayElementImpl"
-//    implements="com.hbuf.idea.language.psi.HbufTypeArrayElement"
+type-array::=type-base LBRACK RBRACK [QUESTION] {
+    mixin="com.hbuf.idea.language.psi.impl.HbufTypeArrayElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufTypeArrayElement"
 }
 
-type-map::=type-base [QUESTION] LSS TYPES GTR{
-//    mixin="com.hbuf.idea.language.psi.impl.HbufTypeMapElementImpl"
-//    implements="com.hbuf.idea.language.psi.HbufTypeMapElement"
+type-map::=type-base LSS TYPES GTR [QUESTION]{
+    mixin="com.hbuf.idea.language.psi.impl.HbufTypeMapElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufTypeMapElement"
 }
 
 annotation-group::= annotation [annotation-group] {
@@ -175,6 +175,6 @@ enum-field-list::= enum-field-statement [enum-field-list]{
 }
 
 enum-field-statement::= [annotation-group] ident-name ASSIGN ID{
-//    mixin="com.hbuf.idea.language.psi.impl.HbufEnumFieldElementImpl"
-//    implements="com.hbuf.idea.language.psi.HbufEnumFieldElement"
+    mixin="com.hbuf.idea.language.psi.impl.HbufEnumFieldElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufEnumFieldElement"
 }
