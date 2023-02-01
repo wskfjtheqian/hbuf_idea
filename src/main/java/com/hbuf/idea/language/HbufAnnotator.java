@@ -5,10 +5,18 @@ import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiManager;
+import com.intellij.psi.search.FileTypeIndex;
+import com.intellij.psi.search.GlobalSearchScope;
+import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,18 +27,20 @@ public class HbufAnnotator implements Annotator {
             HbufFieldTypeElement type = ((HbufFieldTypeElement) element);
             HbufTypeElement base = type.getTypeBase();
             if (null != base) {
-                checkType(holder, base, CheckType.Base, CheckType.Data, CheckType.Enum);
+                checkType(holder, null == base.getIdentName() ? base.getTypes() : base.getIdentName(), CheckType.Base, CheckType.Data, CheckType.Enum);
                 return;
             }
             HbufTypeArrayElement array = type.getTypeArray();
             if (null != array) {
-                checkType(holder, array.getTypeBase(), CheckType.Base, CheckType.Data, CheckType.Enum);
+                base = array.getTypeBase();
+                checkType(holder, null == base.getIdentName() ? base.getTypes() : base.getIdentName(), CheckType.Base, CheckType.Data, CheckType.Enum);
                 return;
             }
             HbufTypeMapElement map = type.getTypeMap();
             if (null != map) {
                 checkType(holder, map.getTypes(), CheckType.Base);
-                checkType(holder, map.getTypeBase(), CheckType.Base, CheckType.Data, CheckType.Enum);
+                base = map.getTypeBase();
+                checkType(holder, null == base.getIdentName() ? base.getTypes() : base.getIdentName(), CheckType.Base, CheckType.Data, CheckType.Enum);
                 return;
             }
         }
@@ -300,13 +310,40 @@ public class HbufAnnotator implements Annotator {
                     .create();
             return;
         }
-        if (HbufUtil.isData(element.getProject(), element.getText())) {
+        HbufDataElement dataElement = getDataElement(element.getProject(), element);
+        if (null != dataElement) {
+            if (dataElement.getContainingFile() != data.getContainingFile()) {
+                holder.newAnnotation(HighlightSeverity.ERROR, "Cannot resolve symbol \"" + element.getText() + "\"")
+                        .range(element)
+                        .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
+                        .create();
+            }
             return;
         }
         holder.newAnnotation(HighlightSeverity.ERROR, element.getText() + " undefined symbol")
                 .range(element)
                 .highlightType(ProblemHighlightType.GENERIC_ERROR)
                 .create();
+    }
+
+    private @Nullable HbufDataElement getDataElement(Project project, PsiElement data) {
+        Collection<VirtualFile> virtualFiles =
+                FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(project));
+        for (VirtualFile virtualFile : virtualFiles) {
+            HbufFile hbufFile = (HbufFile) PsiManager.getInstance(project).findFile(virtualFile);
+            if (hbufFile != null) {
+                @NotNull Collection<HbufDataElement> properties = PsiTreeUtil.findChildrenOfAnyType(
+                        hbufFile,
+                        HbufDataElement.class
+                );
+                for (HbufDataElement item : properties) {
+                    if (Objects.equals(item.getName(), data.getText())) {
+                        return item;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
 
@@ -397,6 +434,7 @@ public class HbufAnnotator implements Annotator {
         }
         if (list.contains(CheckType.Data)) {
             if (HbufUtil.isData(base.getProject(), base.getText())) {
+
                 return;
             }
         }

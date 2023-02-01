@@ -12,8 +12,8 @@ public class HbufIcons {
     public static final Icon DATA = IconLoader.getIcon("/icons/data.png", HbufIcons.class);
     public static final Icon ENUM = IconLoader.getIcon("/icons/enum.png", HbufIcons.class);
     public static final Icon SERVER = IconLoader.getIcon("/icons/server.png", HbufIcons.class);
-
     public static final Icon FIELD = IconLoader.getIcon("/icons/field.png", HbufIcons.class);
-
     public static final Icon FUNC = IconLoader.getIcon("/icons/func.png", HbufIcons.class);
+    public static final Icon GO_DOWN = IconLoader.getIcon("/icons/go_down.png", HbufIcons.class);
+    public static final Icon GO_UP = IconLoader.getIcon("/icons/go_up.png", HbufIcons.class);
 }

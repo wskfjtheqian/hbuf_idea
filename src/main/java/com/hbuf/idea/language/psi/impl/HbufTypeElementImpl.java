@@ -23,12 +23,6 @@ public abstract class HbufTypeElementImpl extends ASTWrapperPsiElement implement
         return getTypes().getText();
     }
 
-    @Nullable
-    abstract HbufNameElement getIdentName();
-
-    @Nullable
-    abstract PsiElement getTypes();
-
     @Override
     public boolean isNullable() {
         return "?".equals(getNode().getLastChildNode().getText());

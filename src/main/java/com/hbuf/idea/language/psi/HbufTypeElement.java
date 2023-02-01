@@ -8,5 +8,12 @@ public interface HbufTypeElement extends PsiElement {
     @NotNull
     String getName();
 
+    @Nullable
+    HbufNameElement getIdentName();
+
+    @Nullable
+    PsiElement getTypes();
+
+    @NotNull
     boolean isNullable();
 }
