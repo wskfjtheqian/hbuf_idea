@@ -31,9 +31,8 @@
                                  implementationClass="com.hbuf.idea.language.HbufRefactoringSupportProvider"/>
         <lang.findUsagesProvider language="Hbuf"
                                  implementationClass="com.hbuf.idea.language.HbufFindUsagesProvider"/>
-
-        <!--        <spellchecker.support language="Hbuf"-->
-        <!--                              implementationClass="com.hbuf.idea.language.HbufSpellcheckingStrategy"/>-->
+        <spellchecker.support language="Hbuf"
+                              implementationClass="com.hbuf.idea.language.HbufSpellcheckingStrategy"/>
 
         <!--        <completion.contributor-->
         <!--                language="Hbuf"-->
