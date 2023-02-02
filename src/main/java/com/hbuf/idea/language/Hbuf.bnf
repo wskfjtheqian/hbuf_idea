@@ -79,7 +79,7 @@ extends::=ident-name [COMMA extends]{
     implements="com.hbuf.idea.language.psi.HbufExtendsElement"
 }
 
-data-body::=LBRACE data-field-list RBRACE {
+data-body::=LBRACE [data-field-list] RBRACE {
     mixin="com.hbuf.idea.language.psi.impl.HbufDataBodyElementImpl"
     implements="com.hbuf.idea.language.psi.HbufDataBodyElement"
 }
@@ -169,7 +169,7 @@ enum-statement::= [annotation-group] ENUM ident-name enum-body{
     implements="com.hbuf.idea.language.psi.HbufEnumElement"
 }
 
-enum-body::=LBRACE enum-field-list RBRACE {
+enum-body::=LBRACE [enum-field-list] RBRACE {
     mixin="com.hbuf.idea.language.psi.impl.HbufEnumBodyElementImpl"
     implements="com.hbuf.idea.language.psi.HbufEnumBodyElement"
 }

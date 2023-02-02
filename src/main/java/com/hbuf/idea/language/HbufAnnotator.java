@@ -1,17 +1,24 @@
 package com.hbuf.idea.language;
 
 import com.hbuf.idea.language.psi.*;
+import com.intellij.codeInsight.intention.IntentionAction;
+import com.intellij.codeInsight.intention.impl.BaseIntentionAction;
 import com.intellij.codeInspection.ProblemHighlightType;
+import com.intellij.codeInspection.util.IntentionFamilyName;
+import com.intellij.codeInspection.util.IntentionName;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;
+import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -267,11 +274,15 @@ public class HbufAnnotator implements Annotator {
     }
 
     private void checkDataFieldId(AnnotationHolder holder, HbufDataFieldElement parent, HbufIdElement element) {
-        HbufDataElement hee = HbufUtil.getDataByChild(element);
-        if (null == hee) {
+        HbufDataElement hde = HbufUtil.getDataByChild(element);
+        if (null == hde) {
             return;
         }
-        for (HbufDataFieldElement item : hee.getDataBody().getDataFieldList().getFields()) {
+        HbufDataFieldsElement fields = hde.getDataBody().getDataFieldList();
+        if (null == fields) {
+            return;
+        }
+        for (HbufDataFieldElement item : fields.getFields()) {
             if (item == parent) {
                 continue;
             }
@@ -315,7 +326,8 @@ public class HbufAnnotator implements Annotator {
             if (dataElement.getContainingFile() != data.getContainingFile()) {
                 holder.newAnnotation(HighlightSeverity.ERROR, "Cannot resolve symbol \"" + element.getText() + "\"")
                         .range(element)
-                        .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
+                        .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                        .withFix(new ImportOuickFix(data))
                         .create();
             }
             return;
@@ -325,6 +337,7 @@ public class HbufAnnotator implements Annotator {
                 .highlightType(ProblemHighlightType.GENERIC_ERROR)
                 .create();
     }
+
 
     private @Nullable HbufDataElement getDataElement(Project project, PsiElement data) {
         Collection<VirtualFile> virtualFiles =
@@ -390,7 +403,11 @@ public class HbufAnnotator implements Annotator {
         if (null == hde) {
             return;
         }
-        for (HbufDataFieldElement item : hde.getDataBody().getDataFieldList().getFields()) {
+        HbufDataFieldsElement fields = hde.getDataBody().getDataFieldList();
+        if (null == fields) {
+            return;
+        }
+        for (HbufDataFieldElement item : fields.getFields()) {
             if (item == parent) {
                 continue;
             }
@@ -453,5 +470,36 @@ public class HbufAnnotator implements Annotator {
                 .highlightType(ProblemHighlightType.LIKE_UNKNOWN_SYMBOL)
                 .create();
         return;
+    }
+
+
+    private class ImportOuickFix extends BaseIntentionAction {
+        private final HbufDataElement data;
+
+        public ImportOuickFix(HbufDataElement data) {
+            this.data = data;
+        }
+
+        @Override
+        public @NotNull
+        @IntentionFamilyName String getFamilyName() {
+            return "Add import file";
+        }
+
+        @Override
+        public @IntentionName
+        @NotNull String getText() {
+            return "Add import \"" + data.getContainingFile().getName() + "\"";
+        }
+
+        @Override
+        public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile psiFile) {
+            return true;
+        }
+
+        @Override
+        public void invoke(@NotNull Project project, Editor editor, PsiFile psiFile) throws IncorrectOperationException {
+
+        }
     }
 }

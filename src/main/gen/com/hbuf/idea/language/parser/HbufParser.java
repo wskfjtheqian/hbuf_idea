@@ -123,17 +123,24 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LBRACE data-field-list RBRACE
+  // LBRACE [data-field-list] RBRACE
   public static boolean data_body(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "data_body")) return false;
     if (!nextTokenIs(b, LBRACE)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, LBRACE);
-    r = r && data_field_list(b, l + 1);
+    r = r && data_body_1(b, l + 1);
     r = r && consumeToken(b, RBRACE);
     exit_section_(b, m, DATA_BODY, r);
     return r;
+  }
+
+  // [data-field-list]
+  private static boolean data_body_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "data_body_1")) return false;
+    data_field_list(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
@@ -221,17 +228,24 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LBRACE enum-field-list RBRACE
+  // LBRACE [enum-field-list] RBRACE
   public static boolean enum_body(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_body")) return false;
     if (!nextTokenIs(b, LBRACE)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, LBRACE);
-    r = r && enum_field_list(b, l + 1);
+    r = r && enum_body_1(b, l + 1);
     r = r && consumeToken(b, RBRACE);
     exit_section_(b, m, ENUM_BODY, r);
     return r;
+  }
+
+  // [enum-field-list]
+  private static boolean enum_body_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_body_1")) return false;
+    enum_field_list(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */

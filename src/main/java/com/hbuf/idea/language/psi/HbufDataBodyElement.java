@@ -7,6 +7,6 @@ import org.jetbrains.annotations.Nullable;
 public interface HbufDataBodyElement extends PsiElement {
     String getName();
 
-    @NotNull
+    @Nullable
     HbufDataFieldsElement getDataFieldList();
 }
