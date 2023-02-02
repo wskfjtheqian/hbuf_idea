@@ -24,7 +24,7 @@ public class HbufSpellcheckingStrategy extends SpellcheckingStrategy {
 
         if (element instanceof LeafPsiElement) {
             @NotNull IElementType type = ((LeafPsiElement) element).getElementType();
-            if (type == HbufTypes.ID) {
+            if (type == HbufTypes.IDENT) {
                 return new PackageElementTokenizer();
             }
         }
