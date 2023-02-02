@@ -5,12 +5,17 @@ package com.hbuf.idea.language.psi;
 import com.hbuf.idea.language.HbufFileType;
 import com.hbuf.idea.language.HbufLanguage;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.NlsSafe;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiFileFactory;
+import com.intellij.psi.PsiManager;
 import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -239,19 +244,19 @@ public class HbufUtil {
         return (HbufServerElement) element;
     }
 
-    public static Collection<HbufDataElement> getDataSub(HbufDataElement element){
+    public static Collection<HbufDataElement> getDataSub(HbufDataElement element) {
         List<HbufDataElement> result = new ArrayList<>();
         Collection<VirtualFile> virtualFiles = FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(element.getProject()));
         for (VirtualFile virtualFile : virtualFiles) {
             HbufFile hbufFile = (HbufFile) PsiManager.getInstance(element.getProject()).findFile(virtualFile);
             if (hbufFile != null) {
                 @NotNull Collection<HbufDataElement> properties = PsiTreeUtil.findChildrenOfAnyType(hbufFile, HbufDataElement.class);
-                for(HbufDataElement data : properties){
-                    if(data == element){
+                for (HbufDataElement data : properties) {
+                    if (data == element) {
                         continue;
                     }
-                    for(HbufNameElement item : data.getExtendList()){
-                        if(Objects.equals(item.getName(), element.getName())){
+                    for (HbufNameElement item : data.getExtendList()) {
+                        if (Objects.equals(item.getName(), element.getName())) {
                             result.add(data);
                             result.addAll(getDataSub(data));
                             break;
@@ -263,19 +268,19 @@ public class HbufUtil {
         return result;
     }
 
-    public static Collection<HbufServerElement> getServerSub(HbufServerElement element){
+    public static Collection<HbufServerElement> getServerSub(HbufServerElement element) {
         List<HbufServerElement> result = new ArrayList<>();
         Collection<VirtualFile> virtualFiles = FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(element.getProject()));
         for (VirtualFile virtualFile : virtualFiles) {
             HbufFile hbufFile = (HbufFile) PsiManager.getInstance(element.getProject()).findFile(virtualFile);
             if (hbufFile != null) {
                 @NotNull Collection<HbufServerElement> properties = PsiTreeUtil.findChildrenOfAnyType(hbufFile, HbufServerElement.class);
-                for(HbufServerElement data : properties){
-                    if(data == element){
+                for (HbufServerElement data : properties) {
+                    if (data == element) {
                         continue;
                     }
-                    for(HbufNameElement item : data.getExtendList()){
-                        if(Objects.equals(item.getName(), element.getName())){
+                    for (HbufNameElement item : data.getExtendList()) {
+                        if (Objects.equals(item.getName(), element.getName())) {
                             result.add(data);
                             result.addAll(getServerSub(data));
                             break;
@@ -285,5 +290,33 @@ public class HbufUtil {
             }
         }
         return result;
+    }
+
+    public static String getString(String text) {
+        if (text.isEmpty()) {
+            return "";
+        }
+        int start = text.indexOf("\"");
+        start = 0 != start ? 0 : 1;
+
+        int end = text.lastIndexOf("\"");
+        end = (end != text.length() - 1) ? text.length() : (text.length() - 1);
+
+        return text.substring(start, end);
+    }
+
+
+    public static boolean isAtImportFile(PsiFile file, HbufDataElement dataElement) {
+        if (file != null) {
+            @NotNull Collection<HbufImportElement> elements = PsiTreeUtil.findChildrenOfAnyType(file, HbufImportElement.class);
+            for (HbufImportElement element : elements) {
+                @NlsSafe String path = HbufUtil.getString(element.getString().getText());
+                @Nullable VirtualFile f = element.getContainingFile().getVirtualFile().getParent().findFileByRelativePath(path);
+                if (dataElement.getContainingFile().getVirtualFile().getPath().equals(f.getPath())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

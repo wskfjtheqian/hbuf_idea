@@ -15,6 +15,7 @@ public abstract class HbufTypeElementImpl extends ASTWrapperPsiElement implement
     }
 
     @Override
+    @NotNull
     public String getName() {
         HbufNameElement ident = getIdentName();
         if (null != ident) {
@@ -24,6 +25,7 @@ public abstract class HbufTypeElementImpl extends ASTWrapperPsiElement implement
     }
 
     @Override
+    @NotNull
     public boolean isNullable() {
         return "?".equals(getNode().getLastChildNode().getText());
     }

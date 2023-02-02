@@ -1,7 +1,6 @@
 package com.hbuf.idea.language;
 
 import com.hbuf.idea.language.psi.*;
-import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.codeInsight.intention.impl.BaseIntentionAction;
 import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.codeInspection.util.IntentionFamilyName;
@@ -11,6 +10,7 @@ import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.NlsSafe;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -138,6 +138,21 @@ public class HbufAnnotator implements Annotator {
                     return;
                 }
             }
+        }
+
+        if (element instanceof HbufImportElement) {
+            checkImport(holder, (HbufImportElement) element);
+        }
+    }
+
+    private void checkImport(AnnotationHolder holder, HbufImportElement element) {
+        @NlsSafe String path = HbufUtil.getString(element.getString().getText());
+        @Nullable VirtualFile file = element.getContainingFile().getVirtualFile().getParent().findFileByRelativePath(path);
+        if (null == file) {
+            holder.newAnnotation(HighlightSeverity.ERROR, "Not find file'" + path)
+                    .range(element.getString())
+                    .highlightType(ProblemHighlightType.ERROR)
+                    .create();
         }
     }
 
@@ -324,11 +339,13 @@ public class HbufAnnotator implements Annotator {
         HbufDataElement dataElement = getDataElement(element.getProject(), element);
         if (null != dataElement) {
             if (dataElement.getContainingFile() != data.getContainingFile()) {
-                holder.newAnnotation(HighlightSeverity.ERROR, "Cannot resolve symbol \"" + element.getText() + "\"")
-                        .range(element)
-                        .highlightType(ProblemHighlightType.GENERIC_ERROR)
-                        .withFix(new ImportOuickFix(data))
-                        .create();
+                if(!HbufUtil.isAtImportFile(data.getContainingFile(),dataElement)) {
+                    holder.newAnnotation(HighlightSeverity.ERROR, "Cannot resolve symbol \"" + element.getText() + "\"")
+                            .range(element)
+                            .highlightType(ProblemHighlightType.ERROR)
+                            .withFix(new ImportOuickFix(data))
+                            .create();
+                }
             }
             return;
         }
@@ -345,7 +362,7 @@ public class HbufAnnotator implements Annotator {
         for (VirtualFile virtualFile : virtualFiles) {
             HbufFile hbufFile = (HbufFile) PsiManager.getInstance(project).findFile(virtualFile);
             if (hbufFile != null) {
-                @NotNull Collection<HbufDataElement> properties = PsiTreeUtil.findChildrenOfAnyType(
+                Collection<HbufDataElement> properties = PsiTreeUtil.findChildrenOfAnyType(
                         hbufFile,
                         HbufDataElement.class
                 );
