@@ -46,7 +46,7 @@ public abstract class HbufNameElementImpl extends ASTWrapperPsiElement implement
         if (this.getParent() instanceof HbufFuncTypeElement) {
             return new DataPsiReference(this, TextRange.create(0, getIdent().getTextLength()));
         } else if (this.getParent() instanceof HbufExtendsElement) {
-            if (this.getParent().getParent() instanceof HbufEnumElement) {
+            if (this.getParent().getParent() instanceof HbufDataElement) {
                 return new DataPsiReference(this, TextRange.create(0, getIdent().getTextLength()));
             } else if (this.getParent().getParent() instanceof HbufServerElement) {
                 return new ServerPsiReference(this, TextRange.create(0, getIdent().getTextLength()));

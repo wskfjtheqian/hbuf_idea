@@ -312,11 +312,24 @@ public class HbufUtil {
             for (HbufImportElement element : elements) {
                 @NlsSafe String path = HbufUtil.getString(element.getString().getText());
                 @Nullable VirtualFile f = element.getContainingFile().getVirtualFile().getParent().findFileByRelativePath(path);
-                if (dataElement.getContainingFile().getVirtualFile().getPath().equals(f.getPath())) {
+                if (null != f && dataElement.getContainingFile().getVirtualFile().getPath().equals(f.getPath())) {
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    public static PsiElement getImportLastNode(HbufFile hbufFile) {
+        @NotNull List<HbufImportElement> importElements = new ArrayList<>(PsiTreeUtil.findChildrenOfAnyType(hbufFile, HbufImportElement.class));
+        if (!importElements.isEmpty()) {
+            return importElements.get(importElements.size() - 1);
+        }
+
+        @NotNull List<HbufPackageElement> packageElements = new ArrayList<>(PsiTreeUtil.findChildrenOfAnyType(hbufFile, HbufPackageElement.class));
+        if (!packageElements.isEmpty()) {
+            return packageElements.get(packageElements.size() - 1);
+        }
+        return hbufFile.getLastChild();
     }
 }
