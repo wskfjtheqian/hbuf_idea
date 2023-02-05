@@ -78,7 +78,7 @@ public class HbufSyntaxHighlighter extends SyntaxHighlighterBase {
             return EMPTY_KEYS;
         }
 
-        if (tokenType.equals(HbufTypes.SEMICOLON) || tokenType.equals(HbufTypes.COLON)) {
+        if (tokenType.equals(HbufTypes.SEMICOLON) || tokenType.equals(HbufTypes.COLON) || tokenType.equals(HbufTypes.COMMA)) {
             return SEMICOLON_KEYS;
         }
 

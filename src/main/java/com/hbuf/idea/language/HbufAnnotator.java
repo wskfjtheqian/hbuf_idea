@@ -471,6 +471,7 @@ public class HbufAnnotator implements Annotator {
                 case "double":
                 case "decimal":
                 case "string":
+                case "date":
                     return;
             }
         }

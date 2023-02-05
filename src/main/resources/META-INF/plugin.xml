@@ -34,12 +34,12 @@
         <spellchecker.support language="Hbuf"
                               implementationClass="com.hbuf.idea.language.HbufSpellcheckingStrategy"/>
 
-        <!--        <completion.contributor-->
-        <!--                language="Hbuf"-->
-        <!--                implementationClass="com.hbuf.idea.language.HbufCompletionContributor"/>-->
 
-        <!--        <lang.formatter language="Hbuf" -->
-        <!--                        implementationClass="com.hbuf.idea.language.HbufFormattingModelBuilder"/>-->
+        <codeStyleSettingsProvider implementation="com.hbuf.idea.language.formatter.HbufCodeStyleSettingsProvider"/>
+        <langCodeStyleSettingsProvider
+                implementation="com.hbuf.idea.language.formatter.HbufLanguageCodeStyleSettingsProvider"/>
+        <lang.formatter language="Hbuf"
+                        implementationClass="com.hbuf.idea.language.formatter.HbufFormattingModelBuilder"/>
 
         <!--        <gotoSymbolContributor implementation="com.hbuf.idea.language.HbufChooseByNameContributor"/>-->
 
