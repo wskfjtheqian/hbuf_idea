@@ -30,12 +30,16 @@ public class HbufFoldingBuilder extends FoldingBuilderEx implements DumbAware {
                 HbufServerBodyElement.class
         );
         for (final PsiElement element : elements) {
-            FoldingGroup group = FoldingGroup.newGroup(elements.toString());
-            descriptors.add(new FoldingDescriptor(
-                    element.getNode(),
-                    new TextRange(element.getTextRange().getStartOffset() + 1, element.getTextRange().getEndOffset() - 1),
-                    group
-            ));
+            int start = element.getTextRange().getStartOffset() + 1;
+            int end = element.getTextRange().getEndOffset() - 1;
+            if (start < end) {
+                FoldingGroup group = FoldingGroup.newGroup(elements.toString());
+                descriptors.add(new FoldingDescriptor(
+                        element.getNode(),
+                        new TextRange(start, end),
+                        group
+                ));
+            }
         }
         return descriptors.toArray(new FoldingDescriptor[descriptors.size()]);
     }

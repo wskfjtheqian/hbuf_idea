@@ -15,8 +15,8 @@ public class HbufFormattingModelBuilder implements FormattingModelBuilder {
         return new SpacingBuilder(settings, HbufLanguage.INSTANCE)
                 .before(HbufTypes.PACKAGE).none()
                 .after(HbufTypes.PACKAGE).spaces(1)
-                .before(HbufTypes.ASSIGN).spaces(1)
-                .after(HbufTypes.ASSIGN).spaces(1)
+                .before(HbufTypes.ASSIGN).none()
+                .after(HbufTypes.ASSIGN).none()
                 .after(HbufTypes.PACKAGE_STATEMENT).lineBreakInCode()
 
                 .before(HbufTypes.IMPORT).none()
