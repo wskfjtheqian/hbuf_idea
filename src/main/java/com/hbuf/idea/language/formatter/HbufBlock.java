@@ -62,7 +62,7 @@ public class HbufBlock extends AbstractBlock {
                 Block block = new HbufBlock(
                         child,
                         Wrap.createWrap(WrapType.NONE, false),
-                        Alignment.createAlignment(),
+                        null,
                         spacingBuilder,
                         indent
                 );

@@ -57,7 +57,7 @@ public class HbufFoldingBuilder extends FoldingBuilderEx implements DumbAware {
 
     @Override
     public boolean isCollapsedByDefault(@NotNull ASTNode node) {
-        return true;
+        return false;
     }
 
 }
