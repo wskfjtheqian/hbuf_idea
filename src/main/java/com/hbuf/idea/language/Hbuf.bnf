@@ -47,7 +47,7 @@
 
 hbufFile ::= item_*
 
-private item_ ::= (package-statement|import-statement|data-statement|server-statement|enum-statement|CRLF)
+private item_ ::= package-statement|import-statement|data-statement|server-statement|enum-statement|CRLF
 
 package-statement ::=COMMENT|(PACKAGE IDENT ASSIGN STRING){
     mixin="com.hbuf.idea.language.psi.impl.HbufPackageElementImpl"
