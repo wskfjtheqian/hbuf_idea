@@ -15,8 +15,6 @@ public class HbufFormattingModelBuilder implements FormattingModelBuilder {
         return new SpacingBuilder(settings, HbufLanguage.INSTANCE)
                 .before(HbufTypes.PACKAGE).none()
                 .after(HbufTypes.PACKAGE).spaces(1)
-                .before(HbufTypes.ASSIGN).none()
-                .after(HbufTypes.ASSIGN).none()
                 .after(HbufTypes.PACKAGE_STATEMENT).lineBreakInCode()
 
                 .before(HbufTypes.IMPORT).none()
@@ -78,6 +76,18 @@ public class HbufFormattingModelBuilder implements FormattingModelBuilder {
                 .after(HbufTypes.SERVER_BODY).none()
                 .before(HbufTypes.LBRACE).none()
                 .after(HbufTypes.LBRACE).none()
+
+                .aroundInside(HbufTypes.ASSIGN, HbufTypes.PACKAGE).spaces(1)
+                .aroundInside(HbufTypes.ASSIGN, HbufTypes.ENUM_FIELD_STATEMENT).spaces(1)
+                .aroundInside(HbufTypes.ASSIGN, HbufTypes.DATA_STATEMENT).spaces(1)
+                .aroundInside(HbufTypes.ASSIGN, HbufTypes.DATA_FIELD_STATEMENT).spaces(1)
+                .aroundInside(HbufTypes.ASSIGN, HbufTypes.SERVER_STATEMENT).spaces(1)
+                .aroundInside(HbufTypes.ASSIGN, HbufTypes.FUNC_STATEMENT).spaces(1)
+                .aroundInside(HbufTypes.ASSIGN, HbufTypes.ANNOTATION_FIELD).spaces(0)
+
+
+//                .before(HbufTypes.ASSIGN).none()
+//                .after(HbufTypes.ASSIGN).none()
                 ;
     }
 

@@ -5,6 +5,7 @@ package com.hbuf.idea.language.formatter;
 import com.hbuf.idea.language.psi.HbufTypes;
 import com.intellij.formatting.*;
 import com.intellij.lang.ASTNode;
+import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.formatter.common.AbstractBlock;
 import com.intellij.psi.tree.IElementType;
@@ -24,6 +25,13 @@ public class HbufBlock extends AbstractBlock {
         super(node, wrap, alignment);
         this.spacingBuilder = spacingBuilder;
         this.mIndent = indent;
+        if(node.getElementType() == HbufTypes.LBRACE){
+            return;
+        }
+        if(node.getElementType() == HbufTypes.RBRACE){
+            return;
+        }
+
     }
 
     @Override
@@ -84,4 +92,20 @@ public class HbufBlock extends AbstractBlock {
         return myNode.getFirstChildNode() == null;
     }
 
+    @Override
+    public @NotNull TextRange getTextRange() {
+        @NotNull TextRange range = super.getTextRange();
+        System.out.println(range.toString());
+        return range;
+    }
+
+    @Override
+    public @NotNull List<Block> getSubBlocks() {
+        return super.getSubBlocks();
+    }
+
+    @Override
+    public @Nullable List<TextRange> getExtraRangesToFormat(@NotNull FormattingRangesInfo info) {
+        return super.getExtraRangesToFormat(info);
+    }
 }

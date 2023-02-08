@@ -41,6 +41,7 @@
         <lang.formatter language="Hbuf"
                         implementationClass="com.hbuf.idea.language.formatter.HbufFormattingModelBuilder"/>
 
+        <lang.braceMatcher language="Hbuf" implementationClass="com.hbuf.idea.language.HbufBraceMatcher"/>
         <!--        <gotoSymbolContributor implementation="com.hbuf.idea.language.HbufChooseByNameContributor"/>-->
 
 
