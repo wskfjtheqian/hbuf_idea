@@ -1,9 +1,6 @@
 package com.hbuf.idea.language.quickfix;
 
-import com.hbuf.idea.language.psi.HbufDataElement;
-import com.hbuf.idea.language.psi.HbufElementFactory;
-import com.hbuf.idea.language.psi.HbufIdElement;
-import com.hbuf.idea.language.psi.HbufUtil;
+import com.hbuf.idea.language.psi.*;
 import com.intellij.codeInsight.intention.impl.BaseIntentionAction;
 import com.intellij.codeInspection.util.IntentionFamilyName;
 import com.intellij.codeInspection.util.IntentionName;
@@ -15,25 +12,26 @@ import com.intellij.psi.PsiFile;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
-public class DataIdQuickFix extends BaseIntentionAction {
+public class ServerIdCollateFix extends BaseIntentionAction {
     private final HbufIdElement element;
 
-    public DataIdQuickFix(HbufIdElement element) {
+    public ServerIdCollateFix(HbufIdElement element) {
         this.element = element;
     }
 
     @Override
     public @NotNull
     @IntentionFamilyName String getFamilyName() {
-        return "Data Id repeat";
+        return "Data id";
     }
 
     @Override
     public @IntentionName
     @NotNull String getText() {
-        return "Automatic correction ID";
+        return "Collate data id";
     }
 
     @Override
@@ -45,25 +43,14 @@ public class DataIdQuickFix extends BaseIntentionAction {
     @Override
     public void invoke(@NotNull final Project project, final Editor editor, PsiFile file) throws IncorrectOperationException {
         WriteCommandAction.writeCommandAction(project).run(() -> {
-            @NotNull Collection<HbufDataElement> elements = HbufUtil.findData(element.getProject());
+            @NotNull List<HbufServerElement> elements = new ArrayList<>(HbufUtil.findServer(element.getProject()));
             for (int i = 0; i < elements.size(); i++) {
-                if (!checkId(i, elements)) {
-                    HbufIdElement id = HbufElementFactory.createId(project, i);
-                    element.getParent().getNode().replaceChild(element.getNode(), id.getNode());
-                    FileEditorManager.getInstance(project).getSelectedTextEditor().getCaretModel().moveCaretRelatively(2, 0, false, false, false);
-                    return;
-                }
+                HbufIdElement id = HbufElementFactory.createId(project, i);
+                HbufIdElement idElement = elements.get(i).getId();
+                idElement.getParent().getNode().replaceChild(idElement.getNode(), id.getNode());
             }
+            FileEditorManager.getInstance(project).getSelectedTextEditor().getCaretModel().moveCaretRelatively(2, 0, false, false, false);
         });
-    }
-
-    private boolean checkId(int id, Collection<HbufDataElement> elements) {
-        for (HbufDataElement item : elements) {
-            if (item.getNumber() == id) {
-                return true;
-            }
-        }
-        return false;
     }
 }
 

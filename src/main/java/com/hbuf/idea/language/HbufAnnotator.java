@@ -185,6 +185,11 @@ public class HbufAnnotator implements Annotator {
                 return;
             }
         }
+        holder.newAnnotation(HighlightSeverity.INFORMATION, "The sort ID function can be used")
+                .range(element)
+                .highlightType(ProblemHighlightType.INFORMATION)
+                .withFix(new DataIdCollateFix(element))
+                .create();
     }
 
     private void checkServerId(AnnotationHolder holder, HbufServerElement parent, HbufIdElement element) {
@@ -201,6 +206,11 @@ public class HbufAnnotator implements Annotator {
                 return;
             }
         }
+        holder.newAnnotation(HighlightSeverity.INFORMATION, "The sort ID function can be used")
+                .range(element)
+                .highlightType(ProblemHighlightType.INFORMATION)
+                .withFix(new ServerIdCollateFix(element))
+                .create();
     }
 
     private void checkDataName(AnnotationHolder holder, HbufDataElement parent, PsiElement element) {
