@@ -197,24 +197,6 @@ public class HbufUtil {
         return false;
     }
 
-    public static List<PsiElement> findProperties(Project project) {
-        List<PsiElement> result = new ArrayList<>();
-        Collection<VirtualFile> virtualFiles =
-                FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(project));
-        for (VirtualFile virtualFile : virtualFiles) {
-            HbufFile hbufFile = (HbufFile) PsiManager.getInstance(project).findFile(virtualFile);
-            if (hbufFile != null) {
-                @NotNull Collection<PsiElement> elements = PsiTreeUtil.findChildrenOfAnyType(
-                        hbufFile,
-                        HbufDataElement.class,
-                        HbufEnumElement.class
-                );
-                result.addAll(elements);
-            }
-        }
-        return result;
-    }
-
     public static HbufEnumElement getEnumByChild(PsiElement element) {
         while (null != element && !(element instanceof HbufEnumElement)) {
             element = element.getParent();

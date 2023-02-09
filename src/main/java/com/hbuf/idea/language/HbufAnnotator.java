@@ -111,7 +111,7 @@ public class HbufAnnotator implements Annotator {
                 return;
             }
             if (parent instanceof HbufDataFieldElement) {
-                checkId(holder, (HbufDataFieldElement) parent, (HbufIdElement) element);
+                checkDataFieldId(holder, (HbufDataFieldElement) parent, (HbufIdElement) element);
                 return;
             }
             if (parent instanceof HbufEnumFieldElement) {
@@ -276,6 +276,11 @@ public class HbufAnnotator implements Annotator {
                 return;
             }
         }
+        holder.newAnnotation(HighlightSeverity.INFORMATION, "The sort ID function can be used")
+                .range(element)
+                .highlightType(ProblemHighlightType.INFORMATION)
+                .withFix(new ServerFuncIdCollateFix(element))
+                .create();
     }
 
     private void checkEnumFieldId(AnnotationHolder holder, HbufEnumFieldElement parent, HbufIdElement element) {
@@ -296,9 +301,14 @@ public class HbufAnnotator implements Annotator {
                 return;
             }
         }
+        holder.newAnnotation(HighlightSeverity.INFORMATION, "The sort ID function can be used")
+                .range(element)
+                .highlightType(ProblemHighlightType.INFORMATION)
+                .withFix(new EnumFieldIdCollateFix(element))
+                .create();
     }
 
-    private void checkId(AnnotationHolder holder, HbufDataFieldElement parent, HbufIdElement element) {
+    private void checkDataFieldId(AnnotationHolder holder, HbufDataFieldElement parent, HbufIdElement element) {
         HbufDataElement hde = HbufUtil.getDataByChild(element);
         if (null == hde) {
             return;
@@ -320,6 +330,11 @@ public class HbufAnnotator implements Annotator {
                 return;
             }
         }
+        holder.newAnnotation(HighlightSeverity.INFORMATION, "The sort ID function can be used")
+                .range(element)
+                .highlightType(ProblemHighlightType.INFORMATION)
+                .withFix(new DataFieldIdCollateFix(element))
+                .create();
     }
 
     private void checkServerExtends(AnnotationHolder holder, HbufServerElement data, PsiElement element) {
@@ -362,7 +377,8 @@ public class HbufAnnotator implements Annotator {
         }
         holder.newAnnotation(HighlightSeverity.ERROR, element.getText() + " undefined symbol")
                 .range(element)
-                .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                .highlightType(ProblemHighlightType.ERROR)
+                .withFix(new DataNewQuickFix((HbufNameElement) element))
                 .create();
     }
 
@@ -480,7 +496,6 @@ public class HbufAnnotator implements Annotator {
         }
         if (list.contains(CheckType.Data)) {
             if (HbufUtil.isData(base.getProject(), base.getText())) {
-
                 return;
             }
         }
@@ -494,9 +509,11 @@ public class HbufAnnotator implements Annotator {
                 return;
             }
         }
+
         holder.newAnnotation(HighlightSeverity.ERROR, base.getText() + " undefined symbol")
                 .range(base)
-                .highlightType(ProblemHighlightType.LIKE_UNKNOWN_SYMBOL)
+                .highlightType(ProblemHighlightType.ERROR)
+                .withFix(new DataNewQuickFix(base))
                 .create();
         return;
     }

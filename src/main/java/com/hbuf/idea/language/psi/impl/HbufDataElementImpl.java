@@ -5,6 +5,8 @@ import com.hbuf.idea.language.psi.HbufExtendsElement;
 import com.hbuf.idea.language.psi.HbufNameElement;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
+import com.intellij.openapi.util.NlsSafe;
+import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -20,6 +22,12 @@ public abstract class HbufDataElementImpl extends ASTWrapperPsiElement implement
     @Override
     public String getName() {
         return getIdentName().getName();
+    }
+
+    @Override
+    public PsiElement setName(@NlsSafe @NotNull String var1) {
+        getIdentName().setName(var1);
+        return this;
     }
 
     @NotNull

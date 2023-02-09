@@ -35,4 +35,9 @@ public class HbufElementFactory {
         @NotNull List<HbufDataElement> elements = new ArrayList<>(PsiTreeUtil.findChildrenOfAnyType(file, HbufDataElement.class));
         return elements.get(0).getId();
     }
+
+    public static HbufDataElement createData(Project project, String name, int id) {
+        final HbufFile file = createFile(project, "data " + name + " = " + id + " {\n}");
+        return (HbufDataElement) file.getFirstChild();
+    }
 }
