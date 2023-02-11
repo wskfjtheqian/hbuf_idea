@@ -169,6 +169,10 @@ public class HbufAnnotator implements Annotator {
                 return;
             }
         }
+        holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                .range(element)
+                .textAttributes(HbufSyntaxHighlighter.FIELD)
+                .create();
     }
 
     private void checkDataId(AnnotationHolder holder, HbufDataElement parent, HbufIdElement element) {
@@ -421,6 +425,10 @@ public class HbufAnnotator implements Annotator {
                 return;
             }
         }
+        holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                .range(element)
+                .textAttributes(HbufSyntaxHighlighter.FIELD)
+                .create();
     }
 
     private void checkServerFuncName(AnnotationHolder holder, HbufServerFuncElement parent, PsiElement element) {
@@ -439,6 +447,10 @@ public class HbufAnnotator implements Annotator {
                         .create();
                 return;
             }
+            holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                    .range(element)
+                    .textAttributes(HbufSyntaxHighlighter.METHOD)
+                    .create();
         }
     }
 
@@ -463,6 +475,10 @@ public class HbufAnnotator implements Annotator {
                 return;
             }
         }
+        holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                .range(element)
+                .textAttributes(HbufSyntaxHighlighter.FIELD)
+                .create();
     }
 
 

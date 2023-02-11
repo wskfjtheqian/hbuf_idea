@@ -46,6 +46,16 @@ public class HbufSyntaxHighlighter extends SyntaxHighlighterBase {
     );
     private static final TextAttributesKey[] SEMICOLON_KEYS = new TextAttributesKey[]{SEMICOLON};
 
+    public static final TextAttributesKey METHOD = createTextAttributesKey(
+            "HBUF_METHOD", DefaultLanguageHighlighterColors.INSTANCE_METHOD
+    );
+    private static final TextAttributesKey[] METHOD_KEYS = new TextAttributesKey[]{METHOD};
+
+    public static final TextAttributesKey FIELD = createTextAttributesKey(
+            "HBUF_FIELD", DefaultLanguageHighlighterColors.INSTANCE_FIELD
+    );
+    private static final TextAttributesKey[] FIELD_KEYS = new TextAttributesKey[]{FIELD};
+
 
     @NotNull
     @Override
