@@ -54,7 +54,8 @@ public class HbufFormattingModelBuilder implements FormattingModelBuilder {
                 .after(HbufTypes.SERVER).lineBreakOrForceSpace(false, true)
                 .after(HbufTypes.FUNC_STATEMENT).blankLines(1)
                 .around(HbufTypes.LPAREN).lineBreakOrForceSpace(false, false)
-                .around(HbufTypes.RPAREN).lineBreakOrForceSpace(false, false)
+                .before(HbufTypes.RPAREN).lineBreakOrForceSpace(false, false)
+                .after(HbufTypes.RPAREN).lineBreakOrForceSpace(false, true)
 
                 .before(HbufTypes.FUNC_TYPE).lineBreakOrForceSpace(false, false)
                 .after(HbufTypes.FUNC_TYPE).lineBreakOrForceSpace(false, true)
