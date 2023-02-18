@@ -3,11 +3,15 @@
 package com.hbuf.idea.language.psi;
 
 import com.intellij.psi.PsiElement;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Collection;
 
 public interface HbufEnumBodyElement extends PsiElement {
     @Nullable
     HbufEnumFieldsElement getEnumFieldList();
 
-
+    @NotNull
+    Collection<HbufEnumFieldElement> getFields();
 }

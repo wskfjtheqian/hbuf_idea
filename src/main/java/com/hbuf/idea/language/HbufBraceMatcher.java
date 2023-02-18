@@ -11,10 +11,10 @@ import org.jetbrains.annotations.Nullable;
 public class HbufBraceMatcher implements PairedBraceMatcher {
     //todo [low] what is true and what is false
     private static final BracePair[] PAIRS = {
-            new BracePair(HbufTypes.LBRACE,HbufTypes.RBRACE,false),
-            new BracePair(HbufTypes.LBRACK, HbufTypes.RBRACK,false),
-            new BracePair(HbufTypes.LPAREN, HbufTypes.RPAREN,false),
-            new BracePair(HbufTypes.LSS, HbufTypes.GTR,false)
+            new BracePair(HbufTypes.LBRACE, HbufTypes.RBRACE, false),
+            new BracePair(HbufTypes.LBRACK, HbufTypes.RBRACK, false),
+            new BracePair(HbufTypes.LPAREN, HbufTypes.RPAREN, false),
+            new BracePair(HbufTypes.LSS, HbufTypes.GTR, false)
     };
 
 

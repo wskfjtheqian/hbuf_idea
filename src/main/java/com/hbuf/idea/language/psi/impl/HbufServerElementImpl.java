@@ -3,6 +3,7 @@ package com.hbuf.idea.language.psi.impl;
 import com.hbuf.idea.language.psi.HbufExtendsElement;
 import com.hbuf.idea.language.psi.HbufNameElement;
 import com.hbuf.idea.language.psi.HbufServerElement;
+import com.hbuf.idea.language.psi.HbufServerFuncElement;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.NlsSafe;
@@ -47,5 +48,11 @@ public abstract class HbufServerElementImpl extends ASTWrapperPsiElement impleme
             return new ArrayList<>();
         }
         return getExtends().getExtendList();
+    }
+
+    @NotNull
+    @Override
+    public Collection<HbufServerFuncElement> getFuncts() {
+        return getServerBody().getFuncts();
     }
 }

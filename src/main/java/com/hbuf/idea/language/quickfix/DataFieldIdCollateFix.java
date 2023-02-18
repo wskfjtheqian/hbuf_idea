@@ -45,7 +45,7 @@ public class DataFieldIdCollateFix extends BaseIntentionAction {
     @Override
     public void invoke(@NotNull final Project project, final Editor editor, PsiFile file) throws IncorrectOperationException {
         WriteCommandAction.writeCommandAction(project).run(() -> {
-            ArrayList<HbufDataFieldElement> elements = new ArrayList<>(HbufUtil.getDataByChild(element).getDataBody().getDataFieldList().getFields());
+            ArrayList<HbufDataFieldElement> elements = new ArrayList<>(HbufUtil.getDataByChild(element).getFields());
             for (int i = 0; i < elements.size(); i++) {
                 HbufIdElement id = HbufElementFactory.createId(project, i);
                 HbufIdElement idElement = elements.get(i).getId();

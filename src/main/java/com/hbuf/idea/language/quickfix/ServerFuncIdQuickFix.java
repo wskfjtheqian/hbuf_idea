@@ -3,6 +3,7 @@ package com.hbuf.idea.language.quickfix;
 import com.hbuf.idea.language.psi.HbufElementFactory;
 import com.hbuf.idea.language.psi.HbufIdElement;
 import com.hbuf.idea.language.psi.HbufServerFuncElement;
+import com.hbuf.idea.language.psi.HbufUtil;
 import com.intellij.codeInsight.intention.impl.BaseIntentionAction;
 import com.intellij.codeInspection.util.IntentionFamilyName;
 import com.intellij.codeInspection.util.IntentionName;
@@ -15,6 +16,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class ServerFuncIdQuickFix extends BaseIntentionAction {
@@ -45,7 +47,7 @@ public class ServerFuncIdQuickFix extends BaseIntentionAction {
     @Override
     public void invoke(@NotNull final Project project, final Editor editor, PsiFile file) throws IncorrectOperationException {
         WriteCommandAction.writeCommandAction(project).run(() -> {
-            @NotNull Collection<HbufServerFuncElement> elements = PsiTreeUtil.findChildrenOfAnyType(element.getParent().getParent(), HbufServerFuncElement.class);
+            @NotNull Collection<HbufServerFuncElement> elements = new ArrayList<>(HbufUtil.getServerByChild(element).getFuncts());
             for (int i = 0; i < elements.size(); i++) {
                 if (!checkId(i, elements)) {
                     HbufIdElement id = HbufElementFactory.createId(project, i);

@@ -1,6 +1,7 @@
 package com.hbuf.idea.language.psi.impl;
 
 import com.hbuf.idea.language.psi.HbufDataElement;
+import com.hbuf.idea.language.psi.HbufDataFieldElement;
 import com.hbuf.idea.language.psi.HbufExtendsElement;
 import com.hbuf.idea.language.psi.HbufNameElement;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
@@ -48,4 +49,9 @@ public abstract class HbufDataElementImpl extends ASTWrapperPsiElement implement
         return getExtends().getExtendList();
     }
 
+    @NotNull
+    @Override
+    public Collection<HbufDataFieldElement> getFields() {
+        return getDataBody().getFields();
+    }
 }

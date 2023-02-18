@@ -3,6 +3,7 @@ package com.hbuf.idea.language.quickfix;
 import com.hbuf.idea.language.psi.HbufDataFieldElement;
 import com.hbuf.idea.language.psi.HbufElementFactory;
 import com.hbuf.idea.language.psi.HbufIdElement;
+import com.hbuf.idea.language.psi.HbufUtil;
 import com.intellij.codeInsight.intention.impl.BaseIntentionAction;
 import com.intellij.codeInspection.util.IntentionFamilyName;
 import com.intellij.codeInspection.util.IntentionName;
@@ -11,7 +12,6 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 
@@ -45,7 +45,7 @@ public class DataFieldIdQuickFix extends BaseIntentionAction {
     @Override
     public void invoke(@NotNull final Project project, final Editor editor, PsiFile file) throws IncorrectOperationException {
         WriteCommandAction.writeCommandAction(project).run(() -> {
-            @NotNull Collection<HbufDataFieldElement> elements = PsiTreeUtil.findChildrenOfAnyType(element.getParent().getParent(), HbufDataFieldElement.class);
+            @NotNull Collection<HbufDataFieldElement> elements = HbufUtil.getDataByChild(element).getFields();
             for (int i = 0; i < elements.size(); i++) {
                 if (!checkId(i, elements)) {
                     HbufIdElement id = HbufElementFactory.createId(project, i);

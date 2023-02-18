@@ -84,7 +84,7 @@ data-body::=LBRACE [data-field-list] RBRACE {
     implements="com.hbuf.idea.language.psi.HbufDataBodyElement"
 }
 
-data-field-list::= data-field-statement [data-field-list]{
+data-field-list::= (data-field-statement | IDENT) [data-field-list]{
      mixin="com.hbuf.idea.language.psi.impl.HbufDataFieldsElementImpl"
     implements="com.hbuf.idea.language.psi.HbufDataFieldsElement"
 }
@@ -144,12 +144,12 @@ server-body::=LBRACE [func-list] RBRACE {
    implements="com.hbuf.idea.language.psi.HbufServerBodyElement"
 }
 
-func-list::= func-statement [func-list]{
+func-list::= (func-statement | IDENT) [func-list]{
     mixin="com.hbuf.idea.language.psi.impl.HbufServerFuncsElementImpl"
     implements="com.hbuf.idea.language.psi.HbufServerFuncsElement"
 }
 
-func-statement::=COMMENT|([annotation-group] func-type ident-name LPAREN func-param RPAREN ASSIGN id){
+func-statement::=COMMENT|([annotation-group] func-type ident-name LPAREN (func-param|IDENT) RPAREN ASSIGN id){
     mixin="com.hbuf.idea.language.psi.impl.HbufServerFuncElementImpl"
     implements="com.hbuf.idea.language.psi.HbufServerFuncElement"
 }
@@ -159,7 +159,7 @@ func-type::=ident-name{
     implements="com.hbuf.idea.language.psi.HbufFuncTypeElement"
 }
 
-func-param::= func-type ident-name{
+func-param::= (func-type) ident-name{
     mixin="com.hbuf.idea.language.psi.impl.HbufFuncParamElementImpl"
     implements="com.hbuf.idea.language.psi.HbufFuncParamElement"
 }

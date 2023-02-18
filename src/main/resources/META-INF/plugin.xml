@@ -46,7 +46,9 @@
 
 
         <annotator language="Hbuf" implementationClass="com.hbuf.idea.language.HbufAnnotator"/>
-
+        <completion.contributor
+                language="Hbuf"
+                implementationClass="com.hbuf.idea.language.HbufCompletionContributor"/>
     </extensions>
 
     <actions>

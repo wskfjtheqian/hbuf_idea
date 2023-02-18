@@ -5,7 +5,12 @@ package com.hbuf.idea.language.psi;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
+
 public interface HbufServerBodyElement extends PsiElement {
     @NotNull
     HbufServerFuncsElement getFuncList();
+
+    @NotNull
+    Collection<HbufServerFuncElement> getFuncts();
 }

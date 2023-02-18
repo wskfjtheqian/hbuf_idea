@@ -42,7 +42,7 @@ public class ServerFuncIdCollateFix extends BaseIntentionAction {
     @Override
     public void invoke(@NotNull final Project project, final Editor editor, PsiFile file) throws IncorrectOperationException {
         WriteCommandAction.writeCommandAction(project).run(() -> {
-            ArrayList<HbufServerFuncElement> elements = new ArrayList<>(HbufUtil.getServerByChild(element).getServerBody().getFuncList().getFields());
+            ArrayList<HbufServerFuncElement> elements = new ArrayList<>(HbufUtil.getServerByChild(element).getFuncts());
             for (int i = 0; i < elements.size(); i++) {
                 HbufIdElement id = HbufElementFactory.createId(project, i);
                 HbufIdElement idElement = elements.get(i).getId();

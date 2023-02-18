@@ -16,7 +16,7 @@ public abstract class HbufServerFuncsElementImpl extends ASTWrapperPsiElement im
     }
 
     @Override
-    public Collection<HbufServerFuncElement> getFields() {
+    public Collection<HbufServerFuncElement> getFuncts() {
         List<HbufServerFuncElement> list = new ArrayList();
         HbufServerFuncsElementImpl element = this;
         while (null != element) {

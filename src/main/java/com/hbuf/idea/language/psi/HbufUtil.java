@@ -17,12 +17,27 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class HbufUtil {
+    public static Set<String> DataBaseType = Set.of(
+            "int8",
+            "int16",
+            "int32",
+            "int64",
+            "uint8",
+            "uint16",
+            "uint32",
+            "uint64",
+            "bool",
+            "float",
+            "double",
+            "decimal",
+            "string",
+            "date"
+    );
+
+
     public static HbufNameElement createNameElement(Project project, String name) {
         PsiFile file = PsiFileFactory.getInstance(project).createFileFromText("fileName", HbufLanguage.INSTANCE, "enum " + name + "{}");
         if (file instanceof HbufFile) {

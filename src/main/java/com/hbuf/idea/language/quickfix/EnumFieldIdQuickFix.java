@@ -3,6 +3,7 @@ package com.hbuf.idea.language.quickfix;
 import com.hbuf.idea.language.psi.HbufElementFactory;
 import com.hbuf.idea.language.psi.HbufEnumFieldElement;
 import com.hbuf.idea.language.psi.HbufIdElement;
+import com.hbuf.idea.language.psi.HbufUtil;
 import com.intellij.codeInsight.intention.impl.BaseIntentionAction;
 import com.intellij.codeInspection.util.IntentionFamilyName;
 import com.intellij.codeInspection.util.IntentionName;
@@ -45,7 +46,7 @@ public class EnumFieldIdQuickFix extends BaseIntentionAction {
     @Override
     public void invoke(@NotNull final Project project, final Editor editor, PsiFile file) throws IncorrectOperationException {
         WriteCommandAction.writeCommandAction(project).run(() -> {
-            @NotNull Collection<HbufEnumFieldElement> elements = PsiTreeUtil.findChildrenOfAnyType(element.getParent().getParent(), HbufEnumFieldElement.class);
+            @NotNull Collection<HbufEnumFieldElement> elements = HbufUtil.getEnumByChild(element).getFields();
             for (int i = 0; i < elements.size(); i++) {
                 if (!checkId(i, elements)) {
                     HbufIdElement id = HbufElementFactory.createId(project, i);

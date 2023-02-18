@@ -24,6 +24,10 @@ public interface HbufDataElement extends PsiNamedElement {
     @NotNull
     Collection<HbufNameElement> getExtendList();
 
-    @NotNull
+
+
     HbufDataBodyElement getDataBody();
+
+    @NotNull
+    Collection<HbufDataFieldElement> getFields();
 }

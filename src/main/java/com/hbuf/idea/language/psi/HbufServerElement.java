@@ -1,6 +1,5 @@
 package com.hbuf.idea.language.psi;
 
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiNamedElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -26,4 +25,7 @@ public interface HbufServerElement extends PsiNamedElement {
 
     @NotNull
     HbufServerBodyElement getServerBody();
+
+    @NotNull
+    Collection<HbufServerFuncElement> getFuncts();
 }

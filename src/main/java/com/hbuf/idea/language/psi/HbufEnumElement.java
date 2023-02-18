@@ -5,6 +5,8 @@ import com.intellij.psi.PsiNamedElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
+
 public interface HbufEnumElement extends PsiNamedElement {
     String getName();
 
@@ -17,4 +19,6 @@ public interface HbufEnumElement extends PsiNamedElement {
     @NotNull
     HbufEnumBodyElement getEnumBody();
 
+    @NotNull
+    Collection<HbufEnumFieldElement> getFields();
 }

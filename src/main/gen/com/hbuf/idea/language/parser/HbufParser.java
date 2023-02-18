@@ -155,14 +155,23 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // data-field-statement [data-field-list]
+  // (data-field-statement | IDENT) [data-field-list]
   public static boolean data_field_list(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "data_field_list")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, DATA_FIELD_LIST, "<data field list>");
-    r = data_field_statement(b, l + 1);
+    Marker m = enter_section_(b, l, _COLLAPSE_, DATA_FIELD_LIST, "<data field list>");
+    r = data_field_list_0(b, l + 1);
     r = r && data_field_list_1(b, l + 1);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // data-field-statement | IDENT
+  private static boolean data_field_list_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "data_field_list_0")) return false;
+    boolean r;
+    r = data_field_statement(b, l + 1);
+    if (!r) r = consumeToken(b, IDENT);
     return r;
   }
 
@@ -395,14 +404,23 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // func-statement [func-list]
+  // (func-statement | IDENT) [func-list]
   public static boolean func_list(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_list")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, FUNC_LIST, "<func list>");
-    r = func_statement(b, l + 1);
+    Marker m = enter_section_(b, l, _COLLAPSE_, FUNC_LIST, "<func list>");
+    r = func_list_0(b, l + 1);
     r = r && func_list_1(b, l + 1);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // func-statement | IDENT
+  private static boolean func_list_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "func_list_0")) return false;
+    boolean r;
+    r = func_statement(b, l + 1);
+    if (!r) r = consumeToken(b, IDENT);
     return r;
   }
 
@@ -414,20 +432,30 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // func-type ident-name
+  // (func-type) ident-name
   public static boolean func_param(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_param")) return false;
     if (!nextTokenIs(b, IDENT)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = func_type(b, l + 1);
+    r = func_param_0(b, l + 1);
     r = r && ident_name(b, l + 1);
     exit_section_(b, m, FUNC_PARAM, r);
     return r;
   }
 
+  // (func-type)
+  private static boolean func_param_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "func_param_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = func_type(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
   /* ********************************************************** */
-  // COMMENT|([annotation-group] func-type ident-name LPAREN func-param RPAREN ASSIGN id)
+  // COMMENT|([annotation-group] func-type ident-name LPAREN (func-param|IDENT) RPAREN ASSIGN id)
   public static boolean func_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_statement")) return false;
     boolean r;
@@ -438,7 +466,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [annotation-group] func-type ident-name LPAREN func-param RPAREN ASSIGN id
+  // [annotation-group] func-type ident-name LPAREN (func-param|IDENT) RPAREN ASSIGN id
   private static boolean func_statement_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_statement_1")) return false;
     boolean r;
@@ -447,7 +475,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = r && func_type(b, l + 1);
     r = r && ident_name(b, l + 1);
     r = r && consumeToken(b, LPAREN);
-    r = r && func_param(b, l + 1);
+    r = r && func_statement_1_4(b, l + 1);
     r = r && consumeTokens(b, 0, RPAREN, ASSIGN);
     r = r && id(b, l + 1);
     exit_section_(b, m, null, r);
@@ -459,6 +487,15 @@ public class HbufParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "func_statement_1_0")) return false;
     annotation_group(b, l + 1);
     return true;
+  }
+
+  // func-param|IDENT
+  private static boolean func_statement_1_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "func_statement_1_4")) return false;
+    boolean r;
+    r = func_param(b, l + 1);
+    if (!r) r = consumeToken(b, IDENT);
+    return r;
   }
 
   /* ********************************************************** */

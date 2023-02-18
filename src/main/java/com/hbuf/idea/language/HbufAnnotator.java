@@ -267,7 +267,7 @@ public class HbufAnnotator implements Annotator {
         if (null == hse) {
             return;
         }
-        for (HbufServerFuncElement item : hse.getServerBody().getFuncList().getFields()) {
+        for (HbufServerFuncElement item : hse.getServerBody().getFuncList().getFuncts()) {
             if (item == parent) {
                 continue;
             }
@@ -436,7 +436,7 @@ public class HbufAnnotator implements Annotator {
         if (null == hee) {
             return;
         }
-        for (HbufServerFuncElement item : hee.getServerBody().getFuncList().getFields()) {
+        for (HbufServerFuncElement item : hee.getServerBody().getFuncList().getFuncts()) {
             if (item == parent) {
                 continue;
             }
@@ -492,22 +492,8 @@ public class HbufAnnotator implements Annotator {
     private void checkType(@NotNull AnnotationHolder holder, PsiElement base, CheckType... types) {
         List<CheckType> list = Arrays.asList(types);
         if (list.contains(CheckType.Base)) {
-            switch (base.getText()) {
-                case "int8":
-                case "int16":
-                case "int32":
-                case "int64":
-                case "uint8":
-                case "uint16":
-                case "uint32":
-                case "uint64":
-                case "bool":
-                case "float":
-                case "double":
-                case "decimal":
-                case "string":
-                case "date":
-                    return;
+            if (HbufUtil.DataBaseType.contains(base.getText())) {
+                return;
             }
         }
         if (list.contains(CheckType.Data)) {

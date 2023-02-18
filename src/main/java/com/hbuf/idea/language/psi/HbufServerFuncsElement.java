@@ -4,11 +4,13 @@ package com.hbuf.idea.language.psi;
 
 
 import com.intellij.psi.PsiElement;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 
 public interface HbufServerFuncsElement extends PsiElement {
 
-    Collection<HbufServerFuncElement> getFields();
+    @NotNull
+    Collection<HbufServerFuncElement> getFuncts();
 
 }
