@@ -80,5 +80,7 @@ public class HbufCompletionContributor extends CompletionContributor {
                     }
                 }
         );
+
+
     }
 }

@@ -64,27 +64,27 @@ public class HbufAnnotator implements Annotator {
                 return;
             }
             if (parent instanceof HbufEnumElement) {
-                checkEnumName(holder, (HbufEnumElement) parent, element);
+                checkEnumName(holder, (HbufEnumElement) parent, (HbufNameElement) element);
                 return;
             }
             if (parent instanceof HbufDataElement) {
-                checkDataName(holder, (HbufDataElement) parent, element);
+                checkDataName(holder, (HbufDataElement) parent, (HbufNameElement) element);
                 return;
             }
             if (parent instanceof HbufServerElement) {
-                checkServerName(holder, (HbufServerElement) parent, element);
+                checkServerName(holder, (HbufServerElement) parent, (HbufNameElement) element);
                 return;
             }
             if (parent instanceof HbufDataFieldElement) {
-                checkDataFieldName(holder, (HbufDataFieldElement) parent, element);
+                checkDataFieldName(holder, (HbufDataFieldElement) parent, (HbufNameElement) element);
                 return;
             }
             if (parent instanceof HbufEnumFieldElement) {
-                checkEnumFieldName(holder, (HbufEnumFieldElement) parent, element);
+                checkEnumFieldName(holder, (HbufEnumFieldElement) parent, (HbufNameElement) element);
                 return;
             }
             if (parent instanceof HbufServerFuncElement) {
-                checkServerFuncName(holder, (HbufServerFuncElement) parent, element);
+                checkServerFuncName(holder, (HbufServerFuncElement) parent, (HbufNameElement) element);
                 return;
             }
             if (parent instanceof HbufExtendsElement) {
@@ -217,7 +217,7 @@ public class HbufAnnotator implements Annotator {
                 .create();
     }
 
-    private void checkDataName(AnnotationHolder holder, HbufDataElement parent, PsiElement element) {
+    private void checkDataName(AnnotationHolder holder, HbufDataElement parent, HbufNameElement element) {
         for (HbufDataElement item : HbufUtil.findChildrenOfAnyType(element.getProject(), HbufDataElement.class)) {
             if (item == parent) {
                 continue;
@@ -226,13 +226,14 @@ public class HbufAnnotator implements Annotator {
                 holder.newAnnotation(HighlightSeverity.ERROR, "Data name'" + element.getText() + "' is already defined in the scope")
                         .range(element)
                         .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                        .withFix(new RenameQuickFix(element))
                         .create();
                 return;
             }
         }
     }
 
-    private void checkEnumName(AnnotationHolder holder, HbufEnumElement parent, PsiElement element) {
+    private void checkEnumName(AnnotationHolder holder, HbufEnumElement parent, HbufNameElement element) {
         for (HbufEnumElement item : HbufUtil.findChildrenOfAnyType(element.getProject(), HbufEnumElement.class)) {
             if (item == parent) {
                 continue;
@@ -241,13 +242,14 @@ public class HbufAnnotator implements Annotator {
                 holder.newAnnotation(HighlightSeverity.ERROR, "Enum name'" + element.getText() + "' is already defined in the scope")
                         .range(element)
                         .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                        .withFix(new RenameQuickFix(element))
                         .create();
                 return;
             }
         }
     }
 
-    private void checkServerName(AnnotationHolder holder, HbufServerElement parent, PsiElement element) {
+    private void checkServerName(AnnotationHolder holder, HbufServerElement parent, HbufNameElement element) {
         for (HbufServerElement item : HbufUtil.findChildrenOfAnyType(element.getProject(), HbufServerElement.class)) {
             if (item == parent) {
                 continue;
@@ -256,6 +258,7 @@ public class HbufAnnotator implements Annotator {
                 holder.newAnnotation(HighlightSeverity.ERROR, "Server name'" + element.getText() + "' is already defined in the scope")
                         .range(element)
                         .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                        .withFix(new RenameQuickFix(element))
                         .create();
                 return;
             }
@@ -431,7 +434,7 @@ public class HbufAnnotator implements Annotator {
                 .create();
     }
 
-    private void checkServerFuncName(AnnotationHolder holder, HbufServerFuncElement parent, PsiElement element) {
+    private void checkServerFuncName(AnnotationHolder holder, HbufServerFuncElement parent, HbufNameElement element) {
         HbufServerElement hee = HbufUtil.getServerByChild(element);
         if (null == hee) {
             return;
@@ -444,6 +447,7 @@ public class HbufAnnotator implements Annotator {
                 holder.newAnnotation(HighlightSeverity.ERROR, "Func '" + element.getText() + "' is already defined in the scope")
                         .range(element)
                         .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                        .withFix(new RenameQuickFix(element))
                         .create();
                 return;
             }
@@ -454,7 +458,7 @@ public class HbufAnnotator implements Annotator {
         }
     }
 
-    private void checkDataFieldName(AnnotationHolder holder, HbufDataFieldElement parent, PsiElement element) {
+    private void checkDataFieldName(AnnotationHolder holder, HbufDataFieldElement parent, HbufNameElement element) {
         HbufDataElement hde = HbufUtil.getDataByChild(element);
         if (null == hde) {
             return;
@@ -471,6 +475,7 @@ public class HbufAnnotator implements Annotator {
                 holder.newAnnotation(HighlightSeverity.ERROR, "Field '" + element.getText() + "' is already defined in the scope element.getText()")
                         .range(element)
                         .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                        .withFix(new RenameQuickFix(element))
                         .create();
                 return;
             }
