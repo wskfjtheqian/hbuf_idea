@@ -4,7 +4,6 @@ import com.hbuf.idea.language.psi.*;
 import com.intellij.codeInsight.completion.*;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.patterns.PlatformPatterns;
-import com.intellij.psi.PsiErrorElement;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,7 +21,7 @@ public class HbufCompletionContributor extends CompletionContributor {
         );
 
         extend(CompletionType.BASIC, PlatformPatterns.psiElement(HbufTypes.IDENT)
-                        .withParent(PsiErrorElement.class),
+                        .withParent(HbufFile.class),
                 new CompletionProvider<>() {
                     public void addCompletions(@NotNull CompletionParameters parameters,
                                                @NotNull ProcessingContext context,
@@ -32,6 +31,7 @@ public class HbufCompletionContributor extends CompletionContributor {
                         resultSet.addElement(LookupElementBuilder.create("data "));
                         resultSet.addElement(LookupElementBuilder.create("enum "));
                         resultSet.addElement(LookupElementBuilder.create("server "));
+                        resultSet.addElement(LookupElementBuilder.create("data ssa = 0 {\n}\n"));
                     }
                 }
         );

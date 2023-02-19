@@ -49,6 +49,7 @@
         <completion.contributor
                 language="Hbuf"
                 implementationClass="com.hbuf.idea.language.HbufCompletionContributor"/>
+        <editorTypedHandler  implementationClass="com.hbuf.idea.language.HbufTypedHandler"/>
     </extensions>
 
     <actions>

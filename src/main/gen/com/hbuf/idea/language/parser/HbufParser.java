@@ -570,7 +570,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // package-statement|import-statement|data-statement|server-statement|enum-statement|CRLF
+  // package-statement|import-statement|data-statement|server-statement|enum-statement|IDENT|CRLF
   static boolean item_(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "item_")) return false;
     boolean r;
@@ -579,6 +579,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
     if (!r) r = data_statement(b, l + 1);
     if (!r) r = server_statement(b, l + 1);
     if (!r) r = enum_statement(b, l + 1);
+    if (!r) r = consumeToken(b, IDENT);
     if (!r) r = consumeToken(b, CRLF);
     return r;
   }
