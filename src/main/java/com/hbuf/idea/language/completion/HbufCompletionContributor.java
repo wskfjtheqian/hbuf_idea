@@ -1,4 +1,4 @@
-package com.hbuf.idea.language;
+package com.hbuf.idea.language.completion;
 
 import com.hbuf.idea.language.psi.*;
 import com.intellij.codeInsight.completion.*;
@@ -31,7 +31,7 @@ public class HbufCompletionContributor extends CompletionContributor {
                         resultSet.addElement(LookupElementBuilder.create("data "));
                         resultSet.addElement(LookupElementBuilder.create("enum "));
                         resultSet.addElement(LookupElementBuilder.create("server "));
-                        resultSet.addElement(LookupElementBuilder.create("data ssa = 0 {\n}\n"));
+                        resultSet.addElement(new HbufEnumFieldLookupElement());
                     }
                 }
         );

@@ -28,21 +28,7 @@ public class HbufLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSett
 
   @Override
   public String getCodeSample(@NotNull SettingsType settingsType) {
-    return "package go=\"main\"\n" +
-            "\n" +
-            "import \"test2.hbuf\"\n" +
-            "\n" +
-            "//账号状态\n" +
-            "[ui:]\n" +
-            "enum AccountStatus{\n" +
-            "  //账号状态（禁用）\n" +
-            "  [lang:zh=\"禁用\";en=\"Disable\"]\n" +
-            "  disable = 0\n" +
-            "\n" +
-            "  //账号状态（启用）\n" +
-            "  [lang:zh=\"启用\";en=\"Enable\"]\n" +
-            "  enable = 1\n" +
-            "}\n";
+    return "\n";
   }
 
 }

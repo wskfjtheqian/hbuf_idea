@@ -42,13 +42,10 @@
                         implementationClass="com.hbuf.idea.language.formatter.HbufFormattingModelBuilder"/>
 
         <lang.braceMatcher language="Hbuf" implementationClass="com.hbuf.idea.language.HbufBraceMatcher"/>
-        <!--        <gotoSymbolContributor implementation="com.hbuf.idea.language.HbufChooseByNameContributor"/>-->
-
-
         <annotator language="Hbuf" implementationClass="com.hbuf.idea.language.HbufAnnotator"/>
         <completion.contributor
                 language="Hbuf"
-                implementationClass="com.hbuf.idea.language.HbufCompletionContributor"/>
+                implementationClass="com.hbuf.idea.language.completion.HbufCompletionContributor"/>
         <editorTypedHandler  implementationClass="com.hbuf.idea.language.HbufTypedHandler"/>
     </extensions>
 
