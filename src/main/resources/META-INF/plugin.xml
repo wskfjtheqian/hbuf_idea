@@ -48,6 +48,7 @@
                 implementationClass="com.hbuf.idea.language.completion.HbufCompletionContributor"/>
         <editorTypedHandler  implementationClass="com.hbuf.idea.language.HbufTypedHandler"/>
 
+        <defaultLiveTemplatesProvider implementation="com.hbuf.idea.language.template.HbufLiveTemplatesProvider"/>
     </extensions>
 
     <actions>
