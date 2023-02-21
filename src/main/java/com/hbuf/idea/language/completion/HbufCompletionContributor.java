@@ -3,6 +3,9 @@ package com.hbuf.idea.language.completion;
 import com.hbuf.idea.language.psi.*;
 import com.intellij.codeInsight.completion.*;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
+import com.intellij.codeInsight.template.impl.CustomLiveTemplateLookupElement;
+import com.intellij.codeInsight.template.impl.LiveTemplateLookupElement;
+import com.intellij.codeInsight.template.postfix.templates.PostfixLiveTemplate;
 import com.intellij.patterns.PlatformPatterns;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NotNull;
@@ -31,7 +34,7 @@ public class HbufCompletionContributor extends CompletionContributor {
                         resultSet.addElement(LookupElementBuilder.create("data "));
                         resultSet.addElement(LookupElementBuilder.create("enum "));
                         resultSet.addElement(LookupElementBuilder.create("server "));
-                        resultSet.addElement(new HbufEnumFieldLookupElement());
+                        resultSet.addElement(new CustomLiveTemplateLookupElement(new PostfixLiveTemplate(), "enum", "", "CustomLiveTemplateLookupElement", true, true));
                     }
                 }
         );

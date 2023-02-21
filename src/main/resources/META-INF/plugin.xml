@@ -47,9 +47,12 @@
                 language="Hbuf"
                 implementationClass="com.hbuf.idea.language.completion.HbufCompletionContributor"/>
         <editorTypedHandler  implementationClass="com.hbuf.idea.language.HbufTypedHandler"/>
+
     </extensions>
 
     <actions>
-        <!-- Add your actions here -->
+        <action id="Create.Hbuf" class="com.hbuf.idea.language.HbufCreateAction">
+            <add-to-group group-id="NewGroup"/>
+        </action>
     </actions>
 </idea-plugin>
