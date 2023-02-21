@@ -89,4 +89,19 @@ public class HbufBlock extends AbstractBlock {
         return myNode.getFirstChildNode() == null;
     }
 
+    @Override
+    public @NotNull ChildAttributes getChildAttributes(int newChildIndex) {
+        @NotNull IElementType type = myNode.getElementType();
+        Indent indent = Indent.getNoneIndent();
+        if (type == HbufTypes.ENUM_FIELD_LIST
+                || type == HbufTypes.ENUM_BODY
+                || type == HbufTypes.DATA_FIELD_LIST
+                || type == HbufTypes.DATA_BODY
+                || type == HbufTypes.FUNC_LIST
+                || type == HbufTypes.SERVER_BODY
+        ) {
+            indent = Indent.getSpaceIndent(4);
+        }
+        return new ChildAttributes(indent, Alignment.createAlignment());
+    }
 }

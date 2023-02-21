@@ -51,8 +51,6 @@
     </extensions>
 
     <actions>
-        <action id="Create.Hbuf" class="com.hbuf.idea.language.HbufCreateAction">
-            <add-to-group group-id="NewGroup"/>
-        </action>
+
     </actions>
 </idea-plugin>
