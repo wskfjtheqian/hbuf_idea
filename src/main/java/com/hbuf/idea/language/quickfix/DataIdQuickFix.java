@@ -1,6 +1,5 @@
 package com.hbuf.idea.language.quickfix;
 
-import com.hbuf.idea.language.psi.HbufDataElement;
 import com.hbuf.idea.language.psi.HbufElementFactory;
 import com.hbuf.idea.language.psi.HbufIdElement;
 import com.hbuf.idea.language.psi.HbufUtil;
@@ -14,8 +13,6 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Collection;
 
 public class DataIdQuickFix extends BaseIntentionAction {
     private final HbufIdElement element;
@@ -45,25 +42,12 @@ public class DataIdQuickFix extends BaseIntentionAction {
     @Override
     public void invoke(@NotNull final Project project, final Editor editor, PsiFile file) throws IncorrectOperationException {
         WriteCommandAction.writeCommandAction(project).run(() -> {
-            @NotNull Collection<HbufDataElement> elements = HbufUtil.findData(element.getProject());
-            for (int i = 0; i < elements.size(); i++) {
-                if (!checkId(i, elements)) {
-                    HbufIdElement id = HbufElementFactory.createId(project, i);
-                    element.getParent().getNode().replaceChild(element.getNode(), id.getNode());
-                    FileEditorManager.getInstance(project).getSelectedTextEditor().getCaretModel().moveCaretRelatively(2, 0, false, false, false);
-                    return;
-                }
-            }
+            HbufIdElement id = HbufElementFactory.createId(project, HbufUtil.getDataNewId(project));
+            element.getParent().getNode().replaceChild(element.getNode(), id.getNode());
+            FileEditorManager.getInstance(project).getSelectedTextEditor().getCaretModel().moveCaretRelatively(2, 0, false, false, false);
         });
     }
 
-    private boolean checkId(int id, Collection<HbufDataElement> elements) {
-        for (HbufDataElement item : elements) {
-            if (item.getNumber() == id) {
-                return true;
-            }
-        }
-        return false;
-    }
+
 }
 

@@ -329,4 +329,46 @@ public class HbufUtil {
         }
         return hbufFile.getLastChild();
     }
+
+    public static int getDataNewId(Project project) {
+        @NotNull Collection<HbufDataElement> elements = findData(project);
+        for (int i = 0; i < elements.size(); i++) {
+            if (!checkDataId(i, elements)) {
+                return i;
+            }
+        }
+        return elements.size();
+    }
+
+    private static boolean checkDataId(int id, Collection<HbufDataElement> elements) {
+        for (HbufDataElement item : elements) {
+            if (item.getNumber() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static int getServerNewId(Project project) {
+        @NotNull List<HbufServerElement> elements = findServer(project);
+        for (int i = 0; i < elements.size(); i++) {
+            if (!checkServerId(i, elements)) {
+                return i;
+            }
+        }
+        return elements.size();
+    }
+
+    private static boolean checkServerId(int id, List<HbufServerElement> elements) {
+        for (HbufServerElement item : elements) {
+            if (item.getNumber() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static int getFuncNewId(Project project) {
+        return 0;
+    }
 }

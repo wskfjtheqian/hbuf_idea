@@ -56,7 +56,6 @@ public class ServerFuncIdQuickFix extends BaseIntentionAction {
                     return;
                 }
             }
-
         });
     }
 
@@ -66,6 +65,7 @@ public class ServerFuncIdQuickFix extends BaseIntentionAction {
                 return true;
             }
         }
+        Class<? extends Collection> aClass = elements.getClass();
         return false;
     }
 }

@@ -267,11 +267,11 @@ public class HbufAnnotator implements Annotator {
 
     private void checkServerFuncId(AnnotationHolder holder, HbufServerFuncElement parent, HbufIdElement element) {
         HbufServerElement hse = HbufUtil.getServerByChild(element);
-        if (null == hse) {
+        if (null == hse || null == element) {
             return;
         }
         for (HbufServerFuncElement item : hse.getServerBody().getFuncList().getFuncts()) {
-            if (item == parent) {
+            if (item == parent || null == item) {
                 continue;
             }
             if (item.getNumber() == element.getId()) {
@@ -436,11 +436,11 @@ public class HbufAnnotator implements Annotator {
 
     private void checkServerFuncName(AnnotationHolder holder, HbufServerFuncElement parent, HbufNameElement element) {
         HbufServerElement hee = HbufUtil.getServerByChild(element);
-        if (null == hee) {
+        if (null == hee || null == element) {
             return;
         }
         for (HbufServerFuncElement item : hee.getServerBody().getFuncList().getFuncts()) {
-            if (item == parent) {
+            if (null == item || item == parent) {
                 continue;
             }
             if (item.getName().equals(element.getText())) {
@@ -451,11 +451,11 @@ public class HbufAnnotator implements Annotator {
                         .create();
                 return;
             }
-            holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                    .range(element)
-                    .textAttributes(HbufSyntaxHighlighter.METHOD)
-                    .create();
         }
+        holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                .range(element)
+                .textAttributes(HbufSyntaxHighlighter.METHOD)
+                .create();
     }
 
     private void checkDataFieldName(AnnotationHolder holder, HbufDataFieldElement parent, HbufNameElement element) {

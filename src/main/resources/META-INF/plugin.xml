@@ -33,8 +33,6 @@
                                  implementationClass="com.hbuf.idea.language.HbufFindUsagesProvider"/>
         <spellchecker.support language="Hbuf"
                               implementationClass="com.hbuf.idea.language.HbufSpellcheckingStrategy"/>
-
-
         <codeStyleSettingsProvider implementation="com.hbuf.idea.language.formatter.HbufCodeStyleSettingsProvider"/>
         <langCodeStyleSettingsProvider
                 implementation="com.hbuf.idea.language.formatter.HbufLanguageCodeStyleSettingsProvider"/>
@@ -46,11 +44,16 @@
         <completion.contributor
                 language="Hbuf"
                 implementationClass="com.hbuf.idea.language.completion.HbufCompletionContributor"/>
-        <editorTypedHandler  implementationClass="com.hbuf.idea.language.HbufTypedHandler"/>
+        <editorTypedHandler implementationClass="com.hbuf.idea.language.HbufTypedHandler"/>
 
         <defaultLiveTemplates file="/liveTemplates/hbuf.xml"/>
-        <liveTemplateContext implementation="com.hbuf.idea.language.template.HbufLiveTemplatesContext"/>
-        <liveTemplateMacro implementation="com.hbuf.idea.language.template.HbufLiveTemplatesMacro"/>
+        <liveTemplateContext implementation="com.hbuf.idea.language.template.HbufEverywhereContext"/>
+        <liveTemplateContext implementation="com.hbuf.idea.language.template.HbufLiveTemplatesContext$File"/>
+        <liveTemplateContext implementation="com.hbuf.idea.language.template.HbufLiveTemplatesContext$Enum"/>
+        <liveTemplateContext implementation="com.hbuf.idea.language.template.HbufLiveTemplatesContext$Data"/>
+        <liveTemplateContext implementation="com.hbuf.idea.language.template.HbufLiveTemplatesContext$Server"/>
+        <liveTemplateMacro implementation="com.hbuf.idea.language.template.HbufLiveTemplatesMacro$GetDataId"/>
+        <liveTemplateMacro implementation="com.hbuf.idea.language.template.HbufLiveTemplatesMacro$GetServerId"/>
     </extensions>
 
     <actions>

@@ -1,20 +1,40 @@
 package com.hbuf.idea.language.template;
 
+import com.hbuf.idea.language.HbufLanguage;
+import com.hbuf.idea.language.psi.HbufUtil;
 import com.intellij.codeInsight.template.Expression;
 import com.intellij.codeInsight.template.ExpressionContext;
-import com.intellij.codeInsight.template.Macro;
 import com.intellij.codeInsight.template.Result;
+import com.intellij.codeInsight.template.TextResult;
 import com.intellij.codeInsight.template.macro.MacroBase;
-import org.jetbrains.annotations.NotNull;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiWhiteSpace;
+import com.intellij.psi.util.PsiUtilCore;
 import org.jetbrains.annotations.Nullable;
 
-public class HbufLiveTemplatesMacro extends MacroBase {
-    public HbufLiveTemplatesMacro() {
-        super("titleCase", "titleCase(String)");
+public class HbufLiveTemplatesMacro {
+    public static class GetDataId extends MacroBase {
+        public GetDataId() {
+            super("getDataId", "getDataId()");
+        }
+
+        @Override
+        protected @Nullable Result calculateResult(Expression[] expressions, ExpressionContext context, boolean b) {
+            int id = HbufUtil.getDataNewId(context.getProject());
+            return new TextResult("" + id);
+        }
     }
 
-    @Override
-    protected @Nullable Result calculateResult(Expression[] expressions, ExpressionContext expressionContext, boolean b) {
-        return null;
+    public static class GetServerId extends MacroBase {
+        public GetServerId() {
+            super("getServerId", "getServerId()");
+        }
+
+        @Override
+        protected @Nullable Result calculateResult(Expression[] expressions, ExpressionContext context, boolean b) {
+            int id = HbufUtil.getServerNewId(context.getProject());
+            return new TextResult("" + id);
+        }
     }
 }
