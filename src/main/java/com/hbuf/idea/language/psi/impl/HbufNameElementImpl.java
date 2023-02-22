@@ -1,24 +1,17 @@
 package com.hbuf.idea.language.psi.impl;
 
-import com.hbuf.idea.language.HbufIcons;
 import com.hbuf.idea.language.psi.*;
-import com.intellij.codeInsight.lookup.LookupElement;
-import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.NlsSafe;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.*;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import reference.DataPsiReference;
-import reference.ServerPsiReference;
-import reference.TypePsiReference;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.hbuf.idea.language.reference.DataPsiReference;
+import com.hbuf.idea.language.reference.ServerPsiReference;
+import com.hbuf.idea.language.reference.TypePsiReference;
 
 public abstract class HbufNameElementImpl extends ASTWrapperPsiElement implements HbufNameElement {
     public HbufNameElementImpl(@NotNull ASTNode node) {

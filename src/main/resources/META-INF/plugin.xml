@@ -48,7 +48,6 @@
                 implementationClass="com.hbuf.idea.language.completion.HbufCompletionContributor"/>
         <editorTypedHandler  implementationClass="com.hbuf.idea.language.HbufTypedHandler"/>
 
-<!--        <defaultLiveTemplatesProvider implementation="com.hbuf.idea.language.template.HbufLiveTemplatesProvider"/>-->
         <defaultLiveTemplates file="/liveTemplates/hbuf.xml"/>
         <liveTemplateContext implementation="com.hbuf.idea.language.template.HbufLiveTemplatesContext"/>
         <liveTemplateMacro implementation="com.hbuf.idea.language.template.HbufLiveTemplatesMacro"/>

@@ -1,8 +1,8 @@
-package reference;
+package com.hbuf.idea.language.reference;
 
 import com.hbuf.idea.language.HbufIcons;
-import com.hbuf.idea.language.psi.HbufDataElement;
 import com.hbuf.idea.language.psi.HbufNameElement;
+import com.hbuf.idea.language.psi.HbufServerElement;
 import com.hbuf.idea.language.psi.HbufUtil;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
@@ -16,11 +16,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataPsiReference extends PsiReferenceBase<PsiElement> implements PsiPolyVariantReference {
+public class ServerPsiReference extends PsiReferenceBase<PsiElement> implements PsiPolyVariantReference {
 
     private final String name;
 
-    public DataPsiReference(@NotNull PsiElement element, TextRange textRange) {
+    public ServerPsiReference(@NotNull PsiElement element, TextRange textRange) {
         super(element, textRange);
         name = element.getText().substring(textRange.getStartOffset(), textRange.getEndOffset());
     }
@@ -29,7 +29,7 @@ public class DataPsiReference extends PsiReferenceBase<PsiElement> implements Ps
     public ResolveResult[] multiResolve(boolean b) {
         Project project = myElement.getProject();
         List<ResolveResult> results = new ArrayList<>();
-        for (HbufDataElement item : HbufUtil.findData(project, name)) {
+        for (HbufServerElement item : HbufUtil.findServer(project, name)) {
             results.add(new PsiElementResolveResult(item.getIdentName()));
         }
         return results.toArray(new ResolveResult[results.size()]);
@@ -46,7 +46,7 @@ public class DataPsiReference extends PsiReferenceBase<PsiElement> implements Ps
     public Object[] getVariants() {
         Project project = myElement.getProject();
         List<LookupElement> variants = new ArrayList<>();
-        for (final HbufDataElement item : HbufUtil.findData(project)) {
+        for (final HbufServerElement item : HbufUtil.findServer(project)) {
             if (item.getName() != null && item.getName().length() > 0) {
                 variants.add(LookupElementBuilder
                         .create(item).withIcon(HbufIcons.FILE)
@@ -62,6 +62,5 @@ public class DataPsiReference extends PsiReferenceBase<PsiElement> implements Ps
         HbufNameElement newElement = HbufUtil.createNameElement(myElement.getProject(), newElementName);
         return newElement;
     }
-
-
 }
+

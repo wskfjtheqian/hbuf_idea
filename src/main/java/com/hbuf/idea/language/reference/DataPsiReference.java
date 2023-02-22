@@ -1,8 +1,7 @@
-package reference;
+package com.hbuf.idea.language.reference;
 
 import com.hbuf.idea.language.HbufIcons;
 import com.hbuf.idea.language.psi.HbufDataElement;
-import com.hbuf.idea.language.psi.HbufEnumElement;
 import com.hbuf.idea.language.psi.HbufNameElement;
 import com.hbuf.idea.language.psi.HbufUtil;
 import com.intellij.codeInsight.lookup.LookupElement;
@@ -17,11 +16,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public  class TypePsiReference extends PsiReferenceBase<PsiElement> implements PsiPolyVariantReference {
+public class DataPsiReference extends PsiReferenceBase<PsiElement> implements PsiPolyVariantReference {
 
     private final String name;
 
-    public TypePsiReference(@NotNull PsiElement element, TextRange textRange) {
+    public DataPsiReference(@NotNull PsiElement element, TextRange textRange) {
         super(element, textRange);
         name = element.getText().substring(textRange.getStartOffset(), textRange.getEndOffset());
     }
@@ -31,9 +30,6 @@ public  class TypePsiReference extends PsiReferenceBase<PsiElement> implements P
         Project project = myElement.getProject();
         List<ResolveResult> results = new ArrayList<>();
         for (HbufDataElement item : HbufUtil.findData(project, name)) {
-            results.add(new PsiElementResolveResult(item.getIdentName()));
-        }
-        for (HbufEnumElement item : HbufUtil.findEnum(project, name)) {
             results.add(new PsiElementResolveResult(item.getIdentName()));
         }
         return results.toArray(new ResolveResult[results.size()]);
@@ -58,14 +54,6 @@ public  class TypePsiReference extends PsiReferenceBase<PsiElement> implements P
                 );
             }
         }
-        for (final HbufEnumElement item : HbufUtil.findEnum(project)) {
-            if (item.getName() != null && item.getName().length() > 0) {
-                variants.add(LookupElementBuilder
-                        .create(item).withIcon(HbufIcons.FILE)
-                        .withTypeText(item.getContainingFile().getName())
-                );
-            }
-        }
         return variants.toArray();
     }
 
@@ -74,5 +62,6 @@ public  class TypePsiReference extends PsiReferenceBase<PsiElement> implements P
         HbufNameElement newElement = HbufUtil.createNameElement(myElement.getProject(), newElementName);
         return newElement;
     }
-}
 
+
+}
