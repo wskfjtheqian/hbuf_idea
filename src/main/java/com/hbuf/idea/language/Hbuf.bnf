@@ -129,9 +129,14 @@ annotation-list::= annotation-field [SEMICOLON annotation-list]  {
     implements="com.hbuf.idea.language.psi.HbufAnnotationListElement"
 }
 
-annotation-field::= ident-name ASSIGN STRING {
+annotation-field::= ident-name ASSIGN annotation-values {
     mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationFieldElementImpl"
     implements="com.hbuf.idea.language.psi.HbufAnnotationFieldElement"
+}
+
+annotation-values::= STRING [COMMA annotation-values]{
+    mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationValuesElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufAnnotationValuesElement"
 }
 
 server-statement::= COMMENT|([annotation-group] SERVER ident-name [COLON extends] ASSIGN id server-body){

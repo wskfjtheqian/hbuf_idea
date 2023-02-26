@@ -70,14 +70,15 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ident-name ASSIGN STRING
+  // ident-name ASSIGN annotation-values
   public static boolean annotation_field(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "annotation_field")) return false;
     if (!nextTokenIs(b, IDENT)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = ident_name(b, l + 1);
-    r = r && consumeTokens(b, 0, ASSIGN, STRING);
+    r = r && consumeToken(b, ASSIGN);
+    r = r && annotation_values(b, l + 1);
     exit_section_(b, m, ANNOTATION_FIELD, r);
     return r;
   }
@@ -129,6 +130,37 @@ public class HbufParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = consumeToken(b, SEMICOLON);
     r = r && annotation_list(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // STRING [COMMA annotation-values]
+  public static boolean annotation_values(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "annotation_values")) return false;
+    if (!nextTokenIs(b, STRING)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, STRING);
+    r = r && annotation_values_1(b, l + 1);
+    exit_section_(b, m, ANNOTATION_VALUES, r);
+    return r;
+  }
+
+  // [COMMA annotation-values]
+  private static boolean annotation_values_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "annotation_values_1")) return false;
+    annotation_values_1_0(b, l + 1);
+    return true;
+  }
+
+  // COMMA annotation-values
+  private static boolean annotation_values_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "annotation_values_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COMMA);
+    r = r && annotation_values(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
