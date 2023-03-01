@@ -6,9 +6,14 @@ import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.codeInsight.template.impl.CustomLiveTemplateLookupElement;
 import com.intellij.codeInsight.template.impl.LiveTemplateLookupElement;
 import com.intellij.codeInsight.template.postfix.templates.PostfixLiveTemplate;
+import com.intellij.patterns.ElementPatternCondition;
+import com.intellij.patterns.InitialPatternCondition;
+import com.intellij.patterns.ObjectPattern;
 import com.intellij.patterns.PlatformPatterns;
+import com.intellij.psi.PsiElement;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class HbufCompletionContributor extends CompletionContributor {
     public HbufCompletionContributor() {
@@ -72,6 +77,21 @@ public class HbufCompletionContributor extends CompletionContributor {
                 }
         );
 
-
+        extend(CompletionType.BASIC, PlatformPatterns.psiElement().afterLeaf("[")
+                        .and(PlatformPatterns.psiElement().beforeLeaf("]").andOr(PlatformPatterns.psiElement().beforeLeaf(":"))),
+                new CompletionProvider<>() {
+                    public void addCompletions(@NotNull CompletionParameters parameters,
+                                               @NotNull ProcessingContext context,
+                                               @NotNull CompletionResultSet resultSet) {
+                        resultSet.addElement(LookupElementBuilder.create("db"));
+                        resultSet.addElement(LookupElementBuilder.create("ui"));
+                        resultSet.addElement(LookupElementBuilder.create("cache"));
+                        resultSet.addElement(LookupElementBuilder.create("lang"));
+                        resultSet.addElement(LookupElementBuilder.create("tag"));
+                        resultSet.addElement(LookupElementBuilder.create("format"));
+                        resultSet.addElement(LookupElementBuilder.create("verify"));
+                    }
+                }
+        );
     }
 }
