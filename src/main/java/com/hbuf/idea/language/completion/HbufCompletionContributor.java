@@ -78,7 +78,7 @@ public class HbufCompletionContributor extends CompletionContributor {
         );
 
         extend(CompletionType.BASIC, PlatformPatterns.psiElement().afterLeaf("[")
-                        .and(PlatformPatterns.psiElement().beforeLeaf("]").andOr(PlatformPatterns.psiElement().beforeLeaf(":"))),
+                        .and(PlatformPatterns.psiElement().beforeLeaf("]", ":")),
                 new CompletionProvider<>() {
                     public void addCompletions(@NotNull CompletionParameters parameters,
                                                @NotNull ProcessingContext context,
