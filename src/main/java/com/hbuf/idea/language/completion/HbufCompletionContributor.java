@@ -93,5 +93,26 @@ public class HbufCompletionContributor extends CompletionContributor {
                     }
                 }
         );
+
+        extend(CompletionType.BASIC, PlatformPatterns.psiElement().afterLeaf(":", ";")
+                        .and(PlatformPatterns.psiElement().beforeLeaf("=", "]")).and( PlatformPatterns.psiElement()),
+                new CompletionProvider<>() {
+                    public void addCompletions(@NotNull CompletionParameters parameters,
+                                               @NotNull ProcessingContext context,
+                                               @NotNull CompletionResultSet resultSet) {
+                        resultSet.addElement(LookupElementBuilder.create("insert"));
+                        resultSet.addElement(LookupElementBuilder.create("update"));
+                        resultSet.addElement(LookupElementBuilder.create("del"));
+                        resultSet.addElement(LookupElementBuilder.create("get"));
+                        resultSet.addElement(LookupElementBuilder.create("list"));
+                        resultSet.addElement(LookupElementBuilder.create("inserts"));
+                        resultSet.addElement(LookupElementBuilder.create("set"));
+                        resultSet.addElement(LookupElementBuilder.create("count"));
+                        resultSet.addElement(LookupElementBuilder.create("name"));
+                    }
+                }
+        );
+
+
     }
 }
