@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 public class HbufSyntaxHighlighterFactory extends SyntaxHighlighterFactory {
     @Override
     public @NotNull
-    SyntaxHighlighter getSyntaxHighlighter(@Nullable Project project, @Nullable VirtualFile virtualFile) {
+    SyntaxHighlighter getSyntaxHighlighter( Project project,  VirtualFile virtualFile) {
         return new HbufSyntaxHighlighter();
     }
 }

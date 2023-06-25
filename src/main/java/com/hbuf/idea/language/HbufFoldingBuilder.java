@@ -45,7 +45,7 @@ public class HbufFoldingBuilder extends FoldingBuilderEx implements DumbAware {
     }
 
 
-    @Nullable
+    
     @Override
     public String getPlaceholderText(@NotNull ASTNode node) {
         String retTxt = "...";

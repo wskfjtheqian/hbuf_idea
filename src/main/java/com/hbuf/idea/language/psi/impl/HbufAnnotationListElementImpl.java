@@ -30,6 +30,6 @@ public abstract class HbufAnnotationListElementImpl extends ASTWrapperPsiElement
     @NotNull
     abstract HbufAnnotationFieldElement getAnnotationField();
 
-    @Nullable
+    
     abstract HbufAnnotationListElement getAnnotationList();
 }

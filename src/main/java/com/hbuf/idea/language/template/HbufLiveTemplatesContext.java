@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 public abstract class HbufLiveTemplatesContext extends TemplateContextType {
     protected HbufLiveTemplatesContext(@NotNull String id,
                                        @NlsContexts.Label @NotNull String presentableName,
-                                       @Nullable Class<? extends TemplateContextType> baseContextType) {
+                                        Class<? extends TemplateContextType> baseContextType) {
         super(id, presentableName, baseContextType);
     }
 

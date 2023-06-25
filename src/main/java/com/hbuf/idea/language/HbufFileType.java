@@ -38,7 +38,7 @@ public class HbufFileType extends LanguageFileType {
     }
 
     @Override
-    public @Nullable
+    public 
     Icon getIcon() {
         return HbufIcons.FILE;
     }

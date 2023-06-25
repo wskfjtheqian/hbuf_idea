@@ -13,7 +13,7 @@ public interface HbufEnumElement extends PsiNamedElement {
     @NotNull
     HbufNameElement getIdentName();
 
-    @Nullable
+    
     HbufAnnotationGroup getAnnotationGroup();
 
     @NotNull

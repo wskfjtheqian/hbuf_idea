@@ -21,7 +21,7 @@ public class HbufCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
         return new HbufCodeStyleSettings(settings);
     }
 
-    @Nullable
+    
     @Override
     public String getConfigurableDisplayName() {
         return "Hbuf";

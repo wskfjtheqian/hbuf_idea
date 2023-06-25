@@ -50,7 +50,7 @@ public class HbufStructureViewElement {
 
         @Override
         public @NlsSafe
-        @Nullable
+        
         String getPresentableText() {
             return getElement().getPresentation().getPresentableText();
         }
@@ -78,7 +78,7 @@ public class HbufStructureViewElement {
 
         @Override
         public @NlsSafe
-        @Nullable
+        
         String getPresentableText() {
             return getElement().getName();
         }
@@ -103,7 +103,7 @@ public class HbufStructureViewElement {
 
         @Override
         public @NlsSafe
-        @Nullable
+        
         String getPresentableText() {
             return getElement().getName() + " = " + getElement().getNumber();
         }
@@ -136,7 +136,7 @@ public class HbufStructureViewElement {
 
         @Override
         public @NlsSafe
-        @Nullable
+        
         String getPresentableText() {
             return getElement().getName() + " = " + getElement().getNumber();
         }
@@ -161,7 +161,7 @@ public class HbufStructureViewElement {
 
         @Override
         public @NlsSafe
-        @Nullable
+        
         String getPresentableText() {
             HbufFieldTypeElement type = getElement().getTypeStatement();
             String text = "";
@@ -205,7 +205,7 @@ public class HbufStructureViewElement {
 
         @Override
         public @NlsSafe
-        @Nullable
+        
         String getPresentableText() {
             return getElement().getName() + " = " + getElement().getNumber();
         }
@@ -230,7 +230,7 @@ public class HbufStructureViewElement {
 
         @Override
         public @NlsSafe
-        @Nullable
+        
         String getPresentableText() {
             return getElement().getName() +
                     "(" + getElement().getFuncParam().getFuncType().getName() +

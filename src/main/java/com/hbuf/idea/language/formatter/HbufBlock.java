@@ -18,7 +18,7 @@ public class HbufBlock extends AbstractBlock {
     private final SpacingBuilder spacingBuilder;
     private final Indent mIndent;
 
-    protected HbufBlock(@NotNull ASTNode node, @Nullable Wrap wrap, @Nullable Alignment alignment,
+    protected HbufBlock(@NotNull ASTNode node,  Wrap wrap,  Alignment alignment,
                         SpacingBuilder spacingBuilder, Indent indent) {
         super(node, wrap, alignment);
         this.spacingBuilder = spacingBuilder;
@@ -78,9 +78,9 @@ public class HbufBlock extends AbstractBlock {
         return mIndent;
     }
 
-    @Nullable
+    
     @Override
-    public Spacing getSpacing(@Nullable Block child1, @NotNull Block child2) {
+    public Spacing getSpacing( Block child1, @NotNull Block child2) {
         return spacingBuilder.getSpacing(this, child1, child2);
     }
 

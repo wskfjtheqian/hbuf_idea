@@ -22,7 +22,7 @@ public class HbufBraceMatcher implements PairedBraceMatcher {
         return PAIRS;
     }
 
-    public boolean isPairedBracesAllowedBeforeType(@NotNull IElementType iElementType, @Nullable IElementType iElementType1) {
+    public boolean isPairedBracesAllowedBeforeType(@NotNull IElementType iElementType,  IElementType iElementType1) {
         return true;
     }
 

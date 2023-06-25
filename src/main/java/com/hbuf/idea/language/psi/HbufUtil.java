@@ -308,7 +308,7 @@ public class HbufUtil {
             @NotNull Collection<HbufImportElement> elements = PsiTreeUtil.findChildrenOfAnyType(file, HbufImportElement.class);
             for (HbufImportElement element : elements) {
                 @NlsSafe String path = HbufUtil.getString(element.getString().getText());
-                @Nullable VirtualFile f = element.getContainingFile().getVirtualFile().getParent().findFileByRelativePath(path);
+                 VirtualFile f = element.getContainingFile().getVirtualFile().getParent().findFileByRelativePath(path);
                 if (null != f && dataElement.getContainingFile().getVirtualFile().getPath().equals(f.getPath())) {
                     return true;
                 }

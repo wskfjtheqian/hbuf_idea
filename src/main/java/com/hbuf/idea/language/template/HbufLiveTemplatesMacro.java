@@ -20,7 +20,7 @@ public class HbufLiveTemplatesMacro {
         }
 
         @Override
-        protected @Nullable Result calculateResult(Expression[] expressions, ExpressionContext context, boolean b) {
+        protected  Result calculateResult(Expression[] expressions, ExpressionContext context, boolean b) {
             int id = HbufUtil.getDataNewId(context.getProject());
             return new TextResult("" + id);
         }
@@ -32,7 +32,7 @@ public class HbufLiveTemplatesMacro {
         }
 
         @Override
-        protected @Nullable Result calculateResult(Expression[] expressions, ExpressionContext context, boolean b) {
+        protected  Result calculateResult(Expression[] expressions, ExpressionContext context, boolean b) {
             int id = HbufUtil.getServerNewId(context.getProject());
             return new TextResult("" + id);
         }

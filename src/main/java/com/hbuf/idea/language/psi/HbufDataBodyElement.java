@@ -9,7 +9,7 @@ import java.util.Collection;
 public interface HbufDataBodyElement extends PsiElement {
     String getName();
 
-    @Nullable
+    
     HbufDataFieldsElement getDataFieldList();
 
     @NotNull

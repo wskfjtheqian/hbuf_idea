@@ -37,7 +37,7 @@ public abstract class HbufDataElementImpl extends ASTWrapperPsiElement implement
         return getId().getId();
     }
 
-    @Nullable
+    
     abstract HbufExtendsElement getExtends();
 
     @NotNull

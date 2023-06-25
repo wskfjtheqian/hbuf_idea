@@ -38,7 +38,7 @@ public abstract class HbufServerElementImpl extends ASTWrapperPsiElement impleme
     }
 
 
-    @Nullable
+    
     abstract HbufExtendsElement getExtends();
 
     @NotNull

@@ -35,7 +35,7 @@ public class DataPsiReference extends PsiReferenceBase<PsiElement> implements Ps
         return results.toArray(new ResolveResult[results.size()]);
     }
 
-    @Nullable
+    
     @Override
     public PsiElement resolve() {
         ResolveResult[] resolveResults = multiResolve(false);

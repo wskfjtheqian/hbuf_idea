@@ -18,7 +18,7 @@ public interface HbufDataElement extends PsiNamedElement {
     @NotNull
     HbufIdElement getId();
 
-    @Nullable
+    
     HbufAnnotationGroupElement getAnnotationGroup();
 
     @NotNull

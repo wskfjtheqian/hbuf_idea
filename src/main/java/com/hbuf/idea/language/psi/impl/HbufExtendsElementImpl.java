@@ -29,7 +29,7 @@ public abstract class HbufExtendsElementImpl extends ASTWrapperPsiElement implem
         return list;
     }
 
-    @Nullable
+    
     abstract HbufExtendsElement getExtends();
 
     @NotNull

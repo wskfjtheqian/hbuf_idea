@@ -19,7 +19,7 @@ public abstract class HbufNameElementImpl extends ASTWrapperPsiElement implement
     }
 
     @Override
-    public @Nullable PsiElement getNameIdentifier() {
+    public  PsiElement getNameIdentifier() {
         return this;
     }
 

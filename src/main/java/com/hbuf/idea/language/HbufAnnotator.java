@@ -142,7 +142,7 @@ public class HbufAnnotator implements Annotator {
 
     private void checkImport(AnnotationHolder holder, HbufImportElement element) {
         @NlsSafe String path = HbufUtil.getString(element.getString().getText());
-        @Nullable VirtualFile file = element.getContainingFile().getVirtualFile().getParent().findFileByRelativePath(path);
+         VirtualFile file = element.getContainingFile().getVirtualFile().getParent().findFileByRelativePath(path);
         if (null == file) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Not find file'" + path)
                     .range(element.getString())
@@ -390,7 +390,7 @@ public class HbufAnnotator implements Annotator {
     }
 
 
-    private @Nullable HbufDataElement getDataElement(Project project, PsiElement data) {
+    private  HbufDataElement getDataElement(Project project, PsiElement data) {
         Collection<VirtualFile> virtualFiles =
                 FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(project));
         for (VirtualFile virtualFile : virtualFiles) {

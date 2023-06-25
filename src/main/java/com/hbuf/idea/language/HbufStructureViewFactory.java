@@ -11,12 +11,12 @@ import org.jetbrains.annotations.Nullable;
 
 public class HbufStructureViewFactory implements PsiStructureViewFactory {
     @Override
-    public @Nullable
+    public 
     StructureViewBuilder getStructureViewBuilder(@NotNull PsiFile psiFile) {
         return new TreeBasedStructureViewBuilder() {
             @Override
             public @NotNull
-            StructureViewModel createStructureViewModel(@Nullable Editor editor) {
+            StructureViewModel createStructureViewModel( Editor editor) {
                 return new HbufStructureViewModel(editor, psiFile);
             }
         };

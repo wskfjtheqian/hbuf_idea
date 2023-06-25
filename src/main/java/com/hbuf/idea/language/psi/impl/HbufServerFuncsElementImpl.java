@@ -26,7 +26,7 @@ public abstract class HbufServerFuncsElementImpl extends ASTWrapperPsiElement im
         return list;
     }
 
-    @Nullable
+    
     abstract HbufServerFuncsElement getFuncList();
 
 

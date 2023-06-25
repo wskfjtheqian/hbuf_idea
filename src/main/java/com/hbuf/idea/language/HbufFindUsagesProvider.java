@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class HbufFindUsagesProvider implements FindUsagesProvider {
 
-    @Nullable
+    
     @Override
     public WordsScanner getWordsScanner() {
         return new DefaultWordsScanner(new HbufLexerAdapter(),
@@ -27,7 +27,7 @@ public class HbufFindUsagesProvider implements FindUsagesProvider {
         return psiElement instanceof HbufNameElement;
     }
 
-    @Nullable
+    
     @Override
     public String getHelpId(@NotNull PsiElement psiElement) {
         return null;

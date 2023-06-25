@@ -18,7 +18,7 @@ public abstract class HbufImportElementImpl extends ASTWrapperPsiElement impleme
     }
 
     @Override
-    public @Nullable
+    public 
     PsiElement getNameIdentifier() {
         return null;
     }

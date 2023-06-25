@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public interface HbufAnnotationElement extends PsiElement {
-    @Nullable
+    
     HbufAnnotationListElement getAnnotationList();
 
 

@@ -20,7 +20,7 @@ public class HbufStructureViewModel extends TextEditorBasedStructureViewModel im
     @NotNull
     private final StructureViewTreeElement myRootElement;
 
-    HbufStructureViewModel(@Nullable final Editor editor, @NotNull final PsiFile psiFile) {
+    HbufStructureViewModel( final Editor editor, @NotNull final PsiFile psiFile) {
         super(editor, psiFile);
         myRootElement = new DartStructureViewRootElement(psiFile);
     }
@@ -32,7 +32,7 @@ public class HbufStructureViewModel extends TextEditorBasedStructureViewModel im
     }
 
     @Override
-    @Nullable
+    
     public PsiElement getCurrentEditorElement() {
         if (getEditor() == null) return null;
 
@@ -60,7 +60,7 @@ public class HbufStructureViewModel extends TextEditorBasedStructureViewModel im
             super(file);
         }
 
-        @Nullable
+        
         @Override
         public String getPresentableText() {
             return getElement().getName();

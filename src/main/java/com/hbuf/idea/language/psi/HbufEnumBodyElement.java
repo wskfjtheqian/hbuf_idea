@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 
 public interface HbufEnumBodyElement extends PsiElement {
-    @Nullable
+    
     HbufEnumFieldsElement getEnumFieldList();
 
     @NotNull
