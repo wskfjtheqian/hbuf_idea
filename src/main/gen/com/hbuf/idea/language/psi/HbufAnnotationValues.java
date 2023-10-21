@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface HbufAnnotationValues extends HbufAnnotationValuesElement {
 
-  
+  @Nullable
   HbufAnnotationValues getAnnotationValues();
 
   @NotNull

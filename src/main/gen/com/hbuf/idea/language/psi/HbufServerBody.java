@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface HbufServerBody extends HbufServerBodyElement {
 
-  
+  @Nullable
   HbufFuncList getFuncList();
 
 }

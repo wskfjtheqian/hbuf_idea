@@ -33,34 +33,34 @@ STRING=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
 
 %%
 <YYINITIAL> {
-  {WHITE_SPACE}      { return WHITE_SPACE; }
+  {WHITE_SPACE}       { return WHITE_SPACE; }
 
-  " "                { return SPACE; }
-  "="                { return ASSIGN; }
-  "?"                { return QUESTION; }
-  "<"                { return LSS; }
-  "("                { return LPAREN; }
-  "["                { return LBRACK; }
-  "{"                { return LBRACE; }
-  ","                { return COMMA; }
-  ">"                { return GTR; }
-  ")"                { return RPAREN; }
-  "]"                { return RBRACK; }
-  "}"                { return RBRACE; }
-  ";"                { return SEMICOLON; }
-  ":"                { return COLON; }
-  "package"          { return PACKAGE; }
-  "import"           { return IMPORT; }
-  "enum"             { return ENUM; }
-  "server"           { return SERVER; }
-  "data"             { return DATA; }
-  "CRLF"             { return CRLF; }
+  " "                 { return SPACE; }
+  "="                 { return ASSIGN; }
+  "?"                 { return QUESTION; }
+  "<"                 { return LSS; }
+  "("                 { return LPAREN; }
+  "["                 { return LBRACK; }
+  "{"                 { return LBRACE; }
+  ","                 { return COMMA; }
+  ">"                 { return GTR; }
+  ")"                 { return RPAREN; }
+  "]"                 { return RBRACK; }
+  "}"                 { return RBRACE; }
+  ";"                 { return SEMICOLON; }
+  ":"                 { return COLON; }
+  "package"           { return PACKAGE; }
+  "import"            { return IMPORT; }
+  "enum"              { return ENUM; }
+  "server"            { return SERVER; }
+  "data"              { return DATA; }
+  "CRLF"              { return CRLF; }
 
-  {TYPES}            { return TYPES; }
-  {COMMENT}          { return COMMENT; }
-  {NUMBER}           { return NUMBER; }
-  {IDENT}            { return IDENT; }
-  {STRING}           { return STRING; }
+  {TYPES}             { return TYPES; }
+  {COMMENT}           { return COMMENT; }
+  {NUMBER}            { return NUMBER; }
+  {IDENT}             { return IDENT; }
+  {STRING}            { return STRING; }
 
 }
 

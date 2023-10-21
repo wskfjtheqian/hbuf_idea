@@ -7,10 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface HbufImportStatement extends HbufImportElement {
 
-  
+  @Nullable
   PsiElement getComment();
 
-  
+  @Nullable
   PsiElement getString();
 
 }

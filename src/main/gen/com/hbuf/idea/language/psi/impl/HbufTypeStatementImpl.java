@@ -27,19 +27,19 @@ public class HbufTypeStatementImpl extends HbufFieldTypeElementImpl implements H
   }
 
   @Override
-  
+  @Nullable
   public HbufTypeArray getTypeArray() {
     return findChildByClass(HbufTypeArray.class);
   }
 
   @Override
-  
+  @Nullable
   public HbufTypeBase getTypeBase() {
     return findChildByClass(HbufTypeBase.class);
   }
 
   @Override
-  
+  @Nullable
   public HbufTypeMap getTypeMap() {
     return findChildByClass(HbufTypeMap.class);
   }

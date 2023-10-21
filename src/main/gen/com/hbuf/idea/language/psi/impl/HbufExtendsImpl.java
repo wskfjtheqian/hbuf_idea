@@ -27,7 +27,7 @@ public class HbufExtendsImpl extends HbufExtendsElementImpl implements HbufExten
   }
 
   @Override
-  
+  @Nullable
   public HbufExtends getExtends() {
     return findChildByClass(HbufExtends.class);
   }

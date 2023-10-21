@@ -27,43 +27,43 @@ public class HbufFuncStatementImpl extends HbufServerFuncElementImpl implements 
   }
 
   @Override
-  
+  @Nullable
   public HbufAnnotationGroup getAnnotationGroup() {
     return findChildByClass(HbufAnnotationGroup.class);
   }
 
   @Override
-  
+  @Nullable
   public HbufFuncParam getFuncParam() {
     return findChildByClass(HbufFuncParam.class);
   }
 
   @Override
-  
+  @Nullable
   public HbufFuncType getFuncType() {
     return findChildByClass(HbufFuncType.class);
   }
 
   @Override
-  
+  @Nullable
   public HbufId getId() {
     return findChildByClass(HbufId.class);
   }
 
   @Override
-  
+  @Nullable
   public HbufIdentName getIdentName() {
     return findChildByClass(HbufIdentName.class);
   }
 
   @Override
-  
+  @Nullable
   public PsiElement getComment() {
     return findChildByType(COMMENT);
   }
 
   @Override
-  
+  @Nullable
   public PsiElement getIdent() {
     return findChildByType(IDENT);
   }

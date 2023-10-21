@@ -27,13 +27,13 @@ public class HbufTypeBaseImpl extends HbufTypeElementImpl implements HbufTypeBas
   }
 
   @Override
-  
+  @Nullable
   public HbufIdentName getIdentName() {
     return findChildByClass(HbufIdentName.class);
   }
 
   @Override
-  
+  @Nullable
   public PsiElement getTypes() {
     return findChildByType(TYPES);
   }

@@ -27,7 +27,7 @@ public class HbufAnnotationValuesImpl extends HbufAnnotationValuesElementImpl im
   }
 
   @Override
-  
+  @Nullable
   public HbufAnnotationValues getAnnotationValues() {
     return findChildByClass(HbufAnnotationValues.class);
   }

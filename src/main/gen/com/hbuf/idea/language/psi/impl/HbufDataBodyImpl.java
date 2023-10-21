@@ -27,7 +27,7 @@ public class HbufDataBodyImpl extends HbufDataBodyElementImpl implements HbufDat
   }
 
   @Override
-  
+  @Nullable
   public HbufDataFieldList getDataFieldList() {
     return findChildByClass(HbufDataFieldList.class);
   }

@@ -10,7 +10,7 @@ public interface HbufAnnotationGroup extends HbufAnnotationGroupElement {
   @NotNull
   HbufAnnotation getAnnotation();
 
-  
+  @Nullable
   HbufAnnotationGroup getAnnotationGroup();
 
 }

@@ -7,25 +7,25 @@ import com.intellij.psi.PsiElement;
 
 public interface HbufFuncStatement extends HbufServerFuncElement {
 
-  
+  @Nullable
   HbufAnnotationGroup getAnnotationGroup();
 
-  
+  @Nullable
   HbufFuncParam getFuncParam();
 
-  
+  @Nullable
   HbufFuncType getFuncType();
 
-  
+  @Nullable
   HbufId getId();
 
-  
+  @Nullable
   HbufIdentName getIdentName();
 
-  
+  @Nullable
   PsiElement getComment();
 
-  
+  @Nullable
   PsiElement getIdent();
 
 }

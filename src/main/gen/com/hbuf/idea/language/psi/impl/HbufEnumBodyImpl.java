@@ -27,7 +27,7 @@ public class HbufEnumBodyImpl extends HbufEnumBodyElementImpl implements HbufEnu
   }
 
   @Override
-  
+  @Nullable
   public HbufEnumFieldList getEnumFieldList() {
     return findChildByClass(HbufEnumFieldList.class);
   }

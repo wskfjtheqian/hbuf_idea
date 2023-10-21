@@ -7,19 +7,19 @@ import com.intellij.psi.PsiElement;
 
 public interface HbufDataFieldStatement extends HbufDataFieldElement {
 
-  
+  @Nullable
   HbufAnnotationGroup getAnnotationGroup();
 
-  
+  @Nullable
   HbufId getId();
 
-  
+  @Nullable
   HbufIdentName getIdentName();
 
-  
+  @Nullable
   HbufTypeStatement getTypeStatement();
 
-  
+  @Nullable
   PsiElement getComment();
 
 }

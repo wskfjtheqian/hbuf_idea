@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface HbufExtends extends HbufExtendsElement {
 
-  
+  @Nullable
   HbufExtends getExtends();
 
   @NotNull

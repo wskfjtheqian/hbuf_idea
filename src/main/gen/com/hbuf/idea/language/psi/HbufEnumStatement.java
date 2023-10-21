@@ -7,16 +7,16 @@ import com.intellij.psi.PsiElement;
 
 public interface HbufEnumStatement extends HbufEnumElement {
 
-  
+  @Nullable
   HbufAnnotationGroup getAnnotationGroup();
 
-  
+  @Nullable
   HbufEnumBody getEnumBody();
 
-  
+  @Nullable
   HbufIdentName getIdentName();
 
-  
+  @Nullable
   PsiElement getComment();
 
 }

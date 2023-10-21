@@ -33,7 +33,7 @@ public class HbufAnnotationListImpl extends HbufAnnotationListElementImpl implem
   }
 
   @Override
-  
+  @Nullable
   public HbufAnnotationList getAnnotationList() {
     return findChildByClass(HbufAnnotationList.class);
   }

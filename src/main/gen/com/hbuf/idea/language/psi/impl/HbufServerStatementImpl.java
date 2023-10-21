@@ -27,37 +27,37 @@ public class HbufServerStatementImpl extends HbufServerElementImpl implements Hb
   }
 
   @Override
-  
+  @Nullable
   public HbufAnnotationGroup getAnnotationGroup() {
     return findChildByClass(HbufAnnotationGroup.class);
   }
 
   @Override
-  
+  @Nullable
   public HbufExtends getExtends() {
     return findChildByClass(HbufExtends.class);
   }
 
   @Override
-  
+  @Nullable
   public HbufId getId() {
     return findChildByClass(HbufId.class);
   }
 
   @Override
-  
+  @Nullable
   public HbufIdentName getIdentName() {
     return findChildByClass(HbufIdentName.class);
   }
 
   @Override
-  
+  @Nullable
   public HbufServerBody getServerBody() {
     return findChildByClass(HbufServerBody.class);
   }
 
   @Override
-  
+  @Nullable
   public PsiElement getComment() {
     return findChildByType(COMMENT);
   }

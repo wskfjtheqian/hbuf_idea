@@ -7,13 +7,13 @@ import com.intellij.psi.PsiElement;
 
 public interface HbufAnnotation extends HbufAnnotationElement {
 
-  
+  @Nullable
   HbufAnnotationList getAnnotationList();
 
-  
+  @Nullable
   HbufIdentName getIdentName();
 
-  
+  @Nullable
   PsiElement getComment();
 
 }

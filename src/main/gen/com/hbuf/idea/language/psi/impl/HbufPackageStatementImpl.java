@@ -27,19 +27,19 @@ public class HbufPackageStatementImpl extends HbufPackageElementImpl implements 
   }
 
   @Override
-  
+  @Nullable
   public PsiElement getComment() {
     return findChildByType(COMMENT);
   }
 
   @Override
-  
+  @Nullable
   public PsiElement getIdent() {
     return findChildByType(IDENT);
   }
 
   @Override
-  
+  @Nullable
   public PsiElement getString() {
     return findChildByType(STRING);
   }

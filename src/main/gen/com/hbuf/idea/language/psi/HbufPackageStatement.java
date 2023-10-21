@@ -7,13 +7,13 @@ import com.intellij.psi.PsiElement;
 
 public interface HbufPackageStatement extends HbufPackageElement {
 
-  
+  @Nullable
   PsiElement getComment();
 
-  
+  @Nullable
   PsiElement getIdent();
 
-  
+  @Nullable
   PsiElement getString();
 
 }

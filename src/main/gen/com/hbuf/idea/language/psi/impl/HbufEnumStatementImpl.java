@@ -27,25 +27,25 @@ public class HbufEnumStatementImpl extends HbufEnumElementImpl implements HbufEn
   }
 
   @Override
-  
+  @Nullable
   public HbufAnnotationGroup getAnnotationGroup() {
     return findChildByClass(HbufAnnotationGroup.class);
   }
 
   @Override
-  
+  @Nullable
   public HbufEnumBody getEnumBody() {
     return findChildByClass(HbufEnumBody.class);
   }
 
   @Override
-  
+  @Nullable
   public HbufIdentName getIdentName() {
     return findChildByClass(HbufIdentName.class);
   }
 
   @Override
-  
+  @Nullable
   public PsiElement getComment() {
     return findChildByType(COMMENT);
   }

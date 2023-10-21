@@ -27,19 +27,19 @@ public class HbufDataFieldListImpl extends HbufDataFieldsElementImpl implements 
   }
 
   @Override
-  
+  @Nullable
   public HbufDataFieldList getDataFieldList() {
     return findChildByClass(HbufDataFieldList.class);
   }
 
   @Override
-  
+  @Nullable
   public HbufDataFieldStatement getDataFieldStatement() {
     return findChildByClass(HbufDataFieldStatement.class);
   }
 
   @Override
-  
+  @Nullable
   public PsiElement getIdent() {
     return findChildByType(IDENT);
   }

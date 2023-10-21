@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface HbufEnumBody extends HbufEnumBodyElement {
 
-  
+  @Nullable
   HbufEnumFieldList getEnumFieldList();
 
 }

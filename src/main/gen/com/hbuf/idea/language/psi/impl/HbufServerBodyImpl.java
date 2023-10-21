@@ -27,7 +27,7 @@ public class HbufServerBodyImpl extends HbufServerBodyElementImpl implements Hbu
   }
 
   @Override
-  
+  @Nullable
   public HbufFuncList getFuncList() {
     return findChildByClass(HbufFuncList.class);
   }

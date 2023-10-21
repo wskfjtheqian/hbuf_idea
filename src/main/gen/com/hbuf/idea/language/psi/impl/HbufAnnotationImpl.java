@@ -27,19 +27,19 @@ public class HbufAnnotationImpl extends HbufAnnotationElementImpl implements Hbu
   }
 
   @Override
-  
+  @Nullable
   public HbufAnnotationList getAnnotationList() {
     return findChildByClass(HbufAnnotationList.class);
   }
 
   @Override
-  
+  @Nullable
   public HbufIdentName getIdentName() {
     return findChildByClass(HbufIdentName.class);
   }
 
   @Override
-  
+  @Nullable
   public PsiElement getComment() {
     return findChildByType(COMMENT);
   }

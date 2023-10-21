@@ -27,19 +27,19 @@ public class HbufFuncListImpl extends HbufServerFuncsElementImpl implements Hbuf
   }
 
   @Override
-  
+  @Nullable
   public HbufFuncList getFuncList() {
     return findChildByClass(HbufFuncList.class);
   }
 
   @Override
-  
+  @Nullable
   public HbufFuncStatement getFuncStatement() {
     return findChildByClass(HbufFuncStatement.class);
   }
 
   @Override
-  
+  @Nullable
   public PsiElement getIdent() {
     return findChildByType(IDENT);
   }

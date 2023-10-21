@@ -7,10 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface HbufTypeBase extends HbufTypeElement {
 
-  
+  @Nullable
   HbufIdentName getIdentName();
 
-  
+  @Nullable
   PsiElement getTypes();
 
 }

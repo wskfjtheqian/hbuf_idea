@@ -7,13 +7,13 @@ import com.intellij.psi.PsiElement;
 
 public interface HbufTypeStatement extends HbufFieldTypeElement {
 
-  
+  @Nullable
   HbufTypeArray getTypeArray();
 
-  
+  @Nullable
   HbufTypeBase getTypeBase();
 
-  
+  @Nullable
   HbufTypeMap getTypeMap();
 
 }

@@ -27,31 +27,31 @@ public class HbufDataFieldStatementImpl extends HbufDataFieldElementImpl impleme
   }
 
   @Override
-  
+  @Nullable
   public HbufAnnotationGroup getAnnotationGroup() {
     return findChildByClass(HbufAnnotationGroup.class);
   }
 
   @Override
-  
+  @Nullable
   public HbufId getId() {
     return findChildByClass(HbufId.class);
   }
 
   @Override
-  
+  @Nullable
   public HbufIdentName getIdentName() {
     return findChildByClass(HbufIdentName.class);
   }
 
   @Override
-  
+  @Nullable
   public HbufTypeStatement getTypeStatement() {
     return findChildByClass(HbufTypeStatement.class);
   }
 
   @Override
-  
+  @Nullable
   public PsiElement getComment() {
     return findChildByType(COMMENT);
   }
