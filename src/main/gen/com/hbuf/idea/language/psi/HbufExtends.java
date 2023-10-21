@@ -11,6 +11,9 @@ public interface HbufExtends extends HbufExtendsElement {
   HbufExtends getExtends();
 
   @NotNull
+  HbufId getId();
+
+  @NotNull
   HbufIdentName getIdentName();
 
 }

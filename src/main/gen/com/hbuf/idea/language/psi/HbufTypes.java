@@ -40,6 +40,7 @@ public interface HbufTypes {
   IElementType ASSIGN = new HbufTokenType("=");
   IElementType COLON = new HbufTokenType(":");
   IElementType COMMA = new HbufTokenType(",");
+
   IElementType COMMENT = new HbufTokenType("COMMENT");
   IElementType CRLF = new HbufTokenType("CRLF");
   IElementType DATA = new HbufTokenType("data");

@@ -27,13 +27,13 @@ public class EnumFieldIdCollateFix extends BaseIntentionAction {
     @Override
     public @NotNull
     @IntentionFamilyName String getFamilyName() {
-        return "Data id";
+        return "Enum id";
     }
 
     @Override
     public @IntentionName
     @NotNull String getText() {
-        return "Collate data field id";
+        return "Collate enum field id";
     }
 
     @Override

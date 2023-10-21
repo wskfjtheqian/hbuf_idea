@@ -1,6 +1,7 @@
 package com.hbuf.idea.language.psi.impl;
 
 import com.hbuf.idea.language.psi.HbufExtendsElement;
+import com.hbuf.idea.language.psi.HbufIdentName;
 import com.hbuf.idea.language.psi.HbufNameElement;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
@@ -19,11 +20,11 @@ public abstract class HbufExtendsElementImpl extends ASTWrapperPsiElement implem
 
     @NotNull
     @Override
-    public Collection<HbufNameElement> getExtendList() {
-        List<HbufNameElement> list = new ArrayList();
+    public Collection<HbufExtendsElement> getExtendList() {
+        List<HbufExtendsElement> list = new ArrayList();
         HbufExtendsElementImpl element = this;
         while (null != element) {
-            list.add(element.getIdentName());
+            list.add(element);
             element = (HbufExtendsElementImpl) element.getExtends();
         }
         return list;
@@ -31,7 +32,4 @@ public abstract class HbufExtendsElementImpl extends ASTWrapperPsiElement implem
 
     
     abstract HbufExtendsElement getExtends();
-
-    @NotNull
-    abstract HbufNameElement getIdentName();
 }

@@ -59,7 +59,7 @@ import-statement::=COMMENT|(IMPORT STRING){
     implements="com.hbuf.idea.language.psi.HbufImportElement"
 }
 
-data-statement::= COMMENT|([annotation-group] DATA ident-name [COLON extends] ASSIGN id data-body){
+data-statement::= COMMENT|([annotation-group] DATA ident-name [COLON extends] data-body){
      mixin="com.hbuf.idea.language.psi.impl.HbufDataElementImpl"
      implements="com.hbuf.idea.language.psi.HbufDataElement"
 }
@@ -74,7 +74,7 @@ id::=NUMBER{
     implements="com.hbuf.idea.language.psi.HbufIdElement"
 }
 
-extends::=ident-name [COMMA extends]{
+extends::=ident-name ASSIGN id [COMMA extends ]{
     mixin="com.hbuf.idea.language.psi.impl.HbufExtendsElementImpl"
     implements="com.hbuf.idea.language.psi.HbufExtendsElement"
 }
@@ -139,7 +139,7 @@ annotation-values::= STRING [COMMA annotation-values]{
     implements="com.hbuf.idea.language.psi.HbufAnnotationValuesElement"
 }
 
-server-statement::= COMMENT|([annotation-group] SERVER ident-name [COLON extends] ASSIGN id server-body){
+server-statement::= COMMENT|([annotation-group] SERVER ident-name [COLON extends]  server-body){
     mixin="com.hbuf.idea.language.psi.impl.HbufServerElementImpl"
     implements="com.hbuf.idea.language.psi.HbufServerElement"
 }

@@ -31,13 +31,13 @@ public class HbufElementFactory {
     }
 
     public static HbufIdElement createId(Project project, int id) {
-        final HbufFile file = createFile(project, "data D=" + id + "{}");
-        @NotNull List<HbufDataElement> elements = new ArrayList<>(PsiTreeUtil.findChildrenOfAnyType(file, HbufDataElement.class));
-        return elements.get(0).getId();
+        final HbufFile file = createFile(project, "data D:A=" + id + "{}");
+        @NotNull List<HbufIdElement> elements = new ArrayList<>(PsiTreeUtil.findChildrenOfAnyType(file, HbufIdElement.class));
+        return elements.get(0);
     }
 
-    public static HbufDataElement createData(Project project, String name, int id) {
-        final HbufFile file = createFile(project, "data " + name + " = " + id + " {\n}");
+    public static HbufDataElement createData(Project project, String name) {
+        final HbufFile file = createFile(project, "data " + name + " {\n}");
         return (HbufDataElement) file.getFirstChild();
     }
 }

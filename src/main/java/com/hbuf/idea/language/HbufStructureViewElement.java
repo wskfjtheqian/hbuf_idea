@@ -138,7 +138,7 @@ public class HbufStructureViewElement {
         public @NlsSafe
         
         String getPresentableText() {
-            return getElement().getName() + " = " + getElement().getNumber();
+            return getElement().getName() ;
         }
 
         @Override
@@ -207,7 +207,7 @@ public class HbufStructureViewElement {
         public @NlsSafe
         
         String getPresentableText() {
-            return getElement().getName() + " = " + getElement().getNumber();
+            return getElement().getName();
         }
 
         @Override

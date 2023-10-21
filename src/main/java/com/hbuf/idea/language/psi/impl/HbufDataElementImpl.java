@@ -31,18 +31,11 @@ public abstract class HbufDataElementImpl extends ASTWrapperPsiElement implement
         return this;
     }
 
-    @NotNull
-    @Override
-    public long getNumber() {
-        return getId().getId();
-    }
-
-    
     abstract HbufExtendsElement getExtends();
 
     @NotNull
     @Override
-    public Collection<HbufNameElement> getExtendList() {
+    public Collection<HbufExtendsElement> getExtendList() {
         if (null == getExtends()) {
             return new ArrayList<>();
         }

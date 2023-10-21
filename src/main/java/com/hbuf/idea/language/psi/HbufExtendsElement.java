@@ -3,10 +3,19 @@
 package com.hbuf.idea.language.psi;
 
 import com.intellij.psi.PsiElement;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 
 public interface HbufExtendsElement extends PsiElement {
 
-    Collection<HbufNameElement> getExtendList();
+    Collection<HbufExtendsElement> getExtendList();
+
+
+    @NotNull
+    public HbufId getId();
+
+
+    @NotNull
+    public HbufIdentName getIdentName();
 }

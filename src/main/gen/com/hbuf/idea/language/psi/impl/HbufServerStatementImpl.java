@@ -40,12 +40,6 @@ public class HbufServerStatementImpl extends HbufServerElementImpl implements Hb
 
   @Override
   @Nullable
-  public HbufId getId() {
-    return findChildByClass(HbufId.class);
-  }
-
-  @Override
-  @Nullable
   public HbufIdentName getIdentName() {
     return findChildByClass(HbufIdentName.class);
   }

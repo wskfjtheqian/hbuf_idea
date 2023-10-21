@@ -17,6 +17,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.lang.model.element.Element;
 import java.util.*;
 
 public class HbufUtil {
@@ -252,8 +253,8 @@ public class HbufUtil {
                     if (data == element) {
                         continue;
                     }
-                    for (HbufNameElement item : data.getExtendList()) {
-                        if (Objects.equals(item.getName(), element.getName())) {
+                    for (HbufExtendsElement item : data.getExtendList()) {
+                        if (Objects.equals(item.getIdentName().getName(), element.getName())) {
                             result.add(data);
                             result.addAll(getDataSub(data));
                             break;
@@ -276,8 +277,8 @@ public class HbufUtil {
                     if (data == element) {
                         continue;
                     }
-                    for (HbufNameElement item : data.getExtendList()) {
-                        if (Objects.equals(item.getName(), element.getName())) {
+                    for (HbufExtendsElement item : data.getExtendList()) {
+                        if (Objects.equals(item.getIdentName().getName(), element.getName())) {
                             result.add(data);
                             result.addAll(getServerSub(data));
                             break;
@@ -308,7 +309,7 @@ public class HbufUtil {
             @NotNull Collection<HbufImportElement> elements = PsiTreeUtil.findChildrenOfAnyType(file, HbufImportElement.class);
             for (HbufImportElement element : elements) {
                 @NlsSafe String path = HbufUtil.getString(element.getString().getText());
-                 VirtualFile f = element.getContainingFile().getVirtualFile().getParent().findFileByRelativePath(path);
+                VirtualFile f = element.getContainingFile().getVirtualFile().getParent().findFileByRelativePath(path);
                 if (null != f && dataElement.getContainingFile().getVirtualFile().getPath().equals(f.getPath())) {
                     return true;
                 }
@@ -330,45 +331,32 @@ public class HbufUtil {
         return hbufFile.getLastChild();
     }
 
-    public static int getDataNewId(Project project) {
-        @NotNull Collection<HbufDataElement> elements = findData(project);
-        for (int i = 0; i < elements.size(); i++) {
-            if (!checkDataId(i, elements)) {
-                return i;
-            }
-        }
-        return elements.size();
-    }
-
-    private static boolean checkDataId(int id, Collection<HbufDataElement> elements) {
-        for (HbufDataElement item : elements) {
-            if (item.getNumber() == id) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static int getServerNewId(Project project) {
-        @NotNull List<HbufServerElement> elements = findServer(project);
-        for (int i = 0; i < elements.size(); i++) {
-            if (!checkServerId(i, elements)) {
-                return i;
-            }
-        }
-        return elements.size();
-    }
-
-    private static boolean checkServerId(int id, List<HbufServerElement> elements) {
-        for (HbufServerElement item : elements) {
-            if (item.getNumber() == id) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public static int getFuncNewId(Project project) {
         return 0;
+    }
+
+    public static PsiElement getExtendsRoot(PsiElement element) {
+        while (element instanceof HbufExtendsElement) {
+            element = element.getParent();
+        }
+        return element;
+    }
+
+    public static int getExtendsNewId(Project project, Collection<HbufExtendsElement> elements) {
+        for (int i = 0; i < elements.size(); i++) {
+            if (!checkExtendId(i, elements)) {
+                return i;
+            }
+        }
+        return elements.size();
+    }
+
+    private static boolean checkExtendId(int id, Collection<HbufExtendsElement> elements) {
+        for (HbufExtendsElement item : elements) {
+            if (item.getId().getId() == id) {
+                return true;
+            }
+        }
+        return false;
     }
 }

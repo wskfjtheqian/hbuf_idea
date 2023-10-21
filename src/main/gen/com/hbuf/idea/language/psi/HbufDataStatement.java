@@ -17,9 +17,6 @@ public interface HbufDataStatement extends HbufDataElement {
   HbufExtends getExtends();
 
   @Nullable
-  HbufId getId();
-
-  @Nullable
   HbufIdentName getIdentName();
 
   @Nullable

@@ -69,9 +69,8 @@ public class HbufFormattingModelBuilder implements FormattingModelBuilder {
 
                 .aroundInside(HbufTypes.ASSIGN, HbufTypes.PACKAGE_STATEMENT).lineBreakOrForceSpace(false, true)
                 .aroundInside(HbufTypes.ASSIGN, HbufTypes.ENUM_FIELD_STATEMENT).lineBreakOrForceSpace(false, true)
-                .aroundInside(HbufTypes.ASSIGN, HbufTypes.DATA_STATEMENT).lineBreakOrForceSpace(false, true)
+                .aroundInside(HbufTypes.ASSIGN, HbufTypes.EXTENDS).lineBreakOrForceSpace(false, true)
                 .aroundInside(HbufTypes.ASSIGN, HbufTypes.DATA_FIELD_STATEMENT).lineBreakOrForceSpace(false, true)
-                .aroundInside(HbufTypes.ASSIGN, HbufTypes.SERVER_STATEMENT).lineBreakOrForceSpace(false, true)
                 .aroundInside(HbufTypes.ASSIGN, HbufTypes.FUNC_STATEMENT).lineBreakOrForceSpace(false, true)
                 .aroundInside(HbufTypes.ASSIGN, HbufTypes.ANNOTATION_FIELD).lineBreakOrForceSpace(false, false)
 

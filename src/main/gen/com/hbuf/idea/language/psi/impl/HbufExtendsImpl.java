@@ -34,6 +34,12 @@ public class HbufExtendsImpl extends HbufExtendsElementImpl implements HbufExten
 
   @Override
   @NotNull
+  public HbufId getId() {
+    return findNotNullChildByClass(HbufId.class);
+  }
+
+  @Override
+  @NotNull
   public HbufIdentName getIdentName() {
     return findNotNullChildByClass(HbufIdentName.class);
   }

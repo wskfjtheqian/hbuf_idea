@@ -15,7 +15,6 @@ import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -88,7 +87,7 @@ public class HbufAnnotator implements Annotator {
                 return;
             }
             if (parent instanceof HbufExtendsElement) {
-                parent = parent.getParent();
+                parent = HbufUtil.getExtendsRoot(parent);
                 if (parent instanceof HbufDataElement) {
                     checkDataExtends(holder, (HbufDataElement) parent, element);
                     return;
@@ -102,14 +101,6 @@ public class HbufAnnotator implements Annotator {
 
         if (element instanceof HbufIdElement) {
             PsiElement parent = element.getParent();
-            if (parent instanceof HbufDataElement) {
-                checkDataId(holder, (HbufDataElement) parent, (HbufIdElement) element);
-                return;
-            }
-            if (parent instanceof HbufServerElement) {
-                checkServerId(holder, (HbufServerElement) parent, (HbufIdElement) element);
-                return;
-            }
             if (parent instanceof HbufDataFieldElement) {
                 checkDataFieldId(holder, (HbufDataFieldElement) parent, (HbufIdElement) element);
                 return;
@@ -122,14 +113,15 @@ public class HbufAnnotator implements Annotator {
                 checkServerFuncId(holder, (HbufServerFuncElement) parent, (HbufIdElement) element);
                 return;
             }
+
             if (parent instanceof HbufExtendsElement) {
-                parent = parent.getParent();
+                parent = HbufUtil.getExtendsRoot(parent);
                 if (parent instanceof HbufDataElement) {
-                    checkDataExtends(holder, (HbufDataElement) parent, element);
+                    checkExtendsId(holder, ((HbufDataElement) parent).getExtendList(), (HbufIdElement) element);
                     return;
                 }
                 if (parent instanceof HbufServerElement) {
-                    checkServerExtends(holder, (HbufServerElement) parent, element);
+                    checkExtendsId(holder, ((HbufServerElement) parent).getExtendList(), (HbufIdElement) element);
                     return;
                 }
             }
@@ -142,7 +134,7 @@ public class HbufAnnotator implements Annotator {
 
     private void checkImport(AnnotationHolder holder, HbufImportElement element) {
         @NlsSafe String path = HbufUtil.getString(element.getString().getText());
-         VirtualFile file = element.getContainingFile().getVirtualFile().getParent().findFileByRelativePath(path);
+        VirtualFile file = element.getContainingFile().getVirtualFile().getParent().findFileByRelativePath(path);
         if (null == file) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Not find file'" + path)
                     .range(element.getString())
@@ -175,45 +167,24 @@ public class HbufAnnotator implements Annotator {
                 .create();
     }
 
-    private void checkDataId(AnnotationHolder holder, HbufDataElement parent, HbufIdElement element) {
-        for (HbufDataElement item : HbufUtil.findChildrenOfAnyType(element.getProject(), HbufDataElement.class)) {
-            if (item == parent) {
+    private void checkExtendsId(AnnotationHolder holder, @NotNull Collection<HbufExtendsElement> extendList, HbufIdElement element) {
+        for (HbufExtendsElement item : extendList) {
+            if (item.getId() == element) {
                 continue;
             }
-            if (item.getNumber() == element.getId()) {
-                holder.newAnnotation(HighlightSeverity.ERROR, "Data id'" + element.getText() + "' is already defined in the scope")
+            if (item.getId().getId() == element.getId()) {
+                holder.newAnnotation(HighlightSeverity.ERROR, "Extends id'" + element.getText() + "' is already defined in the scope")
                         .range(element)
                         .highlightType(ProblemHighlightType.GENERIC_ERROR)
-                        .withFix(new DataIdQuickFix(element))
+                        .withFix(new ExtendsIdQuickFix(extendList,element))
                         .create();
                 return;
             }
         }
-        holder.newAnnotation(HighlightSeverity.INFORMATION, "The sort ID function can be used")
+        holder.newAnnotation(HighlightSeverity.INFORMATION, "The sort ID extends can be used")
                 .range(element)
                 .highlightType(ProblemHighlightType.INFORMATION)
-                .withFix(new DataIdCollateFix(element))
-                .create();
-    }
-
-    private void checkServerId(AnnotationHolder holder, HbufServerElement parent, HbufIdElement element) {
-        for (HbufServerElement item : HbufUtil.findChildrenOfAnyType(element.getProject(), HbufServerElement.class)) {
-            if (item == parent) {
-                continue;
-            }
-            if (item.getNumber() == element.getId()) {
-                holder.newAnnotation(HighlightSeverity.ERROR, "Server id'" + element.getText() + "' is already defined in the scope")
-                        .range(element)
-                        .highlightType(ProblemHighlightType.GENERIC_ERROR)
-                        .withFix(new ServerIdQuickFix(element))
-                        .create();
-                return;
-            }
-        }
-        holder.newAnnotation(HighlightSeverity.INFORMATION, "The sort ID function can be used")
-                .range(element)
-                .highlightType(ProblemHighlightType.INFORMATION)
-                .withFix(new ServerIdCollateFix(element))
+                .withFix(new ExtendsIdCollateFix(extendList,element))
                 .create();
     }
 
@@ -345,13 +316,27 @@ public class HbufAnnotator implements Annotator {
     }
 
     private void checkServerExtends(AnnotationHolder holder, HbufServerElement data, PsiElement element) {
-        if (data.getName().equals(element.getText())) {
+        if (Objects.equals(data.getName(), element.getText())) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Cyclic inheritance involving '" + element.getText() + "'")
                     .range(element)
                     .highlightType(ProblemHighlightType.GENERIC_ERROR)
                     .create();
             return;
         }
+
+        for (HbufExtendsElement item : data.getExtendList()) {
+            if (item.getIdentName() == element) {
+                continue;
+            }
+            if (Objects.equals(item.getIdentName().getName(), element.getText())) {
+                holder.newAnnotation(HighlightSeverity.ERROR, "Extends name'" + element.getText() + "' is already defined in the scope")
+                        .range(element)
+                        .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                        .create();
+                return;
+            }
+        }
+
         if (HbufUtil.isServer(element.getProject(), element.getText())) {
             return;
         }
@@ -362,13 +347,26 @@ public class HbufAnnotator implements Annotator {
     }
 
     private void checkDataExtends(AnnotationHolder holder, HbufDataElement data, PsiElement element) {
-        if (data.getName().equals(element.getText())) {
+        if (Objects.equals(data.getName(), element.getText())) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Cyclic inheritance involving '" + element.getText() + "'")
                     .range(element)
                     .highlightType(ProblemHighlightType.GENERIC_ERROR)
                     .create();
             return;
         }
+        for (HbufExtendsElement item : data.getExtendList()) {
+            if (item.getIdentName() == element) {
+                continue;
+            }
+            if (Objects.equals(item.getIdentName().getName(), element.getText())) {
+                holder.newAnnotation(HighlightSeverity.ERROR, "Extends name'" + element.getText() + "' is already defined in the scope")
+                        .range(element)
+                        .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                        .create();
+                return;
+            }
+        }
+
         HbufDataElement dataElement = getDataElement(element.getProject(), element);
         if (null != dataElement) {
             if (dataElement.getContainingFile() != data.getContainingFile()) {
@@ -380,17 +378,11 @@ public class HbufAnnotator implements Annotator {
                             .create();
                 }
             }
-            return;
         }
-        holder.newAnnotation(HighlightSeverity.ERROR, element.getText() + " undefined symbol")
-                .range(element)
-                .highlightType(ProblemHighlightType.ERROR)
-                .withFix(new DataNewQuickFix((HbufNameElement) element))
-                .create();
     }
 
 
-    private  HbufDataElement getDataElement(Project project, PsiElement data) {
+    private HbufDataElement getDataElement(Project project, PsiElement data) {
         Collection<VirtualFile> virtualFiles =
                 FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(project));
         for (VirtualFile virtualFile : virtualFiles) {
@@ -522,7 +514,6 @@ public class HbufAnnotator implements Annotator {
                 .highlightType(ProblemHighlightType.ERROR)
                 .withFix(new DataNewQuickFix(base))
                 .create();
-        return;
     }
 
 

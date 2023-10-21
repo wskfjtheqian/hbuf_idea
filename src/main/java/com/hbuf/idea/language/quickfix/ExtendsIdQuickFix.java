@@ -1,6 +1,7 @@
 package com.hbuf.idea.language.quickfix;
 
 import com.hbuf.idea.language.psi.HbufElementFactory;
+import com.hbuf.idea.language.psi.HbufExtendsElement;
 import com.hbuf.idea.language.psi.HbufIdElement;
 import com.hbuf.idea.language.psi.HbufUtil;
 import com.intellij.codeInsight.intention.impl.BaseIntentionAction;
@@ -14,17 +15,22 @@ import com.intellij.psi.PsiFile;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 
-public class ServerIdQuickFix extends BaseIntentionAction {
-    private final HbufIdElement element;
+import java.util.ArrayList;
+import java.util.Collection;
 
-    public ServerIdQuickFix(HbufIdElement element) {
+public class ExtendsIdQuickFix extends BaseIntentionAction {
+    private final HbufIdElement element;
+    private final ArrayList<HbufExtendsElement> extendList;
+
+    public ExtendsIdQuickFix(@NotNull Collection<HbufExtendsElement> extendList, HbufIdElement element) {
+        this.extendList = new ArrayList<>(extendList);
         this.element = element;
     }
 
     @Override
     public @NotNull
     @IntentionFamilyName String getFamilyName() {
-        return "Field Id repeat";
+        return "Extends Id repeat";
     }
 
     @Override
@@ -42,7 +48,7 @@ public class ServerIdQuickFix extends BaseIntentionAction {
     @Override
     public void invoke(@NotNull final Project project, final Editor editor, PsiFile file) throws IncorrectOperationException {
         WriteCommandAction.writeCommandAction(project).run(() -> {
-            HbufIdElement id = HbufElementFactory.createId(project, HbufUtil.getServerNewId(project));
+            HbufIdElement id = HbufElementFactory.createId(project, HbufUtil.getExtendsNewId(project,extendList));
             element.getParent().getNode().replaceChild(element.getNode(), id.getNode());
             FileEditorManager.getInstance(project).getSelectedTextEditor().getCaretModel().moveCaretRelatively(2, 0, false, false, false);
         });

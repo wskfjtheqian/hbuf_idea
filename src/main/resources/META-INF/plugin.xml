@@ -52,8 +52,6 @@
         <liveTemplateContext implementation="com.hbuf.idea.language.template.HbufLiveTemplatesContext$Enum"/>
         <liveTemplateContext implementation="com.hbuf.idea.language.template.HbufLiveTemplatesContext$Data"/>
         <liveTemplateContext implementation="com.hbuf.idea.language.template.HbufLiveTemplatesContext$Server"/>
-        <liveTemplateMacro implementation="com.hbuf.idea.language.template.HbufLiveTemplatesMacro$GetDataId"/>
-        <liveTemplateMacro implementation="com.hbuf.idea.language.template.HbufLiveTemplatesMacro$GetServerId"/>
     </extensions>
 
     <actions>

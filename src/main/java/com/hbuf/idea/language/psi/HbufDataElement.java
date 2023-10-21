@@ -13,17 +13,11 @@ public interface HbufDataElement extends PsiNamedElement {
     @NotNull
     HbufNameElement getIdentName();
 
-    long getNumber();
 
-    @NotNull
-    HbufIdElement getId();
-
-    
     HbufAnnotationGroupElement getAnnotationGroup();
 
     @NotNull
-    Collection<HbufNameElement> getExtendList();
-
+    Collection<HbufExtendsElement> getExtendList();
 
 
     HbufDataBodyElement getDataBody();
