@@ -95,11 +95,12 @@ public class HbufCompletionContributor extends CompletionContributor {
         );
 
         extend(CompletionType.BASIC, PlatformPatterns.psiElement().afterLeaf(":", ";")
-                        .and(PlatformPatterns.psiElement().beforeLeaf("=", "]")).and( PlatformPatterns.psiElement()),
+                        .and(PlatformPatterns.psiElement().beforeLeaf("=", "]")).and(PlatformPatterns.psiElement()),
                 new CompletionProvider<>() {
                     public void addCompletions(@NotNull CompletionParameters parameters,
                                                @NotNull ProcessingContext context,
                                                @NotNull CompletionResultSet resultSet) {
+                        resultSet.addElement(LookupElementBuilder.create("table"));
                         resultSet.addElement(LookupElementBuilder.create("insert"));
                         resultSet.addElement(LookupElementBuilder.create("update"));
                         resultSet.addElement(LookupElementBuilder.create("del"));
@@ -109,6 +110,8 @@ public class HbufCompletionContributor extends CompletionContributor {
                         resultSet.addElement(LookupElementBuilder.create("set"));
                         resultSet.addElement(LookupElementBuilder.create("count"));
                         resultSet.addElement(LookupElementBuilder.create("name"));
+                        resultSet.addElement(LookupElementBuilder.create("where"));
+                        resultSet.addElement(LookupElementBuilder.create("converter"));
                     }
                 }
         );
