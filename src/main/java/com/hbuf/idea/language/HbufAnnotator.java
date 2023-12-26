@@ -386,8 +386,8 @@ public class HbufAnnotator implements Annotator {
         Collection<VirtualFile> virtualFiles =
                 FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(project));
         for (VirtualFile virtualFile : virtualFiles) {
-            HbufFile hbufFile = (HbufFile) PsiManager.getInstance(project).findFile(virtualFile);
-            if (hbufFile != null) {
+            PsiElement hbufFile = PsiManager.getInstance(project).findFile(virtualFile);
+            if (hbufFile != null && hbufFile instanceof HbufFile) {
                 Collection<HbufDataElement> properties = PsiTreeUtil.findChildrenOfAnyType(
                         hbufFile,
                         HbufDataElement.class

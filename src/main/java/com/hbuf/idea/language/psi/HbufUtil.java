@@ -54,8 +54,8 @@ public class HbufUtil {
         List<HbufDataElement> result = new ArrayList<>();
         Collection<VirtualFile> virtualFiles = FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(project));
         for (VirtualFile virtualFile : virtualFiles) {
-            HbufFile hbufFile = (HbufFile) PsiManager.getInstance(project).findFile(virtualFile);
-            if (hbufFile != null) {
+            PsiElement hbufFile = PsiManager.getInstance(project).findFile(virtualFile);
+            if (hbufFile != null && hbufFile instanceof HbufFile) {
                 @NotNull Collection<HbufDataElement> dataElements = PsiTreeUtil.findChildrenOfAnyType(hbufFile, HbufDataElement.class);
                 for (HbufDataElement element : dataElements) {
                     if (element.getName().equals(name)) {
@@ -71,8 +71,8 @@ public class HbufUtil {
         List<HbufDataElement> result = new ArrayList<>();
         Collection<VirtualFile> virtualFiles = FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(project));
         for (VirtualFile virtualFile : virtualFiles) {
-            HbufFile hbufFile = (HbufFile) PsiManager.getInstance(project).findFile(virtualFile);
-            if (hbufFile != null) {
+            PsiElement hbufFile = PsiManager.getInstance(project).findFile(virtualFile);
+            if (hbufFile != null && hbufFile instanceof HbufFile) {
                 @NotNull Collection<HbufDataElement> dataElements = PsiTreeUtil.findChildrenOfAnyType(hbufFile, HbufDataElement.class);
                 result.addAll(dataElements);
             }
@@ -84,8 +84,8 @@ public class HbufUtil {
         List<HbufEnumElement> result = new ArrayList<>();
         Collection<VirtualFile> virtualFiles = FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(project));
         for (VirtualFile virtualFile : virtualFiles) {
-            HbufFile hbufFile = (HbufFile) PsiManager.getInstance(project).findFile(virtualFile);
-            if (hbufFile != null) {
+            PsiElement hbufFile = PsiManager.getInstance(project).findFile(virtualFile);
+            if (hbufFile != null && hbufFile instanceof HbufFile) {
                 @NotNull Collection<HbufEnumElement> enumElements = PsiTreeUtil.findChildrenOfAnyType(hbufFile, HbufEnumElement.class);
                 for (HbufEnumElement element : enumElements) {
                     if (element.getName().equals(name)) {
@@ -101,8 +101,8 @@ public class HbufUtil {
         List<HbufEnumElement> result = new ArrayList<>();
         Collection<VirtualFile> virtualFiles = FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(project));
         for (VirtualFile virtualFile : virtualFiles) {
-            HbufFile hbufFile = (HbufFile) PsiManager.getInstance(project).findFile(virtualFile);
-            if (hbufFile != null) {
+            PsiElement hbufFile = PsiManager.getInstance(project).findFile(virtualFile);
+            if (hbufFile != null && hbufFile instanceof HbufFile) {
                 @NotNull Collection<HbufEnumElement> enumElements = PsiTreeUtil.findChildrenOfAnyType(hbufFile, HbufEnumElement.class);
                 result.addAll(enumElements);
             }
@@ -114,8 +114,8 @@ public class HbufUtil {
         List<HbufServerElement> result = new ArrayList<>();
         Collection<VirtualFile> virtualFiles = FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(project));
         for (VirtualFile virtualFile : virtualFiles) {
-            HbufFile hbufFile = (HbufFile) PsiManager.getInstance(project).findFile(virtualFile);
-            if (hbufFile != null) {
+            PsiElement hbufFile = PsiManager.getInstance(project).findFile(virtualFile);
+            if (hbufFile != null && hbufFile instanceof HbufFile) {
                 @NotNull Collection<HbufServerElement> serverElements = PsiTreeUtil.findChildrenOfAnyType(hbufFile, HbufServerElement.class);
                 for (HbufServerElement element : serverElements) {
                     if (element.getName().equals(name)) {
@@ -131,8 +131,8 @@ public class HbufUtil {
         List<HbufServerElement> result = new ArrayList<>();
         Collection<VirtualFile> virtualFiles = FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(project));
         for (VirtualFile virtualFile : virtualFiles) {
-            HbufFile hbufFile = (HbufFile) PsiManager.getInstance(project).findFile(virtualFile);
-            if (hbufFile != null) {
+            PsiElement hbufFile = PsiManager.getInstance(project).findFile(virtualFile);
+            if (hbufFile != null && hbufFile instanceof HbufFile) {
                 @NotNull Collection<HbufServerElement> serverElements = PsiTreeUtil.findChildrenOfAnyType(hbufFile, HbufServerElement.class);
                 result.addAll(serverElements);
             }
@@ -144,8 +144,8 @@ public class HbufUtil {
         List<T> result = new ArrayList<>();
         Collection<VirtualFile> virtualFiles = FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(project));
         for (VirtualFile virtualFile : virtualFiles) {
-            HbufFile hbufFile = (HbufFile) PsiManager.getInstance(project).findFile(virtualFile);
-            if (hbufFile != null) {
+            PsiElement hbufFile = PsiManager.getInstance(project).findFile(virtualFile);
+            if (hbufFile != null && hbufFile instanceof HbufFile) {
                 @NotNull Collection<T> properties = PsiTreeUtil.findChildrenOfAnyType(hbufFile, classes);
                 result.addAll(properties);
             }
@@ -157,8 +157,8 @@ public class HbufUtil {
         Collection<VirtualFile> virtualFiles =
                 FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(project));
         for (VirtualFile virtualFile : virtualFiles) {
-            HbufFile hbufFile = (HbufFile) PsiManager.getInstance(project).findFile(virtualFile);
-            if (hbufFile != null) {
+            PsiElement hbufFile = PsiManager.getInstance(project).findFile(virtualFile);
+            if (hbufFile != null && hbufFile instanceof HbufFile) {
                 @NotNull Collection<HbufDataElement> properties = PsiTreeUtil.findChildrenOfAnyType(
                         hbufFile,
                         HbufDataElement.class
@@ -177,8 +177,8 @@ public class HbufUtil {
         Collection<VirtualFile> virtualFiles =
                 FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(project));
         for (VirtualFile virtualFile : virtualFiles) {
-            HbufFile hbufFile = (HbufFile) PsiManager.getInstance(project).findFile(virtualFile);
-            if (hbufFile != null) {
+            PsiElement hbufFile = PsiManager.getInstance(project).findFile(virtualFile);
+            if (hbufFile != null && hbufFile instanceof HbufFile) {
                 @NotNull Collection<HbufEnumElement> properties = PsiTreeUtil.findChildrenOfAnyType(
                         hbufFile,
                         HbufEnumElement.class
@@ -197,8 +197,8 @@ public class HbufUtil {
         Collection<VirtualFile> virtualFiles =
                 FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(project));
         for (VirtualFile virtualFile : virtualFiles) {
-            HbufFile hbufFile = (HbufFile) PsiManager.getInstance(project).findFile(virtualFile);
-            if (hbufFile != null) {
+            PsiElement hbufFile = PsiManager.getInstance(project).findFile(virtualFile);
+            if (hbufFile != null && hbufFile instanceof HbufFile) {
                 @NotNull Collection<HbufServerElement> properties = PsiTreeUtil.findChildrenOfAnyType(
                         hbufFile,
                         HbufServerElement.class
@@ -246,8 +246,8 @@ public class HbufUtil {
         List<HbufDataElement> result = new ArrayList<>();
         Collection<VirtualFile> virtualFiles = FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(element.getProject()));
         for (VirtualFile virtualFile : virtualFiles) {
-            HbufFile hbufFile = (HbufFile) PsiManager.getInstance(element.getProject()).findFile(virtualFile);
-            if (hbufFile != null) {
+            PsiElement hbufFile = PsiManager.getInstance(element.getProject()).findFile(virtualFile);
+            if (hbufFile != null && hbufFile instanceof HbufFile) {
                 @NotNull Collection<HbufDataElement> properties = PsiTreeUtil.findChildrenOfAnyType(hbufFile, HbufDataElement.class);
                 for (HbufDataElement data : properties) {
                     if (data == element) {
@@ -270,8 +270,8 @@ public class HbufUtil {
         List<HbufServerElement> result = new ArrayList<>();
         Collection<VirtualFile> virtualFiles = FileTypeIndex.getFiles(HbufFileType.INSTANCE, GlobalSearchScope.allScope(element.getProject()));
         for (VirtualFile virtualFile : virtualFiles) {
-            HbufFile hbufFile = (HbufFile) PsiManager.getInstance(element.getProject()).findFile(virtualFile);
-            if (hbufFile != null) {
+            PsiElement hbufFile = PsiManager.getInstance(element.getProject()).findFile(virtualFile);
+            if (hbufFile != null && hbufFile instanceof HbufFile) {
                 @NotNull Collection<HbufServerElement> properties = PsiTreeUtil.findChildrenOfAnyType(hbufFile, HbufServerElement.class);
                 for (HbufServerElement data : properties) {
                     if (data == element) {
