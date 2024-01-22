@@ -112,6 +112,7 @@ public class HbufCompletionContributor extends CompletionContributor {
                         resultSet.addElement(LookupElementBuilder.create("name"));
                         resultSet.addElement(LookupElementBuilder.create("where"));
                         resultSet.addElement(LookupElementBuilder.create("converter"));
+                        resultSet.addElement(LookupElementBuilder.create("order"));
                     }
                 }
         );
