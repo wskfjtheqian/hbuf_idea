@@ -58,5 +58,11 @@
             <option name='HBUF_SERVER' value='true'/>
         </context>
     </template>
-
+    <template description='Server method declaration' name='Method' toReformat='true' toShortenFQNames='true'
+              value='void $SELECTION$($SELECTION$Req req) = $ID$'>
+        <variable alwaysStopAt='true' defaultValue='' expression='' name='ID'/>
+        <context>
+            <option name='HBUF_SERVER' value='true'/>
+        </context>
+    </template>
 </templateSet>

@@ -2,7 +2,6 @@ package com.hbuf.idea.language.reference;
 
 import com.hbuf.idea.language.HbufIcons;
 import com.hbuf.idea.language.psi.HbufDataElement;
-import com.hbuf.idea.language.psi.HbufNameElement;
 import com.hbuf.idea.language.psi.HbufUtil;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
@@ -11,7 +10,6 @@ import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.*;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +24,13 @@ public class DataPsiReference extends PsiReferenceBase<PsiElement> implements Ps
     }
 
     @Override
-    public ResolveResult[] multiResolve(boolean b) {
+    public ResolveResult @NotNull [] multiResolve(boolean b) {
         Project project = myElement.getProject();
         List<ResolveResult> results = new ArrayList<>();
         for (HbufDataElement item : HbufUtil.findData(project, name)) {
             results.add(new PsiElementResolveResult(item.getIdentName()));
         }
-        return results.toArray(new ResolveResult[results.size()]);
+        return results.toArray(new ResolveResult[0]);
     }
 
     
@@ -43,11 +41,11 @@ public class DataPsiReference extends PsiReferenceBase<PsiElement> implements Ps
     }
 
     @Override
-    public Object[] getVariants() {
+    public Object @NotNull [] getVariants() {
         Project project = myElement.getProject();
         List<LookupElement> variants = new ArrayList<>();
         for (final HbufDataElement item : HbufUtil.findData(project)) {
-            if (item.getName() != null && item.getName().length() > 0) {
+            if (item.getName() != null && !item.getName().isEmpty()) {
                 variants.add(LookupElementBuilder
                         .create(item).withIcon(HbufIcons.FILE)
                         .withTypeText(item.getContainingFile().getName())
@@ -59,8 +57,7 @@ public class DataPsiReference extends PsiReferenceBase<PsiElement> implements Ps
 
     @Override
     public PsiElement handleElementRename(@NotNull String newElementName) throws IncorrectOperationException {
-        HbufNameElement newElement = HbufUtil.createNameElement(myElement.getProject(), newElementName);
-        return newElement;
+        return HbufUtil.createNameElement(myElement.getProject(), newElementName);
     }
 
 

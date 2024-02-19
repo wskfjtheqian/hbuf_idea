@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface HbufFuncType extends HbufFuncTypeElement {
 
-  @NotNull
+  @Nullable
   HbufIdentName getIdentName();
 
 }

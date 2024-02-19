@@ -27,9 +27,9 @@ public class HbufFuncTypeImpl extends HbufFuncTypeElementImpl implements HbufFun
   }
 
   @Override
-  @NotNull
+  @Nullable
   public HbufIdentName getIdentName() {
-    return findNotNullChildByClass(HbufIdentName.class);
+    return findChildByClass(HbufIdentName.class);
   }
 
 }

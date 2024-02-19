@@ -40,7 +40,6 @@ public interface HbufTypes {
   IElementType ASSIGN = new HbufTokenType("=");
   IElementType COLON = new HbufTokenType(":");
   IElementType COMMA = new HbufTokenType(",");
-
   IElementType COMMENT = new HbufTokenType("COMMENT");
   IElementType CRLF = new HbufTokenType("CRLF");
   IElementType DATA = new HbufTokenType("data");
@@ -63,6 +62,7 @@ public interface HbufTypes {
   IElementType SPACE = new HbufTokenType(" ");
   IElementType STRING = new HbufTokenType("STRING");
   IElementType TYPES = new HbufTokenType("TYPES");
+  IElementType VOID = new HbufTokenType("void");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {

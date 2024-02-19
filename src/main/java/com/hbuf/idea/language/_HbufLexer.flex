@@ -55,6 +55,7 @@ STRING=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
   "server"            { return SERVER; }
   "data"              { return DATA; }
   "CRLF"              { return CRLF; }
+  "void"              { return VOID; }
 
   {TYPES}             { return TYPES; }
   {COMMENT}           { return COMMENT; }

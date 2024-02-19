@@ -159,7 +159,7 @@ func-statement::=COMMENT|([annotation-group] func-type ident-name LPAREN (func-p
     implements="com.hbuf.idea.language.psi.HbufServerFuncElement"
 }
 
-func-type::=ident-name{
+func-type::=ident-name | void{
     mixin="com.hbuf.idea.language.psi.impl.HbufFuncTypeElementImpl"
     implements="com.hbuf.idea.language.psi.HbufFuncTypeElement"
 }

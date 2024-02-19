@@ -26,6 +26,9 @@ public abstract class HbufFuncTypeElementImpl extends ASTWrapperPsiElement imple
 
     @Override
     public String getName() {
+        if (null == getIdentName()) {
+            return null;
+        }
         return getIdentName().getName();
     }
 }

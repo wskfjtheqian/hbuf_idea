@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 public interface HbufFuncTypeElement extends PsiElement {
     String getName();
 
-    @NotNull
     HbufNameElement getIdentName();
 
 }

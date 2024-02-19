@@ -45,13 +45,13 @@ public class HbufAnnotator implements Annotator {
                 return;
             }
         }
-        if (element instanceof HbufFuncType) {
-            HbufFuncType func = (HbufFuncType) element;
-            checkType(holder, func, CheckType.Data);
+        if (element instanceof HbufFuncType func) {
+            if (null != func.getName()) {
+                checkType(holder, func, CheckType.Data);
+            }
             return;
         }
-        if (element instanceof HbufFuncParam) {
-            HbufFuncParam param = (HbufFuncParam) element;
+        if (element instanceof HbufFuncParam param) {
             checkType(holder, param.getFuncType(), CheckType.Data);
             return;
         }
@@ -133,7 +133,7 @@ public class HbufAnnotator implements Annotator {
     }
 
     private void checkImport(AnnotationHolder holder, HbufImportElement element) {
-        @NlsSafe String path = HbufUtil.getString(element.getString().getText());
+        String path = HbufUtil.getString(element.getString().getText());
         VirtualFile file = element.getContainingFile().getVirtualFile().getParent().findFileByRelativePath(path);
         if (null == file) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Not find file'" + path)
@@ -176,7 +176,7 @@ public class HbufAnnotator implements Annotator {
                 holder.newAnnotation(HighlightSeverity.ERROR, "Extends id'" + element.getText() + "' is already defined in the scope")
                         .range(element)
                         .highlightType(ProblemHighlightType.GENERIC_ERROR)
-                        .withFix(new ExtendsIdQuickFix(extendList,element))
+                        .withFix(new ExtendsIdQuickFix(extendList, element))
                         .create();
                 return;
             }
@@ -184,7 +184,7 @@ public class HbufAnnotator implements Annotator {
         holder.newAnnotation(HighlightSeverity.INFORMATION, "The sort ID extends can be used")
                 .range(element)
                 .highlightType(ProblemHighlightType.INFORMATION)
-                .withFix(new ExtendsIdCollateFix(extendList,element))
+                .withFix(new ExtendsIdCollateFix(extendList, element))
                 .create();
     }
 
@@ -428,7 +428,7 @@ public class HbufAnnotator implements Annotator {
 
     private void checkServerFuncName(AnnotationHolder holder, HbufServerFuncElement parent, HbufNameElement element) {
         HbufServerElement hee = HbufUtil.getServerByChild(element);
-        if (null == hee || null == element) {
+        if (null == hee) {
             return;
         }
         for (HbufServerFuncElement item : hee.getServerBody().getFuncList().getFuncts()) {
