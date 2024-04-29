@@ -49,6 +49,8 @@ public abstract class HbufNameElementImpl extends ASTWrapperPsiElement implement
             }
         } else if (this.getParent() instanceof HbufTypeElement) {
             return new TypePsiReference(this, TextRange.create(0, getIdent().getTextLength()));
+        } else if (this.getParent() instanceof HbufTypeMapKeyElement) {
+            return new TypePsiReference(this, TextRange.create(0, getIdent().getTextLength()));
         }
         return null;
     }

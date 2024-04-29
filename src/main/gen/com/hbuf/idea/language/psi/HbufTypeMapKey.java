@@ -5,12 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface HbufTypeMap extends HbufTypeMapElement {
+public interface HbufTypeMapKey extends HbufTypeMapKeyElement {
 
-  @NotNull
-  HbufTypeBase getTypeBase();
+  @Nullable
+  HbufIdentName getIdentName();
 
-  @NotNull
-  HbufTypeMapKey getTypeMapKey();
+  @Nullable
+  PsiElement getTypes();
 
 }

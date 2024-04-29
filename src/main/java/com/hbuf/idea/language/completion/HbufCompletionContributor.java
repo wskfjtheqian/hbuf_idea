@@ -83,13 +83,13 @@ public class HbufCompletionContributor extends CompletionContributor {
                     public void addCompletions(@NotNull CompletionParameters parameters,
                                                @NotNull ProcessingContext context,
                                                @NotNull CompletionResultSet resultSet) {
-                        resultSet.addElement(LookupElementBuilder.create("db"));
-                        resultSet.addElement(LookupElementBuilder.create("ui"));
-                        resultSet.addElement(LookupElementBuilder.create("cache"));
-                        resultSet.addElement(LookupElementBuilder.create("lang"));
-                        resultSet.addElement(LookupElementBuilder.create("tag"));
-                        resultSet.addElement(LookupElementBuilder.create("format"));
-                        resultSet.addElement(LookupElementBuilder.create("verify"));
+                        resultSet.addElement(LookupElementBuilder.create("db:"));
+                        resultSet.addElement(LookupElementBuilder.create("ui:"));
+                        resultSet.addElement(LookupElementBuilder.create("cache:"));
+                        resultSet.addElement(LookupElementBuilder.create("lang:"));
+                        resultSet.addElement(LookupElementBuilder.create("tag:"));
+                        resultSet.addElement(LookupElementBuilder.create("format:"));
+                        resultSet.addElement(LookupElementBuilder.create("verify:"));
                     }
                 }
         );
@@ -100,19 +100,19 @@ public class HbufCompletionContributor extends CompletionContributor {
                     public void addCompletions(@NotNull CompletionParameters parameters,
                                                @NotNull ProcessingContext context,
                                                @NotNull CompletionResultSet resultSet) {
-                        resultSet.addElement(LookupElementBuilder.create("table"));
-                        resultSet.addElement(LookupElementBuilder.create("insert"));
-                        resultSet.addElement(LookupElementBuilder.create("update"));
-                        resultSet.addElement(LookupElementBuilder.create("del"));
-                        resultSet.addElement(LookupElementBuilder.create("get"));
+                        resultSet.addElement(LookupElementBuilder.create("table="));
+                        resultSet.addElement(LookupElementBuilder.create("insert="));
+                        resultSet.addElement(LookupElementBuilder.create("update="));
+                        resultSet.addElement(LookupElementBuilder.create("del="));
+                        resultSet.addElement(LookupElementBuilder.create("get="));
                         resultSet.addElement(LookupElementBuilder.create("list"));
-                        resultSet.addElement(LookupElementBuilder.create("inserts"));
-                        resultSet.addElement(LookupElementBuilder.create("set"));
-                        resultSet.addElement(LookupElementBuilder.create("count"));
-                        resultSet.addElement(LookupElementBuilder.create("name"));
-                        resultSet.addElement(LookupElementBuilder.create("where"));
-                        resultSet.addElement(LookupElementBuilder.create("converter"));
-                        resultSet.addElement(LookupElementBuilder.create("order"));
+                        resultSet.addElement(LookupElementBuilder.create("inserts="));
+                        resultSet.addElement(LookupElementBuilder.create("set="));
+                        resultSet.addElement(LookupElementBuilder.create("count="));
+                        resultSet.addElement(LookupElementBuilder.create("name="));
+                        resultSet.addElement(LookupElementBuilder.create("where="));
+                        resultSet.addElement(LookupElementBuilder.create("converter="));
+                        resultSet.addElement(LookupElementBuilder.create("order="));
                     }
                 }
         );

@@ -763,14 +763,16 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // type-base LSS TYPES GTR [QUESTION]
+  // type-base LSS type-map-key GTR [QUESTION]
   public static boolean type_map(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_map")) return false;
     if (!nextTokenIs(b, "<type map>", IDENT, TYPES)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, TYPE_MAP, "<type map>");
     r = type_base(b, l + 1);
-    r = r && consumeTokens(b, 0, LSS, TYPES, GTR);
+    r = r && consumeToken(b, LSS);
+    r = r && type_map_key(b, l + 1);
+    r = r && consumeToken(b, GTR);
     r = r && type_map_4(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -781,6 +783,19 @@ public class HbufParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "type_map_4")) return false;
     consumeToken(b, QUESTION);
     return true;
+  }
+
+  /* ********************************************************** */
+  // TYPES|ident-name
+  public static boolean type_map_key(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_map_key")) return false;
+    if (!nextTokenIs(b, "<type map key>", IDENT, TYPES)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, TYPE_MAP_KEY, "<type map key>");
+    r = consumeToken(b, TYPES);
+    if (!r) r = ident_name(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
   }
 
   /* ********************************************************** */

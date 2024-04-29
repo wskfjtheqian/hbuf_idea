@@ -109,7 +109,11 @@ type-array::=type-base LBRACK RBRACK [QUESTION] {
     implements="com.hbuf.idea.language.psi.HbufTypeArrayElement"
 }
 
-type-map::=type-base LSS TYPES GTR [QUESTION]{
+type-map-key::= TYPES|ident-name{
+    mixin="com.hbuf.idea.language.psi.impl.HbufTypeMapKeyElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufTypeMapKeyElement"
+}
+type-map::=type-base LSS type-map-key GTR [QUESTION]{
     mixin="com.hbuf.idea.language.psi.impl.HbufTypeMapElementImpl"
     implements="com.hbuf.idea.language.psi.HbufTypeMapElement"
 }

@@ -166,7 +166,7 @@ public class HbufStructureViewElement {
             HbufFieldTypeElement type = getElement().getTypeStatement();
             String text = "";
             if (null != type.getTypeMap()) {
-                text = type.getTypeMap().getTypeBase().getName() + (type.getTypeMap().getTypeBase().isNullable() ? "?" : "") + "<" + type.getTypeMap().getKey() + ">" + (type.getTypeMap().isNullable() ? "?" : "");
+                text = type.getTypeMap().getTypeBase().getName() + (type.getTypeMap().getTypeBase().isNullable() ? "?" : "") + "<" + type.getTypeMap().getTypeMapKey().getText() + ">" + (type.getTypeMap().isNullable() ? "?" : "");
             } else if (null != type.getTypeArray()) {
                 text = type.getTypeArray().getTypeBase().getName() + (type.getTypeArray().getTypeBase().isNullable() ? "?" : "") + "[]" + (type.getTypeArray().isNullable() ? "?" : "");
             } else if (null != type.getTypeBase()) {

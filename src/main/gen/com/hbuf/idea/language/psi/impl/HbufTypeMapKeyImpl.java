@@ -10,14 +10,14 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.hbuf.idea.language.psi.HbufTypes.*;
 import com.hbuf.idea.language.psi.*;
 
-public class HbufTypeMapImpl extends HbufTypeMapElementImpl implements HbufTypeMap {
+public class HbufTypeMapKeyImpl extends HbufTypeMapKeyElementImpl implements HbufTypeMapKey {
 
-  public HbufTypeMapImpl(@NotNull ASTNode node) {
+  public HbufTypeMapKeyImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull HbufVisitor visitor) {
-    visitor.visitTypeMap(this);
+    visitor.visitTypeMapKey(this);
   }
 
   @Override
@@ -27,15 +27,15 @@ public class HbufTypeMapImpl extends HbufTypeMapElementImpl implements HbufTypeM
   }
 
   @Override
-  @NotNull
-  public HbufTypeBase getTypeBase() {
-    return findNotNullChildByClass(HbufTypeBase.class);
+  @Nullable
+  public HbufIdentName getIdentName() {
+    return findChildByClass(HbufIdentName.class);
   }
 
   @Override
-  @NotNull
-  public HbufTypeMapKey getTypeMapKey() {
-    return findNotNullChildByClass(HbufTypeMapKey.class);
+  @Nullable
+  public PsiElement getTypes() {
+    return findChildByType(TYPES);
   }
 
 }

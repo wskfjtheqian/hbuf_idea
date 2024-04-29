@@ -115,6 +115,10 @@ public class HbufVisitor extends PsiElementVisitor {
     visitTypeMapElement(o);
   }
 
+  public void visitTypeMapKey(@NotNull HbufTypeMapKey o) {
+    visitTypeMapKeyElement(o);
+  }
+
   public void visitTypeStatement(@NotNull HbufTypeStatement o) {
     visitFieldTypeElement(o);
   }
@@ -228,6 +232,10 @@ public class HbufVisitor extends PsiElementVisitor {
   }
 
   public void visitTypeMapElement(@NotNull HbufTypeMapElement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTypeMapKeyElement(@NotNull HbufTypeMapKeyElement o) {
     visitPsiElement(o);
   }
 

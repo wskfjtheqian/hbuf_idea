@@ -39,7 +39,7 @@ public class HbufAnnotator implements Annotator {
             }
             HbufTypeMapElement map = type.getTypeMap();
             if (null != map) {
-                checkType(holder, map.getTypes(), CheckType.Base);
+                checkType(holder, map.getTypeMapKey(), CheckType.Base, CheckType.Enum);
                 base = map.getTypeBase();
                 checkType(holder, null == base.getIdentName() ? base.getTypes() : base.getIdentName(), CheckType.Base, CheckType.Data, CheckType.Enum);
                 return;

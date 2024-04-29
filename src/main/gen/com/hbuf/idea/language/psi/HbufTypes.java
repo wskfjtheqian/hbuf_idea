@@ -35,6 +35,7 @@ public interface HbufTypes {
   IElementType TYPE_ARRAY = new HbufElementType("TYPE_ARRAY");
   IElementType TYPE_BASE = new HbufElementType("TYPE_BASE");
   IElementType TYPE_MAP = new HbufElementType("TYPE_MAP");
+  IElementType TYPE_MAP_KEY = new HbufElementType("TYPE_MAP_KEY");
   IElementType TYPE_STATEMENT = new HbufElementType("TYPE_STATEMENT");
 
   IElementType ASSIGN = new HbufTokenType("=");
@@ -147,6 +148,9 @@ public interface HbufTypes {
       }
       else if (type == TYPE_MAP) {
         return new HbufTypeMapImpl(node);
+      }
+      else if (type == TYPE_MAP_KEY) {
+        return new HbufTypeMapKeyImpl(node);
       }
       else if (type == TYPE_STATEMENT) {
         return new HbufTypeStatementImpl(node);

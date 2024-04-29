@@ -11,11 +11,7 @@ public interface HbufTypeMapElement extends PsiElement {
     @NotNull
     HbufTypeElement getTypeBase();
 
-    @NotNull
-    PsiElement getTypes();
-
-    @NotNull
-    String getKey();
+    HbufTypeMapKey getTypeMapKey();
 
     boolean isNullable();
 }

@@ -15,7 +15,7 @@ public abstract class HbufTypeMapElementImpl extends ASTWrapperPsiElement implem
 
     @NotNull
     public String getKey() {
-        return getTypes().getText();
+        return getTypeMapKey().getText();
     }
 
     @Override
