@@ -120,6 +120,9 @@ public class HbufCompletionContributor extends CompletionContributor {
                         resultSet.addElement(LookupElementBuilder.create("min="));
                         resultSet.addElement(LookupElementBuilder.create("null="));
                         resultSet.addElement(LookupElementBuilder.create("format="));
+                        resultSet.addElement(LookupElementBuilder.create("digit="));
+
+                        resultSet.addElement(LookupElementBuilder.create("onlyRead="));
                     }
                 }
         );
