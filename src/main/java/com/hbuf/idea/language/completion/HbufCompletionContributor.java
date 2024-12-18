@@ -90,6 +90,7 @@ public class HbufCompletionContributor extends CompletionContributor {
                         resultSet.addElement(LookupElementBuilder.create("tag:"));
                         resultSet.addElement(LookupElementBuilder.create("format:"));
                         resultSet.addElement(LookupElementBuilder.create("verify:"));
+                        resultSet.addElement(LookupElementBuilder.create("bind:"));
                     }
                 }
         );
@@ -123,6 +124,7 @@ public class HbufCompletionContributor extends CompletionContributor {
                         resultSet.addElement(LookupElementBuilder.create("digit="));
 
                         resultSet.addElement(LookupElementBuilder.create("onlyRead="));
+                        resultSet.addElement(LookupElementBuilder.create("value="));
                     }
                 }
         );
