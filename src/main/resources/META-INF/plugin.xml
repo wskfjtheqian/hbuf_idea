@@ -1,11 +1,25 @@
 <idea-plugin>
     <id>org.example.hbuf_idea</id>
-    <name>Plugin display name here</name>
+    <name>HBuf Language Support</name>
     <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
 
     <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
+    HBuf language support for IntelliJ IDEA.<br>
+    <br>
+    This plugin provides support for the HBuf language in IntelliJ IDEA.
+    It includes syntax highlighting, code completion, code inspections,
+    code formatting, and more.
+    <br>
+    <br>
+    HBuf is a simple language that is designed to be easy to learn and use.
+    It is aimed at game development, but can be used for any other purpose.
+    <br>
+    <br>
+    HBuf is an open source project, and you can contribute to it on
+    <a href="https://github.com/wskfjtheqian/hbuf-idea">GitHub</a>.
+    <br>
+    <br>
+
     ]]></description>
 
     <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
