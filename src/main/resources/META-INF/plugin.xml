@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>org.example.hbuf_idea</id>
     <name>HBuf Language Support</name>
-    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+    <vendor email="wskfjtheqian@gmail.com" url="https://github.com/wskfjtheqian/hbuf-idea">heqian</vendor>
 
     <description><![CDATA[
     HBuf language support for IntelliJ IDEA.<br>
@@ -16,7 +16,7 @@
     <br>
     <br>
     HBuf is an open source project, and you can contribute to it on
-    <a href="https://github.com/wskfjtheqian/hbuf-idea">GitHub</a>.
+    <a href="https://github.com/wskfjtheqian/hbuf_idea">GitHub</a>.
     <br>
     <br>
 
