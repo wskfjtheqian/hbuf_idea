@@ -26,7 +26,6 @@
          on how to target different products -->
     <depends>com.intellij.modules.platform</depends>
 
-
     <extensions defaultExtensionNs="com.intellij">
         <fileType name="Hbuf" implementationClass="com.hbuf.idea.language.HbufFileType" fieldName="INSTANCE"
                   language="Hbuf" extensions="hbuf"/>
@@ -68,8 +67,8 @@
         <liveTemplateContext implementation="com.hbuf.idea.language.template.HbufLiveTemplatesContext$Data"/>
         <liveTemplateContext implementation="com.hbuf.idea.language.template.HbufLiveTemplatesContext$Server"/>
 
-        <languageInjectionContributor
-                implementationClass="com.hbuf.idea.language.injection.HbufLanguageInjectionContributor" language="Hbuf"/>
+        <multiHostInjector
+                implementation="com.hbuf.idea.language.injection.HbufLanguageHostInjector" language="Hbuf"/>
     </extensions>
 
     <actions>

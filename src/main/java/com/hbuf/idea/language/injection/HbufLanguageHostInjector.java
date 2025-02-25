@@ -3,27 +3,30 @@ package com.hbuf.idea.language.injection;
 import com.hbuf.idea.language.psi.HbufAnnotation;
 import com.hbuf.idea.language.psi.HbufAnnotationField;
 import com.hbuf.idea.language.psi.HbufAnnotationValues;
-import com.intellij.lang.injection.general.Injection;
-import com.intellij.lang.injection.general.LanguageInjectionContributor;
-import com.intellij.lang.injection.general.SimpleInjection;
+import com.intellij.lang.injection.MultiHostInjector;
+import com.intellij.lang.injection.MultiHostRegistrar;
+import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiLanguageInjectionHost;
 import org.intellij.lang.regexp.RegExpLanguage;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-// 这个类用于将正则表达式语言注入到注解值中。
-public class HbufLanguageInjectionContributor implements LanguageInjectionContributor {
+import java.util.List;
 
-    // 这个方法用于判断是否应该注入正则表达式语言。
+public class HbufLanguageHostInjector implements MultiHostInjector {
     @Override
-    public @Nullable Injection getInjection(@NotNull PsiElement psiElement) {
-        if (shouldInjectRegex(psiElement, "format", "ret")) {
-            return new SimpleInjection(RegExpLanguage.INSTANCE, "", "", null);
+    public void getLanguagesToInject(@NotNull MultiHostRegistrar multiHostRegistrar, @NotNull PsiElement psiElement) {
+
+        if (shouldInjectRegex(psiElement, "format", "reg")) {
+            multiHostRegistrar
+                    .startInjecting(RegExpLanguage.INSTANCE)
+                    .addPlace(null, null,
+                            (PsiLanguageInjectionHost) psiElement,
+                            TextRange.from(1, psiElement.getTextLength() - 2))
+                    .doneInjecting();
         }
-        return null;
     }
 
-    // 这个方法用于判断是否应该注入正则表达式语言。
     private boolean shouldInjectRegex(PsiElement psiElement, String annotationName, String fieldName) {
         if (psiElement instanceof HbufAnnotationValues) {
             psiElement = psiElement.getParent();
@@ -42,5 +45,8 @@ public class HbufLanguageInjectionContributor implements LanguageInjectionContri
         return false;
     }
 
-
+    @Override
+    public @NotNull List<? extends Class<? extends PsiElement>> elementsToInjectIn() {
+        return List.of(HbufAnnotationValues.class);
+    }
 }
