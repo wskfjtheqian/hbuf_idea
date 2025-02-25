@@ -16,4 +16,6 @@ public interface HbufAnnotation extends HbufAnnotationElement {
   @Nullable
   PsiElement getComment();
 
+  @Nullable
+  public String getName();
 }
