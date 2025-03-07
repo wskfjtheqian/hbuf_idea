@@ -7,7 +7,7 @@ import com.intellij.psi.PsiLanguageInjectionHost;
 
 import java.util.Collection;
 
-public interface HbufAnnotationValuesElement extends PsiElement, PsiLanguageInjectionHost {
+public interface HbufAnnotationValuesElement extends PsiElement {
 
     Collection<String> getValues();
 }

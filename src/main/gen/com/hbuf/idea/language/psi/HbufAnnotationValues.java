@@ -11,6 +11,6 @@ public interface HbufAnnotationValues extends HbufAnnotationValuesElement {
   HbufAnnotationValues getAnnotationValues();
 
   @NotNull
-  PsiElement getString();
+  HbufString getString();
 
 }

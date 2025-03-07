@@ -19,9 +19,16 @@ import java.util.Collection;
 
 public class DataNewQuickFix extends BaseIntentionAction {
     private final PsiElement element;
+    private final String name;
 
     public DataNewQuickFix(PsiElement element) {
         this.element = element;
+        this.name = element.getText();
+    }
+
+    public DataNewQuickFix(PsiElement element, String text) {
+        this.element = element;
+        this.name = text;
     }
 
     @Override
@@ -46,7 +53,7 @@ public class DataNewQuickFix extends BaseIntentionAction {
     public void invoke(@NotNull final Project project, final Editor editor, PsiFile file) throws IncorrectOperationException {
         WriteCommandAction.writeCommandAction(project).run(() -> {
             PsiElement child = getAddElement(element);
-            ASTNode data = HbufElementFactory.createData(project, element.getText()).getNode();
+            ASTNode data = HbufElementFactory.createData(project, name).getNode();
             child.getNode().addChild(data);
             FileEditorManager.getInstance(project).getSelectedTextEditor().getCaretModel().moveCaretRelatively(2, 0, false, false, false);
         });

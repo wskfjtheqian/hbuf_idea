@@ -29,39 +29,39 @@ TYPES=int8|int16|int32|int64|uint8|uint16|uint32|uint64|bool|float|double|decima
 COMMENT="//".*
 NUMBER=[0-9]+(\.[0-9]*)?
 IDENT=[:letter:][a-zA-Z_0-9]*
-STRING=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
+STRINGREGEXP=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
 
 %%
 <YYINITIAL> {
-  {WHITE_SPACE}       { return WHITE_SPACE; }
+  {WHITE_SPACE}        { return WHITE_SPACE; }
 
-  " "                 { return SPACE; }
-  "="                 { return ASSIGN; }
-  "?"                 { return QUESTION; }
-  "<"                 { return LSS; }
-  "("                 { return LPAREN; }
-  "["                 { return LBRACK; }
-  "{"                 { return LBRACE; }
-  ","                 { return COMMA; }
-  ">"                 { return GTR; }
-  ")"                 { return RPAREN; }
-  "]"                 { return RBRACK; }
-  "}"                 { return RBRACE; }
-  ";"                 { return SEMICOLON; }
-  ":"                 { return COLON; }
-  "package"           { return PACKAGE; }
-  "import"            { return IMPORT; }
-  "enum"              { return ENUM; }
-  "server"            { return SERVER; }
-  "data"              { return DATA; }
-  "CRLF"              { return CRLF; }
-  "void"              { return VOID; }
+  " "                  { return SPACE; }
+  "="                  { return ASSIGN; }
+  "?"                  { return QUESTION; }
+  "<"                  { return LSS; }
+  "("                  { return LPAREN; }
+  "["                  { return LBRACK; }
+  "{"                  { return LBRACE; }
+  ","                  { return COMMA; }
+  ">"                  { return GTR; }
+  ")"                  { return RPAREN; }
+  "]"                  { return RBRACK; }
+  "}"                  { return RBRACE; }
+  ";"                  { return SEMICOLON; }
+  ":"                  { return COLON; }
+  "package"            { return PACKAGE; }
+  "import"             { return IMPORT; }
+  "enum"               { return ENUM; }
+  "server"             { return SERVER; }
+  "data"               { return DATA; }
+  "CRLF"               { return CRLF; }
+  "void"               { return VOID; }
 
-  {TYPES}             { return TYPES; }
-  {COMMENT}           { return COMMENT; }
-  {NUMBER}            { return NUMBER; }
-  {IDENT}             { return IDENT; }
-  {STRING}            { return STRING; }
+  {TYPES}              { return TYPES; }
+  {COMMENT}            { return COMMENT; }
+  {NUMBER}             { return NUMBER; }
+  {IDENT}              { return IDENT; }
+  {STRINGREGEXP}       { return STRINGREGEXP; }
 
 }
 

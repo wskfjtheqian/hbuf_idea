@@ -8,6 +8,6 @@ public interface HbufAnnotationElement extends PsiElement {
     
     HbufAnnotationListElement getAnnotationList();
 
-
-
+    @Nullable
+    String getName();
 }

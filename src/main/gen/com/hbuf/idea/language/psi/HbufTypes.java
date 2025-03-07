@@ -32,6 +32,7 @@ public interface HbufTypes {
   IElementType PACKAGE_STATEMENT = new HbufElementType("PACKAGE_STATEMENT");
   IElementType SERVER_BODY = new HbufElementType("SERVER_BODY");
   IElementType SERVER_STATEMENT = new HbufElementType("SERVER_STATEMENT");
+  IElementType STRING = new HbufElementType("STRING");
   IElementType TYPE_ARRAY = new HbufElementType("TYPE_ARRAY");
   IElementType TYPE_BASE = new HbufElementType("TYPE_BASE");
   IElementType TYPE_MAP = new HbufElementType("TYPE_MAP");
@@ -61,7 +62,7 @@ public interface HbufTypes {
   IElementType SEMICOLON = new HbufTokenType(";");
   IElementType SERVER = new HbufTokenType("server");
   IElementType SPACE = new HbufTokenType(" ");
-  IElementType STRING = new HbufTokenType("STRING");
+  IElementType STRINGREGEXP = new HbufTokenType("STRINGREGEXP");
   IElementType TYPES = new HbufTokenType("TYPES");
   IElementType VOID = new HbufTokenType("void");
 
@@ -139,6 +140,9 @@ public interface HbufTypes {
       }
       else if (type == SERVER_STATEMENT) {
         return new HbufServerStatementImpl(node);
+      }
+      else if (type == STRING) {
+        return new HbufStringImpl(node);
       }
       else if (type == TYPE_ARRAY) {
         return new HbufTypeArrayImpl(node);

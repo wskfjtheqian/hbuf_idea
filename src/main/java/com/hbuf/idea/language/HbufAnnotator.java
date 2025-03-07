@@ -129,6 +129,22 @@ public class HbufAnnotator implements Annotator {
 
         if (element instanceof HbufImportElement) {
             checkImport(holder, (HbufImportElement) element);
+            return;
+        }
+
+        if (HbufUtil.checkAnnotationValue(element, "db", "table")) {
+            checkTable(holder, element);
+        }
+    }
+
+    private void checkTable(AnnotationHolder holder, PsiElement element) {
+        String text = element.getText().substring(1, element.getText().length() - 1);
+        if(HbufUtil.findData(element.getProject(), text).isEmpty()){
+            holder.newAnnotation(HighlightSeverity.ERROR, "Not find Data'" )
+                    .range(element)
+                    .highlightType(ProblemHighlightType.ERROR)
+                    .withFix(new DataNewQuickFix(element,text))
+                    .create();
         }
     }
 
