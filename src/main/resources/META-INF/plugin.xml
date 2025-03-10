@@ -69,6 +69,12 @@
 
         <multiHostInjector
                 implementation="com.hbuf.idea.language.injection.HbufLanguageHostInjector" language="Hbuf"/>
+
+
+        <fileType name="Annotate" implementationClass="com.hbuf.idea.annotate.AnnotateFileType" fieldName="INSTANCE"
+                  language="Annotate" extensions="annotate"/>
+        <lang.parserDefinition language="Annotate"
+                               implementationClass="com.hbuf.idea.annotate.AnnotateParserDefinition"/>
     </extensions>
 
     <actions>

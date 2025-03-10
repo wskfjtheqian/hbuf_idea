@@ -1,5 +1,6 @@
 package com.hbuf.idea.language.injection;
 
+import com.hbuf.idea.annotate.AnnotateLanguage;
 import com.hbuf.idea.language.psi.*;
 import com.intellij.lang.injection.MultiHostInjector;
 import com.intellij.lang.injection.MultiHostRegistrar;
@@ -21,6 +22,17 @@ public class HbufLanguageHostInjector implements MultiHostInjector {
                             (PsiLanguageInjectionHost) psiElement,
                             TextRange.from(1, psiElement.getTextLength() - 2))
                     .doneInjecting();
+            return;
+        }
+
+        if (HbufUtil.checkAnnotationValue(psiElement, "db", "table")) {
+            multiHostRegistrar
+                    .startInjecting(AnnotateLanguage.INSTANCE)
+                    .addPlace(null, null,
+                            (PsiLanguageInjectionHost) psiElement,
+                            TextRange.from(1, psiElement.getTextLength() - 2))
+                    .doneInjecting();
+            return;
         }
     }
 

@@ -1,0 +1,30 @@
+{
+  parserClass="com.hbuf.idea.annotate.parser.AnnotateParser"
+  parserUtilClass="com.hbuf.idea.annotate.parser.AnnotateParserUtil"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Annotate"
+  psiImplClassSuffix="Impl"
+  psiPackage="com.hbuf.idea.annotate.psi"
+  psiImplPackage="com.hbuf.idea.annotate.psi.impl"
+
+  elementTypeHolderClass="com.hbuf.idea.annotate.psi.AnnotateTypes"
+  elementTypeClass="com.hbuf.idea.annotate.AnnotateLanguage.AnnotateElementType"
+  tokenTypeClass="com.hbuf.idea.annotate.AnnotateLanguage.AnnotateTokenType"
+
+  psiImplUtilClass="com.hbuf.idea.annotate.psi.impl.AnnotatePisUtilImpl"
+
+  tokens = [
+    POINT = '.'
+    IDENT='regexp:\p{Alpha}\w*'
+    COMMENT='regexp://.*'
+  ]
+}
+
+annotateFile ::= item*
+
+item ::= IDENT|(POINT IDENT) {
+              mixin="com.hbuf.idea.annotate.psi.impl.AnnotateItemElementImpl"
+              implements="com.hbuf.idea.annotate.psi.AnnotateItemElement"
+}

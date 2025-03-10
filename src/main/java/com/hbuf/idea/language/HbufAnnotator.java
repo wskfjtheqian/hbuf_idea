@@ -131,10 +131,6 @@ public class HbufAnnotator implements Annotator {
             checkImport(holder, (HbufImportElement) element);
             return;
         }
-
-        if (HbufUtil.checkAnnotationValue(element, "db", "table")) {
-            checkTable(holder, element);
-        }
     }
 
     private void checkTable(AnnotationHolder holder, PsiElement element) {
