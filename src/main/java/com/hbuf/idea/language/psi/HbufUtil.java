@@ -35,7 +35,8 @@ public class HbufUtil {
             "double",
             "decimal",
             "string",
-            "date"
+            "date",
+            "bytes"
     );
 
 
@@ -368,7 +369,7 @@ public class HbufUtil {
         }
 
         psiElement = psiElement.getParent();
-        if (!(psiElement instanceof HbufAnnotationValuesElement)){
+        if (!(psiElement instanceof HbufAnnotationValuesElement)) {
             return false;
         }
 
@@ -379,7 +380,7 @@ public class HbufUtil {
             }
         }
 
-        if (!(fieldName.equals(((HbufAnnotationFieldElement)psiElement).getName()))) {
+        if (!(fieldName.equals(((HbufAnnotationFieldElement) psiElement).getName()))) {
             return false;
         }
 

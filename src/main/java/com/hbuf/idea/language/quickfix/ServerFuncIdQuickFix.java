@@ -12,7 +12,6 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,7 +28,7 @@ public class ServerFuncIdQuickFix extends BaseIntentionAction {
     @Override
     public @NotNull
     @IntentionFamilyName String getFamilyName() {
-        return "Field Id repeat";
+        return "Function Id repeat";
     }
 
     @Override
@@ -49,8 +48,8 @@ public class ServerFuncIdQuickFix extends BaseIntentionAction {
         WriteCommandAction.writeCommandAction(project).run(() -> {
             @NotNull Collection<HbufServerFuncElement> elements = new ArrayList<>(HbufUtil.getServerByChild(element).getFuncts());
             for (int i = 0; i < elements.size(); i++) {
-                if (!checkId(i, elements)) {
-                    HbufIdElement id = HbufElementFactory.createId(project, i);
+                if (!checkId(i + 1, elements)) {
+                    HbufIdElement id = HbufElementFactory.createId(project, i + 1);
                     element.getParent().getNode().replaceChild(element.getNode(), id.getNode());
                     FileEditorManager.getInstance(project).getSelectedTextEditor().getCaretModel().moveCaretRelatively(2, 0, false, false, false);
                     return;

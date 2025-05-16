@@ -25,7 +25,7 @@ import static com.hbuf.idea.language.psi.HbufTypes.*;
 EOL=\R
 WHITE_SPACE=\s+
 
-TYPES=int8|int16|int32|int64|uint8|uint16|uint32|uint64|bool|float|double|decimal|string|date
+TYPES=int8|int16|int32|int64|uint8|uint16|uint32|uint64|bool|float|double|decimal|string|date|bytes
 COMMENT="//".*
 NUMBER=[0-9]+(\.[0-9]*)?
 IDENT=[:letter:][a-zA-Z_0-9]*

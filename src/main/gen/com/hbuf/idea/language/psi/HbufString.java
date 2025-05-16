@@ -7,10 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface HbufString extends HbufStringElement {
 
-  @Nullable
-  PsiElement getIdent();
-
-  @Nullable
+  @NotNull
   PsiElement getStringregexp();
 
 }

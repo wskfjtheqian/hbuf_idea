@@ -27,15 +27,9 @@ public class HbufStringImpl extends HbufStringElementImpl implements HbufString 
   }
 
   @Override
-  @Nullable
-  public PsiElement getIdent() {
-    return findChildByType(IDENT);
-  }
-
-  @Override
-  @Nullable
+  @NotNull
   public PsiElement getStringregexp() {
-    return findChildByType(STRINGREGEXP);
+    return findNotNullChildByType(STRINGREGEXP);
   }
 
 }

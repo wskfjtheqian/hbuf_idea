@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GrepConsole">
+    <option name="tailHistory">
+      <TailHistory>
+        <option name="items">
+          <set>
+            <TailItem>
+              <option name="path" value="$USER_HOME$/Downloads/bt-hall-server-2025-03-23.18.5.log/bt-hall-server-2025-03-23.18.5.log" />
+            </TailItem>
+          </set>
+        </option>
+      </TailHistory>
+    </option>
+  </component>
+</project>

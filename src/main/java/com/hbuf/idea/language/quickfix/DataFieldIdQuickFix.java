@@ -47,8 +47,8 @@ public class DataFieldIdQuickFix extends BaseIntentionAction {
         WriteCommandAction.writeCommandAction(project).run(() -> {
             @NotNull Collection<HbufDataFieldElement> elements = HbufUtil.getDataByChild(element).getFields();
             for (int i = 0; i < elements.size(); i++) {
-                if (!checkId(i, elements)) {
-                    HbufIdElement id = HbufElementFactory.createId(project, i);
+                if (!checkId(i + 1, elements)) {
+                    HbufIdElement id = HbufElementFactory.createId(project, i + 1);
                     element.getParent().getNode().replaceChild(element.getNode(), id.getNode());
                     FileEditorManager.getInstance(project).getSelectedTextEditor().getCaretModel().moveCaretRelatively(2, 0, false, false, false);
                     return;
