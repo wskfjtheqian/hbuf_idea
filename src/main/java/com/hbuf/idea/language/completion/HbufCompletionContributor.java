@@ -91,6 +91,7 @@ public class HbufCompletionContributor extends CompletionContributor {
                         resultSet.addElement(LookupElementBuilder.create("format:"));
                         resultSet.addElement(LookupElementBuilder.create("verify:"));
                         resultSet.addElement(LookupElementBuilder.create("bind:"));
+                        resultSet.addElement(LookupElementBuilder.create("export:"));
                     }
                 }
         );
@@ -127,6 +128,8 @@ public class HbufCompletionContributor extends CompletionContributor {
                         resultSet.addElement(LookupElementBuilder.create("digit="));
 
                         resultSet.addElement(LookupElementBuilder.create("value="));
+
+                        resultSet.addElement(LookupElementBuilder.create("filter="));
                     }
                 }
         );

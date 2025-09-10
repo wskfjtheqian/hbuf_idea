@@ -25,7 +25,4 @@ public interface HbufFuncStatement extends HbufServerFuncElement {
   @Nullable
   PsiElement getComment();
 
-  @Nullable
-  PsiElement getIdent();
-
 }

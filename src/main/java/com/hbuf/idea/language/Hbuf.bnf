@@ -36,6 +36,8 @@
     ENUM='enum'
     SERVER='server'
     DATA='data'
+    VOID='void'
+    STREAM='stream'
     TYPES='regexp:int8|int16|int32|int64|uint8|uint16|uint32|uint64|bool|float|double|decimal|string|date|bytes'
 
     COMMENT='regexp://.*'
@@ -164,12 +166,12 @@ func-list::= (func-statement | IDENT) [func-list]{
     implements="com.hbuf.idea.language.psi.HbufServerFuncsElement"
 }
 
-func-statement::=COMMENT|([annotation-group] func-type ident-name LPAREN (func-param|IDENT) RPAREN ASSIGN id){
+func-statement::=COMMENT|([annotation-group] (func-type | VOID)  ident-name LPAREN (func-param|) RPAREN ASSIGN id){
     mixin="com.hbuf.idea.language.psi.impl.HbufServerFuncElementImpl"
     implements="com.hbuf.idea.language.psi.HbufServerFuncElement"
 }
 
-func-type::=ident-name | void{
+func-type::=ident-name | STREAM{
     mixin="com.hbuf.idea.language.psi.impl.HbufFuncTypeElementImpl"
     implements="com.hbuf.idea.language.psi.HbufFuncTypeElement"
 }

@@ -277,10 +277,11 @@ public class _HbufLexer implements FlexLexer {
     "\1\6\1\7\1\10\1\11\1\12\1\13\1\14\2\15"+
     "\1\16\1\17\11\15\1\20\1\21\1\0\1\22\3\0"+
     "\1\23\1\6\35\15\1\24\1\25\1\15\1\26\2\15"+
-    "\1\27\10\15\1\30\6\15\1\31\1\15\1\32\1\33";
+    "\1\27\11\15\1\30\7\15\1\31\1\15\1\32\1\33"+
+    "\1\34";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[93];
+    int [] result = new int[96];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -315,11 +316,11 @@ public class _HbufLexer implements FlexLexer {
     "\0\u08c0\0\u08f8\0\u0930\0\u0968\0\u09a0\0\u09d8\0\u0a10\0\u0a48"+
     "\0\u0a80\0\u0ab8\0\u0af0\0\u0188\0\u0188\0\u0b28\0\u0188\0\u0b60"+
     "\0\u0b98\0\u0188\0\u0bd0\0\u0c08\0\u0c40\0\u0c78\0\u0cb0\0\u0ce8"+
-    "\0\u0d20\0\u0d58\0\u0188\0\u0d90\0\u0dc8\0\u0e00\0\u0e38\0\u0e70"+
-    "\0\u0ea8\0\u0188\0\u0ee0\0\u0188\0\u0188";
+    "\0\u0d20\0\u0d58\0\u0d90\0\u0188\0\u0dc8\0\u0e00\0\u0e38\0\u0e70"+
+    "\0\u0ea8\0\u0ee0\0\u0f18\0\u0188\0\u0f50\0\u0188\0\u0188\0\u0188";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[93];
+    int [] result = new int[96];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -391,29 +392,32 @@ public class _HbufLexer implements FlexLexer {
     "\1\21\1\117\1\105\6\0\5\21\3\0\25\21\16\0"+
     "\7\21\6\0\5\21\3\0\11\21\1\120\13\21\16\0"+
     "\7\21\6\0\5\21\3\0\23\21\1\121\1\21\16\0"+
-    "\7\21\6\0\5\21\3\0\10\21\1\122\14\21\16\0"+
-    "\7\21\6\0\5\21\3\0\4\21\1\123\20\21\16\0"+
-    "\7\21\6\0\5\21\3\0\20\21\1\105\4\21\16\0"+
-    "\7\21\6\0\5\21\3\0\13\21\1\124\11\21\16\0"+
-    "\7\21\6\0\5\21\3\0\12\21\1\125\12\21\16\0"+
-    "\7\21\6\0\5\21\3\0\21\21\1\105\3\21\16\0"+
-    "\7\21\6\0\5\21\3\0\17\21\1\126\5\21\16\0"+
-    "\5\21\1\105\1\21\6\0\5\21\3\0\25\21\16\0"+
-    "\2\21\1\105\4\21\6\0\5\21\3\0\25\21\16\0"+
-    "\4\21\1\105\2\21\6\0\5\21\3\0\25\21\16\0"+
-    "\7\21\6\0\5\21\3\0\1\21\1\127\23\21\16\0"+
-    "\7\21\6\0\5\21\3\0\5\21\1\130\17\21\16\0"+
-    "\7\21\6\0\5\21\3\0\14\21\1\131\10\21\16\0"+
-    "\7\21\6\0\5\21\3\0\1\21\1\67\23\21\16\0"+
-    "\7\21\6\0\5\21\3\0\5\21\1\105\17\21\16\0"+
-    "\7\21\6\0\5\21\3\0\21\21\1\132\3\21\16\0"+
-    "\7\21\6\0\5\21\3\0\7\21\1\133\15\21\16\0"+
-    "\7\21\6\0\5\21\3\0\17\21\1\134\5\21\16\0"+
-    "\7\21\6\0\5\21\3\0\7\21\1\105\15\21\16\0"+
-    "\7\21\6\0\5\21\3\0\5\21\1\135\17\21\4\0";
+    "\7\21\6\0\5\21\3\0\5\21\1\122\2\21\1\123"+
+    "\14\21\16\0\7\21\6\0\5\21\3\0\4\21\1\124"+
+    "\20\21\16\0\7\21\6\0\5\21\3\0\20\21\1\105"+
+    "\4\21\16\0\7\21\6\0\5\21\3\0\13\21\1\125"+
+    "\11\21\16\0\7\21\6\0\5\21\3\0\12\21\1\126"+
+    "\12\21\16\0\7\21\6\0\5\21\3\0\21\21\1\105"+
+    "\3\21\16\0\7\21\6\0\5\21\3\0\17\21\1\127"+
+    "\5\21\16\0\5\21\1\105\1\21\6\0\5\21\3\0"+
+    "\25\21\16\0\2\21\1\105\4\21\6\0\5\21\3\0"+
+    "\25\21\16\0\4\21\1\105\2\21\6\0\5\21\3\0"+
+    "\25\21\16\0\7\21\6\0\5\21\3\0\1\21\1\130"+
+    "\23\21\16\0\7\21\6\0\5\21\3\0\5\21\1\131"+
+    "\17\21\16\0\7\21\6\0\5\21\3\0\1\21\1\132"+
+    "\23\21\16\0\7\21\6\0\5\21\3\0\14\21\1\133"+
+    "\10\21\16\0\7\21\6\0\5\21\3\0\1\21\1\67"+
+    "\23\21\16\0\7\21\6\0\5\21\3\0\5\21\1\105"+
+    "\17\21\16\0\7\21\6\0\5\21\3\0\21\21\1\134"+
+    "\3\21\16\0\7\21\6\0\5\21\3\0\7\21\1\135"+
+    "\15\21\16\0\7\21\6\0\5\21\3\0\17\21\1\136"+
+    "\5\21\16\0\7\21\6\0\5\21\3\0\13\21\1\137"+
+    "\11\21\16\0\7\21\6\0\5\21\3\0\7\21\1\105"+
+    "\15\21\16\0\7\21\6\0\5\21\3\0\5\21\1\140"+
+    "\17\21\4\0";
 
   private static int [] zzUnpacktrans() {
-    int [] result = new int[3864];
+    int [] result = new int[3976];
     int offset = 0;
     offset = zzUnpacktrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -452,10 +456,10 @@ public class _HbufLexer implements FlexLexer {
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
     "\1\0\1\11\3\1\3\11\2\1\6\11\2\1\2\11"+
-    "\11\1\2\11\1\0\1\11\3\0\71\1";
+    "\11\1\2\11\1\0\1\11\3\0\74\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[93];
+    int [] result = new int[96];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -773,137 +777,142 @@ public class _HbufLexer implements FlexLexer {
             { return BAD_CHARACTER;
             }
           // fall through
-          case 28: break;
+          case 29: break;
           case 2:
             { return WHITE_SPACE;
             }
           // fall through
-          case 29: break;
+          case 30: break;
           case 3:
             { return LPAREN;
             }
           // fall through
-          case 30: break;
+          case 31: break;
           case 4:
             { return RPAREN;
             }
           // fall through
-          case 31: break;
+          case 32: break;
           case 5:
             { return COMMA;
             }
           // fall through
-          case 32: break;
+          case 33: break;
           case 6:
             { return NUMBER;
             }
           // fall through
-          case 33: break;
+          case 34: break;
           case 7:
             { return COLON;
             }
           // fall through
-          case 34: break;
+          case 35: break;
           case 8:
             { return SEMICOLON;
             }
           // fall through
-          case 35: break;
+          case 36: break;
           case 9:
             { return LSS;
             }
           // fall through
-          case 36: break;
+          case 37: break;
           case 10:
             { return ASSIGN;
             }
           // fall through
-          case 37: break;
+          case 38: break;
           case 11:
             { return GTR;
             }
           // fall through
-          case 38: break;
+          case 39: break;
           case 12:
             { return QUESTION;
             }
           // fall through
-          case 39: break;
+          case 40: break;
           case 13:
             { return IDENT;
             }
           // fall through
-          case 40: break;
+          case 41: break;
           case 14:
             { return LBRACK;
             }
           // fall through
-          case 41: break;
+          case 42: break;
           case 15:
             { return RBRACK;
             }
           // fall through
-          case 42: break;
+          case 43: break;
           case 16:
             { return LBRACE;
             }
           // fall through
-          case 43: break;
+          case 44: break;
           case 17:
             { return RBRACE;
             }
           // fall through
-          case 44: break;
+          case 45: break;
           case 18:
             { return STRINGREGEXP;
             }
           // fall through
-          case 45: break;
+          case 46: break;
           case 19:
             { return COMMENT;
             }
           // fall through
-          case 46: break;
+          case 47: break;
           case 20:
             { return CRLF;
             }
           // fall through
-          case 47: break;
+          case 48: break;
           case 21:
             { return TYPES;
             }
           // fall through
-          case 48: break;
+          case 49: break;
           case 22:
             { return DATA;
             }
           // fall through
-          case 49: break;
+          case 50: break;
           case 23:
             { return ENUM;
             }
           // fall through
-          case 50: break;
+          case 51: break;
           case 24:
             { return VOID;
             }
           // fall through
-          case 51: break;
+          case 52: break;
           case 25:
             { return IMPORT;
             }
           // fall through
-          case 52: break;
+          case 53: break;
           case 26:
             { return SERVER;
             }
           // fall through
-          case 53: break;
+          case 54: break;
           case 27:
+            { return STREAM;
+            }
+          // fall through
+          case 55: break;
+          case 28:
             { return PACKAGE;
             }
           // fall through
-          case 54: break;
+          case 56: break;
           default:
             zzScanError(ZZ_NO_MATCH);
           }

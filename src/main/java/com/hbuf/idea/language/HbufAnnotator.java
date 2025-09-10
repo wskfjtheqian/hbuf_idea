@@ -52,7 +52,9 @@ public class HbufAnnotator implements Annotator {
             return;
         }
         if (element instanceof HbufFuncParam param) {
-            checkType(holder, param.getFuncType(), CheckType.Data);
+            if (null != param.getFuncType().getName()) {
+                checkType(holder, param.getFuncType(), CheckType.Data);
+            }
             return;
         }
 
@@ -139,11 +141,11 @@ public class HbufAnnotator implements Annotator {
 
     private void checkTable(AnnotationHolder holder, PsiElement element) {
         String text = element.getText().substring(1, element.getText().length() - 1);
-        if(HbufUtil.findData(element.getProject(), text).isEmpty()){
-            holder.newAnnotation(HighlightSeverity.ERROR, "Not find Data'" )
+        if (HbufUtil.findData(element.getProject(), text).isEmpty()) {
+            holder.newAnnotation(HighlightSeverity.ERROR, "Not find Data'")
                     .range(element)
                     .highlightType(ProblemHighlightType.ERROR)
-                    .withFix(new DataNewQuickFix(element,text))
+                    .withFix(new DataNewQuickFix(element, text))
                     .create();
         }
     }

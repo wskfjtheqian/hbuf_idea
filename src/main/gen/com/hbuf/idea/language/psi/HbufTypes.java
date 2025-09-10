@@ -46,6 +46,7 @@ public interface HbufTypes {
   IElementType CRLF = new HbufTokenType("CRLF");
   IElementType DATA = new HbufTokenType("data");
   IElementType ENUM = new HbufTokenType("enum");
+  IElementType FUNC_STATEMENT_1_4_1_0 = new HbufTokenType("func_statement_1_4_1_0");
   IElementType GTR = new HbufTokenType(">");
   IElementType IDENT = new HbufTokenType("IDENT");
   IElementType IMPORT = new HbufTokenType("import");
@@ -62,6 +63,7 @@ public interface HbufTypes {
   IElementType SEMICOLON = new HbufTokenType(";");
   IElementType SERVER = new HbufTokenType("server");
   IElementType SPACE = new HbufTokenType(" ");
+  IElementType STREAM = new HbufTokenType("stream");
   IElementType STRINGREGEXP = new HbufTokenType("STRINGREGEXP");
   IElementType TYPES = new HbufTokenType("TYPES");
   IElementType VOID = new HbufTokenType("void");

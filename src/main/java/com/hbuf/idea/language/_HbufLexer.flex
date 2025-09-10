@@ -54,8 +54,9 @@ STRINGREGEXP=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
   "enum"               { return ENUM; }
   "server"             { return SERVER; }
   "data"               { return DATA; }
-  "CRLF"               { return CRLF; }
   "void"               { return VOID; }
+  "stream"             { return STREAM; }
+  "CRLF"               { return CRLF; }
 
   {TYPES}              { return TYPES; }
   {COMMENT}            { return COMMENT; }

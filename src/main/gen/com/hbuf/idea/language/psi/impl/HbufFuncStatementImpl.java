@@ -62,10 +62,4 @@ public class HbufFuncStatementImpl extends HbufServerFuncElementImpl implements 
     return findChildByType(COMMENT);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getIdent() {
-    return findChildByType(IDENT);
-  }
-
 }

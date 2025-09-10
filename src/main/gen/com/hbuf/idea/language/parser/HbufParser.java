@@ -467,7 +467,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   // (func-type) ident-name
   public static boolean func_param(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_param")) return false;
-    if (!nextTokenIs(b, "<func param>", IDENT, VOID)) return false;
+    if (!nextTokenIs(b, "<func param>", IDENT, STREAM)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, FUNC_PARAM, "<func param>");
     r = func_param_0(b, l + 1);
@@ -487,7 +487,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // COMMENT|([annotation-group] func-type ident-name LPAREN (func-param|IDENT) RPAREN ASSIGN id)
+  // COMMENT|([annotation-group] (func-type | VOID)  ident-name LPAREN (func-param|) RPAREN ASSIGN id)
   public static boolean func_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_statement")) return false;
     boolean r;
@@ -498,13 +498,13 @@ public class HbufParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [annotation-group] func-type ident-name LPAREN (func-param|IDENT) RPAREN ASSIGN id
+  // [annotation-group] (func-type | VOID)  ident-name LPAREN (func-param|) RPAREN ASSIGN id
   private static boolean func_statement_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_statement_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = func_statement_1_0(b, l + 1);
-    r = r && func_type(b, l + 1);
+    r = r && func_statement_1_1(b, l + 1);
     r = r && ident_name(b, l + 1);
     r = r && consumeToken(b, LPAREN);
     r = r && func_statement_1_4(b, l + 1);
@@ -521,24 +521,35 @@ public class HbufParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // func-param|IDENT
+  // func-type | VOID
+  private static boolean func_statement_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "func_statement_1_1")) return false;
+    boolean r;
+    r = func_type(b, l + 1);
+    if (!r) r = consumeToken(b, VOID);
+    return r;
+  }
+
+  // func-param|
   private static boolean func_statement_1_4(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_statement_1_4")) return false;
     boolean r;
+    Marker m = enter_section_(b);
     r = func_param(b, l + 1);
-    if (!r) r = consumeToken(b, IDENT);
+    if (!r) r = consumeToken(b, FUNC_STATEMENT_1_4_1_0);
+    exit_section_(b, m, null, r);
     return r;
   }
 
   /* ********************************************************** */
-  // ident-name | void
+  // ident-name | STREAM
   public static boolean func_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_type")) return false;
-    if (!nextTokenIs(b, "<func type>", IDENT, VOID)) return false;
+    if (!nextTokenIs(b, "<func type>", IDENT, STREAM)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, FUNC_TYPE, "<func type>");
     r = ident_name(b, l + 1);
-    if (!r) r = consumeToken(b, VOID);
+    if (!r) r = consumeToken(b, STREAM);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
