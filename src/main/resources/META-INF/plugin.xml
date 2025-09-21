@@ -52,6 +52,9 @@
         <liveTemplateContext implementation="com.hbuf.idea.language.template.HbufLiveTemplatesContext$Enum"/>
         <liveTemplateContext implementation="com.hbuf.idea.language.template.HbufLiveTemplatesContext$Data"/>
         <liveTemplateContext implementation="com.hbuf.idea.language.template.HbufLiveTemplatesContext$Server"/>
+
+        <fileEditorProvider implementation="com.hbuf.idea.language.editor.HbufEditorProvider"
+                            id="hbuf-editor"/>
     </extensions>
 
     <actions>
