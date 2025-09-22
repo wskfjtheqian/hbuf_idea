@@ -1,16 +1,23 @@
 package com.hbuf.idea.language.editor;
 
 import javax.swing.*;
-import java.awt.*;
 
-public class HbufEditerGui extends JComponent {
+public class HbufEditerGui extends JPanel {
     private JPanel panel1;
-    private JButton button1;
+    private JList list1;
+    private JCheckBox listCheckBox;
+    private JCheckBox addCheckBox;
+    private JCheckBox getCheckBox;
+    private JCheckBox editCheckBox;
+    private JCheckBox deleteCheckBox;
+    private JCheckBox statusCheckBox;
+    private JCheckBox exportCheckBox;
 
     public HbufEditerGui() {
         add(panel1);
+        //设置布局为填充父容器
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
-
 
 
 }
