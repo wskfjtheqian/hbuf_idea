@@ -5,15 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface HbufPackageStatement extends HbufPackageElement {
-
-  @Nullable
-  HbufString getString();
-
-  @Nullable
-  PsiElement getComment();
+public interface HbufString extends HbufStringElement {
 
   @Nullable
   PsiElement getIdent();
+
+  @Nullable
+  PsiElement getStringregexp();
 
 }

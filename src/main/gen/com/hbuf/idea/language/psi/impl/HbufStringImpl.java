@@ -10,14 +10,14 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.hbuf.idea.language.psi.HbufTypes.*;
 import com.hbuf.idea.language.psi.*;
 
-public class HbufAnnotationValuesImpl extends HbufAnnotationValuesElementImpl implements HbufAnnotationValues {
+public class HbufStringImpl extends HbufStringElementImpl implements HbufString {
 
-  public HbufAnnotationValuesImpl(@NotNull ASTNode node) {
+  public HbufStringImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull HbufVisitor visitor) {
-    visitor.visitAnnotationValues(this);
+    visitor.visitString(this);
   }
 
   @Override
@@ -28,14 +28,14 @@ public class HbufAnnotationValuesImpl extends HbufAnnotationValuesElementImpl im
 
   @Override
   @Nullable
-  public HbufAnnotationValues getAnnotationValues() {
-    return findChildByClass(HbufAnnotationValues.class);
+  public PsiElement getIdent() {
+    return findChildByType(IDENT);
   }
 
   @Override
-  @NotNull
-  public HbufString getString() {
-    return findNotNullChildByClass(HbufString.class);
+  @Nullable
+  public PsiElement getStringregexp() {
+    return findChildByType(STRINGREGEXP);
   }
 
 }

@@ -359,4 +359,38 @@ public class HbufUtil {
         }
         return false;
     }
+
+
+    // 判断指定注解的值
+    public static boolean checkAnnotationValue(PsiElement psiElement, String annotationName, String fieldName) {
+        if (!(psiElement instanceof HbufStringElement)) {
+            return false;
+        }
+
+        psiElement = psiElement.getParent();
+        if (!(psiElement instanceof HbufAnnotationValuesElement)){
+            return false;
+        }
+
+        while (!(psiElement instanceof HbufAnnotationFieldElement)) {
+            psiElement = psiElement.getParent();
+            if (psiElement == null) {
+                return false;
+            }
+        }
+
+        if (!(fieldName.equals(((HbufAnnotationFieldElement)psiElement).getName()))) {
+            return false;
+        }
+
+        psiElement = psiElement.getParent();
+        while (!(psiElement instanceof HbufAnnotationElement)) {
+            psiElement = psiElement.getParent();
+            if (psiElement == null) {
+                return false;
+            }
+        }
+
+        return annotationName.equals(((HbufAnnotationElement) psiElement).getName());
+    }
 }

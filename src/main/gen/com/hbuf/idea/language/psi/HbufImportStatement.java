@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface HbufImportStatement extends HbufImportElement {
 
   @Nullable
-  PsiElement getComment();
+  HbufString getString();
 
   @Nullable
-  PsiElement getString();
+  PsiElement getComment();
 
 }

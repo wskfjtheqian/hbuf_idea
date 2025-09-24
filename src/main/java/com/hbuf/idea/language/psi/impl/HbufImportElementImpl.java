@@ -3,6 +3,7 @@
 package com.hbuf.idea.language.psi.impl;
 
 import com.hbuf.idea.language.psi.HbufImportElement;
+import com.hbuf.idea.language.psi.HbufTypes;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.NlsSafe;
@@ -26,5 +27,11 @@ public abstract class HbufImportElementImpl extends ASTWrapperPsiElement impleme
     @Override
     public PsiElement setName(@NlsSafe @NotNull String s) throws IncorrectOperationException {
         return null;
+    }
+
+    @NotNull
+    @Override
+    public PsiElement getString() {
+        return findChildByType(HbufTypes.STRING);
     }
 }

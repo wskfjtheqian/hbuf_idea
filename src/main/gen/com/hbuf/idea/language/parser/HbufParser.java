@@ -135,13 +135,13 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // STRING [COMMA annotation-values]
+  // string [COMMA annotation-values]
   public static boolean annotation_values(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "annotation_values")) return false;
-    if (!nextTokenIs(b, STRING)) return false;
+    if (!nextTokenIs(b, STRINGREGEXP)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, STRING);
+    r = string(b, l + 1);
     r = r && annotation_values_1(b, l + 1);
     exit_section_(b, m, ANNOTATION_VALUES, r);
     return r;
@@ -580,7 +580,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // COMMENT|(IMPORT STRING)
+  // COMMENT|(IMPORT string)
   public static boolean import_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "import_statement")) return false;
     if (!nextTokenIs(b, "<import statement>", COMMENT, IMPORT)) return false;
@@ -592,12 +592,13 @@ public class HbufParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // IMPORT STRING
+  // IMPORT string
   private static boolean import_statement_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "import_statement_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, IMPORT, STRING);
+    r = consumeToken(b, IMPORT);
+    r = r && string(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -618,7 +619,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // COMMENT|(PACKAGE IDENT ASSIGN STRING)
+  // COMMENT|(PACKAGE IDENT ASSIGN string)
   public static boolean package_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "package_statement")) return false;
     if (!nextTokenIs(b, "<package statement>", COMMENT, PACKAGE)) return false;
@@ -630,12 +631,13 @@ public class HbufParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // PACKAGE IDENT ASSIGN STRING
+  // PACKAGE IDENT ASSIGN string
   private static boolean package_statement_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "package_statement_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, PACKAGE, IDENT, ASSIGN, STRING);
+    r = consumeTokens(b, 0, PACKAGE, IDENT, ASSIGN);
+    r = r && string(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -709,6 +711,18 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, COLON);
     r = r && extends_$(b, l + 1);
     exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // STRINGREGEXP
+  public static boolean string(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "string")) return false;
+    if (!nextTokenIs(b, STRINGREGEXP)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, STRINGREGEXP);
+    exit_section_(b, m, STRING, r);
     return r;
   }
 

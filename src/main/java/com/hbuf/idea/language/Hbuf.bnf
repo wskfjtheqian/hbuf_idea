@@ -41,7 +41,7 @@
     COMMENT='regexp://.*'
     NUMBER='regexp:\d+(\.\d*)?'
     IDENT='regexp:\p{Alpha}\w*'
-    STRING="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
+    STRINGREGEXP="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
   ]
 }
 
@@ -49,12 +49,18 @@ hbufFile ::= item_*
 
 private item_ ::= package-statement|import-statement|data-statement|server-statement|enum-statement|IDENT|CRLF
 
-package-statement ::=COMMENT|(PACKAGE IDENT ASSIGN STRING){
+string ::= STRINGREGEXP {
+    mixin="com.hbuf.idea.language.psi.impl.HbufStringElementImpl"
+    implements="com.hbuf.idea.language.psi.HbufStringElement"
+ }
+
+
+package-statement ::=COMMENT|(PACKAGE IDENT ASSIGN string){
     mixin="com.hbuf.idea.language.psi.impl.HbufPackageElementImpl"
     implements="com.hbuf.idea.language.psi.HbufPackageElement"
 }
 
-import-statement::=COMMENT|(IMPORT STRING){
+import-statement::=COMMENT|(IMPORT string){
     mixin="com.hbuf.idea.language.psi.impl.HbufImportElementImpl"
     implements="com.hbuf.idea.language.psi.HbufImportElement"
 }
@@ -138,7 +144,7 @@ annotation-field::= ident-name ASSIGN annotation-values {
     implements="com.hbuf.idea.language.psi.HbufAnnotationFieldElement"
 }
 
-annotation-values::= STRING [COMMA annotation-values]{
+annotation-values::= string [COMMA annotation-values]{
     mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationValuesElementImpl"
     implements="com.hbuf.idea.language.psi.HbufAnnotationValuesElement"
 }

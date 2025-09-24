@@ -103,6 +103,10 @@ public class HbufVisitor extends PsiElementVisitor {
     visitServerElement(o);
   }
 
+  public void visitString(@NotNull HbufString o) {
+    visitStringElement(o);
+  }
+
   public void visitTypeArray(@NotNull HbufTypeArray o) {
     visitTypeArrayElement(o);
   }
@@ -220,6 +224,10 @@ public class HbufVisitor extends PsiElementVisitor {
   }
 
   public void visitServerFuncsElement(@NotNull HbufServerFuncsElement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStringElement(@NotNull HbufStringElement o) {
     visitPsiElement(o);
   }
 
