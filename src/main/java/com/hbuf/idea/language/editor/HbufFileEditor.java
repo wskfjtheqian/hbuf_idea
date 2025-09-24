@@ -50,7 +50,6 @@ public class HbufFileEditor extends UserDataHolderBase implements FileEditor {
 
     @Override
     public @NotNull FileEditorState getState(@NotNull FileEditorStateLevel level) {
-        // 返回文件编辑器的状态
         return new FileEditorState() {
             @Override
             public boolean canBeMergedWith(@NotNull FileEditorState fileEditorState, @NotNull FileEditorStateLevel fileEditorStateLevel) {
@@ -88,7 +87,6 @@ if (editer != null) {
 
     @Override
     public VirtualFile getFile() {
-        // 确保返回的文件对象不是 null
         if (file == null) {
             throw new IllegalArgumentException("File cannot be null");
         }

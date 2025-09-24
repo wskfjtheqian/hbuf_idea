@@ -2,7 +2,6 @@ package com.hbuf.idea.language.editor;
 
 import com.hbuf.idea.language.psi.HbufDataElement;
 import com.hbuf.idea.language.psi.HbufFile;
-import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.testFramework.LightVirtualFile;
@@ -10,8 +9,7 @@ import com.intellij.ui.OnePixelSplitter;
 import com.intellij.ui.components.JBCheckBox;
 import com.intellij.ui.components.JBList;
 import com.intellij.ui.components.JBScrollPane;
-import com.vladsch.flexmark.html.HtmlRenderer;
-import com.vladsch.flexmark.parser.Parser;
+import com.intellij.util.ui.JBUI;
 import org.intellij.plugins.markdown.lang.MarkdownFileType;
 import org.intellij.plugins.markdown.ui.preview.MarkdownEditorWithPreview;
 import org.intellij.plugins.markdown.ui.preview.MarkdownSplitEditorProvider;
@@ -22,7 +20,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.util.Collection;
 
@@ -30,51 +27,49 @@ public class HbufEditerGui extends JPanel {
     private static final Logger log = LoggerFactory.getLogger(HbufEditerGui.class);
     private final HbufFile file;
     private final Project project;
-    private final Parser parser = Parser.builder().build();
-    private final HtmlRenderer renderer = HtmlRenderer.builder().build();
+
+    DefaultListModel<String> listModel = new DefaultListModel<>();
+    private LightVirtualFile vFile;
+    private String listSelected;
 
     private JList<String> dataList;
     private MarkdownEditorWithPreview mdEditor;
-    private LightVirtualFile vFile;
-
-    DefaultListModel<String> listModel = new DefaultListModel<>();
+    private JBCheckBox checkList;
+    private JBCheckBox checkGet;
+    private JBCheckBox checkAdd;
+    private JBCheckBox checkSet;
+    private JBCheckBox checkDel;
+    private JBCheckBox checkStatus;
+    private JBCheckBox checkExport;
 
     public HbufEditerGui(@Nullable HbufFile file, Project project) {
         this.file = file;
         this.project = project;
         add(createComponent());
-        //设置布局为填充父容器
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-
-//        dataList.setModel(listModel);
-//        dataList.addListSelectionListener(e -> {
-//
-//        });
-
-//        setDataList();
     }
 
     public JComponent createComponent() {
         dataList = new JBList<>(listModel);
         JBScrollPane leftPanel = new JBScrollPane(dataList);
 
-        // 创建虚拟文件
         this.vFile = new LightVirtualFile("temp.md", MarkdownFileType.INSTANCE, "");
         vFile.setWritable(true);
 
         MarkdownSplitEditorProvider provider = new MarkdownSplitEditorProvider();
         mdEditor = (MarkdownEditorWithPreview) provider.createEditor(project, vFile);
 
-        JPanel checkBoxPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5)); // 水平排列，左对齐
-        JBCheckBox check1 = new JBCheckBox("Option 1");
-        JBCheckBox check2 = new JBCheckBox("Option 2");
-        JBCheckBox check3 = new JBCheckBox("Option 3");
-        checkBoxPanel.add(check1);
-        checkBoxPanel.add(check2);
-        checkBoxPanel.add(check3);
+        JPanel checkBoxPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
 
-        // 右边面板：上方复选框，下面 MarkdownEditor
+        checkBoxPanel.add(bindEvent(this.checkList = new JBCheckBox("List")));
+        checkBoxPanel.add(bindEvent(this.checkAdd = new JBCheckBox("Add")));
+        checkBoxPanel.add(bindEvent(this.checkGet = new JBCheckBox("Get")));
+        checkBoxPanel.add(bindEvent(this.checkSet = new JBCheckBox("Set")));
+        checkBoxPanel.add(bindEvent(this.checkDel = new JBCheckBox("Del")));
+        checkBoxPanel.add(bindEvent(this.checkStatus = new JBCheckBox("Status")));
+        checkBoxPanel.add(bindEvent(this.checkExport = new JBCheckBox("Export")));
+
         JPanel rightPanel = new JPanel(new BorderLayout());
         rightPanel.add(checkBoxPanel, BorderLayout.NORTH);
         rightPanel.add(mdEditor.getComponent(), BorderLayout.CENTER);
@@ -83,30 +78,25 @@ public class HbufEditerGui extends JPanel {
         splitter.setFirstComponent(leftPanel);
         splitter.setSecondComponent(rightPanel);
 
-        // 监听 JBList 选择事件
-        dataList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) { // 避免重复触发
-                    String selected = dataList.getSelectedValue();
-                    if (selected != null) {
-                        // 生成代码内容（示例）
-                        StringBuilder code = new StringBuilder();
-                        code.append("```java\n");
-                        code.append("// 生成的代码示例: ").append(selected).append("\n");
-                        code.append("public class ").append(selected.replace(" ", "")).append(" {\n");
-                        code.append("    public void run() {\n");
-                        code.append("        System.out.println(\"Hello ").append(selected).append("\");\n");
-                        code.append("    }\n");
-                        code.append("}\n");
-                        code.append("```\n");
-
-                        mdEditor.getEditor().getDocument().setText(code.toString());
-                    }
-                }
-            }
-        });
+        dataList.addListSelectionListener(this::onListSelection);
         return splitter;
+    }
+
+    private Component bindEvent(JBCheckBox list) {
+        list.setMargin(JBUI.insetsRight(20));
+        list.addChangeListener(e -> {
+            generateCode();
+        });
+        return list;
+    }
+
+    private void onListSelection(ListSelectionEvent e) {
+        if (!e.getValueIsAdjusting()) {
+            this.listSelected = dataList.getSelectedValue();
+            if (listSelected != null) {
+                this.generateCode();
+            }
+        }
     }
 
     private void setDataList() {
@@ -127,6 +117,234 @@ public class HbufEditerGui extends JPanel {
 
     public void dispose() {
         this.mdEditor.dispose();
-      ;
+    }
+
+    public void generateCode() {
+        StringBuilder code = new StringBuilder();
+        code.append(generateHbufServerCode(listSelected));
+        code.append(generateHbufManageCode(listSelected));
+        code.append(generateHbufPowerCode(listSelected));
+        code.append(generateGoServerCode(listSelected));
+        code.append(generateVueListViewCode(listSelected));
+        code.append(generateVueInfoViewCode(listSelected));
+        code.append(generateVueRouteCode(listSelected));
+
+        mdEditor.getEditor().getDocument().setText(code.toString());
+    }
+
+    private StringBuilder generateHbufServerCode(String name) {
+        StringBuilder code = new StringBuilder();
+        code.append("### Hbuf Server Code\n")
+                .append("```hbuf\n")
+                .append("server Server {\n");
+        if (checkList.isSelected()) {
+            code.append("\tList").append(name).append("Resp List").append(name).append("(List").append(name).append("Req req) = 1 \n\n");
+        }
+        if (checkAdd.isSelected()) {
+            code.append("\tAdd").append(name).append("Resp Add").append(name).append("(Add").append(name).append("Req req) = 2  \n\n");
+        }
+        if (checkGet.isSelected()) {
+            code.append("\tGet").append(name).append("Resp Get").append(name).append("(Get").append(name).append("Req req) = 3  \n\n");
+        }
+        if (checkSet.isSelected()) {
+            code.append("\tSet").append(name).append("Resp Set").append(name).append("(Set").append(name).append("Req req) = 4  \n\n");
+        }
+        if (checkDel.isSelected()) {
+            code.append("\tDel").append(name).append("Resp Del").append(name).append("(Del").append(name).append("Req req) = 5  \n\n");
+        }
+        if (checkStatus.isSelected()) {
+            code.append("\tStatus").append(name).append("Resp Status").append(name).append("(Status").append(name).append("Req req) = 6  \n\n");
+        }
+        if (checkExport.isSelected()) {
+            code.append("\tExport").append(name).append("Resp Export").append(name).append("(Export").append(name).append("Req req) = 7  \n\n");
+        }
+
+        code.append("}\n").append("```\n\n");
+        return code;
+    }
+
+    private StringBuilder generateHbufManageCode(String name) {
+        StringBuilder code = new StringBuilder();
+        code.append("### Hbuf Manage Code\n")
+                .append("```hbuf\n")
+                .append("server Server {\n");
+        if (checkList.isSelected()) {
+            code.append("\t[tag:auth=\"manageApi\"; power=\"AdminPower.list").append(name).append("\"]\n");
+            code.append("\t[bind:value=\"BasicServer.List").append(name).append("\"]\n");
+            code.append("\tMgList").append(name).append("Resp MgList").append(name).append("(MgList").append(name).append("Req req) = 1 \n\n");
+        }
+        if (checkAdd.isSelected()) {
+            code.append("\t[tag:auth=\"manageApi\"; power=\"AdminPower.add").append(name).append("\"]\n");
+            code.append("\t[bind:value=\"BasicServer.Add").append(name).append("\"]\n");
+            code.append("\tMgAdd").append(name).append("Resp MgAdd").append(name).append("(MgAdd").append(name).append("Req req) = 2  \n\n");
+        }
+        if (checkGet.isSelected()) {
+            code.append("\t[tag:auth=\"manageApi\"; power=\"AdminPower.get").append(name).append("\",\"AdminPower.set").append(name).append("\"]\n");
+            code.append("\t[bind:value=\"BasicServer.Get").append(name).append("\"]\n");
+            code.append("\tMgGet").append(name).append("Resp MgGet").append(name).append("(MgGet").append(name).append("Req req) = 3  \n\n");
+        }
+        if (checkSet.isSelected()) {
+            code.append("\t[tag:auth=\"manageApi\"; power=\"AdminPower.set").append(name).append("\"]\n");
+            code.append("\t[bind:value=\"BasicServer.set").append(name).append("\"]\n");
+            code.append("\tMgSet").append(name).append("Resp MgSet").append(name).append("(MgSet").append(name).append("Req req) = 4  \n\n");
+        }
+        if (checkDel.isSelected()) {
+            code.append("\t[tag:auth=\"manageApi\"; power=\"AdminPower.del").append(name).append("\"]\n");
+            code.append("\t[bind:value=\"BasicServer.Del").append(name).append("\"]\n");
+            code.append("\tMgDel").append(name).append("Resp MgDel").append(name).append("(MgDel").append(name).append("Req req) = 5  \n\n");
+        }
+        if (checkStatus.isSelected()) {
+            code.append("\t[tag:auth=\"manageApi\"; power=\"AdminPower.status").append(name).append("\"]\n");
+            code.append("\t[bind:value=\"BasicServer.Status").append(name).append("\"]\n");
+            code.append("\tMgStatus").append(name).append("Resp MgStatus").append(name).append("(MgStatus").append(name).append("Req req) = 6  \n\n");
+        }
+        if (checkExport.isSelected()) {
+            code.append("\t[tag:auth=\"manageApi\"; power=\"AdminPower.export").append(name).append("\"]\n");
+            code.append("\t[bind:value=\"BasicServer.Export").append(name).append("\"]\n");
+            code.append("\tMgExport").append(name).append("Resp MgExport").append(name).append("(MgExport").append(name).append("Req req) = 7  \n\n");
+        }
+
+        code.append("}\n").append("```\n\n");
+        return code;
+    }
+
+
+    private StringBuilder generateHbufPowerCode(String name) {
+        StringBuilder code = new StringBuilder();
+        code.append("### Hbuf Power Code\n")
+                .append("```hbuf\n")
+                .append("enum AdminPower{\n");
+        if (checkList.isSelected()) {
+            code.append("\tlist").append(name).append(" = 1 \n\n");
+        }
+        if (checkAdd.isSelected()) {
+            code.append("\tadd").append(name).append(" = 2  \n\n");
+        }
+        if (checkGet.isSelected()) {
+            code.append("\tget").append(name).append(" = 3  \n\n");
+        }
+        if (checkSet.isSelected()) {
+            code.append("\tset").append(name).append(" = 4  \n\n");
+        }
+        if (checkDel.isSelected()) {
+            code.append("\tdel").append(name).append(" = 5  \n\n");
+        }
+        if (checkStatus.isSelected()) {
+            code.append("\tstatus").append(name).append(" = 6  \n\n");
+        }
+        if (checkExport.isSelected()) {
+            code.append("\texport").append(name).append(" = 7  \n\n");
+        }
+
+        code.append("}\n").append("```\n\n");
+        return code;
+    }
+
+    private StringBuilder generateGoServerCode(String name) {
+        StringBuilder code = new StringBuilder();
+        code.append("### Golang Server Code\n")
+                .append("```go\n");
+
+        if (checkList.isSelected()) {
+            code.append("(s *Server) List").append(name).append("(ctx context.Context, req *List").append(name).append("Req) (*List").append(name).append("Resp, error) {\n");
+            code.append("\treturn &List").append(name).append("{}, nil\n");
+            code.append("}\n\n");
+        }
+        if (checkAdd.isSelected()) {
+            code.append("(s *Server) Add").append(name).append("(ctx context.Context, req *Add").append(name).append("Req) (*Add").append(name).append("Resp, error) {\n");
+            code.append("\treturn &Add").append(name).append("{}, nil\n");
+            code.append("}\n\n");
+        }
+        if (checkGet.isSelected()) {
+            code.append("(s *Server) Get").append(name).append("(ctx context.Context, req *Get").append(name).append("Req) (*Get").append(name).append("Resp, error) {\n");
+            code.append("\treturn &Get").append(name).append("{}, nil\n");
+            code.append("}\n\n");
+        }
+        if (checkSet.isSelected()) {
+            code.append("(s *Server) Set").append(name).append("(ctx context.Context, req *Set").append(name).append("Req) (*Set").append(name).append("Resp, error) {\n");
+            code.append("\treturn &Set").append(name).append("{}, nil\n");
+            code.append("}\n\n");
+        }
+        if (checkDel.isSelected()) {
+            code.append("(s *Server) Del").append(name).append("(ctx context.Context, req *Del").append(name).append("Req) (*Del").append(name).append("Resp, error) {\n");
+            code.append("\treturn &Del").append(name).append("{}, nil\n");
+            code.append("}\n\n");
+        }
+        if (checkStatus.isSelected()) {
+            code.append("(s *Server) Status").append(name).append("(ctx context.Context, req *Status").append(name).append("Req) (*Status").append(name).append("Resp, error) {\n");
+            code.append("\treturn &Status").append(name).append("{}, nil\n");
+            code.append("}\n\n");
+        }
+        if (checkExport.isSelected()) {
+            code.append("(s *Server) Export").append(name).append("(ctx context.Context, req *Export").append(name).append("Req) (*Export").append(name).append("Resp, error) {\n");
+            code.append("\treturn &Export").append(name).append("{}, nil\n");
+            code.append("}\n\n");
+        }
+        code.append("```\n\n");
+        return code;
+    }
+
+    private StringBuilder generateVueListViewCode(String name) {
+        StringBuilder code = new StringBuilder();
+        code.append("### Vue List Page Code\n")
+                .append("```vue\n")
+                .append(
+                        "<script setup lang=\"ts\">\n" +
+                                "\n" +
+                                "</script>\n" +
+                                "\n" +
+                                "<template>\n" +
+                                "\n" +
+                                "</template>\n" +
+                                "\n" +
+                                "<style scoped>\n" +
+                                "\n" +
+                                "</style>"
+                );
+
+        code.append("```\n\n");
+        return code;
+    }
+
+    private StringBuilder generateVueInfoViewCode(String name) {
+        StringBuilder code = new StringBuilder();
+        code.append("### Vue Info Page Code\n")
+                .append("```vue\n").append(
+                        "<script setup lang=\"ts\">\n" +
+                                "\n" +
+                                "</script>\n" +
+                                "\n" +
+                                "<template>\n" +
+                                "\n" +
+                                "</template>\n" +
+                                "\n" +
+                                "<style scoped>\n" +
+                                "\n" +
+                                "</style>"
+                );
+
+        code.append("```\n\n");
+        return code;
+    }
+
+    private StringBuilder generateVueRouteCode(String name) {
+        StringBuilder code = new StringBuilder();
+        code.append("### Vue Route Code\n")
+                .append("```vue\n")
+                .append(
+                        "<script setup lang=\"ts\">\n" +
+                                "\n" +
+                                "</script>\n" +
+                                "\n" +
+                                "<template>\n" +
+                                "\n" +
+                                "</template>\n" +
+                                "\n" +
+                                "<style scoped>\n" +
+                                "\n" +
+                                "</style>"
+                );
+        code.append("```\n\n");
+        return code;
     }
 }
