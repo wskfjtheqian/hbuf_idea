@@ -1,0 +1,135 @@
+<script lang="ts" setup>
+  import {EventMsg} from "@/public/event";
+  import {EventBus, tryCatch} from "@/public/utils";
+  import {router} from "@/router";
+  import {onBeforeMount, onMounted, ref} from "vue";
+  import type {FormInstance} from "element-plus";
+  import {ElMessage, useLocale} from "element-plus";
+  import {Download, Lock, Plus, RefreshLeft, Search, Unlock} from "@element-plus/icons-vue";
+  import type Long from "long";
+  import {NetApi} from "@/public/NetApi";
+  import Pagination from "@/components/Pagination.vue";
+  import {AdminPower} from "@/hbuf/power.enum";
+  import {AccountStatus} from "@/hbuf/public.enum";
+  import type {MerchantInfo} from "@/hbuf/merchant.data";
+  import {MgGetMerchantListReq, MgStatusMerchantInfoReq} from "@/hbuf/merchant.manage.data";
+  import {GetMerchantListReqFormItems, MerchantInfoTableColumn} from "@/hbuf/merchant.ui";
+
+  const locale = useLocale()
+  const queryFormRef = ref<FormInstance>()
+  const query = ref<MgGetMerchantListReq>(new MgGetMerchantListReq())
+  const total = ref<number>(0)
+  const merchantList = ref<MerchantInfo[]>([])
+  const selection = ref<MerchantInfo[]>([])
+
+  onMounted(() => {
+    EventBus.$on(EventMsg.refreshMerchantList, searchForm)
+  })
+
+  onBeforeMount(() => {
+    EventBus.$off(EventMsg.refreshMerchantList, searchForm)
+  })
+
+  const searchForm = () => {
+    tryCatch({}, async () => {
+      const resp = await NetApi.instance.merchant.mgGetMerchantList(query.value)
+      merchantList.value = resp.list
+      total.value = resp.total
+    });
+  }
+
+  const resetForm = (ref?: FormInstance) => {
+    ref?.resetFields()
+    searchForm()
+  }
+
+  const handleSelection = (list: MerchantInfo[]) => {
+    selection.value = list
+  }
+
+  const handleExport = () => {
+  }
+
+  const handleEditStatus = async (status: boolean) => {
+    await tryCatch({}, () => {
+      let req = new MgStatusMerchantInfoReq();
+      req.status = status ? AccountStatus.ENABLE : AccountStatus.DISABLE
+      req.merchantId = selection.value.map<Long>((value) => value.merchantId!)
+      return NetApi.instance.merchant.mgStatusMerchantInfo(req)
+    });
+    selection.value.forEach((value) => value.status = status ? AccountStatus.ENABLE : AccountStatus.DISABLE)
+    ElMessage.success(locale.t("public.modifiedSuccessfully"))
+  }
+
+  const handleInfo = (info: MerchantInfo) => {
+    router.push({
+      name: "nav.merchantInfo", params: {
+        id: info.merchantId!.toString(),
+        name: info.name,
+      }
+    })
+  }
+
+  const handleNewAdd = () => {
+    router.push({
+      name: "nav.merchantInfo",
+      params: {
+        id: "create",
+        name: "New",
+      },
+    })
+  }
+</script>
+
+<template>
+  <section class="app-list-page">
+    <el-form ref="queryFormRef" :model="query" inline>
+      <GetMerchantListReqFormItems :model="query"/>
+      <el-form-item>
+        <el-button :icon="Search" type="primary" @click="searchForm()"/>
+        <el-button :icon="RefreshLeft" @click="resetForm(queryFormRef)"/>
+      </el-form-item>
+    </el-form>
+
+    <div class="app-list-page-button">
+      <el-button-group v-power="[AdminPower.MERCHANT_STATUS]">
+        <el-button :disabled="selection.length==0" :icon="Lock" plain size="small" type="warning"
+                   @click="handleEditStatus(false)">
+          {{ $t('public.disabled') }}
+        </el-button>
+        <el-button :disabled="selection.length==0" :icon="Unlock" plain size="small" type="warning"
+                   @click="handleEditStatus(true)">
+          {{ $t('public.enabled') }}
+        </el-button>
+      </el-button-group>
+      <el-button v-power="[AdminPower.MERCHANT_EXPORT]" :icon="Download" plain size="small" type="success"
+                 @click="handleExport()">
+        {{ $t('public.export') }}
+      </el-button>
+      <el-button v-power="[AdminPower.MERCHANT_ADD]" :icon="Plus" class="right-button" size="small"
+                 type="primary" @click="handleNewAdd()">
+        {{ $t('public.newAdd') }}
+      </el-button>
+    </div>
+
+    <el-table :data="merchantList" fit stripe @selection-change="handleSelection">
+      <el-table-column fixed="left" type="selection" width="30"/>
+      <el-table-column fixed="left" type="index" width="50"/>
+      <MerchantInfoTableColumn/>
+      <el-table-column :label="$t('public.operations')" fixed="right" width="122">
+        <template #default="scope">
+          <el-tooltip v-power="[AdminPower.MERCHANT_INFO,AdminPower.MERCHANT_ADD]" :content="$t('public.infoTips')">
+            <el-button link size="small" type="primary" @click="handleInfo(scope.row)">
+              {{ $t('public.info') }}
+            </el-button>
+          </el-tooltip>
+        </template>
+      </el-table-column>
+    </el-table>
+    <pagination :page="query" :total="total" @search="searchForm()"/>
+  </section>
+</template>
+
+<style scoped>
+
+</style>

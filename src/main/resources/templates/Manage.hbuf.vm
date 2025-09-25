@@ -1,0 +1,108 @@
+server Manage {
+#if (${genList} == true)
+    [tag:auth="manageApi"; power="AdminPower.list${dataName}"]
+    [bind:value="BasicServer.List${dataName}"]
+    MgList${dataName}Resp MgList${dataName}(MgList${dataName}Req req) = 1
+#end
+
+#if (${genAdd} == true)
+    [tag:auth="manageApi"; power="AdminPower.add${dataName}"]
+    [bind:value="BasicServer.Add${dataName}"]
+    MgAdd${dataName}Resp MgAdd${dataName}(MgAdd${dataName}Req req) = 2
+#end
+
+#if (${genGet} == true)
+    [tag:auth="manageApi"; power="AdminPower.get${dataName}", "AdminPower.set${dataName}"]
+    [bind:value="BasicServer.Get${dataName}"]
+    MgGet${dataName}Resp MgGet${dataName}(MgGet${dataName}Req req) = 3
+#end
+
+#if (${genSet} == true)
+    [tag:auth="manageApi"; power="AdminPower.set${dataName}"]
+    [bind:value="BasicServer.set${dataName}"]
+    MgSet${dataName}Resp MgSet${dataName}(MgSet${dataName}Req req) = 4
+#end
+
+#if (${genDel} == true)
+    [tag:auth="manageApi"; power="AdminPower.del${dataName}"]
+    [bind:value="BasicServer.Del${dataName}"]
+    MgDel${dataName}Resp MgDel${dataName}(MgDel${dataName}Req req) = 5
+#end
+
+#if (${genStatus} == true)
+    [tag:auth="manageApi"; power="AdminPower.status${dataName}"]
+    [bind:value="BasicServer.Status${dataName}"]
+    MgStatus${dataName}Resp MgStatus${dataName}(MgStatus${dataName}Req req) = 6
+#end
+
+#if (${genExport} == true)
+    [tag:auth="manageApi"; power="AdminPower.export${dataName}"]
+    MgExport${dataName}Resp MgExport${dataName}(MgExport${dataName}Req req) = 7
+#end
+}
+
+#if (${genExport} == true)
+[verify:]
+data MgExport${dataName}Req:Export${dataName}Req = 0 {
+}
+
+data MgExport${dataName}Resp:Export${dataName}Resp = 0 {
+}
+#end
+
+#if (${genStatus} == true)
+[verify:]
+data MgStatus${dataName}Req:Status${dataName}Req = 0 {
+}
+
+data MgStatus${dataName}Resp:Status${dataName}Resp = 0 {
+}
+#end
+
+#if (${genDel} == true)
+[verify:]
+data MgDel${dataName}Req:Del${dataName}Req = 0 {
+}
+
+data MgDel${dataName}Resp:Del${dataName}Resp = 0 {
+}
+#end
+
+#if (${genSet} == true)
+[verify:]
+data MgSet${dataName}Req:Set${dataName}Req = 0 {
+}
+
+data MgSet${dataName}Resp:Set${dataName}Resp = 0 {
+}
+#end
+
+#if (${genGet} == true)
+[verify:]
+data MgGet${dataName}Req:Get${dataName}Req = 0 {
+}
+
+data MgGet${dataName}Resp:Get${dataName}Resp = 0 {
+}
+#end
+
+#if (${genAdd} == true)
+[verify:]
+data MgAdd${dataName}Req:Add${dataName}Req = 0 {
+}
+
+data MgAdd${dataName}Resp:Add${dataName}Resp = 0 {
+}
+#end
+
+#if (${genList} == true)
+[verify:]
+data MgList${dataName}Req:List${dataName}Req = 0 {
+}
+
+data MgList${dataName}Resp:List${dataName}Resp = 0 {
+}
+#end
+
+
+

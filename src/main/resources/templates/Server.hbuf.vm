@@ -1,0 +1,118 @@
+server Server {
+#if (${genList} == true)
+    List${dataName}Resp List${dataName}(List${dataName}Req req) = 1
+#end
+
+#if (${genAdd} == true)
+    Add${dataName}Resp Add${dataName}(Add${dataName}Req req) = 2
+#end
+
+#if (${genGet} == true)
+    Get${dataName}Resp Get${dataName}(Get${dataName}Req req) = 3
+#end
+
+#if (${genSet} == true)
+    Set${dataName}Resp Set${dataName}(Set${dataName}Req req) = 4
+#end
+
+#if (${genDel} == true)
+    Del${dataName}Resp Del${dataName}(Del${dataName}Req req) = 5
+#end
+
+#if (${genStatus} == true)
+    Status${dataName}Resp Status${dataName}(Status${dataName}Req req) = 6
+#end
+
+#if (${genExport} == true)
+    Export${dataName}Resp Export${dataName}(Export${dataName}Req req) = 7
+#end
+}
+
+#if (${genExport} == true)
+[db:table="${dataName}"; list="parent"]
+data Export${dataName}Req:List${dataName} = 0 {
+    [db:where="AND id IN(?)"]
+    int64[]? id = 0
+}
+
+data Export${dataName}Resp {
+}
+#end
+
+#if (${genStatus} == true)
+[db:table="${dataName}"; set="self"]
+data Status${dataName}Req {
+    [db:where="AND id IN(?)"]
+    int64[] id = 0
+
+    [db:set="?"]
+    Status status = 1
+}
+
+data Status${dataName}Resp {
+}
+#end
+
+#if (${genDel} == true)
+[db:table="${dataName}"; del="true"]
+data Del${dataName}Req {
+    [db:where="AND id = ?"]
+    int32 id = 0
+}
+
+data Del${dataName}Resp {
+}
+#end
+
+#if (${genSet} == true)
+data Set${dataName}Req {
+    ${dataName} info = 0
+}
+
+data Set${dataName}Resp {
+}
+#end
+
+#if (${genGet} == true)
+data Get${dataName}Req {
+    int32 id = 0
+}
+
+data Get${dataName}Resp {
+    ${dataName}? info = 0
+}
+#end
+
+#if (${genAdd} == true)
+data Add${dataName}Req {
+    ${dataName} info = 0
+}
+
+data Add${dataName}Resp {
+}
+#end
+
+#if (${genList} == true)
+[cache:]
+[ui:form="true"]
+[db:table="${dataName}"; list="parent"; count="true"]
+data List${dataName}:PageLimit = 0 {
+}
+
+data List${dataName}Req:List${dataName} = 0 {
+}
+
+data List${dataName}Resp {
+    int32 total = 0
+
+    ${dataName}[] list = 1
+}
+#end
+
+
+
+
+
+
+
+

@@ -3,6 +3,7 @@ package com.hbuf.idea.language.editor;
 import com.hbuf.idea.language.psi.HbufDataElement;
 import com.hbuf.idea.language.psi.HbufFile;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.fileEditor.TextEditorWithPreview;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.testFramework.LightVirtualFile;
@@ -10,6 +11,8 @@ import com.intellij.ui.OnePixelSplitter;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBList;
 import com.intellij.ui.components.JBScrollPane;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
 import org.intellij.plugins.markdown.lang.MarkdownFileType;
 import org.intellij.plugins.markdown.ui.preview.MarkdownEditorWithPreview;
 import org.intellij.plugins.markdown.ui.preview.MarkdownSplitEditorProvider;
@@ -20,13 +23,28 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.util.Collection;
+import java.util.Objects;
+import java.util.Properties;
 
 
 public class HbufEditerGui extends JPanel {
     private static final Logger log = LoggerFactory.getLogger(HbufEditerGui.class);
     private final HbufFile file;
     private final Project project;
+    private static final VelocityEngine engine;
+
+    static {
+        Properties props = new Properties();
+        props.setProperty("resource.loader", "class");
+        props.setProperty("class.resource.loader.class",
+                "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+        engine = new VelocityEngine(props);
+        engine.init();
+    }
 
     DefaultListModel<String> listModel = new DefaultListModel<>();
     private LightVirtualFile vFile;
@@ -59,6 +77,7 @@ public class HbufEditerGui extends JPanel {
 
         MarkdownSplitEditorProvider provider = new MarkdownSplitEditorProvider();
         mdEditor = (MarkdownEditorWithPreview) provider.createEditor(project, vFile);
+        mdEditor.setLayout(TextEditorWithPreview.Layout.SHOW_PREVIEW);
 
         CollapsibleCheckBoxGroup group = new CollapsibleCheckBoxGroup(true);
         group.addPanel(this.checkList = bindEvent(new CollapsibleCheckBoxPanel("List", new JBLabel(""), false)));
@@ -134,218 +153,112 @@ public class HbufEditerGui extends JPanel {
         });
     }
 
+    private @NotNull VelocityContext getVelocityContext(String name) {
+        VelocityContext context = new VelocityContext();
+        context.put("dataName", name);
+        context.put("genList", checkList.getCheckBox().isSelected());
+        context.put("genAdd", checkAdd.getCheckBox().isSelected());
+        context.put("genGet", checkGet.getCheckBox().isSelected());
+        context.put("genSet", checkSet.getCheckBox().isSelected());
+        context.put("genDel", checkDel.getCheckBox().isSelected());
+        context.put("genStatus", checkStatus.getCheckBox().isSelected());
+        context.put("genExport", checkExport.getCheckBox().isSelected());
+        return context;
+    }
+
+    private String evaluateVelocity(VelocityContext context, String templateName) {
+        InputStreamReader reader = null;
+        try {
+            reader = new InputStreamReader(Objects.requireNonNull(HbufEditerGui.class.getResourceAsStream("/templates/" + templateName)));
+            StringWriter writer = new StringWriter();
+            engine.evaluate(context, writer, templateName, reader);
+            return writer.toString();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
     private StringBuilder generateHbufServerCode(String name) {
+        VelocityContext context = getVelocityContext(name);
+
         StringBuilder code = new StringBuilder();
         code.append("### Hbuf Server Code\n")
-                .append("```hbuf\n")
-                .append("server Server {\n");
-        if (checkList.getCheckBox().isSelected()) {
-            code.append("\tList").append(name).append("Resp List").append(name).append("(List").append(name).append("Req req) = 1 \n\n");
-        }
-        if (checkAdd.getCheckBox().isSelected()) {
-            code.append("\tAdd").append(name).append("Resp Add").append(name).append("(Add").append(name).append("Req req) = 2  \n\n");
-        }
-        if (checkGet.getCheckBox().isSelected()) {
-            code.append("\tGet").append(name).append("Resp Get").append(name).append("(Get").append(name).append("Req req) = 3  \n\n");
-        }
-        if (checkSet.getCheckBox().isSelected()) {
-            code.append("\tSet").append(name).append("Resp Set").append(name).append("(Set").append(name).append("Req req) = 4  \n\n");
-        }
-        if (checkDel.getCheckBox().isSelected()) {
-            code.append("\tDel").append(name).append("Resp Del").append(name).append("(Del").append(name).append("Req req) = 5  \n\n");
-        }
-        if (checkStatus.getCheckBox().isSelected()) {
-            code.append("\tStatus").append(name).append("Resp Status").append(name).append("(Status").append(name).append("Req req) = 6  \n\n");
-        }
-        if (checkExport.getCheckBox().isSelected()) {
-            code.append("\tExport").append(name).append("Resp Export").append(name).append("(Export").append(name).append("Req req) = 7  \n\n");
-        }
-
-        code.append("}\n").append("```\n\n");
+                .append("```hbuf\n");
+        code.append(evaluateVelocity(context, "Server.hbuf.vm"));
+        code.append("```\n\n");
         return code;
     }
 
     private StringBuilder generateHbufManageCode(String name) {
+        VelocityContext context = getVelocityContext(name);
+
         StringBuilder code = new StringBuilder();
         code.append("### Hbuf Manage Code\n")
-                .append("```hbuf\n")
-                .append("server Server {\n");
-        if (checkList.getCheckBox().isSelected()) {
-            code.append("\t[tag:auth=\"manageApi\"; power=\"AdminPower.list").append(name).append("\"]\n");
-            code.append("\t[bind:value=\"BasicServer.List").append(name).append("\"]\n");
-            code.append("\tMgList").append(name).append("Resp MgList").append(name).append("(MgList").append(name).append("Req req) = 1 \n\n");
-        }
-        if (checkAdd.getCheckBox().isSelected()) {
-            code.append("\t[tag:auth=\"manageApi\"; power=\"AdminPower.add").append(name).append("\"]\n");
-            code.append("\t[bind:value=\"BasicServer.Add").append(name).append("\"]\n");
-            code.append("\tMgAdd").append(name).append("Resp MgAdd").append(name).append("(MgAdd").append(name).append("Req req) = 2  \n\n");
-        }
-        if (checkGet.getCheckBox().isSelected()) {
-            code.append("\t[tag:auth=\"manageApi\"; power=\"AdminPower.get").append(name).append("\",\"AdminPower.set").append(name).append("\"]\n");
-            code.append("\t[bind:value=\"BasicServer.Get").append(name).append("\"]\n");
-            code.append("\tMgGet").append(name).append("Resp MgGet").append(name).append("(MgGet").append(name).append("Req req) = 3  \n\n");
-        }
-        if (checkSet.getCheckBox().isSelected()) {
-            code.append("\t[tag:auth=\"manageApi\"; power=\"AdminPower.set").append(name).append("\"]\n");
-            code.append("\t[bind:value=\"BasicServer.set").append(name).append("\"]\n");
-            code.append("\tMgSet").append(name).append("Resp MgSet").append(name).append("(MgSet").append(name).append("Req req) = 4  \n\n");
-        }
-        if (checkDel.getCheckBox().isSelected()) {
-            code.append("\t[tag:auth=\"manageApi\"; power=\"AdminPower.del").append(name).append("\"]\n");
-            code.append("\t[bind:value=\"BasicServer.Del").append(name).append("\"]\n");
-            code.append("\tMgDel").append(name).append("Resp MgDel").append(name).append("(MgDel").append(name).append("Req req) = 5  \n\n");
-        }
-        if (checkStatus.getCheckBox().isSelected()) {
-            code.append("\t[tag:auth=\"manageApi\"; power=\"AdminPower.status").append(name).append("\"]\n");
-            code.append("\t[bind:value=\"BasicServer.Status").append(name).append("\"]\n");
-            code.append("\tMgStatus").append(name).append("Resp MgStatus").append(name).append("(MgStatus").append(name).append("Req req) = 6  \n\n");
-        }
-        if (checkExport.getCheckBox().isSelected()) {
-            code.append("\t[tag:auth=\"manageApi\"; power=\"AdminPower.export").append(name).append("\"]\n");
-            code.append("\t[bind:value=\"BasicServer.Export").append(name).append("\"]\n");
-            code.append("\tMgExport").append(name).append("Resp MgExport").append(name).append("(MgExport").append(name).append("Req req) = 7  \n\n");
-        }
-
-        code.append("}\n").append("```\n\n");
+                .append("```hbuf\n");
+        code.append(evaluateVelocity(context, "Manage.hbuf.vm"));
+        code.append("```\n\n");
         return code;
     }
 
 
     private StringBuilder generateHbufPowerCode(String name) {
+        VelocityContext context = getVelocityContext(name);
+
         StringBuilder code = new StringBuilder();
         code.append("### Hbuf Power Code\n")
-                .append("```hbuf\n")
-                .append("enum AdminPower{\n");
-        if (checkList.getCheckBox().isSelected()) {
-            code.append("\tlist").append(name).append(" = 1 \n\n");
-        }
-        if (checkAdd.getCheckBox().isSelected()) {
-            code.append("\tadd").append(name).append(" = 2  \n\n");
-        }
-        if (checkGet.getCheckBox().isSelected()) {
-            code.append("\tget").append(name).append(" = 3  \n\n");
-        }
-        if (checkSet.getCheckBox().isSelected()) {
-            code.append("\tset").append(name).append(" = 4  \n\n");
-        }
-        if (checkDel.getCheckBox().isSelected()) {
-            code.append("\tdel").append(name).append(" = 5  \n\n");
-        }
-        if (checkStatus.getCheckBox().isSelected()) {
-            code.append("\tstatus").append(name).append(" = 6  \n\n");
-        }
-        if (checkExport.getCheckBox().isSelected()) {
-            code.append("\texport").append(name).append(" = 7  \n\n");
-        }
-
-        code.append("}\n").append("```\n\n");
+                .append("```hbuf\n");
+        code.append(evaluateVelocity(context, "Power.hbuf.vm"));
+        code.append("```\n\n");
         return code;
     }
 
     private StringBuilder generateGoServerCode(String name) {
+        VelocityContext context = getVelocityContext(name);
+
         StringBuilder code = new StringBuilder();
         code.append("### Golang Server Code\n")
                 .append("```go\n");
-
-        if (checkList.getCheckBox().isSelected()) {
-            code.append("(s *Server) List").append(name).append("(ctx context.Context, req *List").append(name).append("Req) (*List").append(name).append("Resp, error) {\n");
-            code.append("\treturn &List").append(name).append("{}, nil\n");
-            code.append("}\n\n");
-        }
-        if (checkAdd.getCheckBox().isSelected()) {
-            code.append("(s *Server) Add").append(name).append("(ctx context.Context, req *Add").append(name).append("Req) (*Add").append(name).append("Resp, error) {\n");
-            code.append("\treturn &Add").append(name).append("{}, nil\n");
-            code.append("}\n\n");
-        }
-        if (checkGet.getCheckBox().isSelected()) {
-            code.append("(s *Server) Get").append(name).append("(ctx context.Context, req *Get").append(name).append("Req) (*Get").append(name).append("Resp, error) {\n");
-            code.append("\treturn &Get").append(name).append("{}, nil\n");
-            code.append("}\n\n");
-        }
-        if (checkSet.getCheckBox().isSelected()) {
-            code.append("(s *Server) Set").append(name).append("(ctx context.Context, req *Set").append(name).append("Req) (*Set").append(name).append("Resp, error) {\n");
-            code.append("\treturn &Set").append(name).append("{}, nil\n");
-            code.append("}\n\n");
-        }
-        if (checkDel.getCheckBox().isSelected()) {
-            code.append("(s *Server) Del").append(name).append("(ctx context.Context, req *Del").append(name).append("Req) (*Del").append(name).append("Resp, error) {\n");
-            code.append("\treturn &Del").append(name).append("{}, nil\n");
-            code.append("}\n\n");
-        }
-        if (checkStatus.getCheckBox().isSelected()) {
-            code.append("(s *Server) Status").append(name).append("(ctx context.Context, req *Status").append(name).append("Req) (*Status").append(name).append("Resp, error) {\n");
-            code.append("\treturn &Status").append(name).append("{}, nil\n");
-            code.append("}\n\n");
-        }
-        if (checkExport.getCheckBox().isSelected()) {
-            code.append("(s *Server) Export").append(name).append("(ctx context.Context, req *Export").append(name).append("Req) (*Export").append(name).append("Resp, error) {\n");
-            code.append("\treturn &Export").append(name).append("{}, nil\n");
-            code.append("}\n\n");
-        }
+        code.append(evaluateVelocity(context, "Server.go.vm"));
         code.append("```\n\n");
         return code;
     }
 
     private StringBuilder generateVueListViewCode(String name) {
-        StringBuilder code = new StringBuilder();
-        code.append("### Vue List Page Code\n")
-                .append("```vue\n")
-                .append(
-                        "<script setup lang=\"ts\">\n" +
-                                "\n" +
-                                "</script>\n" +
-                                "\n" +
-                                "<template>\n" +
-                                "\n" +
-                                "</template>\n" +
-                                "\n" +
-                                "<style scoped>\n" +
-                                "\n" +
-                                "</style>\n"
-                );
+        VelocityContext context = getVelocityContext(name);
 
+        StringBuilder code = new StringBuilder();
+        code.append("### Vue ListPage Code\n")
+                .append("```vue\n");
+        code.append(evaluateVelocity(context, "ListPage.vue.vm"));
         code.append("```\n\n");
         return code;
     }
 
-    private StringBuilder generateVueInfoViewCode(String name) {
-        StringBuilder code = new StringBuilder();
-        code.append("### Vue Info Page Code\n")
-                .append("```vue\n").append(
-                        "<script setup lang=\"ts\">\n" +
-                                "\n" +
-                                "</script>\n" +
-                                "\n" +
-                                "<template>\n" +
-                                "\n" +
-                                "</template>\n" +
-                                "\n" +
-                                "<style scoped>\n" +
-                                "\n" +
-                                "</style>\n"
-                );
 
+    private StringBuilder generateVueInfoViewCode(String name) {
+        VelocityContext context = getVelocityContext(name);
+
+        StringBuilder code = new StringBuilder();
+        code.append("### Vue ListInfo Code\n")
+                .append("```vue\n");
+        code.append(evaluateVelocity(context, "ListInfo.vue.vm"));
         code.append("```\n\n");
         return code;
     }
 
     private StringBuilder generateVueRouteCode(String name) {
+        VelocityContext context = getVelocityContext(name);
+
         StringBuilder code = new StringBuilder();
-        code.append("### Vue Route Code\n")
-                .append("```vue\n")
-                .append(
-                        "<script setup lang=\"ts\">\n" +
-                                "\n" +
-                                "</script>\n" +
-                                "\n" +
-                                "<template>\n" +
-                                "\n" +
-                                "</template>\n" +
-                                "\n" +
-                                "<style scoped>\n" +
-                                "\n" +
-                                "</style>\n"
-                );
+        code.append("### Vue ListInfo Code\n")
+                .append("```vue\n");
+        code.append(evaluateVelocity(context, "Router.ts.vm"));
         code.append("```\n\n");
         return code;
     }

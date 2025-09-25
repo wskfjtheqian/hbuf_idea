@@ -1,0 +1,24 @@
+enum Power {
+#if (${genList} == true)
+    list${dataName} = 1
+#end
+#if (${genAdd} == true)
+    add${dataName} = 2
+#end
+#if (${genGet} == true)
+    get${dataName} = 3
+#end
+#if (${genSet} == true)
+    set${dataName} = 4
+#end
+#if (${genDel} == true)
+    del${dataName} = 5
+#end
+#if (${genStatus} == true)
+    status${dataName} = 6
+#end
+#if (${genExport} == true)
+    export${dataName} = 7
+#end
+}
+
