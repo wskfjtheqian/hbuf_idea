@@ -13,13 +13,10 @@ public interface HbufServerStatement extends HbufServerElement {
   @Nullable
   HbufExtends getExtends();
 
-  @Nullable
+  @NotNull
   HbufIdentName getIdentName();
 
-  @Nullable
+  @NotNull
   HbufServerBody getServerBody();
-
-  @Nullable
-  PsiElement getComment();
 
 }

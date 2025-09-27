@@ -10,16 +10,13 @@ public interface HbufDataStatement extends HbufDataElement {
   @Nullable
   HbufAnnotationGroup getAnnotationGroup();
 
-  @Nullable
+  @NotNull
   HbufDataBody getDataBody();
 
   @Nullable
   HbufExtends getExtends();
 
-  @Nullable
+  @NotNull
   HbufIdentName getIdentName();
-
-  @Nullable
-  PsiElement getComment();
 
 }

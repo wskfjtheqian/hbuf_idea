@@ -13,17 +13,14 @@ public interface HbufFuncStatement extends HbufServerFuncElement {
   @Nullable
   HbufFuncParam getFuncParam();
 
-  @Nullable
+  @NotNull
   HbufFuncType getFuncType();
 
-  @Nullable
+  @NotNull
   HbufId getId();
 
-  @Nullable
+  @NotNull
   HbufIdentName getIdentName();
-
-  @Nullable
-  PsiElement getComment();
 
   @Nullable
   PsiElement getIdent();

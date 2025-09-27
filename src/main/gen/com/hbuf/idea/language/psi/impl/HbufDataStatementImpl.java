@@ -33,9 +33,9 @@ public class HbufDataStatementImpl extends HbufDataElementImpl implements HbufDa
   }
 
   @Override
-  @Nullable
+  @NotNull
   public HbufDataBody getDataBody() {
-    return findChildByClass(HbufDataBody.class);
+    return findNotNullChildByClass(HbufDataBody.class);
   }
 
   @Override
@@ -45,15 +45,9 @@ public class HbufDataStatementImpl extends HbufDataElementImpl implements HbufDa
   }
 
   @Override
-  @Nullable
+  @NotNull
   public HbufIdentName getIdentName() {
-    return findChildByClass(HbufIdentName.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getComment() {
-    return findChildByType(COMMENT);
+    return findNotNullChildByClass(HbufIdentName.class);
   }
 
 }

@@ -27,15 +27,9 @@ public class HbufImportStatementImpl extends HbufImportElementImpl implements Hb
   }
 
   @Override
-  @Nullable
+  @NotNull
   public HbufString getString() {
-    return findChildByClass(HbufString.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getComment() {
-    return findChildByType(COMMENT);
+    return findNotNullChildByClass(HbufString.class);
   }
 
 }

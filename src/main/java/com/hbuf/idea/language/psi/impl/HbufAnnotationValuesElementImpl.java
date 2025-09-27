@@ -26,7 +26,7 @@ public abstract class HbufAnnotationValuesElementImpl extends ASTWrapperPsiEleme
         List<String> list = new ArrayList();
         HbufAnnotationValuesElementImpl element = this;
         while (null != element) {
-            list.add(element.getString().toString());
+            list.add(element.getString().getText());
             element = (HbufAnnotationValuesElementImpl) element.getAnnotationValues();
         }
         return list;

@@ -1,111 +1,179 @@
-server Server {
+server $util.upperFirst($goPackage)Server {
 #if (${genList} == true)
+#if(${comment})
+    //获得${comment}列表
+#end
     List${dataName}Resp List${dataName}(List${dataName}Req req) = 1
 #end
 
 #if (${genAdd} == true)
+    #if(${comment})
+    //添加${comment}
+    #end
     Add${dataName}Resp Add${dataName}(Add${dataName}Req req) = 2
 #end
 
 #if (${genGet} == true)
+    #if(${comment})
+    //获得${comment}
+    #end
     Get${dataName}Resp Get${dataName}(Get${dataName}Req req) = 3
 #end
 
 #if (${genSet} == true)
+    #if(${comment})
+    //修改${comment}
+    #end
     Set${dataName}Resp Set${dataName}(Set${dataName}Req req) = 4
 #end
 
 #if (${genDel} == true)
+    #if(${comment})
+    //删除${comment}
+    #end
     Del${dataName}Resp Del${dataName}(Del${dataName}Req req) = 5
 #end
 
 #if (${genStatus} == true)
+    #if(${comment})
+    //修改${comment}状态
+    #end
     Status${dataName}Resp Status${dataName}(Status${dataName}Req req) = 6
 #end
 
 #if (${genExport} == true)
+    #if(${comment})
+    //导出${comment}
+    #end
     Export${dataName}Resp Export${dataName}(Export${dataName}Req req) = 7
 #end
 }
 
 #if (${genExport} == true)
+#if(${comment})
+//导出${comment}请求体
+#end
 [db:table="${dataName}"; list="parent"]
 data Export${dataName}Req:List${dataName} = 0 {
     [db:where="AND id IN(?)"]
-    int64[]? id = 0
+    int64[]? $util.camelToUnderline($dbIndex) = 0
 }
 
+#if(${comment})
+//导出${comment}响应体
+#end
 data Export${dataName}Resp {
+    string url = 1
 }
 #end
 
 #if (${genStatus} == true)
+#if(${comment})
+//修改${comment}状态请求体
+#end
 [db:table="${dataName}"; set="self"]
 data Status${dataName}Req {
     [db:where="AND id IN(?)"]
-    int64[] id = 0
+    int64[] $util.camelToUnderline($dbIndex) = 1
 
     [db:set="?"]
-    Status status = 1
+    Status status = 2
 }
 
+#if(${comment})
+//修改${comment}状态响应体
+#end
 data Status${dataName}Resp {
 }
 #end
 
 #if (${genDel} == true)
+#if(${comment})
+//删除${comment}请求体
+#end
 [db:table="${dataName}"; del="true"]
 data Del${dataName}Req {
     [db:where="AND id = ?"]
-    int32 id = 0
+    int32 $util.camelToUnderline($dbIndex) = 1
 }
 
+#if(${comment})
+//删除${comment}响应体
+#end
 data Del${dataName}Resp {
 }
 #end
 
 #if (${genSet} == true)
+#if(${comment})
+//修改${comment}请求体
+#end
 data Set${dataName}Req {
-    ${dataName} info = 0
+    ${dataName} info = 1
 }
 
+#if(${comment})
+//修改${comment}响应体
+#end
 data Set${dataName}Resp {
 }
 #end
 
 #if (${genGet} == true)
+#if(${comment})
+//获得${comment}请求体
+#end
 data Get${dataName}Req {
-    int32 id = 0
+    int32 $util.camelToUnderline($dbIndex) = 1
 }
 
+#if(${comment})
+//获得${comment}响应体
+#end
 data Get${dataName}Resp {
-    ${dataName}? info = 0
+    ${dataName}? info = 1
 }
 #end
 
 #if (${genAdd} == true)
+#if(${comment})
+//添加${comment}请求体
+#end
 data Add${dataName}Req {
     ${dataName} info = 0
 }
 
+#if(${comment})
+//添加${comment}响应体
+#end
 data Add${dataName}Resp {
 }
 #end
 
 #if (${genList} == true)
-[cache:]
+#if(${comment})
+//获得${comment}列表参数
+#end
+
 [ui:form="true"]
-[db:table="${dataName}"; list="parent"; count="true"]
 data List${dataName}:PageLimit = 0 {
 }
 
+#if(${comment})
+//获得${comment}列表请求体
+#end
+[cache:]
+[db:table="${dataName}"; list="parent"; count="true"]
 data List${dataName}Req:List${dataName} = 0 {
 }
 
+#if(${comment})
+//获得${comment}列表响应体
+#end
 data List${dataName}Resp {
-    int32 total = 0
+    int32 total = 1
 
-    ${dataName}[] list = 1
+    ${dataName}[] list = 2
 }
 #end
 

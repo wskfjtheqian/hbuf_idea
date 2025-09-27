@@ -10,10 +10,7 @@ public interface HbufAnnotation extends HbufAnnotationElement {
   @Nullable
   HbufAnnotationList getAnnotationList();
 
-  @Nullable
+  @NotNull
   HbufIdentName getIdentName();
-
-  @Nullable
-  PsiElement getComment();
 
 }

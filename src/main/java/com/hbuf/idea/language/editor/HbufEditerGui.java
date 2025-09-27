@@ -1,10 +1,11 @@
 package com.hbuf.idea.language.editor;
 
-import com.hbuf.idea.language.psi.HbufDataElement;
-import com.hbuf.idea.language.psi.HbufFile;
+import com.hbuf.idea.language.psi.*;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.fileEditor.TextEditorWithPreview;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.NlsSafe;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.testFramework.LightVirtualFile;
 import com.intellij.ui.OnePixelSplitter;
@@ -16,6 +17,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.intellij.plugins.markdown.lang.MarkdownFileType;
 import org.intellij.plugins.markdown.ui.preview.MarkdownEditorWithPreview;
 import org.intellij.plugins.markdown.ui.preview.MarkdownSplitEditorProvider;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -80,13 +82,13 @@ public class HbufEditerGui extends JPanel {
         mdEditor.setLayout(TextEditorWithPreview.Layout.SHOW_PREVIEW);
 
         CollapsibleCheckBoxGroup group = new CollapsibleCheckBoxGroup(true);
-        group.addPanel(this.checkList = bindEvent(new CollapsibleCheckBoxPanel("List", new JBLabel(""), false)));
-        group.addPanel(this.checkExport = bindEvent(new CollapsibleCheckBoxPanel("Export", new JBLabel(""), false)));
-        group.addPanel(this.checkAdd = bindEvent(new CollapsibleCheckBoxPanel("Add", new JBLabel(""), false)));
-        group.addPanel(this.checkGet = bindEvent(new CollapsibleCheckBoxPanel("Get", new JBLabel(""), false)));
-        group.addPanel(this.checkSet = bindEvent(new CollapsibleCheckBoxPanel("Set", new JBLabel(""), false)));
-        group.addPanel(this.checkDel = bindEvent(new CollapsibleCheckBoxPanel("Del", new JBLabel(""), false)));
-        group.addPanel(this.checkStatus = bindEvent(new CollapsibleCheckBoxPanel("Status", new JBLabel(""), false)));
+        group.addPanel(this.checkList = bindEvent(new CollapsibleCheckBoxPanel("List", new JBLabel(""), true)));
+        group.addPanel(this.checkExport = bindEvent(new CollapsibleCheckBoxPanel("Export", new JBLabel(""), true)));
+        group.addPanel(this.checkAdd = bindEvent(new CollapsibleCheckBoxPanel("Add", new JBLabel(""), true)));
+        group.addPanel(this.checkGet = bindEvent(new CollapsibleCheckBoxPanel("Get", new JBLabel(""), true)));
+        group.addPanel(this.checkSet = bindEvent(new CollapsibleCheckBoxPanel("Set", new JBLabel(""), true)));
+        group.addPanel(this.checkDel = bindEvent(new CollapsibleCheckBoxPanel("Del", new JBLabel(""), true)));
+        group.addPanel(this.checkStatus = bindEvent(new CollapsibleCheckBoxPanel("Status", new JBLabel(""), true)));
 
 
         OnePixelSplitter rightSplitter = new OnePixelSplitter(false, 0.3f);
@@ -155,6 +157,9 @@ public class HbufEditerGui extends JPanel {
 
     private @NotNull VelocityContext getVelocityContext(String name) {
         VelocityContext context = new VelocityContext();
+        context.put("util", new VelocityUtil());
+        this.addPackageName(context);
+        this.addDataInfo(context, name);
         context.put("dataName", name);
         context.put("genList", checkList.getCheckBox().isSelected());
         context.put("genAdd", checkAdd.getCheckBox().isSelected());
@@ -164,6 +169,52 @@ public class HbufEditerGui extends JPanel {
         context.put("genStatus", checkStatus.getCheckBox().isSelected());
         context.put("genExport", checkExport.getCheckBox().isSelected());
         return context;
+    }
+
+    private void addDataInfo(VelocityContext context, String name) {
+        @NotNull Collection<HbufDataElement> dataElements = PsiTreeUtil.findChildrenOfAnyType(file, HbufDataElement.class);
+        HbufDataElement dataElement = null;
+        for (HbufDataElement element : dataElements) {
+            if (element.getName().equals(name)) {
+                dataElement = element;
+                break;
+            }
+        }
+        if (dataElement == null) {
+            return;
+        }
+
+        @Nullable PsiElement comment = dataElement.getComment();
+        if (comment != null) {
+            context.put("comment", comment.getText().replaceFirst("//", "").trim());
+        }
+
+        for (HbufDataFieldElement element : dataElement.getFields()) {
+            @NotNull Collection<HbufAnnotationElement> annotations = PsiTreeUtil.findChildrenOfAnyType(element, HbufAnnotationElement.class);
+            for (HbufAnnotationElement annotation : annotations) {
+                if ("db".equals(annotation.getName())) {
+                    for (HbufAnnotationFieldElement fieldElement : annotation.getFields()) {
+                        if ("key".equals(fieldElement.getIdentName().getName())) {
+                            for (String value : fieldElement.getValues()) {
+                                if ("\"true\"".equals(value)) {
+                                    context.put("dbIndex", element.getName());
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void addPackageName(VelocityContext context) {
+        @NotNull Collection<HbufPackageElement> elements = PsiTreeUtil.findChildrenOfAnyType(file, HbufPackageElement.class);
+        for (HbufPackageElement element : elements) {
+            @NonNls String lang = element.getIdent().getText();
+            @NlsSafe String pkg = element.getString().getText().replace("\"", "");
+            context.put(lang + "Package", pkg);
+        }
     }
 
     private String evaluateVelocity(VelocityContext context, String templateName) {

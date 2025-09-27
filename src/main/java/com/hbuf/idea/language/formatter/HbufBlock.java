@@ -78,7 +78,7 @@ public class HbufBlock extends AbstractBlock {
         return mIndent;
     }
 
-    
+
     @Override
     public Spacing getSpacing( Block child1, @NotNull Block child2) {
         return spacingBuilder.getSpacing(this, child1, child2);

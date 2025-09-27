@@ -10,13 +10,10 @@ public interface HbufEnumFieldStatement extends HbufEnumFieldElement {
   @Nullable
   HbufAnnotationGroup getAnnotationGroup();
 
-  @Nullable
+  @NotNull
   HbufId getId();
 
-  @Nullable
+  @NotNull
   HbufIdentName getIdentName();
-
-  @Nullable
-  PsiElement getComment();
 
 }

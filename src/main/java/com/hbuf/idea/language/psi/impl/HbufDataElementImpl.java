@@ -7,6 +7,7 @@ import com.hbuf.idea.language.psi.HbufNameElement;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.NlsSafe;
+import com.intellij.psi.PsiComment;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -47,4 +48,14 @@ public abstract class HbufDataElementImpl extends ASTWrapperPsiElement implement
     public Collection<HbufDataFieldElement> getFields() {
         return getDataBody().getFields();
     }
+
+    @Override
+    public @Nullable PsiElement getComment() {
+        PsiElement prev = getPrevSibling().getPrevSibling();
+        if (prev instanceof PsiComment) {
+            return prev;
+        }
+        return null;
+    }
+
 }

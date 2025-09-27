@@ -39,21 +39,15 @@ public class HbufServerStatementImpl extends HbufServerElementImpl implements Hb
   }
 
   @Override
-  @Nullable
+  @NotNull
   public HbufIdentName getIdentName() {
-    return findChildByClass(HbufIdentName.class);
+    return findNotNullChildByClass(HbufIdentName.class);
   }
 
   @Override
-  @Nullable
+  @NotNull
   public HbufServerBody getServerBody() {
-    return findChildByClass(HbufServerBody.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getComment() {
-    return findChildByType(COMMENT);
+    return findNotNullChildByClass(HbufServerBody.class);
   }
 
 }

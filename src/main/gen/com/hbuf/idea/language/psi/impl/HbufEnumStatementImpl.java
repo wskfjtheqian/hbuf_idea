@@ -33,21 +33,15 @@ public class HbufEnumStatementImpl extends HbufEnumElementImpl implements HbufEn
   }
 
   @Override
-  @Nullable
+  @NotNull
   public HbufEnumBody getEnumBody() {
-    return findChildByClass(HbufEnumBody.class);
+    return findNotNullChildByClass(HbufEnumBody.class);
   }
 
   @Override
-  @Nullable
+  @NotNull
   public HbufIdentName getIdentName() {
-    return findChildByClass(HbufIdentName.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getComment() {
-    return findChildByType(COMMENT);
+    return findNotNullChildByClass(HbufIdentName.class);
   }
 
 }

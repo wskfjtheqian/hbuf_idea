@@ -91,6 +91,7 @@ public class HbufCompletionContributor extends CompletionContributor {
                         resultSet.addElement(LookupElementBuilder.create("format:"));
                         resultSet.addElement(LookupElementBuilder.create("verify:"));
                         resultSet.addElement(LookupElementBuilder.create("bind:"));
+                        resultSet.addElement(LookupElementBuilder.create("export:"));
                     }
                 }
         );
@@ -106,7 +107,8 @@ public class HbufCompletionContributor extends CompletionContributor {
                         resultSet.addElement(LookupElementBuilder.create("update="));
                         resultSet.addElement(LookupElementBuilder.create("del="));
                         resultSet.addElement(LookupElementBuilder.create("get="));
-                        resultSet.addElement(LookupElementBuilder.create("list"));
+                        resultSet.addElement(LookupElementBuilder.create("list="));
+                        resultSet.addElement(LookupElementBuilder.create("listAsync="));
                         resultSet.addElement(LookupElementBuilder.create("inserts="));
                         resultSet.addElement(LookupElementBuilder.create("set="));
                         resultSet.addElement(LookupElementBuilder.create("count="));

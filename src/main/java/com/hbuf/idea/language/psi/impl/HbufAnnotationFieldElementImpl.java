@@ -6,6 +6,8 @@ import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
+
 public abstract class HbufAnnotationFieldElementImpl extends ASTWrapperPsiElement implements HbufAnnotationFieldElement {
 
     public HbufAnnotationFieldElementImpl(@NotNull ASTNode node) {
@@ -17,5 +19,8 @@ public abstract class HbufAnnotationFieldElementImpl extends ASTWrapperPsiElemen
         return getIdentName().getName();
     }
 
-
+    @Override
+    public @NotNull Collection<String> getValues() {
+        return getAnnotationValues().getValues();
+    }
 }

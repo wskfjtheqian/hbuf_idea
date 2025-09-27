@@ -33,27 +33,21 @@ public class HbufDataFieldStatementImpl extends HbufDataFieldElementImpl impleme
   }
 
   @Override
-  @Nullable
+  @NotNull
   public HbufId getId() {
-    return findChildByClass(HbufId.class);
+    return findNotNullChildByClass(HbufId.class);
   }
 
   @Override
-  @Nullable
+  @NotNull
   public HbufIdentName getIdentName() {
-    return findChildByClass(HbufIdentName.class);
+    return findNotNullChildByClass(HbufIdentName.class);
   }
 
   @Override
-  @Nullable
+  @NotNull
   public HbufTypeStatement getTypeStatement() {
-    return findChildByClass(HbufTypeStatement.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getComment() {
-    return findChildByType(COMMENT);
+    return findNotNullChildByClass(HbufTypeStatement.class);
   }
 
 }

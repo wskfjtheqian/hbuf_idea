@@ -13,7 +13,6 @@ public interface HbufDataElement extends PsiNamedElement {
     @NotNull
     HbufNameElement getIdentName();
 
-
     HbufAnnotationGroupElement getAnnotationGroup();
 
     @NotNull
@@ -24,4 +23,7 @@ public interface HbufDataElement extends PsiNamedElement {
 
     @NotNull
     Collection<HbufDataFieldElement> getFields();
+
+    @Nullable
+    PsiElement getComment();
 }
