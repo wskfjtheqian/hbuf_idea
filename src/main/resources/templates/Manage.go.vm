@@ -1,0 +1,66 @@
+package ${goPackage}
+
+import (
+	"context"
+	"github.com/wskfjtheqian/hbuf_golang/pkg/herror"
+	"github.com/wskfjtheqian/hbuf_golang/pkg/hform"
+	"server/pkg/hbuf/task"
+	"server/pkg/hbuf/${goPackage}"
+	"server/pkg/utils"
+)
+
+func NewManage() ${goPackage}.${util.upperFirst(${goPackage})}Manage {
+	return &Manage{}
+}
+
+type Manage struct {
+	${goPackage}.Default${util.upperFirst(${goPackage})}Manage
+}
+
+#if (${genExport} == true)
+// MgExport${dataName} #if(${comment})导出${comment}#end
+
+func (m *Manage) MgExport${dataName}(ctx context.Context, req *${goPackage}.MgExport${dataName}Req) (*${goPackage}.MgExport${dataName}Resp, error) {
+	err := utils.AddTask(
+		ctx,
+		task.TaskTypeExportData,
+		hrpc.GetServerFuncName(${goPackage}.${util.upperFirst(${goPackage})}Server.Export${dataName}),
+		req,
+		"Export ${dataName}",
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &${goPackage}.MgExport${dataName}Resp{}, nil
+}
+#end
+
+#if (${genAdd} == true)
+// MgInit${dataName} #if(${comment})获取${comment}初始化数据#end
+
+func (s *Manage) MgInit${dataName}(ctx context.Context, req *${goPackage}.MgInit${dataName}Req) (*${goPackage}.MgInit${dataName}Resp, error) {
+	token, err := hform.CreateToken(ctx, "${dataName}")
+	if err != nil {
+		return nil, err
+	}
+	return &${goPackage}.MgInit${dataName}Resp{Token: token}, nil
+}
+
+// MgAdd${dataName} #if(${comment})添加${comment}#end
+
+func (s *Manage) MgAdd${dataName}(ctx context.Context, req *${goPackage}.MgAdd${dataName}Req) (*${goPackage}.MgAdd${dataName}Resp, error) {
+	err := hform.ValidateToken(ctx, "${dataName}", req.Token)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := req.Verify(ctx); err != nil {
+		return nil, herror.Wrap(err)
+	}
+	reps, err := ${goPackage}.Get${util.upperFirst(${goPackage})}Server(ctx).Add${dataName}(ctx, &req.Add${dataName}Req)
+	if err != nil {
+		return nil, herror.Wrap(err)
+	}
+	return &${goPackage}.MgAdd${dataName}Resp{Add${dataName}Resp: *reps}, nil
+}
+#end

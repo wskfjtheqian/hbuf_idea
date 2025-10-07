@@ -145,7 +145,9 @@ public class HbufEditerGui extends JPanel {
         code.append(generateHbufServerCode(listSelected));
         code.append(generateHbufManageCode(listSelected));
         code.append(generateHbufPowerCode(listSelected));
+        code.append(generateHbufIdCode(listSelected));
         code.append(generateGoServerCode(listSelected));
+        code.append(generateGoManageCode(listSelected));
         code.append(generateVueListViewCode(listSelected));
         code.append(generateVueInfoViewCode(listSelected));
         code.append(generateVueRouteCode(listSelected));
@@ -269,6 +271,17 @@ public class HbufEditerGui extends JPanel {
         return code;
     }
 
+    private StringBuilder generateHbufIdCode(String name) {
+        VelocityContext context = getVelocityContext(name);
+
+        StringBuilder code = new StringBuilder();
+        code.append("### Hbuf Id Code\n")
+                .append("```hbuf\n");
+        code.append(evaluateVelocity(context, "Id.hbuf.vm"));
+        code.append("```\n\n");
+        return code;
+    }
+
     private StringBuilder generateGoServerCode(String name) {
         VelocityContext context = getVelocityContext(name);
 
@@ -279,6 +292,19 @@ public class HbufEditerGui extends JPanel {
         code.append("```\n\n");
         return code;
     }
+
+     private StringBuilder generateGoManageCode(String name) {
+        VelocityContext context = getVelocityContext(name);
+
+        StringBuilder code = new StringBuilder();
+        code.append("### Golang Manage Code\n")
+                .append("```go\n");
+        code.append(evaluateVelocity(context, "Manage.go.vm"));
+        code.append("```\n\n");
+        return code;
+    }
+
+
 
     private StringBuilder generateVueListViewCode(String name) {
         VelocityContext context = getVelocityContext(name);

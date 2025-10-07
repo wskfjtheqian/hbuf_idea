@@ -1,0 +1,9 @@
+enum IdType {
+#if (${genList} == true)
+#if(${comment})
+    // ${comment}Id
+#end
+    ${dataName}Id = 1
+#end
+}
+

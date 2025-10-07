@@ -1,4 +1,4 @@
-server $util.upperFirst($goPackage)Server {
+server ${util.upperFirst(${goPackage})}Server {
 #if (${genList} == true)
 #if(${comment})
     //获得${comment}列表
@@ -53,10 +53,10 @@ server $util.upperFirst($goPackage)Server {
 #if(${comment})
 //导出${comment}请求体
 #end
-[db:table="${dataName}"; list="parent"]
+[db:table="${dataName}"; listAsync="parent"]
 data Export${dataName}Req:List${dataName} = 0 {
     [db:where="AND id IN(?)"]
-    int64[]? $util.camelToUnderline($dbIndex) = 0
+    int64[]? $util.camelToUnderline($dbIndex)s = 0
 }
 
 #if(${comment})
@@ -74,7 +74,7 @@ data Export${dataName}Resp {
 [db:table="${dataName}"; set="self"]
 data Status${dataName}Req {
     [db:where="AND id IN(?)"]
-    int64[] $util.camelToUnderline($dbIndex) = 1
+    int64[] $util.camelToUnderline($dbIndex)s = 1
 
     [db:set="?"]
     Status status = 2
@@ -93,8 +93,8 @@ data Status${dataName}Resp {
 #end
 [db:table="${dataName}"; del="true"]
 data Del${dataName}Req {
-    [db:where="AND id = ?"]
-    int32 $util.camelToUnderline($dbIndex) = 1
+    [db:where="AND IN(?)"]
+    int64[] $util.camelToUnderline($dbIndex)s = 1
 }
 
 #if(${comment})
