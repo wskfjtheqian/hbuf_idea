@@ -151,6 +151,7 @@ public class HbufEditerGui extends JPanel {
         code.append(generateVueListViewCode(listSelected));
         code.append(generateVueInfoViewCode(listSelected));
         code.append(generateVueRouteCode(listSelected));
+        code.append(generateVueLangCode(listSelected));
 
         ApplicationManager.getApplication().runWriteAction(() -> {
             mdEditor.getEditor().getDocument().setText(code.toString());
@@ -334,9 +335,21 @@ public class HbufEditerGui extends JPanel {
 
         StringBuilder code = new StringBuilder();
         code.append("### Vue ListInfo Code\n")
-                .append("```vue\n");
+                .append("```ts\n");
         code.append(evaluateVelocity(context, "Router.ts.vm"));
         code.append("```\n\n");
         return code;
     }
+
+    private StringBuilder generateVueLangCode(String name) {
+        VelocityContext context = getVelocityContext(name);
+
+        StringBuilder code = new StringBuilder();
+        code.append("### Vue Lang Code\n")
+                .append("```json\n");
+        code.append(evaluateVelocity(context, "Lang.json.vm"));
+        code.append("```\n\n");
+        return code;
+    }
+
 }

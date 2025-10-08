@@ -1,0 +1,58 @@
+const router = [
+    {
+        nav: true,
+        path: '${util.lowerFirst(${dataName})}/',
+        name: "nav.${util.lowerFirst(${dataName})}.manage",
+        icon: Apple,
+        children: [
+#if (${genList} == true)
+                {
+                    nav: true,
+                    path: 'list',
+                    name: "nav.${util.lowerFirst(${dataName})}.list",
+                    power: AdminPower.LIST${util.camelToUnderline(${dataName}).toUpperCase()},
+                    component: () => import('../views/${goPackage}/${dataName}ListView.vue'),
+                },
+#end
+#if (${genGet} == true)
+                {
+                    nav: true,
+                    path: 'info/:id/:name',
+                    name: "nav.${util.lowerFirst(${dataName})}.get",
+                    power: AdminPower.GET${util.camelToUnderline(${dataName}).toUpperCase()},
+                    component: () => import('../views/${goPackage}/${dataName}InfoView.vue'),
+                },
+#end
+#if (${genSet} == true)
+                {
+                    name: "nav.${util.lowerFirst(${dataName})}.set",
+                    power: AdminPower.SET${util.camelToUnderline(${dataName}).toUpperCase()},
+                },
+#end
+#if (${genAdd} == true)
+                {
+                    name: "nav.${util.lowerFirst(${dataName})}.add",
+                    power: AdminPower.ADD${util.camelToUnderline(${dataName}).toUpperCase()},
+                },
+#end
+#if (${genDel} == true)
+                {
+                    name: "nav.${util.lowerFirst(${dataName})}.del",
+                    power: AdminPower.DEL${util.camelToUnderline(${dataName}).toUpperCase()},
+                },
+#end
+#if (${genExport} == true)
+                {
+                    name: "nav.${util.lowerFirst(${dataName})}.export",
+                    power: AdminPower.EXPORT${util.camelToUnderline(${dataName}).toUpperCase()},
+                },
+#end
+#if (${genStatus} == true)
+                {
+                    name: "nav.${util.lowerFirst(${dataName})}.status",
+                    power: AdminPower.STATUS${util.camelToUnderline(${dataName}).toUpperCase()},
+                },
+#end
+        ],
+    },
+]

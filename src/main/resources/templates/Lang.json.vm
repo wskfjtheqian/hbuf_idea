@@ -1,0 +1,26 @@
+{
+  "${util.lowerFirst(${dataName})}": {
+    "manage": "${comment}管理",
+#if (${genList} == true)
+    "list": "${comment}列表",
+#end
+#if (${genGet} == true)
+    "get": "${comment}[{name}]",
+#end
+#if (${genSet} == true)
+    "set": "修改${comment}",
+#end
+#if (${genAdd} == true)
+    "add": "添加${comment}",
+#end
+#if (${genDel} == true)
+    "del": "删除${comment}",
+#end
+#if (${genExport} == true)
+    "export": "导出${comment}",
+#end
+#if (${genStatus} == true)
+    "status": "修改${comment}状态",
+#end
+  }
+}
