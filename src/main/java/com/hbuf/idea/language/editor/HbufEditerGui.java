@@ -323,9 +323,9 @@ public class HbufEditerGui extends JPanel {
         VelocityContext context = getVelocityContext(name);
 
         StringBuilder code = new StringBuilder();
-        code.append("### Vue ListInfo Code\n")
+        code.append("### Vue InfoPage Code\n")
                 .append("```vue\n");
-        code.append(evaluateVelocity(context, "ListInfo.vue.vm"));
+        code.append(evaluateVelocity(context, "InfoPage.vue.vm"));
         code.append("```\n\n");
         return code;
     }

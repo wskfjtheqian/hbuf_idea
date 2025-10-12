@@ -3,7 +3,7 @@ const router = [
         nav: true,
         path: '${util.lowerFirst(${dataName})}/',
         name: "nav.${util.lowerFirst(${dataName})}.manage",
-        icon: Apple,
+        icon: markRaw(Apple),
         children: [
 #if (${genList} == true)
                 {

@@ -1,128 +1,185 @@
-<script lang="ts" setup>
-  import {EventMsg} from "@/public/event";
-  import {EventBus, tryCatch} from "@/public/utils";
-  import {router} from "@/router";
-  import {onBeforeMount, onMounted, ref} from "vue";
-  import type {FormInstance} from "element-plus";
-  import {ElMessage, useLocale} from "element-plus";
-  import {Download, Lock, Plus, RefreshLeft, Search, Unlock} from "@element-plus/icons-vue";
-  import type Long from "long";
-  import {NetApi} from "@/public/NetApi";
+<script setup lang="ts">
+  import {onMounted, onUnmounted, ref} from "vue";
+  import router from "@/router";
   import Pagination from "@/components/Pagination.vue";
+  import {ElMessage, ElMessageBox, type FormInstance, useLocale} from "element-plus";
+  import {Delete, Download, Lock, Plus, RefreshLeft, Search, Unlock} from "@element-plus/icons-vue";
+  import type Long from "long";
+  import {tryCatch} from "@/public/utils.ts";
+#if (${genAdd} == true || ${genSet} == true)
+  import {EventBus, EventMsg} from "@/public/event.ts";
+#end
+  import {NetApi} from "@/public/NetApi.ts";
   import {AdminPower} from "@/hbuf/power.enum";
-  import {AccountStatus} from "@/hbuf/public.enum";
-  import type {MerchantInfo} from "@/hbuf/merchant.data";
-  import {MgGetMerchantListReq, MgStatusMerchantInfoReq} from "@/hbuf/merchant.manage.data";
-  import {GetMerchantListReqFormItems, MerchantInfoTableColumn} from "@/hbuf/merchant.ui";
+  import {List${dataName}, type ${dataName}} from "@/hbuf/${goPackage}.data";
+  import {Status} from "@/hbuf/public.enum";
+  import {type ${util.upperFirst(${goPackage})}Manage, ${util.upperFirst(${goPackage})}ManageClient} from "@/hbuf/${goPackage}.manage.server.ts";
+  import {MgDel${dataName}Req, MgExport${dataName}Req, MgStatus${dataName}Req} from "@/hbuf/${goPackage}.manage.data.ts";
+  import {List${dataName}FormItems, ${dataName}TableColumn} from "@/hbuf/${goPackage}.ui.tsx";
 
+  const ${goPackage}Api: ${util.upperFirst(${goPackage})}Manage = new ${util.upperFirst(${goPackage})}ManageClient(NetApi.instance.client)
   const locale = useLocale()
   const queryFormRef = ref<FormInstance>()
-  const query = ref<MgGetMerchantListReq>(new MgGetMerchantListReq())
+  const query = ref<MgExport${dataName}Req>(new MgExport${dataName}Req())
+  const ${dataName}List = ref<${dataName}[]>([])
   const total = ref<number>(0)
-  const merchantList = ref<MerchantInfo[]>([])
-  const selection = ref<MerchantInfo[]>([])
+  const selection = ref<${dataName}[]>([])
 
+#if (${genAdd} == true || ${genSet} == true)
   onMounted(() => {
-    EventBus.$on(EventMsg.refreshMerchantList, searchForm)
+    EventBus.$on(EventMsg.refresh${dataName}List, searchForm);
   })
 
-  onBeforeMount(() => {
-    EventBus.$off(EventMsg.refreshMerchantList, searchForm)
+  onUnmounted(() => {
+    EventBus.$off(EventMsg.refresh${dataName}List, searchForm);
   })
+#end
 
   const searchForm = () => {
     tryCatch({}, async () => {
-      const resp = await NetApi.instance.merchant.mgGetMerchantList(query.value)
-      merchantList.value = resp.list
+      const resp = await ${goPackage}Api.mgList${dataName}(query.value)
+      ${dataName}List.value = resp.list
       total.value = resp.total
     });
   }
 
-  const resetForm = (ref?: FormInstance) => {
+  const resetForm = (ref: FormInstance | undefined) => {
     ref?.resetFields()
     searchForm()
   }
 
-  const handleSelection = (list: MerchantInfo[]) => {
+  const handleSelection = (list: ${dataName}[]) => {
     selection.value = list
   }
 
-  const handleExport = () => {
-  }
-
-  const handleEditStatus = async (status: boolean) => {
+#if (${genStatus} == true)
+  const handleEditStatus = async (status: Status) => {
     await tryCatch({}, () => {
-      let req = new MgStatusMerchantInfoReq();
-      req.status = status ? AccountStatus.ENABLE : AccountStatus.DISABLE
-      req.merchantId = selection.value.map<Long>((value) => value.merchantId!)
-      return NetApi.instance.merchant.mgStatusMerchantInfo(req)
+      let req = new MgStatus${dataName}Req();
+      req.status = status
+      req.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}s = selection.value.map<Long>((value) => value.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}!)
+      return ${goPackage}Api.mgStatus${dataName}(req)
     });
-    selection.value.forEach((value) => value.status = status ? AccountStatus.ENABLE : AccountStatus.DISABLE)
+    selection.value.forEach((value) => value.status = status)
     ElMessage.success(locale.t("public.modifiedSuccessfully"))
   }
+#end
 
-  const handleInfo = (info: MerchantInfo) => {
+#if (${genDel} == true)
+  const handleDelete = async () => {
+    await ElMessageBox.confirm(locale.t('public.deleteConfirm', {name: locale.t('public.selectedItem')}))
+
+    await tryCatch({}, () => {
+      let req = new MgDel${dataName}Req();
+      req.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}s = selection.value.map<Long>((value) => value.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}!)
+      return ${goPackage}Api.mgDel${dataName}(req)
+    });
+    searchForm()
+    ElMessage.success(locale.t("public.deleteSuccessfully"))
+  }
+#end
+
+#if (${genGet} == true)
+  const handleInfo = (info: ${dataName}) => {
     router.push({
-      name: "nav.merchantInfo", params: {
-        id: info.merchantId!.toString(),
+      name: "nav.${util.lowerFirst(${dataName})}.get",
+      params: {
+        id: info.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}!.toString(),
         name: info.name,
-      }
+      },
     })
   }
+#end
 
+#if (${genExport} == true)
+  const handleExport = async () => {
+    await tryCatch({}, () => {
+      query.value.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}s = selection.value.map<Long>((value) => value.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}!)
+      return ${goPackage}Api.mgExport${dataName}(query.value)
+    });
+    ElMessage.success(locale.t("public.exportSuccessfully"))
+  }
+#end
+
+#if (${genAdd} == true)
   const handleNewAdd = () => {
     router.push({
-      name: "nav.merchantInfo",
+      name: "nav.${util.lowerFirst(${dataName})}.get",
       params: {
         id: "create",
         name: "New",
       },
     })
   }
+#end
 </script>
 
 <template>
   <section class="app-list-page">
-    <el-form ref="queryFormRef" :model="query" inline>
-      <GetMerchantListReqFormItems :model="query"/>
+    <el-form :model="query as List${dataName}" ref="queryFormRef" inline>
+      <list-${util.camelToMiddleLine(${dataName}).toLowerCase()}-form-items :model="query"/>
       <el-form-item>
-        <el-button :icon="Search" type="primary" @click="searchForm()"/>
-        <el-button :icon="RefreshLeft" @click="resetForm(queryFormRef)"/>
+        <el-button type="primary" @click="searchForm()" :icon="Search"/>
+        <el-button @click="resetForm(queryFormRef)" :icon="RefreshLeft"/>
       </el-form-item>
     </el-form>
 
     <div class="app-list-page-button">
-      <el-button-group v-power="[AdminPower.MERCHANT_STATUS]">
-        <el-button :disabled="selection.length==0" :icon="Lock" plain size="small" type="warning"
-                   @click="handleEditStatus(false)">
+#if (${genStatus} == true)
+      <el-button-group v-power="[AdminPower.STATUS${util.camelToUnderline(${dataName}).toUpperCase()}]">
+        <el-button type="warning" plain :icon="Lock" size="small" @click="handleEditStatus(Status.DISABLE)"
+                   :disabled="selection.length==0">
           {{ $t('public.disabled') }}
         </el-button>
-        <el-button :disabled="selection.length==0" :icon="Unlock" plain size="small" type="warning"
-                   @click="handleEditStatus(true)">
+        <el-button type="warning" plain :icon="Unlock" size="small" @click="handleEditStatus(Status.ENABLE)"
+                   :disabled="selection.length==0">
           {{ $t('public.enabled') }}
         </el-button>
       </el-button-group>
-      <el-button v-power="[AdminPower.MERCHANT_EXPORT]" :icon="Download" plain size="small" type="success"
+#end
+#if (${genAdd} == true)
+      <el-button v-power="[AdminPower.DEL${util.camelToUnderline(${dataName}).toUpperCase()}]" type="danger" plain :icon="Delete" size="small"
+                 @click="handleDelete()" :disabled="selection.length==0">
+        {{ $t('public.delete') }}
+      </el-button>
+#end
+#if (${genExport} == true)
+      <el-button v-power="[AdminPower.EXPORT${util.camelToUnderline(${dataName}).toUpperCase()}]" type="success" plain :icon="Download" size="small"
                  @click="handleExport()">
         {{ $t('public.export') }}
       </el-button>
-      <el-button v-power="[AdminPower.MERCHANT_ADD]" :icon="Plus" class="right-button" size="small"
-                 type="primary" @click="handleNewAdd()">
+#end
+#if (${genAdd} == true)
+      <el-button v-power="[AdminPower.ADD${util.camelToUnderline(${dataName}).toUpperCase()}]" class="right-button" type="primary" :icon="Plus"
+                 size="small" @click="handleNewAdd()">
         {{ $t('public.newAdd') }}
       </el-button>
+#end
     </div>
 
-    <el-table :data="merchantList" fit stripe @selection-change="handleSelection">
+    <el-table :data="${dataName}List" @selection-change="handleSelection" stripe fit>
       <el-table-column fixed="left" type="selection" width="30"/>
       <el-table-column fixed="left" type="index" width="50"/>
-      <MerchantInfoTableColumn/>
-      <el-table-column :label="$t('public.operations')" fixed="right" width="122">
+      <${util.camelToMiddleLine(${dataName}).toLowerCase()}-table-column/>
+      <el-table-column fixed="right" :label="$t('public.operations')" width="122">
         <template #default="scope">
-          <el-tooltip v-power="[AdminPower.MERCHANT_INFO,AdminPower.MERCHANT_ADD]" :content="$t('public.infoTips')">
-            <el-button link size="small" type="primary" @click="handleInfo(scope.row)">
-              {{ $t('public.info') }}
-            </el-button>
-          </el-tooltip>
+#if (${genGet} == true || ${genSet} == true)
+          <span
+#if (${genGet} == true)
+                  v-power="[AdminPower.GET${util.camelToUnderline(${dataName}).toUpperCase()}]"
+#elseif (${genGet} == true)
+                  v-power="[AdminPower.SET${util.camelToUnderline(${dataName}).toUpperCase()}]"
+#else
+                  v-power="[AdminPower.GET${util.camelToUnderline(${dataName}).toUpperCase()},AdminPower.SET${util.camelToUnderline(${dataName}).toUpperCase()}]"
+#end
+          >
+            <el-tooltip :content="$t('public.infoTips')">
+              <el-button link type="primary" size="small" @click="handleInfo(scope.row)">
+                {{ $t('public.info') }}
+              </el-button>
+            </el-tooltip>
+          </span>
+#end
         </template>
       </el-table-column>
     </el-table>
