@@ -16,7 +16,6 @@ const router = [
 #end
 #if (${genGet} == true)
                 {
-                    nav: true,
                     path: 'info/:id/:name',
                     name: "nav.${util.lowerFirst(${dataName})}.get",
                     power: AdminPower.GET${util.camelToUnderline(${dataName}).toUpperCase()},
