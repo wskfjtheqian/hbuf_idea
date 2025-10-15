@@ -1,71 +1,54 @@
 server ${util.upperFirst(${goPackage})}Server {
+#if (${genExport} == true)
+#if(${comment})
+    //导出${comment}
+#end
+    Export${dataName}Resp Export${dataName}(Export${dataName}Req req) = 1
+#end
+
 #if (${genList} == true)
 #if(${comment})
     //获得${comment}列表
 #end
-    List${dataName}Resp List${dataName}(List${dataName}Req req) = 1
+    List${dataName}Resp List${dataName}(List${dataName}Req req) = 2
 #end
 
 #if (${genAdd} == true)
     #if(${comment})
     //添加${comment}
     #end
-    Add${dataName}Resp Add${dataName}(Add${dataName}Req req) = 2
+    Add${dataName}Resp Add${dataName}(Add${dataName}Req req) = 3
 #end
 
 #if (${genGet} == true)
     #if(${comment})
     //获得${comment}
     #end
-    Get${dataName}Resp Get${dataName}(Get${dataName}Req req) = 3
+    Get${dataName}Resp Get${dataName}(Get${dataName}Req req) = 4
 #end
 
 #if (${genSet} == true)
     #if(${comment})
     //修改${comment}
     #end
-    Set${dataName}Resp Set${dataName}(Set${dataName}Req req) = 4
+    Set${dataName}Resp Set${dataName}(Set${dataName}Req req) = 5
 #end
 
 #if (${genDel} == true)
     #if(${comment})
     //删除${comment}
     #end
-    Del${dataName}Resp Del${dataName}(Del${dataName}Req req) = 5
+    Del${dataName}Resp Del${dataName}(Del${dataName}Req req) = 6
 #end
 
 #if (${genStatus} == true)
     #if(${comment})
     //修改${comment}状态
     #end
-    Status${dataName}Resp Status${dataName}(Status${dataName}Req req) = 6
+    Status${dataName}Resp Status${dataName}(Status${dataName}Req req) = 7
 #end
 
-#if (${genExport} == true)
-    #if(${comment})
-    //导出${comment}
-    #end
-    Export${dataName}Resp Export${dataName}(Export${dataName}Req req) = 7
-#end
 }
-
-#if (${genExport} == true)
-#if(${comment})
-//导出${comment}请求体
-#end
-[db:table="${dataName}"; listAsync="parent"]
-data Export${dataName}Req:List${dataName} = 0 {
-    [db:where="AND id IN(?)"]
-    int64[]? $util.camelToUnderline($dbIndex)s = 0
-}
-
-#if(${comment})
-//导出${comment}响应体
-#end
-data Export${dataName}Resp {
-    string url = 1
-}
-#end
 
 #if (${genStatus} == true)
 #if(${comment})
@@ -177,10 +160,19 @@ data List${dataName}Resp {
 }
 #end
 
-
-
-
-
-
-
-
+#if (${genExport} == true)
+#if(${comment})
+//导出${comment}请求体
+#end
+[db:table="${dataName}"; listAsync="parent"]
+data Export${dataName}Req:List${dataName} = 0 {
+    [db:where="AND id IN(?)"]
+    int64[]? $util.camelToUnderline($dbIndex)s = 0
+}
+#if(${comment})
+//导出${comment}响应体
+#end
+data Export${dataName}Resp {
+    string url = 1
+}
+#end
