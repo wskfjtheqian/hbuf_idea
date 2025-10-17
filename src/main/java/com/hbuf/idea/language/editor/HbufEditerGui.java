@@ -79,7 +79,7 @@ public class HbufEditerGui extends JPanel {
 
         MarkdownSplitEditorProvider provider = new MarkdownSplitEditorProvider();
         mdEditor = (MarkdownEditorWithPreview) provider.createEditor(project, vFile);
-        mdEditor.setLayout(TextEditorWithPreview.Layout.SHOW_PREVIEW);
+//        mdEditor.setLayout(TextEditorWithPreview.Layout.SHOW_PREVIEW);
 
         CollapsibleCheckBoxGroup group = new CollapsibleCheckBoxGroup(true);
         group.addPanel(this.checkList = bindEvent(new CollapsibleCheckBoxPanel("List", new JBLabel(""), true)));
