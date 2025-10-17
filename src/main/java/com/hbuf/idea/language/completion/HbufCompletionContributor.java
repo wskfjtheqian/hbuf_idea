@@ -3,17 +3,9 @@ package com.hbuf.idea.language.completion;
 import com.hbuf.idea.language.psi.*;
 import com.intellij.codeInsight.completion.*;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.codeInsight.template.impl.CustomLiveTemplateLookupElement;
-import com.intellij.codeInsight.template.impl.LiveTemplateLookupElement;
-import com.intellij.codeInsight.template.postfix.templates.PostfixLiveTemplate;
-import com.intellij.patterns.ElementPatternCondition;
-import com.intellij.patterns.InitialPatternCondition;
-import com.intellij.patterns.ObjectPattern;
 import com.intellij.patterns.PlatformPatterns;
-import com.intellij.psi.PsiElement;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class HbufCompletionContributor extends CompletionContributor {
     public HbufCompletionContributor() {
@@ -92,6 +84,7 @@ public class HbufCompletionContributor extends CompletionContributor {
                         resultSet.addElement(LookupElementBuilder.create("verify:"));
                         resultSet.addElement(LookupElementBuilder.create("bind:"));
                         resultSet.addElement(LookupElementBuilder.create("export:"));
+                        resultSet.addElement(LookupElementBuilder.create("filter:"));
                     }
                 }
         );
@@ -127,6 +120,7 @@ public class HbufCompletionContributor extends CompletionContributor {
                         resultSet.addElement(LookupElementBuilder.create("format="));
                         resultSet.addElement(LookupElementBuilder.create("onlyRead="));
                         resultSet.addElement(LookupElementBuilder.create("digit="));
+                        resultSet.addElement(LookupElementBuilder.create("tag="));
 
                         resultSet.addElement(LookupElementBuilder.create("value="));
                     }
