@@ -121,6 +121,7 @@ public class HbufCompletionContributor extends CompletionContributor {
                         resultSet.addElement(LookupElementBuilder.create("onlyRead="));
                         resultSet.addElement(LookupElementBuilder.create("digit="));
                         resultSet.addElement(LookupElementBuilder.create("tag="));
+                        resultSet.addElement(LookupElementBuilder.create("toNull="));
 
                         resultSet.addElement(LookupElementBuilder.create("value="));
                     }
