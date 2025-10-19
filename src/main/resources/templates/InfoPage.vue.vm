@@ -108,7 +108,7 @@
 
     <el-form ref="formRef" :model="form" label-width="auto"
 #if (${genAdd} == true && ${genSet} == true)
-             :disabled="!power([AdminPower.ADD${util.camelToUnderline(${dataName}).toUpperCase()}, AdminPower.Set${util.camelToUnderline(${dataName}).toUpperCase()}])"
+             :disabled="!power([AdminPower.ADD${util.camelToUnderline(${dataName}).toUpperCase()}, AdminPower.SET${util.camelToUnderline(${dataName}).toUpperCase()}])"
 #elseif (${genAdd} == true)
              :disabled="!power([AdminPower.ADD${util.camelToUnderline(${dataName}).toUpperCase()}])"
 #elseif (${genSet} == true)

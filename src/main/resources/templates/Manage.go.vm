@@ -9,12 +9,13 @@ import (
 	"server/pkg/utils"
 )
 
-func NewManage() ${goPackage}.${util.upperFirst(${goPackage})}Manage {
-	return &Manage{}
+func NewManage(app *App) ${goPackage}.${util.upperFirst(${goPackage})}Manage {
+	return &Manage{app: app}
 }
 
 type Manage struct {
 	${goPackage}.Default${util.upperFirst(${goPackage})}Manage
+	app *App
 }
 
 #if (${genExport} == true)
@@ -24,7 +25,7 @@ func (m *Manage) MgExport${dataName}(ctx context.Context, req *${goPackage}.MgEx
 	err := utils.AddTask(
 		ctx,
 		task.TaskTypeExportData,
-		hrpc.GetServerFuncName(${goPackage}.${util.upperFirst(${goPackage})}Server.Export${dataName}),
+		${goPackage}.${util.upperFirst(${goPackage})}Server.Export${dataName},
 		req,
 		"Export ${dataName}",
 	)

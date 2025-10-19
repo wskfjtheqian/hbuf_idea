@@ -119,8 +119,12 @@
     <el-form :model="query as List${dataName}" ref="queryFormRef" inline>
       <list-${util.camelToMiddleLine(${dataName}).toLowerCase()}-form-items :model="query"/>
       <el-form-item>
-        <el-button type="primary" @click="searchForm()" :icon="Search"/>
-        <el-button @click="resetForm(queryFormRef)" :icon="RefreshLeft"/>
+        <el-tooltip :content="$t('public.searchTips')">
+          <el-button type="primary" @click="searchForm()" :icon="Search"/>
+        </el-tooltip>
+        <el-tooltip :content="$t('public.resetTips')">
+          <el-button @click="resetForm(queryFormRef)" :icon="RefreshLeft"/>
+        </el-tooltip>
       </el-form-item>
     </el-form>
 
