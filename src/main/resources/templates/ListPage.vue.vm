@@ -92,9 +92,10 @@
 #end
 
 #if (${genExport} == true)
-  const handleExport = async () => {
+  const handleExport = async (zoneOffset: number) => {
     await tryCatch({}, () => {
       query.value.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}s = selection.value.map<Long>((value) => value.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}!)
+      query.value.zoneOffset = zoneOffset
       return ${goPackage}Api.mgExport${dataName}(query.value)
     });
     ElMessage.success(locale.t("public.exportSuccessfully"))
@@ -149,7 +150,7 @@
 #end
 #if (${genExport} == true)
       <el-button v-power="[AdminPower.EXPORT${util.camelToUnderline(${dataName}).toUpperCase()}]" type="success" plain :icon="Download" size="small"
-                 @click="handleExport()">
+                 @click="handleExport($getTimezoneOffset())">
         {{ $t('public.export') }}
       </el-button>
 #end

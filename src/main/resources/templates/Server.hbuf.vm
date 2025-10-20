@@ -167,7 +167,9 @@ data List${dataName}Resp {
 [db:table="${dataName}"; listAsync="parent"]
 data Export${dataName}Req:List${dataName} = 0 {
     [db:where="AND id IN(?)"]
-    int64[]? $util.camelToUnderline($dbIndex)s = 0
+    int64[]? $util.camelToUnderline($dbIndex)s = 1
+
+    int32 zone_offset = 2
 }
 #if(${comment})
 //导出${comment}响应体
