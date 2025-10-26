@@ -16,6 +16,7 @@
   import {type ${util.upperFirst(${goPackage})}Manage, ${util.upperFirst(${goPackage})}ManageClient} from "@/hbuf/${goPackage}.manage.server.ts";
   import {MgDel${dataName}Req, MgExport${dataName}Req, MgStatus${dataName}Req} from "@/hbuf/${goPackage}.manage.data.ts";
   import {List${dataName}FormItems, ${dataName}TableColumn} from "@/hbuf/${goPackage}.ui.tsx";
+  import TableColumnSetting from "@/components/TableColumnSetting.vue";
 
   const ${goPackage}Api: ${util.upperFirst(${goPackage})}Manage = new ${util.upperFirst(${goPackage})}ManageClient(NetApi.instance.client)
   const locale = useLocale()
@@ -24,6 +25,7 @@
   const ${dataName}List = ref<${dataName}[]>([])
   const total = ref<number>(0)
   const selection = ref<${dataName}[]>([])
+  const settingRef = ref<InstanceType<typeof TableColumnSetting> | null>(null);
 
 #if (${genAdd} == true || ${genSet} == true)
   onMounted(() => {
@@ -130,6 +132,8 @@
     </el-form>
 
     <div class="app-list-page-button">
+      <table-column-setting ref="settingRef"/>
+
 #if (${genStatus} == true)
       <el-button-group v-power="[AdminPower.STATUS${util.camelToUnderline(${dataName}).toUpperCase()}]">
         <el-button type="warning" plain :icon="Lock" size="small" @click="handleEditStatus(Status.DISABLE)"
@@ -165,7 +169,7 @@
     <el-table :data="${dataName}List" @selection-change="handleSelection" stripe fit>
       <el-table-column fixed="left" type="selection" width="30"/>
       <el-table-column fixed="left" type="index" width="50"/>
-      <${util.camelToMiddleLine(${dataName}).toLowerCase()}-table-column/>
+      <${util.camelToMiddleLine(${dataName}).toLowerCase()}-table-column  :setting="settingRef?.onSetting"/>
       <el-table-column fixed="right" :label="$t('public.operations')" width="122">
         <template #default="scope">
 #if (${genGet} == true || ${genSet} == true)

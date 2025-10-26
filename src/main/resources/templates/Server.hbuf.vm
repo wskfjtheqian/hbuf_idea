@@ -76,8 +76,8 @@ data Status${dataName}Resp {
 #end
 [db:table="${dataName}"; del="true"]
 data Del${dataName}Req {
-    [db:where="AND IN(?)"]
-    int64[] $util.camelToUnderline($dbIndex)s = 1
+    [db:where="AND IN(${dbIndex})"]
+    int64[] ${util.camelToUnderline(${dbIndex})}s = 1
 }
 
 #if(${comment})
