@@ -40,9 +40,9 @@ func (s *Server) Add${dataName}(ctx context.Context, req *${goPackage}.Add${data
 		return nil, err
 	}
 
-	req.Info.Set${util.upperFirst(${util.underlineToCamel(${dbIndex})})}(id)
-	req.Info.SetCreateTime(hbuf.Time(time.Now()))
-	_, _, err = req.Info.DbInsert(ctx)
+	req.Set${util.upperFirst(${util.underlineToCamel(${dbIndex})})}(id)
+	req.SetCreateTime(hbuf.Time(time.Now()))
+	_, _, err = req.DbInsert(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +55,7 @@ func (s *Server) Add${dataName}(ctx context.Context, req *${goPackage}.Add${data
 // Set${dataName} #if(${comment})修改${comment}#end
 
 func (s *Server) Set${dataName}(ctx context.Context, req *${goPackage}.Set${dataName}Req) (*${goPackage}.Set${dataName}Resp, error) {
-	count, _, err := req.Info.DbUpdate(ctx)
+	count, _, err := req.DbUpdate(ctx)
 	if err != nil {
 		return nil, err
 	}
