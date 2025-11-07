@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import Long from "long";
-  import {tryCatch} from "@/public/utils";
+  import {objectAssign, tryCatch} from "@/public/utils";
   import {ref} from "vue";
   import router from "@/router";
 #if (${genAdd} == true || ${genSet} == true)
@@ -70,8 +70,7 @@
   const handleAdd = async (ref: FormInstance | undefined) => {
     if (!await ref!.validate()) return
     await tryCatch({}, async () => {
-      const req = new MgAdd${dataName}Req()
-      req.info = form.value
+      const req = objectAssign(new MgAdd${dataName}Req(), form.value)
       req.token = token!
       await ${goPackage}Api.mgAdd${dataName}(req)
     })
@@ -85,8 +84,7 @@
   const handleSave = async (ref: FormInstance | undefined) => {
     if (!await ref!.validate()) return
     await tryCatch({}, async () => {
-      const req = new MgSet${dataName}Req()
-      req.info = form.value
+      const req = objectAssign(new MgSet${dataName}Req(), form.value)
       await ${goPackage}Api.mgSet${dataName}(req)
     })
     EventBus.$emit(EventMsg.refresh${dataName}List)

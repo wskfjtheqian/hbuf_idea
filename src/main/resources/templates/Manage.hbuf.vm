@@ -185,6 +185,7 @@ data MgAdd${dataName}Resp:Add${dataName}Resp = 0 {
 //获得${comment}列表请求体
 #end
 [verify:]
+[ui:form="true"]
 data MgList${dataName}Req:List${dataName}Req = 0 {
 }
 

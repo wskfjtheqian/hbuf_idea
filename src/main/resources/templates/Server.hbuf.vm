@@ -137,8 +137,6 @@ data Add${dataName}Resp {
 #if(${comment})
 //获得${comment}列表参数
 #end
-
-[ui:form="true"]
 data List${dataName}:PageLimit = 0 {
 }
 

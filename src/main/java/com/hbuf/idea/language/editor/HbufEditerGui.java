@@ -5,6 +5,7 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.fileEditor.TextEditorWithPreview;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.NlsSafe;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.testFramework.LightVirtualFile;
@@ -13,6 +14,7 @@ import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBList;
 import com.intellij.ui.components.JBScrollPane;
 import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
 import org.intellij.plugins.markdown.lang.MarkdownFileType;
 import org.intellij.plugins.markdown.ui.preview.MarkdownEditorWithPreview;
@@ -28,6 +30,7 @@ import javax.swing.event.ListSelectionEvent;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Properties;
@@ -45,6 +48,9 @@ public class HbufEditerGui extends JPanel {
         props.setProperty("class.resource.loader.class",
                 "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         engine = new VelocityEngine(props);
+        engine.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
+        engine.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");
+        engine.setProperty("file.resource.loader.unicode", "true"); // 对文件模板有效
         engine.init();
     }
 
@@ -154,7 +160,8 @@ public class HbufEditerGui extends JPanel {
         code.append(generateVueLangCode(listSelected));
 
         ApplicationManager.getApplication().runWriteAction(() -> {
-            mdEditor.getEditor().getDocument().setText(code.toString());
+            String fixedTemplate = StringUtil.convertLineSeparators(code.toString());
+            mdEditor.getEditor().getDocument().setText(fixedTemplate);
         });
     }
 
@@ -223,7 +230,7 @@ public class HbufEditerGui extends JPanel {
     private String evaluateVelocity(VelocityContext context, String templateName) {
         InputStreamReader reader = null;
         try {
-            reader = new InputStreamReader(Objects.requireNonNull(HbufEditerGui.class.getResourceAsStream("/templates/" + templateName)));
+            reader = new InputStreamReader(Objects.requireNonNull(HbufEditerGui.class.getResourceAsStream("/templates/" + templateName)), StandardCharsets.UTF_8);
             StringWriter writer = new StringWriter();
             engine.evaluate(context, writer, templateName, reader);
             return writer.toString();
