@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Properties;
@@ -50,7 +51,7 @@ public class HbufEditerGui extends JPanel {
         engine = new VelocityEngine(props);
         engine.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
         engine.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");
-        engine.setProperty("file.resource.loader.unicode", "true"); // 对文件模板有效
+        engine.setProperty("file.resource.loader.unicode", "true");
         engine.init();
     }
 
@@ -158,6 +159,7 @@ public class HbufEditerGui extends JPanel {
         code.append(generateVueInfoViewCode(listSelected));
         code.append(generateVueRouteCode(listSelected));
         code.append(generateVueLangCode(listSelected));
+        code.append(generateSqlCode(listSelected));
 
         ApplicationManager.getApplication().runWriteAction(() -> {
             String fixedTemplate = StringUtil.convertLineSeparators(code.toString());
@@ -199,6 +201,7 @@ public class HbufEditerGui extends JPanel {
             context.put("comment", comment.getText().replaceFirst("//", "").trim());
         }
 
+        ArrayList<HbufDataField> fields = new ArrayList<>();
         for (HbufDataFieldElement element : dataElement.getFields()) {
             @NotNull Collection<HbufAnnotationElement> annotations = PsiTreeUtil.findChildrenOfAnyType(element, HbufAnnotationElement.class);
             for (HbufAnnotationElement annotation : annotations) {
@@ -215,7 +218,16 @@ public class HbufEditerGui extends JPanel {
                     }
                 }
             }
+
+            HbufDataField field = new HbufDataField();
+            field.setName(element.getName());
+            field.setType(element.getTypeStatement().getText());
+            field.setComment("element");
+
+            fields.add(field);
         }
+
+        context.put("fields", fields);
     }
 
     private void addPackageName(VelocityContext context) {
@@ -355,6 +367,17 @@ public class HbufEditerGui extends JPanel {
         code.append("### Vue Lang Code\n")
                 .append("```json\n");
         code.append(evaluateVelocity(context, "Lang.json.vm"));
+        code.append("```\n\n");
+        return code;
+    }
+
+    private StringBuilder generateSqlCode(String name) {
+        VelocityContext context = getVelocityContext(name);
+
+        StringBuilder code = new StringBuilder();
+        code.append("### Create Table SQL Code\n")
+                .append("```sql\n");
+        code.append(evaluateVelocity(context, "Lang.sql.vm"));
         code.append("```\n\n");
         return code;
     }

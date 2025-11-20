@@ -1,0 +1,9 @@
+create table ${util.camelToUnderline(${dataName})}
+(
+    #foreach($field in ${fields})
+
+    ${field.name} ${field.type} ${field.comment}
+
+    #if($velocityCount < $columns.size()),#end
+    #end
+)  comment '${comment}';
