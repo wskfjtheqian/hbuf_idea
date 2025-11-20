@@ -12,7 +12,7 @@ server ${util.upperFirst(${goPackage})}Manage {
 #if(${comment})
     //添加${comment}
 #end
-    [tag:auth="manageApi"; power="AdminPower.add${dataName}"]
+    [tag:auth="manageApi"; power="AdminPower.add${dataName}"; log="添加${comment}"]
     [bind:value="${util.upperFirst(${goPackage})}Server.Add${dataName}"]
     MgAdd${dataName}Resp MgAdd${dataName}(MgAdd${dataName}Req req) = 2
 #end
@@ -21,7 +21,7 @@ server ${util.upperFirst(${goPackage})}Manage {
 #if(${comment})
     //获得${comment}
 #end
-    [tag:auth="manageApi"; power="AdminPower.get${dataName}", "AdminPower.set${dataName}"]
+    [tag:auth="manageApi"; power="AdminPower.get${dataName}", "AdminPower.get${dataName}"]
     [bind:value="${util.upperFirst(${goPackage})}Server.Get${dataName}"]
     MgGet${dataName}Resp MgGet${dataName}(MgGet${dataName}Req req) = 3
 #end
@@ -30,7 +30,7 @@ server ${util.upperFirst(${goPackage})}Manage {
 #if(${comment})
     //修改${comment}
 #end
-    [tag:auth="manageApi"; power="AdminPower.set${dataName}"]
+    [tag:auth="manageApi"; power="AdminPower.set${dataName}"; log="修改${comment}"]
     [bind:value="${util.upperFirst(${goPackage})}Server.Set${dataName}"]
     MgSet${dataName}Resp MgSet${dataName}(MgSet${dataName}Req req) = 4
 #end
@@ -39,7 +39,7 @@ server ${util.upperFirst(${goPackage})}Manage {
 #if(${comment})
     //删除${comment}
 #end
-    [tag:auth="manageApi"; power="AdminPower.del${dataName}"]
+    [tag:auth="manageApi"; power="AdminPower.del${dataName}"; log="删除${comment}"]
     [bind:value="${util.upperFirst(${goPackage})}Server.Del${dataName}"]
     MgDel${dataName}Resp MgDel${dataName}(MgDel${dataName}Req req) = 5
 #end
@@ -48,7 +48,7 @@ server ${util.upperFirst(${goPackage})}Manage {
 #if(${comment})
     //修改${comment}状态
 #end
-    [tag:auth="manageApi"; power="AdminPower.status${dataName}"]
+    [tag:auth="manageApi"; power="AdminPower.status${dataName}"; log="修改${comment}状态"]
     [bind:value="${util.upperFirst(${goPackage})}Server.Status${dataName}"]
     MgStatus${dataName}Resp MgStatus${dataName}(MgStatus${dataName}Req req) = 6
 #end
@@ -57,7 +57,7 @@ server ${util.upperFirst(${goPackage})}Manage {
 #if(${comment})
     //导出${comment}
 #end
-    [tag:auth="manageApi"; power="AdminPower.export${dataName}"]
+    [tag:auth="manageApi"; power="AdminPower.export${dataName}"; log="导出${comment}"]
     MgExport${dataName}Resp MgExport${dataName}(MgExport${dataName}Req req) = 7
 #end
 

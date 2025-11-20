@@ -22,7 +22,7 @@
   const ${goPackage}Api: ${util.upperFirst(${goPackage})}Manage = new ${util.upperFirst(${goPackage})}ManageClient(NetApi.instance.client)
   const locale = useLocale()
   const queryFormRef = ref<FormInstance>()
-  const query = ref<MgList${dataName}Req>(new MgExport${dataName}Req())
+  const query = ref<MgList${dataName}Req>(new MgList${dataName}Req())
   const ${dataName}List = ref<${dataName}[]>([])
   const total = ref<number>(0)
   const selection = ref<${dataName}[]>([])
