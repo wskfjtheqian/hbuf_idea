@@ -141,7 +141,6 @@ data List${dataName}:PageLimit = 0 {
 #if(${comment})
 //获得${comment}列表请求体
 #end
-[cache:]
 [db:table="${dataName}"; list="parent"; count="true"]
 data List${dataName}Req:List${dataName} = 0 {
 }

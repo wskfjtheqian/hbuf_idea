@@ -1,43 +1,43 @@
 enum Power {
 #if (${genList} == true)
 #if(${comment})
-    // 获得${comment}列表
+    //获得${comment}列表
 #end
     list${dataName} = 1
 #end
 #if (${genAdd} == true)
 #if(${comment})
-    // 添加${comment}
+    //添加${comment}
 #end
     add${dataName} = 2
 #end
 #if (${genGet} == true)
 #if(${comment})
-    // 获得${comment}
+    //获得${comment}
 #end
     get${dataName} = 3
 #end
 #if (${genSet} == true)
 #if(${comment})
-    // 修改${comment}列表
+    //修改${comment}列表
 #end
     set${dataName} = 4
 #end
 #if (${genDel} == true)
 #if(${comment})
-    // 删除${comment}
+    //删除${comment}
 #end
     del${dataName} = 5
 #end
 #if (${genStatus} == true)
 #if(${comment})
-    // 修改${comment}状态
+    //修改${comment}状态
 #end
     status${dataName} = 6
 #end
 #if (${genExport} == true)
 #if(${comment})
-    // 导出${comment}
+    //导出${comment}
 #end
     export${dataName} = 7
 #end

@@ -1,6 +1,5 @@
 const router = [
     {
-        nav: true,
         path: '${util.lowerFirst(${dataName})}/',
         name: "nav.${util.lowerFirst(${dataName})}.manage",
         icon: markRaw(Apple),
