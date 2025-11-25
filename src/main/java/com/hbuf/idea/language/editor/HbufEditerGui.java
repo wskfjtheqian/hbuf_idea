@@ -2,7 +2,6 @@ package com.hbuf.idea.language.editor;
 
 import com.hbuf.idea.language.psi.*;
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.fileEditor.TextEditorWithPreview;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.NlsSafe;
 import com.intellij.openapi.util.text.StringUtil;
@@ -46,11 +45,9 @@ public class HbufEditerGui extends JPanel {
     static {
         Properties props = new Properties();
         props.setProperty("resource.loader", "class");
-        props.setProperty("class.resource.loader.class",
-                "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+        props.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         engine = new VelocityEngine(props);
         engine.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
-        engine.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");
         engine.setProperty("file.resource.loader.unicode", "true");
         engine.init();
     }
@@ -204,6 +201,7 @@ public class HbufEditerGui extends JPanel {
         ArrayList<HbufDataField> fields = new ArrayList<>();
         for (HbufDataFieldElement element : dataElement.getFields()) {
             @NotNull Collection<HbufAnnotationElement> annotations = PsiTreeUtil.findChildrenOfAnyType(element, HbufAnnotationElement.class);
+            boolean hasDbIndex = false;
             for (HbufAnnotationElement annotation : annotations) {
                 if ("db".equals(annotation.getName())) {
                     for (HbufAnnotationFieldElement fieldElement : annotation.getFields()) {
@@ -211,7 +209,8 @@ public class HbufEditerGui extends JPanel {
                             for (String value : fieldElement.getValues()) {
                                 if ("\"true\"".equals(value)) {
                                     context.put("dbIndex", element.getName());
-                                    return;
+                                    hasDbIndex = true;
+                                    break;
                                 }
                             }
                         }
@@ -220,14 +219,54 @@ public class HbufEditerGui extends JPanel {
             }
 
             HbufDataField field = new HbufDataField();
-            field.setName(element.getName());
+            if (hasDbIndex) {
+                field.setName("id");
+            } else {
+                field.setName(element.getName());
+            }
             field.setType(element.getTypeStatement().getText());
-            field.setComment("element");
+
+            comment = element.getComment();
+            if (comment != null) {
+                field.setComment(comment.getText().replaceFirst("//", "").trim());
+            } else {
+                field.setComment("");
+            }
+
+            field.setSqlType(getSqlType(field.getType()));
+            field.setDefaultValue(getDefaultValue(field.getType()));
 
             fields.add(field);
         }
 
         context.put("fields", fields);
+    }
+
+    private String getDefaultValue(String type) {
+        type = type.replace("?", "");
+        return switch (type) {
+            case "int8", "int16", "int32", "uint8", "uint16", "int64", "uint32", "uint64", "float", "double",
+                 "decimal" -> "NOT NULL DEFAULT 0";
+            case "bool" -> "NOT NULL DEFAULT false";
+            default -> "NULL";
+        };
+    }
+
+    private String getSqlType(String type) {
+        type = type.replace("?", "");
+        return switch (type) {
+            case "int8" -> "INT8";
+            case "int16", "int32", "uint8", "uint16" -> "INT";
+            case "int64", "uint32", "uint64" -> "BIGINT";
+            case "bool" -> "BOOLEAN";
+            case "float" -> "FLOAT";
+            case "double" -> "DOUBLE";
+            case "bytes" -> "BLOB";
+            case "string" -> "VARCHAR(200)";
+            case "date" -> "TIMESTAMP(3)";
+            case "decimal" -> "DECIMAL(22,6)";
+            default -> "TEXT";
+        };
     }
 
     private void addPackageName(VelocityContext context) {
@@ -261,8 +300,7 @@ public class HbufEditerGui extends JPanel {
         VelocityContext context = getVelocityContext(name);
 
         StringBuilder code = new StringBuilder();
-        code.append("### Hbuf Server Code\n")
-                .append("```hbuf\n");
+        code.append("### Hbuf Server Code\n").append("```hbuf\n");
         code.append(evaluateVelocity(context, "Server.hbuf.vm"));
         code.append("```\n\n");
         return code;
@@ -272,8 +310,7 @@ public class HbufEditerGui extends JPanel {
         VelocityContext context = getVelocityContext(name);
 
         StringBuilder code = new StringBuilder();
-        code.append("### Hbuf Manage Code\n")
-                .append("```hbuf\n");
+        code.append("### Hbuf Manage Code\n").append("```hbuf\n");
         code.append(evaluateVelocity(context, "Manage.hbuf.vm"));
         code.append("```\n\n");
         return code;
@@ -284,8 +321,7 @@ public class HbufEditerGui extends JPanel {
         VelocityContext context = getVelocityContext(name);
 
         StringBuilder code = new StringBuilder();
-        code.append("### Hbuf Power Code\n")
-                .append("```hbuf\n");
+        code.append("### Hbuf Power Code\n").append("```hbuf\n");
         code.append(evaluateVelocity(context, "Power.hbuf.vm"));
         code.append("```\n\n");
         return code;
@@ -295,8 +331,7 @@ public class HbufEditerGui extends JPanel {
         VelocityContext context = getVelocityContext(name);
 
         StringBuilder code = new StringBuilder();
-        code.append("### Hbuf Id Code\n")
-                .append("```hbuf\n");
+        code.append("### Hbuf Id Code\n").append("```hbuf\n");
         code.append(evaluateVelocity(context, "Id.hbuf.vm"));
         code.append("```\n\n");
         return code;
@@ -306,32 +341,28 @@ public class HbufEditerGui extends JPanel {
         VelocityContext context = getVelocityContext(name);
 
         StringBuilder code = new StringBuilder();
-        code.append("### Golang Server Code\n")
-                .append("```go\n");
+        code.append("### Golang Server Code\n").append("```go\n");
         code.append(evaluateVelocity(context, "Server.go.vm"));
         code.append("```\n\n");
         return code;
     }
 
-     private StringBuilder generateGoManageCode(String name) {
+    private StringBuilder generateGoManageCode(String name) {
         VelocityContext context = getVelocityContext(name);
 
         StringBuilder code = new StringBuilder();
-        code.append("### Golang Manage Code\n")
-                .append("```go\n");
+        code.append("### Golang Manage Code\n").append("```go\n");
         code.append(evaluateVelocity(context, "Manage.go.vm"));
         code.append("```\n\n");
         return code;
     }
 
 
-
     private StringBuilder generateVueListViewCode(String name) {
         VelocityContext context = getVelocityContext(name);
 
         StringBuilder code = new StringBuilder();
-        code.append("### Vue ListPage Code\n")
-                .append("```vue\n");
+        code.append("### Vue ListPage Code\n").append("```vue\n");
         code.append(evaluateVelocity(context, "ListPage.vue.vm"));
         code.append("```\n\n");
         return code;
@@ -342,8 +373,7 @@ public class HbufEditerGui extends JPanel {
         VelocityContext context = getVelocityContext(name);
 
         StringBuilder code = new StringBuilder();
-        code.append("### Vue InfoPage Code\n")
-                .append("```vue\n");
+        code.append("### Vue InfoPage Code\n").append("```vue\n");
         code.append(evaluateVelocity(context, "InfoPage.vue.vm"));
         code.append("```\n\n");
         return code;
@@ -353,8 +383,7 @@ public class HbufEditerGui extends JPanel {
         VelocityContext context = getVelocityContext(name);
 
         StringBuilder code = new StringBuilder();
-        code.append("### Vue ListInfo Code\n")
-                .append("```ts\n");
+        code.append("### Vue ListInfo Code\n").append("```ts\n");
         code.append(evaluateVelocity(context, "Router.ts.vm"));
         code.append("```\n\n");
         return code;
@@ -364,8 +393,7 @@ public class HbufEditerGui extends JPanel {
         VelocityContext context = getVelocityContext(name);
 
         StringBuilder code = new StringBuilder();
-        code.append("### Vue Lang Code\n")
-                .append("```json\n");
+        code.append("### Vue Lang Code\n").append("```json\n");
         code.append(evaluateVelocity(context, "Lang.json.vm"));
         code.append("```\n\n");
         return code;
@@ -375,9 +403,8 @@ public class HbufEditerGui extends JPanel {
         VelocityContext context = getVelocityContext(name);
 
         StringBuilder code = new StringBuilder();
-        code.append("### Create Table SQL Code\n")
-                .append("```sql\n");
-        code.append(evaluateVelocity(context, "Lang.sql.vm"));
+        code.append("### Create Table SQL Code\n").append("```sql\n");
+        code.append(evaluateVelocity(context, "Sql.sql.vm"));
         code.append("```\n\n");
         return code;
     }
