@@ -56,11 +56,11 @@ func (s *Manage) MgAdd${dataName}(ctx context.Context, req *${goPackage}.MgAdd${
 	}
 
 	if err := req.Verify(ctx); err != nil {
-		return nil, herror.Wrap(err)
+		return nil, err
 	}
 	reps, err := ${goPackage}.Get${util.upperFirst(${goPackage})}Server(ctx).Add${dataName}(ctx, &req.Add${dataName}Req)
 	if err != nil {
-		return nil, herror.Wrap(err)
+		return nil, err
 	}
 	return &${goPackage}.MgAdd${dataName}Resp{Add${dataName}Resp: *reps}, nil
 }
