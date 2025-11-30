@@ -106,7 +106,7 @@ data Set${dataName}Resp {
 //获得${comment}请求体
 #end
 data Get${dataName}Req {
-    int32 $util.camelToUnderline($dbIndex) = 1
+    int64 $util.camelToUnderline($dbIndex) = 1
 }
 
 #if(${comment})

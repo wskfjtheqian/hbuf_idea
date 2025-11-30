@@ -124,6 +124,7 @@ public class HbufCompletionContributor extends CompletionContributor {
                         resultSet.addElement(LookupElementBuilder.create("toNull="));
 
                         resultSet.addElement(LookupElementBuilder.create("value="));
+                        resultSet.addElement(LookupElementBuilder.create("multilingual="));
                     }
                 }
         );

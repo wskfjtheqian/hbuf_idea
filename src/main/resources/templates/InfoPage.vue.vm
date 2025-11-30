@@ -1,5 +1,4 @@
 <script setup lang="ts">
-  import Long from "long";
   import {objectAssign, tryCatch} from "@/public/utils";
   import {ref} from "vue";
   import router from "@/router";
@@ -60,7 +59,7 @@
         #end
     } else {
       let req = new MgGet${dataName}Req();
-      req.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})} = Long.fromString(current.id as string)
+      req.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})} = new BigInt(current.id as string)
       tryCatch({}, async () => {
         const resp = await ${goPackage}Api.mgGet${dataName}(req)
         form.value = (initValue = resp.info!).clone()

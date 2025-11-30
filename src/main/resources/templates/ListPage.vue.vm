@@ -4,7 +4,6 @@
   import Pagination from "@/components/Pagination.vue";
   import {ElMessage, ElMessageBox, type FormInstance, useLocale} from "element-plus";
   import {Delete, Download, Lock, Plus, RefreshLeft, Search, Unlock} from "@element-plus/icons-vue";
-  import type Long from "long";
   import {objectAssign, tryCatch} from "@/public/utils.ts";
 #if (${genAdd} == true || ${genSet} == true)
   import {EventBus, EventMsg} from "@/public/event.ts";
@@ -60,7 +59,7 @@
     await tryCatch({}, () => {
       let req = new MgStatus${dataName}Req();
       req.status = status
-      req.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}s = selection.value.map<Long>((value) => value.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}!)
+      req.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}s = selection.value.map<bigint>((value) => value.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}!)
       return ${goPackage}Api.mgStatus${dataName}(req)
     });
     selection.value.forEach((value) => value.status = status)
@@ -74,7 +73,7 @@
 
     await tryCatch({}, () => {
       let req = new MgDel${dataName}Req();
-      req.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}s = selection.value.map<Long>((value) => value.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}!)
+      req.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}s = selection.value.map<bigint>((value) => value.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}!)
       return ${goPackage}Api.mgDel${dataName}(req)
     });
     searchForm()
@@ -98,7 +97,7 @@
   const handleExport = async (zoneOffset: number) => {
     await tryCatch({}, () => {
       const req = objectAssign(new MgExport${dataName}Req(), query.value);
-      req.roleIds = selection.value.map<Long>((value) => value.roleId!)
+      req.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}s = selection.value.map<bigint>((value) => value.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}!)
       req.zoneOffset = zoneOffset
       return ${goPackage}Api.mgExport${dataName}(req)
     });
