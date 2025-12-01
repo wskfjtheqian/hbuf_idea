@@ -81,6 +81,7 @@ public class HbufSyntaxHighlighter extends SyntaxHighlighterBase {
                 tokenType.equals(HbufTypes.DATA) ||
                 tokenType.equals(HbufTypes.SERVER) ||
                 tokenType.equals(HbufTypes.VOID) ||
+                tokenType.equals(HbufTypes.STREAM) ||
                 tokenType.equals(HbufTypes.TYPES)) {
             return KEY_KEYS;
         }

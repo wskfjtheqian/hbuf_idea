@@ -62,6 +62,7 @@ public interface HbufTypes {
   IElementType SEMICOLON = new HbufTokenType(";");
   IElementType SERVER = new HbufTokenType("server");
   IElementType SPACE = new HbufTokenType(" ");
+  IElementType STREAM = new HbufTokenType("stream");
   IElementType STRINGREGEXP = new HbufTokenType("STRINGREGEXP");
   IElementType TYPES = new HbufTokenType("TYPES");
   IElementType VOID = new HbufTokenType("void");

@@ -169,7 +169,7 @@ func-statement::=([annotation-group] func-type ident-name LPAREN (func-param|IDE
     implements="com.hbuf.idea.language.psi.HbufServerFuncElement"
 }
 
-func-type::=ident-name | void{
+func-type::=ident-name | void | stream{
     mixin="com.hbuf.idea.language.psi.impl.HbufFuncTypeElementImpl"
     implements="com.hbuf.idea.language.psi.HbufFuncTypeElement"
 }

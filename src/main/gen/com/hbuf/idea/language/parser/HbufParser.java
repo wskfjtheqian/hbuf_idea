@@ -416,7 +416,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
   // (func-type) ident-name
   public static boolean func_param(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_param")) return false;
-    if (!nextTokenIs(b, "<func param>", IDENT, VOID)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, FUNC_PARAM, "<func param>");
     r = func_param_0(b, l + 1);
@@ -469,14 +468,14 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ident-name | void
+  // ident-name | void | stream
   public static boolean func_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_type")) return false;
-    if (!nextTokenIs(b, "<func type>", IDENT, VOID)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, FUNC_TYPE, "<func type>");
     r = ident_name(b, l + 1);
     if (!r) r = consumeToken(b, VOID);
+    if (!r) r = consumeToken(b, STREAM);
     exit_section_(b, l, m, r, false, null);
     return r;
   }

@@ -56,6 +56,7 @@ STRINGREGEXP=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
   "data"               { return DATA; }
   "CRLF"               { return CRLF; }
   "void"               { return VOID; }
+  "stream"             { return STREAM; }
 
   {TYPES}              { return TYPES; }
   {COMMENT}            { return COMMENT; }
