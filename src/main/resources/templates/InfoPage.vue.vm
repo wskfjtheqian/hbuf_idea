@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import {objectAssign, tryCatch} from "@/public/utils";
   import {ref} from "vue";
-  import router from "@/router";
+  import router, {goBack} from "@/router";
       #if (${genAdd} == true || ${genSet} == true)
       import {AdminPower} from "@/hbuf/power.enum";
       #end
@@ -78,7 +78,7 @@
         })
         EventBus.$emit(EventMsg.refresh${dataName}List)
         ElMessage.success(locale.t("public.addSuccessfully"))
-        router.back()
+        goBack()
       }
       #end
 
@@ -91,7 +91,7 @@
         })
         EventBus.$emit(EventMsg.refresh${dataName}List)
         ElMessage.success(locale.t("public.modifiedSuccessfully"))
-        router.back()
+        goBack()
       }
       #end
 
