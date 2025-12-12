@@ -55,12 +55,9 @@ func (s *Server) Add${dataName}(ctx context.Context, req *${goPackage}.Add${data
 // Set${dataName} #if(${comment})修改${comment}#end
 
 func (s *Server) Set${dataName}(ctx context.Context, req *${goPackage}.Set${dataName}Req) (*${goPackage}.Set${dataName}Resp, error) {
-	count, _, err := req.DbUpdate(ctx)
+	_, _, err := req.DbUpdate(ctx)
 	if err != nil {
 		return nil, err
-	}
-	if count == 0 {
-		return nil, utils.NewError(erros.ErrorCodeIdError)
 	}
 
 	return &${goPackage}.Set${dataName}Resp{}, nil
@@ -71,12 +68,9 @@ func (s *Server) Set${dataName}(ctx context.Context, req *${goPackage}.Set${data
 // Del${dataName} #if(${comment})删除${comment}#end
 
 func (s *Server) Del${dataName}(ctx context.Context, req *${goPackage}.Del${dataName}Req) (*${goPackage}.Del${dataName}Resp, error) {
-	count, _, err := req.DbDel(ctx)
+	_, _, err := req.DbDel(ctx)
 	if err != nil {
 		return nil, err
-	}
-	if count == 0 {
-		return nil, utils.NewError(erros.ErrorCodeIdError)
 	}
 
 	return &${goPackage}.Del${dataName}Resp{}, nil

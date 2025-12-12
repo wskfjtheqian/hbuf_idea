@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="afda2a2c-465a-4a2e-aeb4-1da08dfdf2c3" name="Changes" comment="refactor(core): 修改字段类型并优化模板代码">
+    <list default="true" id="afda2a2c-465a-4a2e-aeb4-1da08dfdf2c3" name="Changes" comment="fix(ui): 使用goBack替换router.back">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/Server.hbuf.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/Server.hbuf.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/InfoPage.vue.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/InfoPage.vue.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/Server.go.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/Server.go.vm" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +55,7 @@
       </state>
     </system>
   </component>
+  <component name="GOROOT" url="file://$USER_HOME$/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.24.9.windows-amd64" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -88,6 +89,7 @@
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master__edit&quot;,
     &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -102,7 +104,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Gradle.hbuf_idea [buildPlugin]">
+  <component name="RunManager" selected="Gradle.hbuf_idea [runIde]">
     <configuration name="hbuf_idea [buildPlugin]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -149,8 +151,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.hbuf_idea [buildPlugin]" />
         <item itemvalue="Gradle.hbuf_idea [runIde]" />
+        <item itemvalue="Gradle.hbuf_idea [buildPlugin]" />
       </list>
     </recent_temporary>
   </component>
@@ -175,7 +177,9 @@
       <workItem from="1764471209051" duration="4620000" />
       <workItem from="1764550900505" duration="1163000" />
       <workItem from="1764554671671" duration="1698000" />
-      <workItem from="1764557279598" duration="1552000" />
+      <workItem from="1764557279598" duration="3008000" />
+      <workItem from="1764906212228" duration="6002000" />
+      <workItem from="1765405582910" duration="6311000" />
     </task>
     <task id="LOCAL-00001" summary="feat: 添加字段sqlType和defaultValue并优化模板代码">
       <option name="closed" value="true" />
@@ -209,7 +213,23 @@
       <option name="project" value="LOCAL" />
       <updated>1764555632636</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="refactor(core): 修改字段类型并优化模板代码">
+      <option name="closed" value="true" />
+      <created>1764586808013</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1764586808013</updated>
+    </task>
+    <task id="LOCAL-00006" summary="fix(ui): 使用goBack替换router.back">
+      <option name="closed" value="true" />
+      <created>1765164638777</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1765164638777</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -220,7 +240,8 @@
     <MESSAGE value="refactor: 添加字段sqlType和defaultValue并优化模板代码" />
     <MESSAGE value="refactor: 修改字段类型并优化模板代码" />
     <MESSAGE value="refactor(core): 修改字段类型并优化模板代码" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor(core): 修改字段类型并优化模板代码" />
+    <MESSAGE value="fix(ui): 使用goBack替换router.back" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(ui): 使用goBack替换router.back" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

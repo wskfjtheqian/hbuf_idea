@@ -1,105 +1,109 @@
 <script setup lang="ts">
-  import {objectAssign, tryCatch} from "@/public/utils";
-  import {ref} from "vue";
-  import router, {goBack} from "@/router";
-      #if (${genAdd} == true || ${genSet} == true)
-      import {AdminPower} from "@/hbuf/power.enum";
-      #end
-  import {ElMessage, useLocale} from "element-plus";
-  import type {FormInstance} from "element-plus";
-      #if (${genAdd} == true || ${genSet} == true)
-      import {power} from "@/public/directive.ts";
-      #end
-  import {NetApi} from "@/public/NetApi.ts";
-      #if (${genAdd} == true || ${genSet} == true)
-      import {EventBus, EventMsg} from "@/public/event.ts";
-      #end
-  import {${dataName}} from "@/hbuf/${goPackage}.data";
-  import {${dataName}FormItems} from "@/hbuf/${goPackage}.ui";
-  import {
-    type ${util.upperFirst(${goPackage})}Manage,
-          ${util.upperFirst(${goPackage})}ManageClient
-  } from "@/hbuf/${goPackage}.manage.server.ts";
-      #if (${genAdd} == true || ${genGet} == true || ${genSet} == true)
-      import {
-          #if (${genAdd} == true)
-            MgAdd${dataName}Req,
-          #end
-          #if (${genGet} == true)
-            MgGet${dataName}Req,
-          #end
-          #if (${genAdd} == true)
-            MgInit${dataName}Req,
-          #end
-          #if (${genSet} == true)
-            MgSet${dataName}Req
-          #end
-      } from "@/hbuf/${goPackage}.manage.data.ts";
-      #end
-  const ${goPackage}Api: ${util.upperFirst(${goPackage})}Manage = new ${util.upperFirst(${goPackage})}ManageClient(NetApi.instance.client)
-  const locale = useLocale()
-  const formRef = ref<FormInstance>()
-  const form = ref<${dataName}>(new ${dataName}())
-  let initValue: ${dataName} | null
-      #if (${genAdd} == true)
-      let token: string | null = null
-      #end
-  let isAdd = false
-
-  const init = () => {
-    const current = router.currentRoute.value.params
-    isAdd = current.id == "create" && current.name == "New"
-    if (isAdd) {
+import {objectAssign, tryCatch} from "@/public/utils";
+import {ref} from "vue";
+import {onMounted, onUnmounted, ref} from "vue";
+import router, {goBack} from "@/router";
+    #if (${genAdd} == true || ${genSet} == true)
+    import {AdminPower} from "@/hbuf/power.enum";
+    #end
+import {ElMessage, useLocale} from "element-plus";
+import type {FormInstance} from "element-plus";
+    #if (${genAdd} == true || ${genSet} == true)
+    import {power} from "@/public/directive.ts";
+    #end
+import {NetApi} from "@/public/NetApi.ts";
+    #if (${genAdd} == true || ${genSet} == true)
+    import {EventBus, EventMsg} from "@/public/event.ts";
+    #end
+import {${dataName}} from "@/hbuf/${goPackage}.data";
+import {${dataName}FormItems} from "@/hbuf/${goPackage}.ui";
+import {
+  type ${util.upperFirst(${goPackage})}Manage,
+        ${util.upperFirst(${goPackage})}ManageClient
+} from "@/hbuf/${goPackage}.manage.server.ts";
+    #if (${genAdd} == true || ${genGet} == true || ${genSet} == true)
+    import {
         #if (${genAdd} == true)
-          tryCatch({}, async () => {
-            const resp = await ${goPackage}Api.mgInit${dataName}(new MgInit${dataName}Req())
-            form.value = (initValue = resp.info!).clone()
-            token = resp.token
-          })
+          MgAdd${dataName}Req,
         #end
-    } else {
-      let req = new MgGet${dataName}Req();
-      req.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})} = new BigInt(current.id as string)
-      tryCatch({}, async () => {
-        const resp = await ${goPackage}Api.mgGet${dataName}(req)
-        form.value = (initValue = resp.info!).clone()
-      })
-    }
-  }
-  init()
+        #if (${genGet} == true)
+          MgGet${dataName}Req,
+        #end
+        #if (${genAdd} == true)
+          MgInit${dataName}Req,
+        #end
+        #if (${genSet} == true)
+          MgSet${dataName}Req
+        #end
+    } from "@/hbuf/${goPackage}.manage.data.ts";
+    #end
+const ${goPackage}Api: ${util.upperFirst(${goPackage})}Manage = new ${util.upperFirst(${goPackage})}ManageClient(NetApi.instance.client)
+const locale = useLocale()
+const formRef = ref<FormInstance>()
+const form = ref<${dataName}>(new ${dataName}())
+const isAdd = ref(false)
+let initValue: ${dataName} | null
+#if (${genAdd} == true)
+let token: string | null = null
+#end
 
+
+const init = () => {
+  const current = router.currentRoute.value.params
+  isAdd.value = current.id == "create" && current.name == "New"
+  if (isAdd.value) {
       #if (${genAdd} == true)
-      const handleAdd = async (ref: FormInstance | undefined) => {
-        if (!await ref!.validate()) return
-        await tryCatch({}, async () => {
-          const req = objectAssign(new MgAdd${dataName}Req(), form.value)
-          req.token = token!
-          await ${goPackage}Api.mgAdd${dataName}(req)
+        tryCatch({}, async () => {
+          const resp = await ${goPackage}Api.mgInit${dataName}(new MgInit${dataName}Req())
+          form.value = (initValue = resp.info!).clone()
+          token = resp.token
         })
-        EventBus.$emit(EventMsg.refresh${dataName}List)
-        ElMessage.success(locale.t("public.addSuccessfully"))
-        goBack()
-      }
       #end
+  } else {
+    let req = new MgGet${dataName}Req();
+    req.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})} = BigInt(current.id as string)
+    tryCatch({}, async () => {
+      const resp = await ${goPackage}Api.mgGet${dataName}(req)
+      form.value = (initValue = resp.info!).clone()
+    })
+  }
+}
+onMounted(init)
 
-      #if (${genSet} == true)
-      const handleSave = async (ref: FormInstance | undefined) => {
-        if (!await ref!.validate()) return
-        await tryCatch({}, async () => {
-          const req = objectAssign(new MgSet${dataName}Req(), form.value)
-          await ${goPackage}Api.mgSet${dataName}(req)
-        })
-        EventBus.$emit(EventMsg.refresh${dataName}List)
-        ElMessage.success(locale.t("public.modifiedSuccessfully"))
-        goBack()
-      }
-      #end
+onUnmounted(init)
 
-      #if (${genAdd} == true || ${genSet} == true)
-      const handleReset = (ref: FormInstance | undefined) => {
-        form.value = initValue!.clone()
-      }
-      #end
+    #if (${genAdd} == true)
+    const handleAdd = async (ref: FormInstance | undefined) => {
+      if (!await ref!.validate()) return
+      await tryCatch({}, async () => {
+        const req = objectAssign(new MgAdd${dataName}Req(), form.value)
+        req.token = token!
+        await ${goPackage}Api.mgAdd${dataName}(req)
+      })
+      EventBus.$emit(EventMsg.refresh${dataName}List)
+      ElMessage.success(locale.t("public.addSuccessfully"))
+      goBack()
+    }
+    #end
+
+    #if (${genSet} == true)
+    const handleSave = async (ref: FormInstance | undefined) => {
+      if (!await ref!.validate()) return
+      await tryCatch({}, async () => {
+        const req = objectAssign(new MgSet${dataName}Req(), form.value)
+        await ${goPackage}Api.mgSet${dataName}(req)
+      })
+      EventBus.$emit(EventMsg.refresh${dataName}List)
+      ElMessage.success(locale.t("public.modifiedSuccessfully"))
+      goBack()
+    }
+    #end
+
+    #if (${genAdd} == true || ${genSet} == true)
+    const handleReset = (ref: FormInstance | undefined) => {
+      form.value = initValue!.clone()
+    }
+    #end
 
 </script>
 

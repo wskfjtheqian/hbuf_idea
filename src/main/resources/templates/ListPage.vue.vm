@@ -39,6 +39,7 @@
 
   const searchForm = () => {
     tryCatch({}, async () => {
+      query.value.order = "DESC"
       const resp = await ${goPackage}Api.mgList${dataName}(query.value)
       ${dataName}List.value = resp.list
       total.value = resp.total
