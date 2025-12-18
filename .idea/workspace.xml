@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="afda2a2c-465a-4a2e-aeb4-1da08dfdf2c3" name="Changes" comment="fix(ui): 使用goBack替换router.back">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="afda2a2c-465a-4a2e-aeb4-1da08dfdf2c3" name="Changes" comment="fix(ui): 修正查询默认排序逻辑">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/InfoPage.vue.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/InfoPage.vue.vm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/Server.go.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/Server.go.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/ListPage.vue.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/ListPage.vue.vm" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,6 +90,7 @@
     &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
     &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/develop/hbuf/hbuf_idea&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -179,7 +179,9 @@
       <workItem from="1764554671671" duration="1698000" />
       <workItem from="1764557279598" duration="3008000" />
       <workItem from="1764906212228" duration="6002000" />
-      <workItem from="1765405582910" duration="6311000" />
+      <workItem from="1765405582910" duration="7902000" />
+      <workItem from="1765760079623" duration="3117000" />
+      <workItem from="1765937355447" duration="1887000" />
     </task>
     <task id="LOCAL-00001" summary="feat: 添加字段sqlType和defaultValue并优化模板代码">
       <option name="closed" value="true" />
@@ -229,7 +231,23 @@
       <option name="project" value="LOCAL" />
       <updated>1765164638777</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="fix(ui): 使用goBack替换router.back&#10;perf: 优化模板代码和Go代码逻辑">
+      <option name="closed" value="true" />
+      <created>1765521273220</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1765521273220</updated>
+    </task>
+    <task id="LOCAL-00008" summary="fix(ui): 修正查询默认排序逻辑">
+      <option name="closed" value="true" />
+      <created>1765777374087</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1765777374087</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -241,7 +259,9 @@
     <MESSAGE value="refactor: 修改字段类型并优化模板代码" />
     <MESSAGE value="refactor(core): 修改字段类型并优化模板代码" />
     <MESSAGE value="fix(ui): 使用goBack替换router.back" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(ui): 使用goBack替换router.back" />
+    <MESSAGE value="fix(ui): 使用goBack替换router.back&#10;perf: 优化模板代码和Go代码逻辑" />
+    <MESSAGE value="fix(ui): 修正查询默认排序逻辑" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(ui): 修正查询默认排序逻辑" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

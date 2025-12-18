@@ -121,7 +121,8 @@ onUnmounted(init)
              :disabled="true"
         #end
     >
-      <${util.camelToMiddleLine(${dataName}).toLowerCase()}-form-items :model="form" :isAdd="isAdd"/>
+      <${util.camelToMiddleLine(${dataName}).toLowerCase()}-form-items :model="form" :isAdd="isAdd">
+      </${util.camelToMiddleLine(${dataName}).toLowerCase()}-form-items>
         #if (${genAdd} == true || ${genSet} == true)
         <el-affix position="bottom" :offset="26">
           <el-form-item label=" ">
@@ -144,8 +145,8 @@ onUnmounted(init)
               {{ $t('public.reset') }}
             </el-button>
           </el-form-item>
+        </el-affix>
         #end
-    </el-affix>
     </el-form>
   </el-scrollbar>
 </template>
