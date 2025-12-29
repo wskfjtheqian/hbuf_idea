@@ -121,19 +121,20 @@
 
 <template>
   <section class="app-list-page">
-    <el-form :model="query as List${dataName}" ref="queryFormRef" inline>
-      <mg-list-${util.camelToMiddleLine(${dataName}).toLowerCase()}-req-form-items :model="query">
-      </mg-list-${util.camelToMiddleLine(${dataName}).toLowerCase()}-req-form-items>
-      <el-form-item>
-        <el-tooltip :content="$t('public.searchTips')">
-          <el-button type="primary" @click="searchForm()" :icon="Search"/>
-        </el-tooltip>
-        <el-tooltip :content="$t('public.resetTips')">
-          <el-button @click="resetForm(queryFormRef)" :icon="RefreshLeft"/>
-        </el-tooltip>
-      </el-form-item>
-    </el-form>
-
+    <search-layout>
+      <el-form :model="query as List${dataName}" ref="queryFormRef" inline>
+        <mg-list-${util.camelToMiddleLine(${dataName}).toLowerCase()}-req-form-items :model="query">
+        </mg-list-${util.camelToMiddleLine(${dataName}).toLowerCase()}-req-form-items>
+        <el-form-item>
+          <el-tooltip :content="$t('public.searchTips')">
+            <el-button type="primary" @click="searchForm()" :icon="Search"/>
+          </el-tooltip>
+          <el-tooltip :content="$t('public.resetTips')">
+            <el-button @click="resetForm(queryFormRef)" :icon="RefreshLeft"/>
+          </el-tooltip>
+        </el-form-item>
+      </el-form>
+    </search-layout>
     <div class="app-list-page-button">
       <table-column-setting ref="settingRef"/>
 

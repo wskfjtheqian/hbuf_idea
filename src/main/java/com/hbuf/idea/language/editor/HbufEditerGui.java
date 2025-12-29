@@ -2,6 +2,7 @@ package com.hbuf.idea.language.editor;
 
 import com.hbuf.idea.language.psi.*;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.fileEditor.TextEditorWithPreview;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.NlsSafe;
 import com.intellij.openapi.util.text.StringUtil;
@@ -83,7 +84,7 @@ public class HbufEditerGui extends JPanel {
 
         MarkdownSplitEditorProvider provider = new MarkdownSplitEditorProvider();
         mdEditor = (MarkdownEditorWithPreview) provider.createEditor(project, vFile);
-//        mdEditor.setLayout(TextEditorWithPreview.Layout.SHOW_PREVIEW);
+        mdEditor.setLayout(TextEditorWithPreview.Layout.SHOW_PREVIEW);
 
         CollapsibleCheckBoxGroup group = new CollapsibleCheckBoxGroup(true);
         group.addPanel(this.checkList = bindEvent(new CollapsibleCheckBoxPanel("List", new JBLabel(""), true)));

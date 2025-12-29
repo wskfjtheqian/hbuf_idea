@@ -41,7 +41,7 @@ func (s *Server) Add${dataName}(ctx context.Context, req *${goPackage}.Add${data
 	}
 
 	req.Set${util.upperFirst(${util.underlineToCamel(${dbIndex})})}(id)
-	req.SetCreateTime(hbuf.Time(time.Now()))
+	req.SetCreateTime(time.Now())
 	_, _, err = req.DbInsert(ctx)
 	if err != nil {
 		return nil, err
