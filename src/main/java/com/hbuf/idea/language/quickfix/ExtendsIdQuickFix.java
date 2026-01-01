@@ -3,7 +3,6 @@ package com.hbuf.idea.language.quickfix;
 import com.hbuf.idea.language.psi.HbufElementFactory;
 import com.hbuf.idea.language.psi.HbufExtendsElement;
 import com.hbuf.idea.language.psi.HbufIdElement;
-import com.hbuf.idea.language.psi.HbufUtil;
 import com.intellij.codeInsight.intention.impl.BaseIntentionAction;
 import com.intellij.codeInspection.util.IntentionFamilyName;
 import com.intellij.codeInspection.util.IntentionName;
@@ -48,12 +47,28 @@ public class ExtendsIdQuickFix extends BaseIntentionAction {
     @Override
     public void invoke(@NotNull final Project project, final Editor editor, PsiFile file) throws IncorrectOperationException {
         WriteCommandAction.writeCommandAction(project).run(() -> {
-            HbufIdElement id = HbufElementFactory.createId(project, HbufUtil.getExtendsNewId(project,extendList));
-            element.getParent().getNode().replaceChild(element.getNode(), id.getNode());
-            FileEditorManager.getInstance(project).getSelectedTextEditor().getCaretModel().moveCaretRelatively(2, 0, false, false, false);
+            for (int i = 0; i < extendList.size(); i++) {
+                if (!checkId(i, extendList)) {
+                    HbufIdElement id = HbufElementFactory.createId(project, i);
+                    element.getParent().getNode().replaceChild(element.getNode(), id.getNode());
+                    FileEditorManager.getInstance(project).getSelectedTextEditor().getCaretModel().moveCaretRelatively(2, 0, false, false, false);
+                    return;
+                }
+            }
         });
     }
 
+    private boolean checkId(int id, Collection<HbufExtendsElement> elements) {
+        if (id < 1 || id > 0xFFFF) {
+            return false;
+        }
+        for (HbufExtendsElement item : elements) {
+            if (item.getId().getId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
 

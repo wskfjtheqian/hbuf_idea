@@ -58,6 +58,9 @@ public class DataFieldIdQuickFix extends BaseIntentionAction {
     }
 
     private boolean checkId(int id, Collection<HbufDataFieldElement> elements) {
+        if (id < 1 || id > 0xFFFF) {
+            return false;
+        }
         for (HbufDataFieldElement item : elements) {
             if (item.getNumber() == id) {
                 return true;

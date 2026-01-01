@@ -44,7 +44,7 @@ public class ServerFuncIdCollateFix extends BaseIntentionAction {
         WriteCommandAction.writeCommandAction(project).run(() -> {
             ArrayList<HbufServerFuncElement> elements = new ArrayList<>(HbufUtil.getServerByChild(element).getFuncts());
             for (int i = 0; i < elements.size(); i++) {
-                HbufIdElement id = HbufElementFactory.createId(project, i);
+                HbufIdElement id = HbufElementFactory.createId(project, i+1);
                 HbufIdElement idElement = elements.get(i).getId();
                 idElement.getParent().getNode().replaceChild(idElement.getNode(), id.getNode());
             }

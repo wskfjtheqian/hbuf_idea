@@ -181,6 +181,15 @@ public class HbufAnnotator implements Annotator {
     }
 
     private void checkExtendsId(AnnotationHolder holder, @NotNull Collection<HbufExtendsElement> extendList, HbufIdElement element) {
+        if (element.getId() < 1 || element.getId() > 0xFFFF) {
+            holder.newAnnotation(HighlightSeverity.ERROR, "The sort ID extends must be between 1 and 0xFFFF")
+                    .range(element)
+                    .highlightType(ProblemHighlightType.GENERIC_ERROR)
+                    .withFix(new ExtendsIdQuickFix(extendList, element))
+                    .create();
+            return;
+        }
+
         for (HbufExtendsElement item : extendList) {
             if (item.getId() == element) {
                 continue;

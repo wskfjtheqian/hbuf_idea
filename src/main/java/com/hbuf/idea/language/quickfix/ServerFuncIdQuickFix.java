@@ -12,7 +12,6 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 
@@ -50,7 +49,7 @@ public class ServerFuncIdQuickFix extends BaseIntentionAction {
             @NotNull Collection<HbufServerFuncElement> elements = new ArrayList<>(HbufUtil.getServerByChild(element).getFuncts());
             for (int i = 0; i < elements.size(); i++) {
                 if (!checkId(i, elements)) {
-                    HbufIdElement id = HbufElementFactory.createId(project, i);
+                    HbufIdElement id = HbufElementFactory.createId(project, i + 1);
                     element.getParent().getNode().replaceChild(element.getNode(), id.getNode());
                     FileEditorManager.getInstance(project).getSelectedTextEditor().getCaretModel().moveCaretRelatively(2, 0, false, false, false);
                     return;
@@ -60,6 +59,9 @@ public class ServerFuncIdQuickFix extends BaseIntentionAction {
     }
 
     private boolean checkId(int id, Collection<HbufServerFuncElement> elements) {
+        if (id == 0 || id > 0xFFFF) {
+            return true;
+        }
         for (HbufServerFuncElement item : elements) {
             if (item.getNumber() == id) {
                 return true;
