@@ -8,15 +8,16 @@
 #if (${genAdd} == true || ${genSet} == true)
   import {EventBus, EventMsg} from "@/public/event.ts";
 #end
-  import {NetApi} from "@/public/NetApi.ts";
+  import NetApi from "@/public/NetApi.ts";
   import {AdminPower} from "@/hbuf/power.enum";
   import {List${dataName}, type ${dataName}} from "@/hbuf/${goPackage}.data";
   import {Status} from "@/hbuf/public.enum";
   import {type ${util.upperFirst(${goPackage})}Manage, ${util.upperFirst(${goPackage})}ManageClient} from "@/hbuf/${goPackage}.manage.server.ts";
-  import {MgDel${dataName}Req, MgList${dataName}Req, MgStatus${dataName}Req} from "@/hbuf/${goPackage}.manage.data.ts";
+  import {MgDel${dataName}Req, MgExport${dataName}Req,MgList${dataName}Req, MgStatus${dataName}Req} from "@/hbuf/${goPackage}.manage.data.ts";
   import {${dataName}TableColumn} from "@/hbuf/${goPackage}.ui.tsx";
   import {MgList${dataName}ReqFormItems} from "@/hbuf/${goPackage}.manage.ui.tsx";
   import TableColumnSetting from "@/components/TableColumnSetting.vue";
+  import SearchLayout from "@/components/SearchLayout.vue";
 
   const ${goPackage}Api: ${util.upperFirst(${goPackage})}Manage = new ${util.upperFirst(${goPackage})}ManageClient(NetApi.instance.client)
   const locale = useLocale()

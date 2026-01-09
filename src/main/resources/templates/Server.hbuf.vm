@@ -91,7 +91,7 @@ data Del${dataName}Resp {
 #if(${comment})
 //修改${comment}请求体
 #end
-data Set${dataName}Req:${dataName} = 0 {
+data Set${dataName}Req:${dataName} = 1 {
 }
 
 #if(${comment})
@@ -121,7 +121,7 @@ data Get${dataName}Resp {
 #if(${comment})
 //添加${comment}请求体
 #end
-data Add${dataName}Req: ${dataName} = 0 {
+data Add${dataName}Req: ${dataName} = 1 {
 }
 
 #if(${comment})
@@ -135,14 +135,14 @@ data Add${dataName}Resp {
 #if(${comment})
 //获得${comment}列表参数
 #end
-data List${dataName}:PageLimit = 0 {
+data List${dataName}:PageLimit = 1 {
 }
 
 #if(${comment})
 //获得${comment}列表请求体
 #end
 [db:table="${dataName}"; list="parent"; count="true"]
-data List${dataName}Req:List${dataName} = 0 {
+data List${dataName}Req:List${dataName} = 1 {
 }
 
 #if(${comment})
@@ -160,7 +160,7 @@ data List${dataName}Resp {
 //导出${comment}请求体
 #end
 [db:table="${dataName}"; listAsync="parent"]
-data Export${dataName}Req:List${dataName} = 0 {
+data Export${dataName}Req:List${dataName} = 1  {
     [db:where="AND id IN(?)"]
     int64[]? $util.camelToUnderline($dbIndex)s = 1
 

@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="afda2a2c-465a-4a2e-aeb4-1da08dfdf2c3" name="Changes" comment="fix(ui): 修正查询默认排序逻辑">
+    <list default="true" id="afda2a2c-465a-4a2e-aeb4-1da08dfdf2c3" name="Changes" comment="fix(ui): 修复预览布局显示问题和模板调整&#10;fix(ui): 修复搜索布局标签包裹问题&#10;fix(server): 修复时间设置方法调用错误">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hbuf/idea/language/quickfix/DataFieldIdQuickFix.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hbuf/idea/language/quickfix/DataFieldIdQuickFix.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hbuf/idea/language/quickfix/ExtendsIdQuickFix.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hbuf/idea/language/quickfix/ExtendsIdQuickFix.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/InfoPage.vue.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/InfoPage.vue.vm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/ListPage.vue.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/ListPage.vue.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/Manage.hbuf.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/Manage.hbuf.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/Server.hbuf.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/Server.hbuf.vm" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +50,18 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="hbuf_idea" type="f1a62948:ProjectNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="hbuf_idea" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="hbuf_idea" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="intellij" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -182,6 +198,14 @@
       <workItem from="1765405582910" duration="7902000" />
       <workItem from="1765760079623" duration="3117000" />
       <workItem from="1765937355447" duration="1887000" />
+      <workItem from="1766023628846" duration="1481000" />
+      <workItem from="1766759596877" duration="1875000" />
+      <workItem from="1766970099288" duration="2976000" />
+      <workItem from="1767574507957" duration="149000" />
+      <workItem from="1767574682675" duration="6581000" />
+      <workItem from="1767756991188" duration="599000" />
+      <workItem from="1767770516018" duration="2770000" />
+      <workItem from="1767845102443" duration="3125000" />
     </task>
     <task id="LOCAL-00001" summary="feat: 添加字段sqlType和defaultValue并优化模板代码">
       <option name="closed" value="true" />
@@ -247,11 +271,38 @@
       <option name="project" value="LOCAL" />
       <updated>1765777374087</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="fix(ui): 修正查询默认排序逻辑&#10;perf: 优化模板代码和Go代码逻辑">
+      <option name="closed" value="true" />
+      <created>1766023706774</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1766023706774</updated>
+    </task>
+    <task id="LOCAL-00010" summary="fix(ui): 修复预览布局显示问题和模板调整&#10;fix(ui): 修复搜索布局标签包裹问题&#10;fix(server): 修复时间设置方法调用错误">
+      <option name="closed" value="true" />
+      <created>1767013441051</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1767013441051</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat: 添加字段sqlType和defaultValue并优化模板代码" />
@@ -261,7 +312,9 @@
     <MESSAGE value="fix(ui): 使用goBack替换router.back" />
     <MESSAGE value="fix(ui): 使用goBack替换router.back&#10;perf: 优化模板代码和Go代码逻辑" />
     <MESSAGE value="fix(ui): 修正查询默认排序逻辑" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(ui): 修正查询默认排序逻辑" />
+    <MESSAGE value="fix(ui): 修正查询默认排序逻辑&#10;perf: 优化模板代码和Go代码逻辑" />
+    <MESSAGE value="fix(ui): 修复预览布局显示问题和模板调整&#10;fix(ui): 修复搜索布局标签包裹问题&#10;fix(server): 修复时间设置方法调用错误" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(ui): 修复预览布局显示问题和模板调整&#10;fix(ui): 修复搜索布局标签包裹问题&#10;fix(server): 修复时间设置方法调用错误" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

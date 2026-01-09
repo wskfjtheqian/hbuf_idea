@@ -94,13 +94,13 @@ data MgInit${dataName}Resp {
 //导出${comment}请求体
 #end
 [verify:]
-data MgExport${dataName}Req:Export${dataName}Req = 0 {
+data MgExport${dataName}Req:Export${dataName}Req = 1  {
 }
 
 #if(${comment})
 //导出${comment}响应体
 #end
-data MgExport${dataName}Resp:Export${dataName}Resp = 0 {
+data MgExport${dataName}Resp:Export${dataName}Resp = 1  {
 }
 #end
 
@@ -109,13 +109,13 @@ data MgExport${dataName}Resp:Export${dataName}Resp = 0 {
 //修改${comment}状态请求体
 #end
 [verify:]
-data MgStatus${dataName}Req:Status${dataName}Req = 0 {
+data MgStatus${dataName}Req:Status${dataName}Req = 1  {
 }
 
 #if(${comment})
 //修改${comment}状态响应体
 #end
-data MgStatus${dataName}Resp:Status${dataName}Resp = 0 {
+data MgStatus${dataName}Resp:Status${dataName}Resp = 1  {
 }
 #end
 
@@ -124,13 +124,13 @@ data MgStatus${dataName}Resp:Status${dataName}Resp = 0 {
 //删除${comment}请求体
 #end
 [verify:]
-data MgDel${dataName}Req:Del${dataName}Req = 0 {
+data MgDel${dataName}Req:Del${dataName}Req = 1  {
 }
 
 #if(${comment})
 //删除${comment}响应体
 #end
-data MgDel${dataName}Resp:Del${dataName}Resp = 0 {
+data MgDel${dataName}Resp:Del${dataName}Resp = 1  {
 }
 #end
 
@@ -139,13 +139,13 @@ data MgDel${dataName}Resp:Del${dataName}Resp = 0 {
 //修改${comment}请求体
 #end
 [verify:]
-data MgSet${dataName}Req:Set${dataName}Req = 0 {
+data MgSet${dataName}Req:Set${dataName}Req = 1  {
 }
 
 #if(${comment})
 //修改${comment}响应体
 #end
-data MgSet${dataName}Resp:Set${dataName}Resp = 0 {
+data MgSet${dataName}Resp:Set${dataName}Resp = 1  {
 }
 #end
 
@@ -154,13 +154,13 @@ data MgSet${dataName}Resp:Set${dataName}Resp = 0 {
 //获得${comment}请求体
 #end
 [verify:]
-data MgGet${dataName}Req:Get${dataName}Req = 0 {
+data MgGet${dataName}Req:Get${dataName}Req = 1  {
 }
 
 #if(${comment})
 //获得${comment}响应体
 #end
-data MgGet${dataName}Resp:Get${dataName}Resp = 0 {
+data MgGet${dataName}Resp:Get${dataName}Resp = 1  {
 }
 #end
 
@@ -169,14 +169,14 @@ data MgGet${dataName}Resp:Get${dataName}Resp = 0 {
 //添加${comment}请求体
 #end
 [verify:]
-data MgAdd${dataName}Req:Add${dataName}Req = 0 {
+data MgAdd${dataName}Req:Add${dataName}Req = 1  {
     string token = 1
 }
 
 #if(${comment})
 //添加${comment}响应体
 #end
-data MgAdd${dataName}Resp:Add${dataName}Resp = 0 {
+data MgAdd${dataName}Resp:Add${dataName}Resp = 1  {
 }
 #end
 
@@ -186,13 +186,13 @@ data MgAdd${dataName}Resp:Add${dataName}Resp = 0 {
 #end
 [verify:]
 [ui:form="true"]
-data MgList${dataName}Req:List${dataName}Req = 0 {
+data MgList${dataName}Req:List${dataName}Req = 1  {
 }
 
 #if(${comment})
 //获得${comment}列表响应体
 #end
-data MgList${dataName}Resp:List${dataName}Resp = 0 {
+data MgList${dataName}Resp:List${dataName}Resp = 1  {
 }
 #end
 

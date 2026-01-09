@@ -49,7 +49,7 @@ public class ExtendsIdQuickFix extends BaseIntentionAction {
         WriteCommandAction.writeCommandAction(project).run(() -> {
             for (int i = 0; i < extendList.size(); i++) {
                 if (!checkId(i, extendList)) {
-                    HbufIdElement id = HbufElementFactory.createId(project, i);
+                    HbufIdElement id = HbufElementFactory.createId(project, i + 1);
                     element.getParent().getNode().replaceChild(element.getNode(), id.getNode());
                     FileEditorManager.getInstance(project).getSelectedTextEditor().getCaretModel().moveCaretRelatively(2, 0, false, false, false);
                     return;
