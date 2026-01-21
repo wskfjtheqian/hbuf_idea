@@ -42,14 +42,14 @@ const locale = useLocale()
 const formRef = ref<FormInstance>()
 const form = ref<${dataName}>(new ${dataName}())
 const isAdd = ref(false)
+const current = router.currentRoute.value.params
+
 let initValue: ${dataName} | null
 #if (${genAdd} == true)
 let token: string | null = null
 #end
 
-
 const init = () => {
-  const current = router.currentRoute.value.params
   isAdd.value = current.id == "create" && current.name == "New"
   if (isAdd.value) {
       #if (${genAdd} == true)
@@ -89,8 +89,17 @@ onUnmounted(init)
     #if (${genSet} == true)
     const handleSave = async (ref: FormInstance | undefined) => {
       if (!await ref!.validate()) return
+      const {change, fields} = form.value.$getChangeField(initValue!, "")
+      if (fields.length == 0) {
+        ElMessage.warning(locale.t("public.notChange"))
+        return
+      }
+
+      if (!await ref!.validate()) return
       await tryCatch({}, async () => {
-        const req = objectAssign(new MgSet${dataName}Req(), form.value)
+        const req = objectAssign(new MgSet${dataName}Req(), change)
+        req.changeFields = fields
+        req.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})} = form.value.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}
         await ${goPackage}Api.mgSet${dataName}(req)
       })
       EventBus.$emit(EventMsg.refresh${dataName}List)

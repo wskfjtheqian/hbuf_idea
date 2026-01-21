@@ -91,7 +91,7 @@ data Del${dataName}Resp {
 #if(${comment})
 //修改${comment}请求体
 #end
-data Set${dataName}Req:${dataName} = 1 {
+data Set${dataName}Req:${dataName} = 1, ChangeFields = 2 {
 }
 
 #if(${comment})

@@ -20,7 +20,6 @@ type Server struct {
 
 #if (${genGet} == true)
 // Get${dataName} #if(${comment})获得${comment}#end
-
 func (s *Server) Get${dataName}(ctx context.Context, req *${goPackage}.Get${dataName}Req) (*${goPackage}.Get${dataName}Resp, error) {
 	info, err := ${goPackage}.${dataName}{$util.upperFirst($util.underlineToCamel($dbIndex)): &req.$util.upperFirst($util.underlineToCamel($dbIndex))}.DbGet(ctx)
 	if err != nil {
@@ -33,7 +32,6 @@ func (s *Server) Get${dataName}(ctx context.Context, req *${goPackage}.Get${data
 
 #if (${genAdd} == true)
 // Add${dataName} #if(${comment})添加${comment}#end
-
 func (s *Server) Add${dataName}(ctx context.Context, req *${goPackage}.Add${dataName}Req) (*${goPackage}.Add${dataName}Resp, error) {
 	id, err := s.app. ${util.lowerFirst(${util.underlineToCamel(${dbIndex})})} .NextId(ctx)
 	if err != nil {
@@ -53,9 +51,14 @@ func (s *Server) Add${dataName}(ctx context.Context, req *${goPackage}.Add${data
 
 #if (${genSet} == true)
 // Set${dataName} #if(${comment})修改${comment}#end
-
 func (s *Server) Set${dataName}(ctx context.Context, req *${goPackage}.Set${dataName}Req) (*${goPackage}.Set${dataName}Resp, error) {
-	_, _, err := req.DbUpdate(ctx)
+	changes := ${goPackage}.${dataName}FieldsByString(req.GetChangeFields()...)
+	if len(changes) == 0 {
+		return &${goPackage}.Set${dataName}Resp{}, nil
+	}
+
+	req.DbSetChangeFields(changes...)
+	_, _, err := req.DbUpdateChange(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +69,6 @@ func (s *Server) Set${dataName}(ctx context.Context, req *${goPackage}.Set${data
 
 #if (${genDel} == true)
 // Del${dataName} #if(${comment})删除${comment}#end
-
 func (s *Server) Del${dataName}(ctx context.Context, req *${goPackage}.Del${dataName}Req) (*${goPackage}.Del${dataName}Resp, error) {
 	_, _, err := req.DbDel(ctx)
 	if err != nil {
@@ -79,7 +81,6 @@ func (s *Server) Del${dataName}(ctx context.Context, req *${goPackage}.Del${data
 
 #if (${genList} == true)
 // List${dataName} #if(${comment})获得${comment}列表#end
-
 func (s *Server) List${dataName}(ctx context.Context, req *${goPackage}.List${dataName}Req) (*${goPackage}.List${dataName}Resp, error) {
 	count, err := req.DbCount(ctx)
 	if nil != err {
@@ -89,7 +90,8 @@ func (s *Server) List${dataName}(ctx context.Context, req *${goPackage}.List${da
 	if 0 == count {
 		return &${goPackage}.List${dataName}Resp{List: make([]${goPackage}.${dataName}, 0)}, nil
 	}
-	list, err := req.DbList(ctx)
+
+	list, err := req.DbList(ctx, ${goPackage}.${dataName}FieldsByString(req.GetShowFields()...)...)
 	if nil != err {
 		return nil, err
 	}
@@ -100,7 +102,6 @@ func (s *Server) List${dataName}(ctx context.Context, req *${goPackage}.List${da
 
 #if (${genStatus} == true)
 // Status${dataName} #if(${comment})修改${comment}状态#end
-
 func (s *Server) Status${dataName}(ctx context.Context, req *${goPackage}.Status${dataName}Req) (*${goPackage}.Status${dataName}Resp, error) {
 	_, _, err := req.DbSet(ctx)
 	if err != nil {
@@ -113,7 +114,6 @@ func (s *Server) Status${dataName}(ctx context.Context, req *${goPackage}.Status
 
 #if (${genExport} == true)
 // Export${dataName} #if(${comment})导出${comment}#end
-
 func (s *Server) Export${dataName}(ctx context.Context, req *${goPackage}.Export${dataName}Req) (*${goPackage}.Export${dataName}Resp, error) {
 	url, err := utils.ExportExcel[${goPackage}.${dataName}](ctx, req, "", "${dataName}")
 	if err != nil {

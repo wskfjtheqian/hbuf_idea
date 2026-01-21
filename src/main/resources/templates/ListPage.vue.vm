@@ -10,7 +10,7 @@
 #end
   import NetApi from "@/public/NetApi.ts";
   import {AdminPower} from "@/hbuf/power.enum";
-  import {List${dataName}, type ${dataName}} from "@/hbuf/${goPackage}.data";
+  import {List${dataName}, ${dataName}} from "@/hbuf/${goPackage}.data";
   import {Status} from "@/hbuf/public.enum";
   import {type ${util.upperFirst(${goPackage})}Manage, ${util.upperFirst(${goPackage})}ManageClient} from "@/hbuf/${goPackage}.manage.server.ts";
   import {MgDel${dataName}Req, MgExport${dataName}Req,MgList${dataName}Req, MgStatus${dataName}Req} from "@/hbuf/${goPackage}.manage.data.ts";
@@ -41,6 +41,7 @@
 
   const searchForm = () => {
     tryCatch({}, async () => {
+      query.value.showFields = ${dataName}.$convertField(["${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}", ...(settingRef.value?.showFields() ?? [])]);
       const resp = await ${goPackage}Api.mgList${dataName}(query.value)
       ${dataName}List.value = resp.list
       total.value = resp.total

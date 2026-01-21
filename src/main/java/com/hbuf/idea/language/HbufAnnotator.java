@@ -147,7 +147,9 @@ public class HbufAnnotator implements Annotator {
 
     private void checkImport(AnnotationHolder holder, HbufImportElement element) {
         String path = HbufUtil.getString(element.getString().getText());
-        VirtualFile file = element.getContainingFile().getVirtualFile().getParent().findFileByRelativePath(path);
+        VirtualFile parent = element.getContainingFile().getVirtualFile().getParent();
+
+        VirtualFile file = parent.findFileByRelativePath(path);
         if (null == file) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Not find file'" + path)
                     .range(element.getString())
