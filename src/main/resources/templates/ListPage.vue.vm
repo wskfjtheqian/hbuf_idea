@@ -152,7 +152,7 @@
         </el-button>
       </el-button-group>
 #end
-#if (${genAdd} == true)
+#if (${genDel} == true)
       <el-button v-power="[AdminPower.DEL${util.camelToUnderline(${dataName}).toUpperCase()}]" type="danger" plain :icon="Delete" size="small"
                  @click="handleDelete()" :disabled="selection.length==0">
         {{ $t('public.delete') }}

@@ -20,7 +20,6 @@ type Manage struct {
 
 #if (${genExport} == true)
 // MgExport${dataName} #if(${comment})导出${comment}#end
-
 func (m *Manage) MgExport${dataName}(ctx context.Context, req *${goPackage}.MgExport${dataName}Req) (*${goPackage}.MgExport${dataName}Resp, error) {
 	err := utils.AddTask(
 		ctx,
@@ -38,7 +37,6 @@ func (m *Manage) MgExport${dataName}(ctx context.Context, req *${goPackage}.MgEx
 
 #if (${genAdd} == true)
 // MgInit${dataName} #if(${comment})获取${comment}初始化数据#end
-
 func (s *Manage) MgInit${dataName}(ctx context.Context, req *${goPackage}.MgInit${dataName}Req) (*${goPackage}.MgInit${dataName}Resp, error) {
 	token, err := hform.CreateToken(ctx, "${dataName}")
 	if err != nil {
@@ -48,7 +46,6 @@ func (s *Manage) MgInit${dataName}(ctx context.Context, req *${goPackage}.MgInit
 }
 
 // MgAdd${dataName} #if(${comment})添加${comment}#end
-
 func (s *Manage) MgAdd${dataName}(ctx context.Context, req *${goPackage}.MgAdd${dataName}Req) (*${goPackage}.MgAdd${dataName}Resp, error) {
 	err := hform.ValidateToken(ctx, "${dataName}", req.Token)
 	if err != nil {

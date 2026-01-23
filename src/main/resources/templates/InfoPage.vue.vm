@@ -70,49 +70,47 @@ const init = () => {
 }
 onMounted(init)
 
-onUnmounted(init)
+#if (${genAdd} == true)
+const handleAdd = async (ref: FormInstance | undefined) => {
+  if (!await ref!.validate()) return
+  await tryCatch({}, async () => {
+    const req = objectAssign(new MgAdd${dataName}Req(), form.value)
+    req.token = token!
+    await ${goPackage}Api.mgAdd${dataName}(req)
+  })
+  EventBus.$emit(EventMsg.refresh${dataName}List)
+  ElMessage.success(locale.t("public.addSuccessfully"))
+  goBack()
+}
+#end
 
-    #if (${genAdd} == true)
-    const handleAdd = async (ref: FormInstance | undefined) => {
-      if (!await ref!.validate()) return
-      await tryCatch({}, async () => {
-        const req = objectAssign(new MgAdd${dataName}Req(), form.value)
-        req.token = token!
-        await ${goPackage}Api.mgAdd${dataName}(req)
-      })
-      EventBus.$emit(EventMsg.refresh${dataName}List)
-      ElMessage.success(locale.t("public.addSuccessfully"))
-      goBack()
-    }
-    #end
+#if (${genSet} == true)
+const handleSave = async (ref: FormInstance | undefined) => {
+  if (!await ref!.validate()) return
+  const {change, fields} = form.value.$getChangeField(initValue!, "")
+  if (fields.length == 0) {
+    ElMessage.warning(locale.t("public.notChange"))
+    return
+  }
 
-    #if (${genSet} == true)
-    const handleSave = async (ref: FormInstance | undefined) => {
-      if (!await ref!.validate()) return
-      const {change, fields} = form.value.$getChangeField(initValue!, "")
-      if (fields.length == 0) {
-        ElMessage.warning(locale.t("public.notChange"))
-        return
-      }
+  if (!await ref!.validate()) return
+  await tryCatch({}, async () => {
+    const req = objectAssign(new MgSet${dataName}Req(), change)
+    req.changeFields = fields
+    req.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})} = form.value.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}
+    await ${goPackage}Api.mgSet${dataName}(req)
+  })
+  EventBus.$emit(EventMsg.refresh${dataName}List)
+  ElMessage.success(locale.t("public.modifiedSuccessfully"))
+  goBack()
+}
+#end
 
-      if (!await ref!.validate()) return
-      await tryCatch({}, async () => {
-        const req = objectAssign(new MgSet${dataName}Req(), change)
-        req.changeFields = fields
-        req.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})} = form.value.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}
-        await ${goPackage}Api.mgSet${dataName}(req)
-      })
-      EventBus.$emit(EventMsg.refresh${dataName}List)
-      ElMessage.success(locale.t("public.modifiedSuccessfully"))
-      goBack()
-    }
-    #end
-
-    #if (${genAdd} == true || ${genSet} == true)
-    const handleReset = (ref: FormInstance | undefined) => {
-      form.value = initValue!.clone()
-    }
-    #end
+#if (${genAdd} == true || ${genSet} == true)
+const handleReset = (ref: FormInstance | undefined) => {
+  form.value = initValue!.clone()
+}
+#end
 
 </script>
 
