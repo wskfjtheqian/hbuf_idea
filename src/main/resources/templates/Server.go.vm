@@ -38,6 +38,7 @@ func (s *Server) Add${dataName}(ctx context.Context, req *${goPackage}.Add${data
 		return nil, err
 	}
 
+	req.DbClearChangeFields()
 	req.Set${util.upperFirst(${util.underlineToCamel(${dbIndex})})}(id)
 	req.SetCreateTime(time.Now())
 	_, _, err = req.DbInsert(ctx)
