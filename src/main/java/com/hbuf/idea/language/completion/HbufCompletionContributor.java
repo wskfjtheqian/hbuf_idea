@@ -112,10 +112,14 @@ public class HbufCompletionContributor extends CompletionContributor {
                         resultSet.addElement(LookupElementBuilder.create("order="));
                         resultSet.addElement(LookupElementBuilder.create("form="));
                         resultSet.addElement(LookupElementBuilder.create("fake="));
+                        resultSet.addElement(LookupElementBuilder.create("change="));
 
                         resultSet.addElement(LookupElementBuilder.create("reg="));
                         resultSet.addElement(LookupElementBuilder.create("max="));
                         resultSet.addElement(LookupElementBuilder.create("min="));
+                        resultSet.addElement(LookupElementBuilder.create("minLen="));
+                        resultSet.addElement(LookupElementBuilder.create("maxLen="));
+                        resultSet.addElement(LookupElementBuilder.create("maxLine="));
                         resultSet.addElement(LookupElementBuilder.create("null="));
                         resultSet.addElement(LookupElementBuilder.create("format="));
                         resultSet.addElement(LookupElementBuilder.create("onlyRead="));
