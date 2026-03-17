@@ -97,12 +97,14 @@ public class HbufCompletionContributor extends CompletionContributor {
                                                @NotNull CompletionResultSet resultSet) {
                         resultSet.addElement(LookupElementBuilder.create("table="));
                         resultSet.addElement(LookupElementBuilder.create("insert="));
+                        resultSet.addElement(LookupElementBuilder.create("replace="));
                         resultSet.addElement(LookupElementBuilder.create("update="));
                         resultSet.addElement(LookupElementBuilder.create("del="));
                         resultSet.addElement(LookupElementBuilder.create("get="));
                         resultSet.addElement(LookupElementBuilder.create("list="));
                         resultSet.addElement(LookupElementBuilder.create("listAsync="));
                         resultSet.addElement(LookupElementBuilder.create("inserts="));
+                        resultSet.addElement(LookupElementBuilder.create("replaces="));
                         resultSet.addElement(LookupElementBuilder.create("set="));
                         resultSet.addElement(LookupElementBuilder.create("count="));
                         resultSet.addElement(LookupElementBuilder.create("name="));

@@ -2,9 +2,6 @@ package ${goPackage}
 
 import (
 	"context"
-	"github.com/wskfjtheqian/hbuf_golang/pkg/hbuf"
-	"server/pkg/hbuf/erros"
-	"server/pkg/hbuf/${goPackage}"
 	"server/pkg/utils"
 	"time"
 )
@@ -93,7 +90,7 @@ func (s *Server) List${dataName}(ctx context.Context, req *${goPackage}.List${da
 	}
 
 	if req.LimitType == public.LimitTypeCountList || req.LimitType == public.LimitTypeList {
-		list, err := req.DbList(ctx, ${goPackage}.${dataName}FieldsByString(req.GetShowFields()...)...)
+		list, err := req.DbList(ctx, ${goPackage}.${dataName}FieldsByName(req.GetShowFields()...)...)
 		if nil != err {
 			return nil, err
 		}
@@ -118,7 +115,7 @@ func (s *Server) Status${dataName}(ctx context.Context, req *${goPackage}.Status
 #if (${genExport} == true)
 // Export${dataName} #if(${comment})导出${comment}#end
 func (s *Server) Export${dataName}(ctx context.Context, req *${goPackage}.Export${dataName}Req) (*${goPackage}.Export${dataName}Resp, error) {
-	url, err := utils.ExportExcel[${goPackage}.${dataName}](ctx, req, "", "${dataName}")
+	url, err := utils.ExportExcel[${goPackage}.${dataName}](ctx, req, "", "${dataName}", nil)
 	if err != nil {
 		return nil, err
 	}
