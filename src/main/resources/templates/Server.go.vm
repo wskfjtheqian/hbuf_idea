@@ -18,7 +18,7 @@ type Server struct {
 #if (${genGet} == true)
 // Get${dataName} #if(${comment})获得${comment}#end
 func (s *Server) Get${dataName}(ctx context.Context, req *${goPackage}.Get${dataName}Req) (*${goPackage}.Get${dataName}Resp, error) {
-	info, err := ${goPackage}.${dataName}{$util.upperFirst($util.underlineToCamel($dbIndex)): &req.$util.upperFirst($util.underlineToCamel($dbIndex))}.DbGet(ctx, ${goPackage}.${dataName}FieldsByString(req.GetShowFields()...)...)
+	info, err := ${goPackage}.${dataName}{$util.upperFirst($util.underlineToCamel($dbIndex)): &req.$util.upperFirst($util.underlineToCamel($dbIndex))}.DbGet(ctx, ${goPackage}.${dataName}FieldsByName(req.GetShowFields()...)...)
 	if err != nil {
 		return nil, err
 	}
@@ -50,7 +50,7 @@ func (s *Server) Add${dataName}(ctx context.Context, req *${goPackage}.Add${data
 #if (${genSet} == true)
 // Set${dataName} #if(${comment})修改${comment}#end
 func (s *Server) Set${dataName}(ctx context.Context, req *${goPackage}.Set${dataName}Req) (*${goPackage}.Set${dataName}Resp, error) {
-	changes := ${goPackage}.${dataName}FieldsByString(req.GetChangeFields()...)
+	changes := ${goPackage}.${dataName}FieldsByName(req.GetChangeFields()...)
 	if len(changes) == 0 {
 		return &${goPackage}.Set${dataName}Resp{}, nil
 	}
