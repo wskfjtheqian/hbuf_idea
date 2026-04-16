@@ -15,9 +15,7 @@ import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import javax.lang.model.element.Element;
 import java.util.*;
 
 public class HbufUtil {
@@ -35,6 +33,7 @@ public class HbufUtil {
             "double",
             "decimal",
             "string",
+            "bytes",
             "date"
     );
 
