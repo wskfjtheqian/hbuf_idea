@@ -37,7 +37,7 @@ import {
         #end
     } from "@/hbuf/${goPackage}.manage.data.ts";
     #end
-import InputLangChange from "@/components/input/InputLangChange.vue";
+import InputChange from "@/components/input/InputChange.vue";
 
 const ${goPackage}Api: ${util.upperFirst(${goPackage})}Manage = new ${util.upperFirst(${goPackage})}ManageClient(NetApi.instance.client)
 const locale = useLocale()
@@ -131,7 +131,7 @@ const handleReset = (ref: FormInstance | undefined) => {
              :disabled="true"
         #end
     >
-      <input-lang-change v-model="langChange">
+      <input-change v-model="langChange">
         <${util.camelToMiddleLine(${dataName}).toLowerCase()}-form-items :model="form" :isAdd="isAdd">
         </${util.camelToMiddleLine(${dataName}).toLowerCase()}-form-items>
           #if (${genAdd} == true || ${genSet} == true)
@@ -158,7 +158,7 @@ const handleReset = (ref: FormInstance | undefined) => {
           </el-form-item>
         </el-affix>
         #end
-      </input-lang-change>
+      </input-change>
     </el-form>
   </el-scrollbar>
 </template>

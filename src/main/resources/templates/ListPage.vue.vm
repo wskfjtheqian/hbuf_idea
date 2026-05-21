@@ -37,7 +37,7 @@
     EventBus.$off(EventMsg.refresh${dataName}List, searchForm);
   })
 #end
-  query.value.order = "DESC"
+  query.value.orderDesc = "${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}"
 
   const searchForm = () => {
     tryCatch({}, async () => {
@@ -90,7 +90,7 @@
       name: "nav.${util.lowerFirst(${dataName})}.get",
       params: {
         id: info.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}!.toString(),
-        name: info.name,
+        name: info.name?.toString() ?? info.${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}!.toString(),
       },
     })
   }
