@@ -7,13 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface HbufFuncList extends HbufServerFuncsElement {
 
-  @Nullable
-  HbufFuncList getFuncList();
-
-  @Nullable
-  HbufFuncStatement getFuncStatement();
-
-  @Nullable
-  PsiElement getIdent();
+  @NotNull
+  List<HbufFuncStatement> getFuncStatementList();
 
 }

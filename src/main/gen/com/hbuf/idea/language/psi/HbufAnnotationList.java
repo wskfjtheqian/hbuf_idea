@@ -8,9 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface HbufAnnotationList extends HbufAnnotationListElement {
 
   @NotNull
-  HbufAnnotationField getAnnotationField();
-
-  @Nullable
-  HbufAnnotationList getAnnotationList();
+  List<HbufAnnotationField> getAnnotationFieldList();
 
 }

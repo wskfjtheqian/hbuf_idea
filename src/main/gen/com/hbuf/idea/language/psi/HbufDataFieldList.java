@@ -7,13 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface HbufDataFieldList extends HbufDataFieldsElement {
 
-  @Nullable
-  HbufDataFieldList getDataFieldList();
-
-  @Nullable
-  HbufDataFieldStatement getDataFieldStatement();
-
-  @Nullable
-  PsiElement getIdent();
+  @NotNull
+  List<HbufDataFieldStatement> getDataFieldStatementList();
 
 }

@@ -93,7 +93,7 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // annotation-field [SEMICOLON annotation-list]
+  // annotation-field (SEMICOLON annotation-field)*
   public static boolean annotation_list(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "annotation_list")) return false;
     if (!nextTokenIs(b, IDENT)) return false;
@@ -105,26 +105,30 @@ public class HbufParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [SEMICOLON annotation-list]
+  // (SEMICOLON annotation-field)*
   private static boolean annotation_list_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "annotation_list_1")) return false;
-    annotation_list_1_0(b, l + 1);
+    while (true) {
+      int c = current_position_(b);
+      if (!annotation_list_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "annotation_list_1", c)) break;
+    }
     return true;
   }
 
-  // SEMICOLON annotation-list
+  // SEMICOLON annotation-field
   private static boolean annotation_list_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "annotation_list_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, SEMICOLON);
-    r = r && annotation_list(b, l + 1);
+    r = r && annotation_field(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   /* ********************************************************** */
-  // string [COMMA annotation-values]
+  // string (COMMA string)*
   public static boolean annotation_values(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "annotation_values")) return false;
     if (!nextTokenIs(b, STRINGREGEXP)) return false;
@@ -136,20 +140,24 @@ public class HbufParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [COMMA annotation-values]
+  // (COMMA string)*
   private static boolean annotation_values_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "annotation_values_1")) return false;
-    annotation_values_1_0(b, l + 1);
+    while (true) {
+      int c = current_position_(b);
+      if (!annotation_values_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "annotation_values_1", c)) break;
+    }
     return true;
   }
 
-  // COMMA annotation-values
+  // COMMA string
   private static boolean annotation_values_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "annotation_values_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, COMMA);
-    r = r && annotation_values(b, l + 1);
+    r = r && string(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -176,13 +184,17 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (data-field-statement | IDENT) [data-field-list]
+  // (data-field-statement | IDENT) +
   public static boolean data_field_list(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "data_field_list")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _COLLAPSE_, DATA_FIELD_LIST, "<data field list>");
+    Marker m = enter_section_(b, l, _NONE_, DATA_FIELD_LIST, "<data field list>");
     r = data_field_list_0(b, l + 1);
-    r = r && data_field_list_1(b, l + 1);
+    while (r) {
+      int c = current_position_(b);
+      if (!data_field_list_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "data_field_list", c)) break;
+    }
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -194,13 +206,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = data_field_statement(b, l + 1);
     if (!r) r = consumeToken(b, IDENT);
     return r;
-  }
-
-  // [data-field-list]
-  private static boolean data_field_list_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "data_field_list_1")) return false;
-    data_field_list(b, l + 1);
-    return true;
   }
 
   /* ********************************************************** */
@@ -288,23 +293,20 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // enum-field-statement [enum-field-list]
+  // enum-field-statement+
   public static boolean enum_field_list(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_field_list")) return false;
     if (!nextTokenIs(b, "<enum field list>", IDENT, LBRACK)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, ENUM_FIELD_LIST, "<enum field list>");
     r = enum_field_statement(b, l + 1);
-    r = r && enum_field_list_1(b, l + 1);
+    while (r) {
+      int c = current_position_(b);
+      if (!enum_field_statement(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "enum_field_list", c)) break;
+    }
     exit_section_(b, l, m, r, false, null);
     return r;
-  }
-
-  // [enum-field-list]
-  private static boolean enum_field_list_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "enum_field_list_1")) return false;
-    enum_field_list(b, l + 1);
-    return true;
   }
 
   /* ********************************************************** */
@@ -385,13 +387,17 @@ public class HbufParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (func-statement | IDENT) [func-list]
+  // (func-statement | IDENT)+
   public static boolean func_list(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_list")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _COLLAPSE_, FUNC_LIST, "<func list>");
+    Marker m = enter_section_(b, l, _NONE_, FUNC_LIST, "<func list>");
     r = func_list_0(b, l + 1);
-    r = r && func_list_1(b, l + 1);
+    while (r) {
+      int c = current_position_(b);
+      if (!func_list_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "func_list", c)) break;
+    }
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -403,13 +409,6 @@ public class HbufParser implements PsiParser, LightPsiParser {
     r = func_statement(b, l + 1);
     if (!r) r = consumeToken(b, IDENT);
     return r;
-  }
-
-  // [func-list]
-  private static boolean func_list_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "func_list_1")) return false;
-    func_list(b, l + 1);
-    return true;
   }
 
   /* ********************************************************** */

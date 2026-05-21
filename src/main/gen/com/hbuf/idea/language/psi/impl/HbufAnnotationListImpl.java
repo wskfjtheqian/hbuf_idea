@@ -28,14 +28,8 @@ public class HbufAnnotationListImpl extends HbufAnnotationListElementImpl implem
 
   @Override
   @NotNull
-  public HbufAnnotationField getAnnotationField() {
-    return findNotNullChildByClass(HbufAnnotationField.class);
-  }
-
-  @Override
-  @Nullable
-  public HbufAnnotationList getAnnotationList() {
-    return findChildByClass(HbufAnnotationList.class);
+  public List<HbufAnnotationField> getAnnotationFieldList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, HbufAnnotationField.class);
   }
 
 }

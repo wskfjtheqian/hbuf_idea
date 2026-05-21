@@ -27,15 +27,9 @@ public class HbufAnnotationValuesImpl extends HbufAnnotationValuesElementImpl im
   }
 
   @Override
-  @Nullable
-  public HbufAnnotationValues getAnnotationValues() {
-    return findChildByClass(HbufAnnotationValues.class);
-  }
-
-  @Override
   @NotNull
-  public HbufString getString() {
-    return findNotNullChildByClass(HbufString.class);
+  public List<HbufString> getStringList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, HbufString.class);
   }
 
 }

@@ -90,7 +90,7 @@ data-body::=LBRACE [data-field-list] RBRACE {
     implements="com.hbuf.idea.language.psi.HbufDataBodyElement"
 }
 
-data-field-list::= (data-field-statement | IDENT) [data-field-list]{
+data-field-list::= (data-field-statement | IDENT) +{
      mixin="com.hbuf.idea.language.psi.impl.HbufDataFieldsElementImpl"
     implements="com.hbuf.idea.language.psi.HbufDataFieldsElement"
 }
@@ -134,7 +134,7 @@ annotation::=(LBRACK ident-name COLON [annotation-list] RBRACK){
     implements="com.hbuf.idea.language.psi.HbufAnnotationElement"
 }
 
-annotation-list::= annotation-field [SEMICOLON annotation-list]  {
+annotation-list::= annotation-field (SEMICOLON annotation-field)*  {
     mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationListElementImpl"
     implements="com.hbuf.idea.language.psi.HbufAnnotationListElement"
 }
@@ -144,7 +144,7 @@ annotation-field::= ident-name ASSIGN annotation-values {
     implements="com.hbuf.idea.language.psi.HbufAnnotationFieldElement"
 }
 
-annotation-values::= string [COMMA annotation-values]{
+annotation-values::= string (COMMA string)*{
     mixin="com.hbuf.idea.language.psi.impl.HbufAnnotationValuesElementImpl"
     implements="com.hbuf.idea.language.psi.HbufAnnotationValuesElement"
 }
@@ -159,7 +159,7 @@ server-body::=LBRACE [func-list] RBRACE {
    implements="com.hbuf.idea.language.psi.HbufServerBodyElement"
 }
 
-func-list::= (func-statement | IDENT) [func-list]{
+func-list::= (func-statement | IDENT)+{
     mixin="com.hbuf.idea.language.psi.impl.HbufServerFuncsElementImpl"
     implements="com.hbuf.idea.language.psi.HbufServerFuncsElement"
 }
@@ -189,7 +189,7 @@ enum-body::=LBRACE [enum-field-list] RBRACE {
     implements="com.hbuf.idea.language.psi.HbufEnumBodyElement"
 }
 
-enum-field-list::= enum-field-statement [enum-field-list]{
+enum-field-list::= enum-field-statement+{
    mixin="com.hbuf.idea.language.psi.impl.HbufEnumFieldsElementImpl"
    implements="com.hbuf.idea.language.psi.HbufEnumFieldsElement"
 }

@@ -1,6 +1,7 @@
 package com.hbuf.idea.language.psi.impl;
 
 import com.hbuf.idea.language.psi.HbufEnumFieldElement;
+import com.hbuf.idea.language.psi.HbufEnumFieldStatement;
 import com.hbuf.idea.language.psi.HbufEnumFieldsElement;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
@@ -17,16 +18,8 @@ public abstract class HbufEnumFieldsElementImpl extends ASTWrapperPsiElement imp
 
     @Override
     public Collection<HbufEnumFieldElement> getFields() {
-        List<HbufEnumFieldElement> list = new ArrayList();
-        HbufEnumFieldsElementImpl element = this;
-        while (null != element) {
-            list.add(element.getEnumFieldStatement());
-            element = (HbufEnumFieldsElementImpl) element.getEnumFieldList();
-        }
-        return list;
+        return new ArrayList<>(getEnumFieldStatementList());
     }
 
-    abstract HbufEnumFieldsElement getEnumFieldList();
-
-    abstract HbufEnumFieldElement getEnumFieldStatement();
+    abstract List<HbufEnumFieldStatement> getEnumFieldStatementList();
 }

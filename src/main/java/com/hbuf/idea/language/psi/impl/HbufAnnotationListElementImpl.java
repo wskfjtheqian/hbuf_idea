@@ -18,18 +18,9 @@ public abstract class HbufAnnotationListElementImpl extends ASTWrapperPsiElement
 
     @Override
     public Collection<HbufAnnotationFieldElement> getFields() {
-        List<HbufAnnotationFieldElement> list = new ArrayList();
-        HbufAnnotationListElementImpl element = this;
-        while (null != element) {
-            list.add(element.getAnnotationField());
-            element = (HbufAnnotationListElementImpl) element.getAnnotationList();
-        }
-        return list;
+        return new ArrayList<>(getAnnotationFieldList());
     }
 
-    @NotNull
-    abstract HbufAnnotationFieldElement getAnnotationField();
 
-    
-    abstract HbufAnnotationListElement getAnnotationList();
+    abstract  List<HbufAnnotationField> getAnnotationFieldList();
 }

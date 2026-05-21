@@ -1,6 +1,7 @@
 package com.hbuf.idea.language.psi.impl;
 
 import com.hbuf.idea.language.psi.HbufDataFieldElement;
+import com.hbuf.idea.language.psi.HbufDataFieldStatement;
 import com.hbuf.idea.language.psi.HbufDataFieldsElement;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
@@ -17,17 +18,8 @@ public abstract class HbufDataFieldsElementImpl extends ASTWrapperPsiElement imp
 
     @Override
     public Collection<HbufDataFieldElement> getFields() {
-        List<HbufDataFieldElement> list = new ArrayList();
-        HbufDataFieldsElementImpl element = this;
-        while (null != element) {
-            list.add(element.getDataFieldStatement());
-            element = (HbufDataFieldsElementImpl) element.getDataFieldList();
-        }
-        return list;
+        return new ArrayList<>(getDataFieldStatementList());
     }
 
-    abstract HbufDataFieldsElement getDataFieldList();
-
-    abstract HbufDataFieldElement getDataFieldStatement();
-
+    abstract List<HbufDataFieldStatement> getDataFieldStatementList();
 }

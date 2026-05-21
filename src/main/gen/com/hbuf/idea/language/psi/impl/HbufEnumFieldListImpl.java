@@ -27,15 +27,9 @@ public class HbufEnumFieldListImpl extends HbufEnumFieldsElementImpl implements 
   }
 
   @Override
-  @Nullable
-  public HbufEnumFieldList getEnumFieldList() {
-    return findChildByClass(HbufEnumFieldList.class);
-  }
-
-  @Override
   @NotNull
-  public HbufEnumFieldStatement getEnumFieldStatement() {
-    return findNotNullChildByClass(HbufEnumFieldStatement.class);
+  public List<HbufEnumFieldStatement> getEnumFieldStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, HbufEnumFieldStatement.class);
   }
 
 }
