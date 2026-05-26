@@ -52,7 +52,7 @@
         </context>
     </template>
     <template description='Server function declaration' name='Function' toReformat='true' toShortenFQNames='true'
-              value='$SELECTION$Reps $SELECTION$($SELECTION$Req req) = $ID$'>
+              value='$SELECTION$Resp $SELECTION$($SELECTION$Req req) = $ID$'>
         <variable alwaysStopAt='true' defaultValue='' expression='' name='ID'/>
         <context>
             <option name='HBUF_SERVER' value='true'/>

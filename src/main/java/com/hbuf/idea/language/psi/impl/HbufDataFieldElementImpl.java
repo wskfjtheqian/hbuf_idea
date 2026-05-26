@@ -28,7 +28,11 @@ public abstract class HbufDataFieldElementImpl extends ASTWrapperPsiElement impl
 
     @Override
     public @Nullable PsiElement getComment() {
-        PsiElement leaf = this.getParent().getPrevSibling();
+        PsiElement leaf = this.getPrevSibling();
+        if (leaf == null) {
+            leaf = this.getParent().getPrevSibling();
+        }
+
         while (leaf instanceof PsiWhiteSpace) {
             leaf = leaf.getPrevSibling();
         }
