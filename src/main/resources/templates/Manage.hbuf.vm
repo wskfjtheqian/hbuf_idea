@@ -138,7 +138,7 @@ data MgDel${dataName}Resp:Del${dataName}Resp = 1  {
 #if(${comment})
 //修改${comment}请求体
 #end
-[verify:]
+[verify:fields="change_fields"]
 data MgSet${dataName}Req:Set${dataName}Req = 1  {
 }
 
