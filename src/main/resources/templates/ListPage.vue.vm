@@ -37,7 +37,7 @@
     EventBus.$off(EventMsg.refresh${dataName}List, searchForm);
   })
 #end
-  query.value.orderDesc = "${util.lowerFirst(${util.underlineToCamel(${dbIndex})})}"
+  query.value.orderDesc = "${dbIndex}"
 
   const searchForm = () => {
     tryCatch({}, async () => {

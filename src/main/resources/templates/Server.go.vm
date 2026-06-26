@@ -90,6 +90,7 @@ func (s *Server) List${dataName}(ctx context.Context, req *${goPackage}.List${da
 	}
 
 	if req.LimitType == public.LimitTypeCountList || req.LimitType == public.LimitTypeList {
+		utils.FieldToDbName(req.OrderDesc, ${goPackage}.${dataName}FieldsByName)
 		list, err := req.DbList(ctx, ${goPackage}.${dataName}FieldsByName(req.GetShowFields()...)...)
 		if nil != err {
 			return nil, err
