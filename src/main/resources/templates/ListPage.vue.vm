@@ -27,6 +27,7 @@
   const total = ref<number>(0)
   const selection = ref<${dataName}[]>([])
   const settingRef = ref<InstanceType<typeof TableColumnSetting> | null>(null);
+  import {beforeTodayRange} from "@/public/time.ts";
 
 #if (${genAdd} == true || ${genSet} == true)
   onMounted(() => {
@@ -37,6 +38,7 @@
     EventBus.$off(EventMsg.refresh${dataName}List, searchForm);
   })
 #end
+  beforeTodayRange(query.value, "rangeCreateTimes", 7)
   query.value.orderDesc = "${dbIndex}"
 
   const searchForm = () => {
