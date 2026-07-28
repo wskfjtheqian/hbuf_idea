@@ -120,7 +120,10 @@ const handleReset = (ref: FormInstance | undefined) => {
 <template>
   <el-scrollbar class="app-form-page">
 
-    <el-form ref="formRef" :model="form" label-width="auto"
+    <el-form
+        ref="formRef"
+        :model="form"
+        label-width="auto"
         #if (${genAdd} == true && ${genSet} == true)
              :disabled="!power([AdminPower.ADD${util.camelToUnderline(${dataName}).toUpperCase()}, AdminPower.SET${util.camelToUnderline(${dataName}).toUpperCase()}])"
         #elseif (${genAdd} == true)

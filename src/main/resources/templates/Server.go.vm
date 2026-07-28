@@ -86,6 +86,9 @@ func (s *Server) List${dataName}(ctx context.Context, req *${goPackage}.List${da
 		if nil != err {
 			return nil, err
 		}
+		if count == 0 {
+			return ret, nil
+		}
 		ret.SetTotal(int32(count))
 	}
 
