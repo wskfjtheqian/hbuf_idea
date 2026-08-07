@@ -1,4 +1,4 @@
-package ${goPackage}
+package internal
 
 import (
 	"context"
@@ -27,6 +27,7 @@ func (m *Handler) MgExport${dataName}(ctx context.Context, req *${goPackage}.MgE
 		${goPackage}.${util.upperFirst(${goPackage})}Server.Export${dataName},
 		req,
 		"Export ${dataName}",
+		-1,
 	)
 	if err != nil {
 		return nil, err

@@ -1,17 +1,18 @@
-package ${goPackage}
+package internal
 
 import (
 	"context"
 	"server/pkg/utils"
+	"server/pkg/utils"
 	"time"
 )
 
-func NewServer(app *App) ${goPackage}.${util.upperFirst(${goPackage})}Server {
+func NewServer(app utils.App) ${goPackage}.${util.upperFirst(${goPackage})}Server {
 	return &Server{app: app}
 }
 
 type Server struct {
-	app *App
+	app utils.App
 }
 
 
@@ -30,7 +31,7 @@ func (s *Server) Get${dataName}(ctx context.Context, req *${goPackage}.Get${data
 #if (${genAdd} == true)
 // Add${dataName} #if(${comment})添加${comment}#end
 func (s *Server) Add${dataName}(ctx context.Context, req *${goPackage}.Add${dataName}Req) (*${goPackage}.Add${dataName}Resp, error) {
-	id, err := s.app. ${util.lowerFirst(${util.underlineToCamel(${dbIndex})})} .NextId(ctx)
+	id, err := s. ${util.lowerFirst(${util.underlineToCamel(${dbIndex})})} .NextId(ctx)
 	if err != nil {
 		return nil, err
 	}

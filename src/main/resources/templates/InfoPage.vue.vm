@@ -89,6 +89,11 @@ const handleAdd = async (ref: FormInstance | undefined) => {
 
 #if (${genSet} == true)
 const handleSave = async (ref: FormInstance | undefined) => {
+  if (!langChange.value) {
+    ElMessage.success(locale.t("public.modifiedSuccessfully"))
+    return
+  }
+  
   if (!await ref!.validate()) return
   const {change, fields} = form.value.$getChangeField(initValue!, "")
   if (fields.length == 0) {
