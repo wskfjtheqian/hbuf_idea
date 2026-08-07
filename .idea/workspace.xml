@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="afda2a2c-465a-4a2e-aeb4-1da08dfdf2c3" name="Changes" comment="refactor(psi): 重构 PSI 元素实现以使用列表方法">
+    <list default="true" id="afda2a2c-465a-4a2e-aeb4-1da08dfdf2c3" name="Changes" comment="refactor(template): 重构模板文件结构和命名规范&#10;&#10;- 将 InfoPage.vue.vm 中的 el-form 标签属性分行格式化&#10;- 将 Manage.go.vm 中的结构体名称从 Manage 重命名为 Handler&#10;- 更新 NewManage 函数名为 NewHandler 并修改返回类型&#10;- 将所有方法接收器从 *Manage 修改为 *Handler&#10;- 在 Server.go.vm 中添加零计数时的早期返回逻辑&#10;- 更新项目版本号从 1.2.2.0 到 1.2.3.0">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -243,7 +244,20 @@
       <workItem from="1780111261978" duration="1302000" />
       <workItem from="1780713459781" duration="5086000" />
       <workItem from="1781750561102" duration="2783000" />
-      <workItem from="1781764855678" duration="3635000" />
+      <workItem from="1781764855678" duration="4290000" />
+      <workItem from="1782695955054" duration="186000" />
+      <workItem from="1782696176632" duration="599000" />
+      <workItem from="1782800557888" duration="599000" />
+      <workItem from="1782892649479" duration="1398000" />
+      <workItem from="1782896258521" duration="1204000" />
+      <workItem from="1783403141614" duration="1825000" />
+      <workItem from="1783907850839" duration="1196000" />
+      <workItem from="1784089829635" duration="3055000" />
+      <workItem from="1784509391355" duration="303000" />
+      <workItem from="1784509729417" duration="6576000" />
+      <workItem from="1785151139601" duration="599000" />
+      <workItem from="1785204017235" duration="1043000" />
+      <workItem from="1785206941300" duration="3747000" />
     </task>
     <task id="LOCAL-00001" summary="feat: 添加字段sqlType和defaultValue并优化模板代码">
       <option name="closed" value="true" />
@@ -453,7 +467,23 @@
       <option name="project" value="LOCAL" />
       <updated>1782438849483</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="chore(build): 更新项目版本号从 1.2.1.3 到 1.2.2.0">
+      <option name="closed" value="true" />
+      <created>1782438892336</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1782438892336</updated>
+    </task>
+    <task id="LOCAL-00028" summary="refactor(template): 重构模板文件结构和命名规范&#10;&#10;- 将 InfoPage.vue.vm 中的 el-form 标签属性分行格式化&#10;- 将 Manage.go.vm 中的结构体名称从 Manage 重命名为 Handler&#10;- 更新 NewManage 函数名为 NewHandler 并修改返回类型&#10;- 将所有方法接收器从 *Manage 修改为 *Handler&#10;- 在 Server.go.vm 中添加零计数时的早期返回逻辑&#10;- 更新项目版本号从 1.2.2.0 到 1.2.3.0">
+      <option name="closed" value="true" />
+      <created>1785206674542</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1785206674542</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -471,8 +501,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: 添加字段sqlType和defaultValue并优化模板代码" />
-    <MESSAGE value="refactor: 添加字段sqlType和defaultValue并优化模板代码" />
     <MESSAGE value="refactor: 修改字段类型并优化模板代码" />
     <MESSAGE value="refactor(core): 修改字段类型并优化模板代码" />
     <MESSAGE value="fix(ui): 使用goBack替换router.back" />
@@ -496,7 +524,9 @@
     <MESSAGE value="fix(parser): 修复注释获取逻辑并更新模板变量命名&#10;&#10;- 修复了 PSI 元素注释获取时父节点查找的问题&#10;- 将 liveTemplates 中函数声明的返回类型从 Reps 统一改为 Resp&#10;- 更新了 Go 模板中变量名从 reps 改为 resp 以保持一致性&#10;- 项目版本号从 1.2.1.0 更新到 1.2.1.2" />
     <MESSAGE value="feat(manage): 更新验证字段配置&#10;&#10;- 修改模板中的验证注释格式&#10;- 添加字段变更跟踪功能支持&#10;- 更新数据请求结构定义方式" />
     <MESSAGE value="refactor(psi): 重构 PSI 元素实现以使用列表方法" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor(psi): 重构 PSI 元素实现以使用列表方法" />
+    <MESSAGE value="chore(build): 更新项目版本号从 1.2.1.3 到 1.2.2.0" />
+    <MESSAGE value="refactor(template): 重构模板文件结构和命名规范&#10;&#10;- 将 InfoPage.vue.vm 中的 el-form 标签属性分行格式化&#10;- 将 Manage.go.vm 中的结构体名称从 Manage 重命名为 Handler&#10;- 更新 NewManage 函数名为 NewHandler 并修改返回类型&#10;- 将所有方法接收器从 *Manage 修改为 *Handler&#10;- 在 Server.go.vm 中添加零计数时的早期返回逻辑&#10;- 更新项目版本号从 1.2.2.0 到 1.2.3.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor(template): 重构模板文件结构和命名规范&#10;&#10;- 将 InfoPage.vue.vm 中的 el-form 标签属性分行格式化&#10;- 将 Manage.go.vm 中的结构体名称从 Manage 重命名为 Handler&#10;- 更新 NewManage 函数名为 NewHandler 并修改返回类型&#10;- 将所有方法接收器从 *Manage 修改为 *Handler&#10;- 在 Server.go.vm 中添加零计数时的早期返回逻辑&#10;- 更新项目版本号从 1.2.2.0 到 1.2.3.0" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
