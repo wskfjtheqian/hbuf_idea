@@ -128,6 +128,8 @@ public class HbufCompletionContributor extends CompletionContributor {
                         resultSet.addElement(LookupElementBuilder.create("digit="));
                         resultSet.addElement(LookupElementBuilder.create("tag="));
                         resultSet.addElement(LookupElementBuilder.create("toNull="));
+                        resultSet.addElement(LookupElementBuilder.create("formAttr="));
+                        resultSet.addElement(LookupElementBuilder.create("tableAttr="));
 
                         resultSet.addElement(LookupElementBuilder.create("value="));
                         resultSet.addElement(LookupElementBuilder.create("textarea="));

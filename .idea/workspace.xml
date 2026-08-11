@@ -7,6 +7,7 @@
     <list default="true" id="afda2a2c-465a-4a2e-aeb4-1da08dfdf2c3" name="Changes" comment="refactor(template): 重构模板文件结构和命名规范&#10;&#10;- 将 InfoPage.vue.vm 中的 el-form 标签属性分行格式化&#10;- 将 Manage.go.vm 中的结构体名称从 Manage 重命名为 Handler&#10;- 更新 NewManage 函数名为 NewHandler 并修改返回类型&#10;- 将所有方法接收器从 *Manage 修改为 *Handler&#10;- 在 Server.go.vm 中添加零计数时的早期返回逻辑&#10;- 更新项目版本号从 1.2.2.0 到 1.2.3.0">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hbuf/idea/language/completion/HbufCompletionContributor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hbuf/idea/language/completion/HbufCompletionContributor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -258,6 +259,9 @@
       <workItem from="1785151139601" duration="599000" />
       <workItem from="1785204017235" duration="1043000" />
       <workItem from="1785206941300" duration="3747000" />
+      <workItem from="1786120337130" duration="45000" />
+      <workItem from="1786120558585" duration="4282000" />
+      <workItem from="1786345077553" duration="1381000" />
     </task>
     <task id="LOCAL-00001" summary="feat: 添加字段sqlType和defaultValue并优化模板代码">
       <option name="closed" value="true" />
@@ -483,7 +487,15 @@
       <option name="project" value="LOCAL" />
       <updated>1785206674542</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="refactor(template): 重构模板文件结构和命名规范&#10;&#10;- 将 InfoPage.vue.vm 中的 el-form 标签属性分行格式化&#10;- 将 Manage.go.vm 中的结构体名称从 Manage 重命名为 Handler&#10;- 更新 NewManage 函数名为 NewHandler 并修改返回类型&#10;- 将所有方法接收器从 *Manage 修改为 *Handler&#10;- 在 Server.go.vm 中添加零计数时的早期返回逻辑&#10;- 更新项目版本号从 1.2.2.0 到 1.2.3.0">
+      <option name="closed" value="true" />
+      <created>1786120357487</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1786120357487</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
