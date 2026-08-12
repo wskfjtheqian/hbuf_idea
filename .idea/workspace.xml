@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="afda2a2c-465a-4a2e-aeb4-1da08dfdf2c3" name="Changes" comment="refactor(template): 重构模板文件结构和命名规范&#10;&#10;- 将 InfoPage.vue.vm 中的 el-form 标签属性分行格式化&#10;- 将 Manage.go.vm 中的结构体名称从 Manage 重命名为 Handler&#10;- 更新 NewManage 函数名为 NewHandler 并修改返回类型&#10;- 将所有方法接收器从 *Manage 修改为 *Handler&#10;- 在 Server.go.vm 中添加零计数时的早期返回逻辑&#10;- 更新项目版本号从 1.2.2.0 到 1.2.3.0">
+    <list default="true" id="afda2a2c-465a-4a2e-aeb4-1da08dfdf2c3" name="Changes" comment="refactor(completion): 优化代码补全功能并更新版本号&#10;&#10;- 在 HbufCompletionContributor 中添加 formAttr 和 tableAttr 补全项&#10;- 更新项目版本号从 1.2.2.1 到 1.2.2.3&#10;- 重构模板文件结构和命名规范，将 Manage 重命名为 Handler&#10;- 添加零计数时的早期返回逻辑优化性能">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hbuf/idea/language/completion/HbufCompletionContributor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hbuf/idea/language/completion/HbufCompletionContributor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/InfoPage.vue.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/InfoPage.vue.vm" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +50,17 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="hbuf_idea" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="hbuf_idea" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="hbuf_idea" type="f1a62948:ProjectNode" />
                 <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
               </path>
             </expand>
@@ -86,39 +97,62 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.hbuf_idea [buildPlugin].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.hbuf_idea [runIde].executor&quot;: &quot;Debug&quot;,
-    &quot;Gradle.hbuf_idea [setupDependencies].executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master__edit&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/develop/hbuf/hbuf_idea&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.hbuf_idea [buildPlugin].executor": "Debug",
+    "Gradle.hbuf_idea [clean].executor": "Run",
+    "Gradle.hbuf_idea [runIde].executor": "Debug",
+    "Gradle.hbuf_idea [setupDependencies].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "master__edit",
+    "go.import.settings.migrated": "true",
+    "go.sdk.automatically.set": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "E:/develop/hbuf/hbuf_idea",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "show.migrate.to.gradle.popup": "false",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Gradle.hbuf_idea [buildPlugin]">
     <configuration name="hbuf_idea [buildPlugin]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="buildPlugin" />
+          </list>
+        </option>
+        <option name="vmOptions" value="" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="hbuf_idea [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -129,7 +163,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="buildPlugin" />
+            <option value="clean" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -162,9 +196,15 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Gradle.hbuf_idea [buildPlugin]" />
+      <item itemvalue="Gradle.hbuf_idea [clean]" />
+      <item itemvalue="Gradle.hbuf_idea [runIde]" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.hbuf_idea [buildPlugin]" />
+        <item itemvalue="Gradle.hbuf_idea [clean]" />
         <item itemvalue="Gradle.hbuf_idea [runIde]" />
       </list>
     </recent_temporary>
@@ -261,7 +301,11 @@
       <workItem from="1785206941300" duration="3747000" />
       <workItem from="1786120337130" duration="45000" />
       <workItem from="1786120558585" duration="4282000" />
-      <workItem from="1786345077553" duration="1381000" />
+      <workItem from="1786345077553" duration="2004000" />
+      <workItem from="1789701703447" duration="458000" />
+      <workItem from="1789702201653" duration="534000" />
+      <workItem from="1789702867679" duration="403000" />
+      <workItem from="1786499478396" duration="231000" />
     </task>
     <task id="LOCAL-00001" summary="feat: 添加字段sqlType和defaultValue并优化模板代码">
       <option name="closed" value="true" />
@@ -495,7 +539,15 @@
       <option name="project" value="LOCAL" />
       <updated>1786120357487</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="refactor(completion): 优化代码补全功能并更新版本号&#10;&#10;- 在 HbufCompletionContributor 中添加 formAttr 和 tableAttr 补全项&#10;- 更新项目版本号从 1.2.2.1 到 1.2.2.3&#10;- 重构模板文件结构和命名规范，将 Manage 重命名为 Handler&#10;- 添加零计数时的早期返回逻辑优化性能">
+      <option name="closed" value="true" />
+      <created>1786410847624</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1786410847624</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -513,7 +565,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor: 修改字段类型并优化模板代码" />
     <MESSAGE value="refactor(core): 修改字段类型并优化模板代码" />
     <MESSAGE value="fix(ui): 使用goBack替换router.back" />
     <MESSAGE value="fix(ui): 使用goBack替换router.back&#10;perf: 优化模板代码和Go代码逻辑" />
@@ -538,7 +589,8 @@
     <MESSAGE value="refactor(psi): 重构 PSI 元素实现以使用列表方法" />
     <MESSAGE value="chore(build): 更新项目版本号从 1.2.1.3 到 1.2.2.0" />
     <MESSAGE value="refactor(template): 重构模板文件结构和命名规范&#10;&#10;- 将 InfoPage.vue.vm 中的 el-form 标签属性分行格式化&#10;- 将 Manage.go.vm 中的结构体名称从 Manage 重命名为 Handler&#10;- 更新 NewManage 函数名为 NewHandler 并修改返回类型&#10;- 将所有方法接收器从 *Manage 修改为 *Handler&#10;- 在 Server.go.vm 中添加零计数时的早期返回逻辑&#10;- 更新项目版本号从 1.2.2.0 到 1.2.3.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor(template): 重构模板文件结构和命名规范&#10;&#10;- 将 InfoPage.vue.vm 中的 el-form 标签属性分行格式化&#10;- 将 Manage.go.vm 中的结构体名称从 Manage 重命名为 Handler&#10;- 更新 NewManage 函数名为 NewHandler 并修改返回类型&#10;- 将所有方法接收器从 *Manage 修改为 *Handler&#10;- 在 Server.go.vm 中添加零计数时的早期返回逻辑&#10;- 更新项目版本号从 1.2.2.0 到 1.2.3.0" />
+    <MESSAGE value="refactor(completion): 优化代码补全功能并更新版本号&#10;&#10;- 在 HbufCompletionContributor 中添加 formAttr 和 tableAttr 补全项&#10;- 更新项目版本号从 1.2.2.1 到 1.2.2.3&#10;- 重构模板文件结构和命名规范，将 Manage 重命名为 Handler&#10;- 添加零计数时的早期返回逻辑优化性能" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor(completion): 优化代码补全功能并更新版本号&#10;&#10;- 在 HbufCompletionContributor 中添加 formAttr 和 tableAttr 补全项&#10;- 更新项目版本号从 1.2.2.1 到 1.2.2.3&#10;- 重构模板文件结构和命名规范，将 Manage 重命名为 Handler&#10;- 添加零计数时的早期返回逻辑优化性能" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

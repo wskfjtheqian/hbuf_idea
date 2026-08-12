@@ -45,7 +45,7 @@ const formRef = ref<FormInstance>()
 const form = ref<${dataName}>(new ${dataName}())
 const isAdd = ref(false)
 const current = router.currentRoute.value.params
-const langChange = ref(false)
+const inputChange = ref(false)
 
 let initValue: ${dataName} | null
 #if (${genAdd} == true)
@@ -76,6 +76,7 @@ onMounted(init)
 #if (${genAdd} == true)
 const handleAdd = async (ref: FormInstance | undefined) => {
   if (!await ref!.validate()) return
+
   await tryCatch({}, async () => {
     const req = objectAssign(new MgAdd${dataName}Req(), form.value)
     req.token = token!
@@ -89,19 +90,17 @@ const handleAdd = async (ref: FormInstance | undefined) => {
 
 #if (${genSet} == true)
 const handleSave = async (ref: FormInstance | undefined) => {
-  if (!langChange.value) {
-    ElMessage.success(locale.t("public.modifiedSuccessfully"))
-    return
-  }
-  
   if (!await ref!.validate()) return
   const {change, fields} = form.value.$getChangeField(initValue!, "")
   if (fields.length == 0) {
-    ElMessage.warning(locale.t("public.notChange"))
+    if (!inputChange.value) {
+      ElMessage.warning(t("public.notChange"))
+    } else {
+      ElMessage.success(t("public.modifiedSuccessfully"))
+    }
     return
   }
 
-  if (!await ref!.validate()) return
   await tryCatch({}, async () => {
     const req = objectAssign(new MgSet${dataName}Req(), change)
     req.changeFields = fields
@@ -139,7 +138,7 @@ const handleReset = (ref: FormInstance | undefined) => {
              :disabled="true"
         #end
     >
-      <input-change v-model="langChange">
+      <input-change v-model="inputChange">
         <${util.camelToMiddleLine(${dataName}).toLowerCase()}-form-items :model="form" :isAdd="isAdd">
         </${util.camelToMiddleLine(${dataName}).toLowerCase()}-form-items>
           #if (${genAdd} == true || ${genSet} == true)
