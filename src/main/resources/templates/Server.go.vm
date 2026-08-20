@@ -120,6 +120,7 @@ func (s *Server) Status${dataName}(ctx context.Context, req *${goPackage}.Status
 #if (${genExport} == true)
 // Export${dataName} #if(${comment})导出${comment}#end
 func (s *Server) Export${dataName}(ctx context.Context, req *${goPackage}.Export${dataName}Req) (*${goPackage}.Export${dataName}Resp, error) {
+	utils.FieldToDbName(req.OrderDesc, ${goPackage}.{dataName}FieldsByName)
 	url, err := utils.ExportExcel[${goPackage}.${dataName}](ctx, req, "", "${dataName}", nil)
 	if err != nil {
 		return nil, err
