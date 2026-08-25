@@ -74,7 +74,7 @@
 
 #if (${genDel} == true)
   const handleDelete = async () => {
-    await ElMessageBox.confirm(locale.t('public.deleteConfirm', {name: locale.t('public.selectedItem')})).catch(() => null)
+    await ElMessageBox.confirm(locale.t('public.deleteConfirm', {name: locale.t('public.selectedItem')}))
 
     await tryCatch({}, () => {
       let req = new MgDel${dataName}Req();

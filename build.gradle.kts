@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.hbuf.idea"
-version = "1.2.2.5"
+version = "1.2.2.6"
 
 repositories {
     mavenCentral()
