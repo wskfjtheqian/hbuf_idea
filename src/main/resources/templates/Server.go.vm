@@ -5,6 +5,8 @@ import (
 	"server/pkg/utils"
 	"server/pkg/utils"
 	"time"
+
+	"github.com/wskfjtheqian/hbuf_golang/pkg/hsql"
 )
 
 func NewServer(app utils.App) ${goPackage}.${util.upperFirst(${goPackage})}Server {
@@ -39,7 +41,7 @@ func (s *Server) Add${dataName}(ctx context.Context, req *${goPackage}.Add${data
 	req.DbClearChangeFields()
 	req.Set${util.upperFirst(${util.underlineToCamel(${dbIndex})})}(id)
 	req.SetCreateTime(time.Now())
-	_, _, err = req.DbInsert(ctx)
+	_, _, err = req.DbInsert(ctx, hsql.Insert)
 	if err != nil {
 		return nil, err
 	}

@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="afda2a2c-465a-4a2e-aeb4-1da08dfdf2c3" name="Changes" comment="fix(template): 修复导出方法中字段映射的语法错误并补充升序支持&#10;&#10;- 修复 FieldToDbName 调用中变量引用缺少 $ 符号的语法错误&#10;- 新增对 OrderAsc 字段的 FieldToDbName 转换处理&#10;- 版本号升级至 1.2.2.7">
-      <change afterPath="$PROJECT_DIR$/.idea/easy-i18n.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/go.imports.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="afda2a2c-465a-4a2e-aeb4-1da08dfdf2c3" name="Changes" comment="refactor(template): 重构模板中字段转换方法调用方式&#10;&#10;- 将两次 FieldToDbName 调用合并为一次 FieldsToDbName 调用&#10;- 简化 Server.go.vm 中导出方法的排序字段转换逻辑&#10;- 项目版本号升级至 1.2.2.8">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/Manage.go.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/Manage.go.vm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/Server.go.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/Server.go.vm" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -570,7 +566,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix(ui): 使用goBack替换router.back" />
     <MESSAGE value="fix(ui): 使用goBack替换router.back&#10;perf: 优化模板代码和Go代码逻辑" />
     <MESSAGE value="fix(ui): 修正查询默认排序逻辑" />
     <MESSAGE value="fix(ui): 修正查询默认排序逻辑&#10;perf: 优化模板代码和Go代码逻辑" />
@@ -595,7 +590,8 @@
     <MESSAGE value="refactor(template): 重构模板文件结构和命名规范&#10;&#10;- 将 InfoPage.vue.vm 中的 el-form 标签属性分行格式化&#10;- 将 Manage.go.vm 中的结构体名称从 Manage 重命名为 Handler&#10;- 更新 NewManage 函数名为 NewHandler 并修改返回类型&#10;- 将所有方法接收器从 *Manage 修改为 *Handler&#10;- 在 Server.go.vm 中添加零计数时的早期返回逻辑&#10;- 更新项目版本号从 1.2.2.0 到 1.2.3.0" />
     <MESSAGE value="refactor(completion): 优化代码补全功能并更新版本号&#10;&#10;- 在 HbufCompletionContributor 中添加 formAttr 和 tableAttr 补全项&#10;- 更新项目版本号从 1.2.2.1 到 1.2.2.3&#10;- 重构模板文件结构和命名规范，将 Manage 重命名为 Handler&#10;- 添加零计数时的早期返回逻辑优化性能" />
     <MESSAGE value="fix(template): 修复导出方法中字段映射的语法错误并补充升序支持&#10;&#10;- 修复 FieldToDbName 调用中变量引用缺少 $ 符号的语法错误&#10;- 新增对 OrderAsc 字段的 FieldToDbName 转换处理&#10;- 版本号升级至 1.2.2.7" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(template): 修复导出方法中字段映射的语法错误并补充升序支持&#10;&#10;- 修复 FieldToDbName 调用中变量引用缺少 $ 符号的语法错误&#10;- 新增对 OrderAsc 字段的 FieldToDbName 转换处理&#10;- 版本号升级至 1.2.2.7" />
+    <MESSAGE value="refactor(template): 重构模板中字段转换方法调用方式&#10;&#10;- 将两次 FieldToDbName 调用合并为一次 FieldsToDbName 调用&#10;- 简化 Server.go.vm 中导出方法的排序字段转换逻辑&#10;- 项目版本号升级至 1.2.2.8" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor(template): 重构模板中字段转换方法调用方式&#10;&#10;- 将两次 FieldToDbName 调用合并为一次 FieldsToDbName 调用&#10;- 简化 Server.go.vm 中导出方法的排序字段转换逻辑&#10;- 项目版本号升级至 1.2.2.8" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
